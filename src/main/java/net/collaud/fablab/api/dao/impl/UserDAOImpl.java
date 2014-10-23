@@ -27,13 +27,13 @@ public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
 
 	@Override
 	public UserEO getByLogin(String login) {
-		Query query = sessionFactory.getCurrentSession().createQuery(UserEO.FIND_BY_IDS);
+		Query query = sessionFactory.getCurrentSession().createQuery(UserEO.FIND_BY_LOGIN);
 		query.setParameter(UserEO.PARAM_LOGIN, login);
 		return (UserEO) query.uniqueResult();
 	}
 
 	@Override
 	public List<UserEO> getAllUsers() {
-		return findAll();
+		return findAllEntities();
 	}
 }

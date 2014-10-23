@@ -1,10 +1,12 @@
 package net.collaud.fablab.api.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.dao.ReservationDAO;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.exceptions.FablabException;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,9 +14,10 @@ import org.springframework.stereotype.Repository;
  * @author gaetan
  */
 @Repository
-public class ReservationDAOImpl  implements ReservationDAO {
+public class ReservationDAOImpl extends AbstractDAO<ReservationEO> implements ReservationDAO {
 
 	public ReservationDAOImpl() {
+		super(ReservationEO.class);
 	}
 
 
@@ -28,46 +31,29 @@ public class ReservationDAOImpl  implements ReservationDAO {
 //		}
 //	}
 //
-//	@Override
-//	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) {
-//
-//		if (dateStart != null && dateEnd != null && dateStart.after(dateEnd)) {
-//			return new ArrayList<>();
-//		}
-//
-//		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-//		CriteriaQuery<ReservationEO> cq = cb.createQuery(ReservationEO.class);
-//		Root<ReservationEO> reservation = cq.from(ReservationEO.class);
-//
-//		List<Predicate> listPredicate = new ArrayList<>();
-//
-//		listPredicate.add(cb.greaterThanOrEqualTo(reservation.get(ReservationEO_.dateStart), dateStart));
-//		listPredicate.add(cb.lessThanOrEqualTo(reservation.get(ReservationEO_.dateEnd), dateEnd));
-//		
-//		if (machineIds != null) {
-//			listPredicate.add(reservation.get(ReservationEO_.machine).in(machineIds));
-//		}
-//
-//		cq.where(cb.and(listPredicate.toArray(new Predicate[]{})));
-//
-//		cq.orderBy(cb.desc(reservation.get(ReservationEO_.machine)));
-//		TypedQuery<ReservationEO> query = getEntityManager().createQuery(cq);
-//		return query.getResultList();
-//	}
+	@Override
+	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) {
+		if (dateStart != null && dateEnd != null && dateStart.after(dateEnd)) {
+			return new ArrayList<>();
+		}
+		
+		Query query = createQuery(ReservationEO.SELECT_BY_TIME)
+				.setParameter(ReservationEO.PARAM_DATE_START, dateStart)
+				.setParameter(ReservationEO.PARAM_DATE_END, dateEnd);
+		
+		//FIXME take machinesIds in consideration
+		
+		return query.list();
+	}
 
 	@Override
-	public ReservationEO save(ReservationEO current) throws FablabException {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ReservationEO save(ReservationEO reservation) throws FablabException {
+		return super.saveEntity(reservation);
 	}
 
 	@Override
 	public void remove(ReservationEO current) throws FablabException {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) throws FablabException {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		super.removeEntity(current);
 	}
 
 }

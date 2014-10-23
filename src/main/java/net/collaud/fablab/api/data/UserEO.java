@@ -37,8 +37,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			+ " JOIN FETCH g.roles AS r "
 			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN;
 	
-	public static final String FIND_BY_RFID = "user.findByRFID";
-	public static final String FIND_BY_IDS = "user.findByIds";
 	public static final String PARAM_LOGIN = "login";
 	public static final String PARAM_RFID = "rfid";
 	public static final String PARAM_IDS = "ids";

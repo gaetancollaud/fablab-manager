@@ -10,7 +10,8 @@ import net.collaud.fablab.api.exceptions.FablabException;
  */
 public interface UserService {
 
-	UserEO findByLogin(String username);
-	List<UserEO> getAllUsers();
+	UserEO findByLogin(String login) throws FablabException;
+
+	List<UserEO> getAllUsers() throws FablabException;
 
 }

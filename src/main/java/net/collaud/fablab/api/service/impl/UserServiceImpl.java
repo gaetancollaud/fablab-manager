@@ -3,6 +3,9 @@ package net.collaud.fablab.api.service.impl;
 import java.util.List;
 import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.exceptions.FablabConstraintException;
+import net.collaud.fablab.api.exceptions.FablabException;
+import net.collaud.fablab.api.exceptions.FablabWrongParameterException;
 import net.collaud.fablab.api.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,11 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	private UserDao userDao;
 
 	@Override
-	public UserEO findByLogin(String username){
-		return userDao.getByLogin(username);
+	public UserEO findByLogin(String login) throws FablabException{
+		if(login==null || login.isEmpty()){
+			throw new FablabWrongParameterException("login cannot be null or empty");
+		}
+		return userDao.getByLogin(login);
 	}
 
 	@Override

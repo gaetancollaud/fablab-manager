@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.dao.impl;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 import net.collaud.fablab.api.data.AbstractDataEO;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,13 +37,17 @@ public abstract class AbstractDAO<T extends AbstractDataEO> {
 		return entityClass.getSimpleName();
 	}
 	
-	protected List<T> findAll(){
+	protected List<T> findAllEntities(){
 		return createQuery("FROM "+getEOName()).list();
 	}
 	
-	protected T save(T entity){
+	protected T saveEntity(T entity){
 		getSession().saveOrUpdate(entity);
 		return entity;
+	}
+	
+	protected void removeEntity(T entity){
+		getSession().delete(entity);
 	}
 	
 //	
