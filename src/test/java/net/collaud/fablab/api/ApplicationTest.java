@@ -11,9 +11,8 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @EnableAutoConfiguration
 @ImportResource({
-	"classpath:/spring-context.xml",
-	"classpath:/spring-database.xml",
-	"classpath:/spring-security.xml"
+	"classpath:/spring-context-test.xml",
+	"classpath:/spring-database-test.xml",
 })
 public class ApplicationTest {
 	
