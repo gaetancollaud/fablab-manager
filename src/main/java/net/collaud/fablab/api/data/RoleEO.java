@@ -38,6 +38,10 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@Size(min = 1, max = 45)
+	@Column(name = "technicalname", nullable = false)
+	private String technicalname;
+
 	@JoinTable(name = "r_group_role",
 			joinColumns = {
 				@JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, updatable = false)},
@@ -77,6 +81,14 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getTechnicalname() {
+		return technicalname;
+	}
+
+	public void setTechnicalname(String technicalname) {
+		this.technicalname = technicalname;
 	}
 
 	public Set<GroupEO> getGroups() {

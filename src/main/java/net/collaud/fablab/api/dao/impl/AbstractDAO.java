@@ -17,10 +17,9 @@ public abstract class AbstractDAO<T extends AbstractDataEO> {
 
 	private final Class<T> entityClass;
 	
-	
 	@Autowired
 	private SessionFactory sessionFactory;
-//
+	
 	public AbstractDAO(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}
@@ -37,17 +36,24 @@ public abstract class AbstractDAO<T extends AbstractDataEO> {
 		return entityClass.getSimpleName();
 	}
 	
+	protected T getById(Integer id){
+		return (T) getSession().byId(String.valueOf(id));
+	}
+	
 	protected List<T> findAllEntities(){
 		return createQuery("FROM "+getEOName()).list();
 	}
 	
 	protected T saveEntity(T entity){
-		getSession().saveOrUpdate(entity);
-		return entity;
+		return (T) getSession().merge(entity);
 	}
 	
 	protected void removeEntity(T entity){
 		getSession().delete(entity);
+	}
+	
+	protected void removeEntityById(Integer id){
+		getSession().delete(getSession().byId(String.valueOf(id)));
 	}
 	
 //	

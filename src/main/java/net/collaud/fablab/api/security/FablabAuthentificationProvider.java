@@ -1,9 +1,10 @@
 package net.collaud.fablab.api.security;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import net.collaud.fablab.api.data.UserEO;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +39,28 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 			throw new AuthenticationServiceException("Cannot get user with login " + login, ex);
 		}
 		if (user != null) {
+//
+//			if(mdpwrong){
+//				throw new BadCredentialsException("wrong password");
+//			}
 
 			//FIXME test mdp
-			List<GrantedAuthority> roles = new ArrayList<>();
+			Set<GrantedAuthority> roles = new HashSet<>();
+			List<String> groupsStr = new ArrayList<>();
+			List<String> rolesStr = new ArrayList<>();
 			user.getGroups()
 					.forEach(g -> g.getRoles()
-							.forEach(r -> roles.add(new SimpleGrantedAuthority(r.getName()))));
-
-			LOG.info("Trying to connect with username=" + login + ", password=" + password);
+							.forEach(r -> {
+								roles.add(new SimpleGrantedAuthority(r.getTechnicalname()));
+								rolesStr.add(r.getTechnicalname());
+							}));
+			LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
+			//FIXME audit this
 
 			return new UsernamePasswordAuthenticationToken(login, password, roles);
 		} else {
 			throw new UsernameNotFoundException("Username " + login + " not found");
 		}
-
 	}
 
 	@Override

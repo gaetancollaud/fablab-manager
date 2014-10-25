@@ -1,16 +1,19 @@
 package net.collaud.fablab.api.service.impl;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
-import net.collaud.fablab.api.exceptions.FablabException;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.service.SecurityService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author gaetan
  */
-@RolesAllowed({RolesHelper.ROLE_ADMIN})
 @Service
 @Transactional
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
@@ -28,16 +30,55 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Autowired
 	private UserDao userDao;
 
-	
+	@Autowired
+	private AuthenticationProvider authManager;
 
 	@Override
-	@PermitAll
-	public UserEO getCurrentUser() throws FablabException {
+	public UserEO getCurrentUser() {
+		Integer id = getCurrentUserId();
+		return userDao.getById(id);
+	}
+
+	@Override
+	public Integer getCurrentUserId() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null) {
-			return null;
+			return -1;
 		}
-		return userDao.getByLogin(context.getAuthentication().getName());
+		return Integer.parseInt(context.getAuthentication().getName());
 	}
+
+	@Override
+	public Boolean isAuthenticated() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		return context != null && context.getAuthentication() != null;
+	}
+
+	@Override
+	public LoginResult login(String login, String password) {
+		if(isAuthenticated()){
+			return LoginResult.ALREADY_CONNECTED;
+		}
+		try {
+			Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(login, password));
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			return LoginResult.OK;
+		}catch(BadCredentialsException ex){
+			LOG.warn("Wrong password for login "+login, ex);
+			return LoginResult.WRONG_PASSWORD;
+		}catch(UsernameNotFoundException ex){
+			LOG.warn("Login "+login+" not found", ex);
+			return LoginResult.UNKNOWN_USERNAME;
+		} catch (AuthenticationException ex) {
+			return LoginResult.INTERNAL_ERROR;
+		}
+	}
+
+	@Override
+	public void logout() {
+		SecurityContextHolder.clearContext();
+	}
+	
+	
 
 }

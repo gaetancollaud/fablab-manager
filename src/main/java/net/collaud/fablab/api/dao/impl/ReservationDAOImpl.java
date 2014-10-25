@@ -21,16 +21,6 @@ public class ReservationDAOImpl extends AbstractDAO<ReservationEO> implements Re
 	}
 
 
-//	@Override
-//	public ReservationEO save(ReservationEO reservation) throws FablabException {
-//		//FIXME check if no reservation before, use transaction
-//		if (reservation.getReservationId() > 0) {
-//			return edit(reservation);
-//		} else {
-//			return create(reservation);
-//		}
-//	}
-//
 	@Override
 	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) {
 		if (dateStart != null && dateEnd != null && dateStart.after(dateEnd)) {
@@ -52,8 +42,8 @@ public class ReservationDAOImpl extends AbstractDAO<ReservationEO> implements Re
 	}
 
 	@Override
-	public void remove(ReservationEO current) throws FablabException {
-		super.removeEntity(current);
+	public void remove(Integer reservationId) throws FablabException {
+		super.removeEntity(null);
 	}
 
 }

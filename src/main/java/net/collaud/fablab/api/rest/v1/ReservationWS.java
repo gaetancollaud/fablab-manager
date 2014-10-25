@@ -4,15 +4,18 @@ import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.exceptions.FablabException;
+import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
 import net.collaud.fablab.api.rest.v1.data.ReservationTO;
 import net.collaud.fablab.api.rest.v1.helper.ReservationTOHelper;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.ReservationService;
-import net.collaud.fablab.api.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/api/v1/reservation")
-@PreAuthorize(RolesHelper.HAS_ROLE_ADMIN)
+@Secured({RolesHelper.ROLE_ADMIN})
 public class ReservationWS {
 
 	private static final Logger LOG = Logger.getLogger(ReservationWS.class);
@@ -32,17 +35,36 @@ public class ReservationWS {
 	@Autowired
 	private ReservationService reservationService;
 
-	@RequestMapping()
-	public List<ReservationTO> list(){
-		try {
-			Date start = new Date(0, 0, 1);
-			Date end = new Date(2020, 0, 1);
-			List<ReservationEO> list = reservationService.findReservations(start, end, null);
-			return reservationHelper.fromEOList(list);
-		} catch (Exception ex) {
-			LOG.error("Cannot list reservation", ex);
-		}
-		return null;
+	@RequestMapping(value = "search", method = RequestMethod.POST)
+	public List<ReservationTO> list(@RequestBody ReservationSearchCriteria criteria) throws FablabException {
+		LOG.debug("Search reservation " + criteria);//FIXME put param
+		List<ReservationEO> list = reservationService.findReservations(
+				criteria.getDateFrom(),
+				criteria.getDateTo(),
+				criteria.getMachineIds());
+		return reservationHelper.fromEOList(list);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public void create(@RequestBody ReservationTO to) throws FablabException {
+		ReservationEO eo = reservationHelper.fromTO(to);
+		eo.setReservationId(0);
+		LOG.debug("create reservation " + eo);
+		reservationService.save(eo);
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public void edit(@PathVariable Integer id, @RequestBody ReservationTO to) throws FablabException {
+		LOG.debug("edit reservation " + to);
+		ReservationEO eo = reservationHelper.fromTO(to);
+		eo.setReservationId(id);
+		reservationService.save(eo);
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void remove(@PathVariable Integer id) throws FablabException {
+		LOG.debug("delete reservation with id " + id);
+		reservationService.remove(id);
 	}
 
 }

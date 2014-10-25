@@ -11,9 +11,9 @@ import net.collaud.fablab.api.exceptions.FablabException;
  */
 public interface ReservationDAO {
 
-	public ReservationEO save(ReservationEO current) throws FablabException;
+	public ReservationEO save(ReservationEO reservation) throws FablabException;
 
-	public void remove(ReservationEO current) throws FablabException;
+	public void remove(Integer reservationId) throws FablabException;
 
 	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) throws FablabException;
 

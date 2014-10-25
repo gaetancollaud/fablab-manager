@@ -8,6 +8,7 @@ import net.collaud.fablab.api.data.UserEO;
  */
 public interface UserDao {
 
+	UserEO getById(Integer id);
 	UserEO getByLogin(String login);
 	List<UserEO> getAllUsers();
 }

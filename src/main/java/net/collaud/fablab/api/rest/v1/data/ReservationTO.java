@@ -14,9 +14,9 @@ public class ReservationTO extends AbstractTO{
 	
 	private Date dateEnd;
 	
-	private UserTO user;
+	private Integer userId;
 	
-	private MachineTO machine;
+	private Integer machineId;
 
 	public Integer getReservationId() {
 		return reservationId;
@@ -42,20 +42,22 @@ public class ReservationTO extends AbstractTO{
 		this.dateEnd = dateEnd;
 	}
 
-	public UserTO getUser() {
-		return user;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUser(UserTO user) {
-		this.user = user;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public MachineTO getMachine() {
-		return machine;
+	public Integer getMachineId() {
+		return machineId;
 	}
 
-	public void setMachine(MachineTO machine) {
-		this.machine = machine;
+	public void setMachineId(Integer machineId) {
+		this.machineId = machineId;
 	}
+
+	
 	
 }

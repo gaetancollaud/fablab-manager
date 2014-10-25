@@ -36,4 +36,9 @@ public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
 	public List<UserEO> getAllUsers() {
 		return findAllEntities();
 	}
+
+	@Override
+	public UserEO getById(Integer id) {
+		return super.getById(id);
+	}
 }

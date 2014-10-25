@@ -13,7 +13,7 @@ public interface ReservationService {
 
 	ReservationEO save(ReservationEO reservation) throws FablabException;
 
-	void remove(ReservationEO reservation) throws FablabException;
+	void remove(Integer reservationId) throws FablabException;
 
 	List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) throws FablabException;
 
