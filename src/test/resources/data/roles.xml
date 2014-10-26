@@ -1,0 +1,4 @@
+<dataset>
+	<t_role role_id="1" name="Admin" technicalname="ROLE_ADMIN"  />
+	<t_role role_id="2" name="Manage users" technicalname="ROLE_MANAGE_USER"  />
+</dataset>

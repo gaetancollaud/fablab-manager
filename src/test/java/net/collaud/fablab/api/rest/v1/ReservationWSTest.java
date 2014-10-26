@@ -1,11 +1,13 @@
 package net.collaud.fablab.api.rest.v1;
 
+import net.collaud.fablab.api.rest.AbstractRestTest;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import junit.framework.TestCase;
 import net.collaud.fablab.api.ApplicationTest;
-import net.collaud.fablab.api.rest.v1.data.UserTO;
+import net.collaud.fablab.api.security.RolesHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,24 +26,10 @@ import org.springframework.web.client.RestTemplate;
 @SpringApplicationConfiguration(classes = ApplicationTest.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-public class ReservationWSTest extends TestCase {
-	
-	@Value("${local.server.port}")
-    private  int port;
-
-	protected <T> List<T> getObjectList(String path, Class<T> clazz) {
-		RestTemplate restTemplate = new TestRestTemplate();
-		Class arr = Array.newInstance(clazz, 0).getClass();
-		Object o = restTemplate.getForObject("http://localhost:" + port + "/api/v1/" + path, arr);
-		return Arrays.asList((T[]) o);
-	}
-
-	protected <T> T getObject(String path, Class<T> clazz) {
-		RestTemplate restTemplate = new TestRestTemplate();
-		return restTemplate.getForObject("http://localhost:" + port + "/api/v1/" + path, clazz);
-	}
+public class ReservationWSTest extends AbstractRestTest{
 	
 	public ReservationWSTest() {
+		super("api/v1");
 	}
 	
 
@@ -50,9 +38,7 @@ public class ReservationWSTest extends TestCase {
 	 */
 	@Test
 	public void testAccess() throws Exception {
-		Object userList = getObject("user", Object.class);
-		assertNotNull("list must be not null", userList);
-		//assertTrue("List should be empty", userList.isEmpty());
+		testRestrictedAccess(RolesHelper.ROLE_MANAGE_USER, "user");
 	}
 
 	
