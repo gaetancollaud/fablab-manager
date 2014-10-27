@@ -33,8 +33,8 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	public static final String FIND_BY_LOGIN
 			= " SELECT u "
 			+ " FROM UserEO u "
-			+ " JOIN FETCH u.groups AS g "
-			+ " JOIN FETCH g.roles AS r "
+			+ " LEFT JOIN FETCH u.groups AS g "
+			+ " LEFT JOIN FETCH g.roles AS r "
 			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN;
 	
 	public static final String PARAM_LOGIN = "login";
@@ -53,7 +53,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	private String login;
 
 	@Size(min = 0, max = 64)
-	@Column(name = "password", nullable = false, unique = true)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Size(min = 0, max = 45)

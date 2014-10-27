@@ -1,0 +1,55 @@
+<dataset>
+	
+	<!-- BEGIN roles -->
+	<t_role role_id="1" name="" technicalname="ROLE_ADMIN"  />
+	<t_role role_id="2" name="" technicalname="ROLE_MANAGE_MACHINE"  />
+	<t_role role_id="3" name="" technicalname="ROLE_MANAGE_PAYMENT"  />
+	<t_role role_id="4" name="" technicalname="ROLE_MANAGE_USER"  />
+	<t_role role_id="5" name="" technicalname="ROLE_SYSTEM"  />
+	<t_role role_id="6" name="" technicalname="ROLE_VIEW_ACCOUNTING"  />
+	<t_role role_id="7" name="" technicalname="ROLE_VIEW_AUDIT"  />
+	<t_role role_id="8" name="" technicalname="ROLE_MANAGE_RESERVATION"  />
+	<t_role role_id="9" name="" technicalname="ROLE_USE_RESERVATION"  />
+	<t_role role_id="10" name="" technicalname="ROLE_VIEW_RESERVATION"  />
+	<!-- END roles -->
+
+	<!-- BEGIN groups -->	
+	<t_group group_id="1" name="" technicalname="comite" />
+	<r_group_role role_id="1" group_id="1" />
+	<r_group_role role_id="2" group_id="1" />
+	<r_group_role role_id="3" group_id="1" />
+	<r_group_role role_id="4" group_id="1" />
+	<r_group_role role_id="5" group_id="1" />
+	<r_group_role role_id="7" group_id="1" />
+	<r_group_role role_id="8" group_id="1" />
+	<r_group_role role_id="9" group_id="1" />
+	<r_group_role role_id="10" group_id="1" />
+	
+	<t_group group_id="2" name="" technicalname="animator" />
+	<r_group_role role_id="3" group_id="2" />
+	<r_group_role role_id="9" group_id="2" />
+	<r_group_role role_id="10" group_id="2" />
+	
+	<t_group group_id="3" name="" technicalname="member" />
+	<r_group_role role_id="9" group_id="3" />
+	<r_group_role role_id="10" group_id="3" />
+	
+	<t_group group_id="4" name="" technicalname="no_role" />
+	<!-- END groups -->
+	
+	<!-- BEGIN membership type -->
+	<t_membership_type membership_type_id="1" name="extern" />
+	<t_membership_type membership_type_id="2" name="normal" />
+	<t_membership_type membership_type_id="3" name="student" />
+	<t_membership_type membership_type_id="4" name="angel" />
+	<!-- END membership type -->
+	
+	<!-- BEGIN user -->
+	<t_user user_id="1" login="administrator1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<t_user user_id="2" login="animator1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<t_user user_id="3" login="member1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<t_user user_id="4" login="extern1" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<!-- END user -->
+	
+	
+</dataset>

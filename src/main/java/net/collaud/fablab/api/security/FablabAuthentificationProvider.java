@@ -33,6 +33,7 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 		String login = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		UserEO user;
+		
 		try {
 			user = userService.findByLogin(login);
 		} catch (Exception ex) {
