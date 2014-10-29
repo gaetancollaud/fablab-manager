@@ -11,11 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
- * @author Gaétan
+ * @author GaÃ©tan
  */
 abstract public class AbstractRestTest extends TestCase {
 
@@ -50,7 +49,7 @@ abstract public class AbstractRestTest extends TestCase {
 
 	protected void testRestrictedAccess(String path, String... roles) {
 		try {
-			Map resNoLogin = getObject(path, Map.class);
+			Object resNoLogin = getObject(path, Object.class);
 			fail("Exception should be throwed");
 		} catch (HttpClientErrorException ex) {
 			assertEquals("Status should be 401 (Unauthorized)", HttpStatus.UNAUTHORIZED, ex.getStatusCode());
@@ -59,7 +58,7 @@ abstract public class AbstractRestTest extends TestCase {
 
 		loginAs("member1");
 		try {
-			Map resLoginNoRole = getObject(path, Map.class);
+			Object resLoginNoRole = getObject(path, Object.class);
 		} catch (HttpClientErrorException ex) {
 			assertEquals("Status should be 403 (Forbidden)", HttpStatus.FORBIDDEN, ex.getStatusCode());
 
@@ -67,8 +66,8 @@ abstract public class AbstractRestTest extends TestCase {
 		logout();
 
 		loginAs("administrator1");
-		Map resLoginRole = getObject(path, Map.class);
-		assertEquals("Status should be 403 (Forbidden)", 200, resLoginRole.get("status"));
+		Object resLoginRole = getObject(path, Object.class);
+		assertNotNull("resut is null", resLoginRole);
 		logout();
 	}
 

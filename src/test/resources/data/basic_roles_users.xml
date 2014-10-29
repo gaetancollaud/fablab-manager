@@ -46,8 +46,14 @@
 	
 	<!-- BEGIN user -->
 	<t_user user_id="1" login="administrator1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="1" group_id="1" />
+	
 	<t_user user_id="2" login="animator1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="1" group_id="2" />
+	
 	<t_user user_id="3" login="member1" password="" membership_type_id="2" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="1" group_id="3" />
+	
 	<t_user user_id="4" login="extern1" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
 	<!-- END user -->
 	

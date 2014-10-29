@@ -50,11 +50,14 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 			List<String> groupsStr = new ArrayList<>();
 			List<String> rolesStr = new ArrayList<>();
 			user.getGroups()
-					.forEach(g -> g.getRoles()
+					.forEach(g -> {
+						groupsStr.add(g.getTechnicalname());
+						g.getRoles()
 							.forEach(r -> {
 								roles.add(new SimpleGrantedAuthority(r.getTechnicalname()));
 								rolesStr.add(r.getTechnicalname());
-							}));
+							});
+							});
 			LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
 			//FIXME audit this
 
