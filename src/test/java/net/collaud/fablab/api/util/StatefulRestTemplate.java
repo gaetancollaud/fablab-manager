@@ -18,14 +18,14 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author gaetancollaud@gmail.com
  */
-public class StatefullRestTemplate {
+public class StatefulRestTemplate {
 
-	private static final Logger LOG = Logger.getLogger(StatefullRestTemplate.class);
+	private static final Logger LOG = Logger.getLogger(StatefulRestTemplate.class);
 
 	private final RestTemplate template;
 	private final Map<String, String> cookies;
 
-	public StatefullRestTemplate() {
+	public StatefulRestTemplate() {
 		template = new RestTemplate();
 		cookies = new HashMap<>();
 	}
@@ -66,7 +66,7 @@ public class StatefullRestTemplate {
 	}
 
 	/**
-	 * call a POST call.
+	 * execute a POST call.
 	 *
 	 * @param <T> return type of this call
 	 * @param url url to call
@@ -75,14 +75,37 @@ public class StatefullRestTemplate {
 	 * @return the returned object of this request
 	 */
 	public <T> T post(String url, Object data, Class<T> clazz) {
-		HttpEntity request = new HttpEntity(data, getHeaders());
-		HttpEntity<T> response = template.exchange(url, HttpMethod.POST, request, clazz);
-		extractCookies(response.getHeaders());
-		return response.getBody();
+		return getObject(HttpMethod.POST, url, data, clazz);
 	}
 
 	/**
-	 * call a GET call.
+	 * execute a PUT call.
+	 *
+	 * @param <T> return type of this call
+	 * @param url url to call
+	 * @param data request data
+	 * @param clazz return type class
+	 * @return the returned object of this request
+	 */
+	public <T> T put(String url, Object data, Class<T> clazz) {
+		return getObject(HttpMethod.PUT, url, data, clazz);
+	}
+
+	/**
+	 * execute a DELETE call.
+	 *
+	 * @param <T> return type of this call
+	 * @param url url to call
+	 * @param data request data
+	 * @param clazz return type class
+	 * @return the returned object of this request
+	 */
+	public <T> T delete(String url, Object data, Class<T> clazz) {
+		return getObject(HttpMethod.DELETE, url, data, clazz);
+	}
+
+	/**
+	 * execute a GET call.
 	 *
 	 * @param <T> return type of this call
 	 * @param url url to call
@@ -90,7 +113,43 @@ public class StatefullRestTemplate {
 	 * @return the returned object of this request
 	 */
 	public <T> T get(String url, Class<T> clazz) {
-		HttpEntity<T> response = template.exchange(getRequestEntity(HttpMethod.GET, url), clazz);
+		return getObject(HttpMethod.GET, url, clazz);
+	}
+
+	/**
+	 * Execute a stateful call.
+	 *
+	 * @param <T> return object type
+	 * @param method http method
+	 * @param url call url
+	 * @param clazz return object type
+	 * @return result object
+	 */
+	public <T> T getObject(HttpMethod method, String url, Class<T> clazz) {
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Execute " + method + " call to " + url);
+		}
+		HttpEntity<T> response = template.exchange(getRequestEntity(method, url), clazz);
+		extractCookies(response.getHeaders());
+		return response.getBody();
+	}
+
+	/**
+	 * Execute a stateful call with request data.
+	 *
+	 * @param <T> return object type
+	 * @param method http method
+	 * @param url call url
+	 * @param data input data
+	 * @param clazz return object type
+	 * @return result object
+	 */
+	public <T> T getObject(HttpMethod method, String url, Object data, Class<T> clazz) {
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Execute " + method + " call to " + url + " with data=" + data);
+		}
+		HttpEntity request = new HttpEntity(data, getHeaders());
+		HttpEntity<T> response = template.exchange(url, method, request, clazz);
 		extractCookies(response.getHeaders());
 		return response.getBody();
 	}
@@ -159,5 +218,4 @@ public class StatefullRestTemplate {
 		headers.put("Cookie", Arrays.asList(new String[]{getCookiesString()}));
 		return headers;
 	}
-
 }

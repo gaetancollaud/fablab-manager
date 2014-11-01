@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
-import net.collaud.fablab.api.util.StatefullRestTemplate;
+import net.collaud.fablab.api.rest.v1.data.UserTO;
+import net.collaud.fablab.api.util.StatefulRestTemplate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,12 @@ abstract public class AbstractRestTest extends TestCase {
 
 	private final String resourcePath;
 
-	private final StatefullRestTemplate restTemplate;
+	private final StatefulRestTemplate restTemplate;
 
 	public AbstractRestTest(String resourcePath) {
 		assert resourcePath != null : "Path should not be null";
 		this.resourcePath = resourcePath;
-		restTemplate = new StatefullRestTemplate();
+		restTemplate = new StatefulRestTemplate();
 	}
 
 	public int getPort() {
