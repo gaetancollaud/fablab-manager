@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
+import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.rest.v1.data.UserTO;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
@@ -75,7 +76,8 @@ abstract public class AbstractRestTest extends TestCase {
 	protected void loginAs(String username) {
 		AuthCredential credential = new AuthCredential(username, "");
 
-		Object result = restTemplate.post("http://localhost:" + getPort() + "/api/v1/auth/login", credential, Object.class);
+		LoginResult result = restTemplate.post("http://localhost:" + getPort() + "/api/v1/auth/login", credential, LoginResult.class);
+		assertEquals("Login is not ok", result.getName(), LoginResult.OK.getName());
 		LOG.debug("Logged as " + username);
 	}
 
