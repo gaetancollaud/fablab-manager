@@ -6,17 +6,28 @@ import java.util.Date;
  *
  * @author Gaétan
  */
-public class ReservationTO extends AbstractTO{
-	
+public class ReservationTO extends AbstractTO {
+
 	private Integer reservationId;
-	
+
 	private Date dateStart;
-	
+
 	private Date dateEnd;
-	
+
 	private Integer userId;
-	
+
 	private Integer machineId;
+
+	public ReservationTO() {
+	}
+
+	public ReservationTO(Integer reservationId, Date dateStart, Date dateEnd, Integer userId, Integer machineId) {
+		this.reservationId = reservationId;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+		this.userId = userId;
+		this.machineId = machineId;
+	}
 
 	public Integer getReservationId() {
 		return reservationId;
@@ -58,6 +69,4 @@ public class ReservationTO extends AbstractTO{
 		this.machineId = machineId;
 	}
 
-	
-	
 }

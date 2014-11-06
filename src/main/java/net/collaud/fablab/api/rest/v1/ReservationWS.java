@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.rest.v1;
 
-import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.exceptions.FablabException;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/api/v1/reservation")
-@Secured({RolesHelper.ROLE_ADMIN})
 public class ReservationWS {
 
 	private static final Logger LOG = Logger.getLogger(ReservationWS.class);
@@ -36,8 +34,9 @@ public class ReservationWS {
 	private ReservationService reservationService;
 
 	@RequestMapping(value = "search", method = RequestMethod.POST)
+//	@Secured({RolesHelper.ROLE_VIEW_RESERVATION})
 	public List<ReservationTO> list(@RequestBody ReservationSearchCriteria criteria) throws FablabException {
-		LOG.debug("Search reservation " + criteria);//FIXME put param
+		LOG.debug("Search reservation " + criteria);
 		List<ReservationEO> list = reservationService.findReservations(
 				criteria.getDateFrom(),
 				criteria.getDateTo(),

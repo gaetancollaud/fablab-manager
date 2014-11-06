@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@Secured({RolesHelper.ROLE_ADMIN})
 public class ReservationServiceImpl implements ReservationService {
 
 	private static final Logger LOG = Logger.getLogger(ReservationServiceImpl.class);

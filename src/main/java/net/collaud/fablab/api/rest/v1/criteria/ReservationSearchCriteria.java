@@ -12,6 +12,15 @@ public class ReservationSearchCriteria {
 	private Date dateTo;
 	private List<Integer> machineIds;
 
+	public ReservationSearchCriteria() {
+	}
+
+	public ReservationSearchCriteria(Date dateFrom, Date dateTo, List<Integer> machineIds) {
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
+		this.machineIds = machineIds;
+	}
+
 	public Date getDateFrom() {
 		return dateFrom;
 	}

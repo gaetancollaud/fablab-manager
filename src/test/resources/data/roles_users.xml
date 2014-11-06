@@ -77,7 +77,6 @@
 	
 	<t_user user_id="4" login="extern1" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
 	
-	
 	<t_user user_id="10" login="ROLE_ADMIN" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
 	<r_group_user user_id="10" group_id="5" />
 	<t_user user_id="11" login="ROLE_MANAGE_MACHINE" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
@@ -97,6 +96,7 @@
 	<t_user user_id="18" login="ROLE_USE_RESERVATION" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
 	<r_group_user user_id="18" group_id="13" />
 	<t_user user_id="19" login="ROLE_VIEW_RESERVATION" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="19" group_id="14" />
 	<!-- END user -->
 	
 	

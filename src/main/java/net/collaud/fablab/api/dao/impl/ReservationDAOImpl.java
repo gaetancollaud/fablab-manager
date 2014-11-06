@@ -43,7 +43,7 @@ public class ReservationDAOImpl extends AbstractDAO<ReservationEO> implements Re
 
 	@Override
 	public void remove(Integer reservationId) throws FablabException {
-		super.removeEntity(null);
+		super.removeEntityById(reservationId);
 	}
 
 }

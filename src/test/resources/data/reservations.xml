@@ -1,0 +1,26 @@
+<dataset>
+	
+	
+	<!-- BEGIN machine types -->
+	<t_machine_type machine_type_id="1" technicalname="3dprinter" name="3d printer" restricted="1" />
+	<t_machine_type machine_type_id="2" technicalname="lasercutter" name="laser cutter" restricted="1" />
+	<t_machine_type machine_type_id="3" technicalname="cnc" name="CNC" restricted="1" />
+	<t_machine_type machine_type_id="4" technicalname="other" name="Other" restricted="0" />
+	<!-- END machine types -->
+	
+	<!-- BEGIN machines -->
+	<t_machine machine_id="1" machine_type_id="1" name="Ultimaker 1" />
+	<t_machine machine_id="2" machine_type_id="1" name="Ultimaker 2" />
+	<t_machine machine_id="3" machine_type_id="1" name="Makerbot Replicator" />
+	<t_machine machine_id="4" machine_type_id="2" name="Decoupeuse laser" />
+	<t_machine machine_id="5" machine_type_id="3" name="CNC 1" />
+	<t_machine machine_id="6" machine_type_id="3" name="CNC 2" />
+	<!-- END machines -->
+	
+	<!-- BEGIN reservations -->
+	<t_reservation reservation_id="1" user_id="1" machine_id="1" date_start="2014-01-01 00:00:00" date_end="2014-01-01 10:00:00" />
+	<t_reservation reservation_id="2" user_id="1" machine_id="1" date_start="2014-01-01 10:00:00" date_end="2014-01-01 11:00:00" />
+	<!-- END reservations -->
+	
+	
+</dataset>

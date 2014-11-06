@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import net.collaud.fablab.api.data.AbstractDataEO;
 import org.hibernate.Query;
@@ -37,7 +38,7 @@ public abstract class AbstractDAO<T extends AbstractDataEO> {
 	}
 	
 	protected T getById(Integer id){
-		return (T) getSession().byId(String.valueOf(id));
+		return (T) getSession().get(entityClass, id);
 	}
 	
 	protected List<T> findAllEntities(){
@@ -53,7 +54,7 @@ public abstract class AbstractDAO<T extends AbstractDataEO> {
 	}
 	
 	protected void removeEntityById(Integer id){
-		getSession().delete(getSession().byId(String.valueOf(id)));
+		Optional.ofNullable(getById(id)).ifPresent(obj -> getSession().delete(obj));
 	}
 	
 //	

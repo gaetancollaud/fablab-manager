@@ -12,6 +12,7 @@ import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -40,20 +41,31 @@ abstract public class AbstractRestTest extends TestCase {
 		return port;
 	}
 
-	protected <T> List<T> getObjectList(String path, Class<T> clazz) {
+	protected <T> List<T> callForList(HttpMethod method, String path, Class<T> clazz) {
 		Class arr = Array.newInstance(clazz, 0).getClass();
-		Object o = restTemplate.get("http://localhost:" + port + "/" + resourcePath + "/" + path, arr);
+		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
+		Object o = restTemplate.getObject(method, completePath, arr);
 		return Arrays.asList((T[]) o);
 	}
 
-	protected <T> T getObject(String path, Class<T> clazz) {
-		return restTemplate.get("http://localhost:" + port + "/" + resourcePath + "/" + path, clazz);
+	protected <T> T callForObject(HttpMethod method, String path, Class<T> clazz) {
+		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
+		return restTemplate.getObject(method, completePath, clazz);
 	}
 
-	protected void testRestrictedAccess(String path, String... roles) {
+	protected <T> T callForObject(HttpMethod method, String path, Object data, Class<T> clazz) {
+		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
+		return restTemplate.getObject(method, completePath, data, clazz);
+	}
+
+	protected void testRestrictedAccess(HttpMethod method, String path, String... roles) {
+		testRestrictedAccess(method, path, null, roles);
+	}
+
+	protected void testRestrictedAccess(HttpMethod method, String path, Object data, String... roles) {
 		Set<String> rolesToTestSet = new TreeSet<>(Arrays.asList(roles));
 		Set<String> allRolesSet = new TreeSet<>(Arrays.asList(RolesHelper.LIST_ROLES));
-		LOG.debug("Testing path '"+path+"' for roles "+rolesToTestSet.toString());
+		LOG.debug("Testing path '" + path + "' for roles " + rolesToTestSet.toString());
 
 		//check if all roles to test exist.
 		for (String role : roles) {
@@ -64,7 +76,7 @@ abstract public class AbstractRestTest extends TestCase {
 
 		try {
 			//should trow 401 because not logged yet
-			getObject(path, Object.class);
+			callForObject(method, path, data, Object.class);
 			fail("Exception should be throwed");
 		} catch (HttpClientErrorException ex) {
 			assertEquals("Status should be 401 (Unauthorized)", HttpStatus.UNAUTHORIZED, ex.getStatusCode());
@@ -76,12 +88,16 @@ abstract public class AbstractRestTest extends TestCase {
 
 			if (rolesToTestSet.contains(role)) {
 				//this role should have access
-				Object resLoginOk = getObject(path, Object.class);
-				assertNotNull("resut is null", resLoginOk);
+				try {
+					callForObject(method, path, data, Object.class);
+				} catch (HttpClientErrorException ex) {
+					fail("Role '" + role + " should have access to " + path+". Error :"+ex.getMessage());
+				}
 			} else {
 				//this role should not have access
 				try {
-					getObject(path, Object.class);
+					callForObject(method, path, data, Object.class);
+					fail("Role '" + role + " should not have access to " + path);
 				} catch (HttpClientErrorException ex) {
 					assertEquals("Status should be 403 (Forbidden)", HttpStatus.FORBIDDEN, ex.getStatusCode());
 
