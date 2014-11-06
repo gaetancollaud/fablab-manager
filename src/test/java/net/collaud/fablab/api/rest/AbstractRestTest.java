@@ -3,11 +3,12 @@ package net.collaud.fablab.api.rest;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import junit.framework.TestCase;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
-import net.collaud.fablab.api.rest.v1.data.UserTO;
+import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,27 +51,46 @@ abstract public class AbstractRestTest extends TestCase {
 	}
 
 	protected void testRestrictedAccess(String path, String... roles) {
+		Set<String> rolesToTestSet = new TreeSet<>(Arrays.asList(roles));
+		Set<String> allRolesSet = new TreeSet<>(Arrays.asList(RolesHelper.LIST_ROLES));
+		LOG.debug("Testing path '"+path+"' for roles "+rolesToTestSet.toString());
+
+		//check if all roles to test exist.
+		for (String role : roles) {
+			if (!allRolesSet.contains(role)) {
+				throw new RuntimeException("Role '" + role + "' unknown. Use RolesHelper for roles list");
+			}
+		}
+
 		try {
-			Object resNoLogin = getObject(path, Object.class);
+			//should trow 401 because not logged yet
+			getObject(path, Object.class);
 			fail("Exception should be throwed");
 		} catch (HttpClientErrorException ex) {
 			assertEquals("Status should be 401 (Unauthorized)", HttpStatus.UNAUTHORIZED, ex.getStatusCode());
-
 		}
 
-		loginAs("member1");
-		try {
-			Object resLoginNoRole = getObject(path, Object.class);
-		} catch (HttpClientErrorException ex) {
-			assertEquals("Status should be 403 (Forbidden)", HttpStatus.FORBIDDEN, ex.getStatusCode());
+		for (String role : RolesHelper.LIST_ROLES) {
+			//login as role to test
+			loginAs(role);
 
+			if (rolesToTestSet.contains(role)) {
+				//this role should have access
+				Object resLoginOk = getObject(path, Object.class);
+				assertNotNull("resut is null", resLoginOk);
+			} else {
+				//this role should not have access
+				try {
+					getObject(path, Object.class);
+				} catch (HttpClientErrorException ex) {
+					assertEquals("Status should be 403 (Forbidden)", HttpStatus.FORBIDDEN, ex.getStatusCode());
+
+				}
+			}
+
+			//logout
+			logout();
 		}
-		logout();
-
-		loginAs("administrator1");
-		Object resLoginRole = getObject(path, Object.class);
-		assertNotNull("resut is null", resLoginRole);
-		logout();
 	}
 
 	protected void loginAs(String username) {

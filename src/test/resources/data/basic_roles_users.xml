@@ -35,6 +35,27 @@
 	<r_group_role role_id="10" group_id="3" />
 	
 	<t_group group_id="4" name="" technicalname="no_role" />
+	
+	<t_group group_id="5" name="" technicalname="ROLE_ADMIN" />
+	<r_group_role role_id="1" group_id="5" />
+	<t_group group_id="6" name="" technicalname="ROLE_MANAGE_MACHINE" />
+	<r_group_role role_id="2" group_id="6" />
+	<t_group group_id="7" name="" technicalname="ROLE_MANAGE_PAYMENT" />
+	<r_group_role role_id="3" group_id="7" />
+	<t_group group_id="8" name="" technicalname="ROLE_MANAGE_USER" />
+	<r_group_role role_id="4" group_id="8" />
+	<t_group group_id="9" name="" technicalname="ROLE_SYSTEM" />
+	<r_group_role role_id="5" group_id="9" />
+	<t_group group_id="10" name="" technicalname="ROLE_VIEW_ACCOUNTING" />
+	<r_group_role role_id="6" group_id="10" />
+	<t_group group_id="11" name="" technicalname="ROLE_VIEW_AUDIT" />
+	<r_group_role role_id="7" group_id="11" />
+	<t_group group_id="12" name="" technicalname="ROLE_MANAGE_RESERVATION" />
+	<r_group_role role_id="8" group_id="12" />
+	<t_group group_id="13" name="" technicalname="ROLE_USE_RESERVATION" />
+	<r_group_role role_id="9" group_id="13" />
+	<t_group group_id="14" name="" technicalname="ROLE_VIEW_RESERVATION" />
+	<r_group_role role_id="10" group_id="14" />	
 	<!-- END groups -->
 	
 	<!-- BEGIN membership type -->
@@ -55,6 +76,27 @@
 	<r_group_user user_id="1" group_id="3" />
 	
 	<t_user user_id="4" login="extern1" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	
+	
+	<t_user user_id="10" login="ROLE_ADMIN" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="10" group_id="5" />
+	<t_user user_id="11" login="ROLE_MANAGE_MACHINE" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="11" group_id="6" />
+	<t_user user_id="12" login="ROLE_MANAGE_PAYMENT" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="12" group_id="7" />
+	<t_user user_id="13" login="ROLE_MANAGE_USER" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="13" group_id="8" />
+	<t_user user_id="14" login="ROLE_SYSTEM" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="14" group_id="9" />
+	<t_user user_id="15" login="ROLE_VIEW_ACCOUNTING" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="15" group_id="10" />
+	<t_user user_id="16" login="ROLE_VIEW_AUDIT" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="16" group_id="11" />
+	<t_user user_id="17" login="ROLE_MANAGE_RESERVATION" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="17" group_id="12" />
+	<t_user user_id="18" login="ROLE_USE_RESERVATION" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
+	<r_group_user user_id="18" group_id="13" />
+	<t_user user_id="19" login="ROLE_VIEW_RESERVATION" password="" membership_type_id="1" auth_by_sql="true" firstname="" lastname="" date_inscr="2014-01-01 00:00:00" balance="0" enabled="true" />
 	<!-- END user -->
 	
 	

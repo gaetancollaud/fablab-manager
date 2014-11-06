@@ -35,7 +35,6 @@ public class ReservationWSTest extends AbstractRestTest{
 		super("api/v1");
 	}
 	
-
 	/**
 	 * Test of list method, of class ReservationWS.
 	 */

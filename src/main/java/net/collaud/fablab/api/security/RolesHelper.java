@@ -17,6 +17,19 @@ public class RolesHelper {
 	public static final String ROLE_USE_RESERVATION = "ROLE_USE_RESERVATION";
 	public static final String ROLE_VIEW_RESERVATION = "ROLE_VIEW_RESERVATION";
 
+	public static final String[] LIST_ROLES = new String[]{
+		ROLE_ADMIN,
+		ROLE_MANAGE_MACHINE,
+		ROLE_MANAGE_PAYMENT,
+		ROLE_MANAGE_USER,
+		ROLE_SYSTEM,
+		ROLE_VIEW_ACCOUNTING,
+		ROLE_VIEW_AUDIT,
+		ROLE_MANAGE_RESERVATION,
+		ROLE_USE_RESERVATION,
+		ROLE_VIEW_RESERVATION
+	};
+
 	public static final String hasAnyRole(String... roles) {
 		StringBuilder sb = new StringBuilder("hasAnyRole([");
 		if (roles.length > 0) {
