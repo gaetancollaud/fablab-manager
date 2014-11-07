@@ -62,11 +62,6 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public Integer getId() {
-		return getRoleId();
-	}
-
 	public Integer getRoleId() {
 		return roleId;
 	}

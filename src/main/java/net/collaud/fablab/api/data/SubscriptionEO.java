@@ -74,11 +74,6 @@ public class SubscriptionEO extends AbstractDataEO implements Serializable {
 		this.subscriptionId = subscriptionId;
 	}
 
-	@Override
-	public Integer getId() {
-		return getSubscriptionId();
-	}
-
 	public Integer getSubscriptionId() {
 		return subscriptionId;
 	}

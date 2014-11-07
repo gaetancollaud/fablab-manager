@@ -30,19 +30,4 @@ public class RolesHelper {
 		ROLE_VIEW_RESERVATION
 	};
 
-	public static final String hasAnyRole(String... roles) {
-		StringBuilder sb = new StringBuilder("hasAnyRole([");
-		if (roles.length > 0) {
-			for (String role : roles) {
-				sb.append("'");
-				sb.append(role);
-				sb.append("',");
-			}
-			//remove last coma
-			sb.deleteCharAt(sb.length());
-		}
-		sb.append("]");
-		return sb.toString();
-	}
-
 }

@@ -53,11 +53,6 @@ public class GroupEO extends AbstractDataEO implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public Integer getId() {
-		return getGroupId();
-	}
-
 	public Integer getGroupId() {
 		return groupId;
 	}

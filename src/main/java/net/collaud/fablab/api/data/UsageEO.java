@@ -85,11 +85,6 @@ public class UsageEO extends AbstractDataEO implements Serializable {
 		this.comment = comment;
 	}
 
-	@Override
-	public Integer getId() {
-		return getUsageId();
-	}
-
 	public Integer getUsageId() {
 		return usageId;
 	}

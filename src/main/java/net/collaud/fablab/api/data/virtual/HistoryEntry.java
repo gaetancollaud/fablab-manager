@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.data.virtual;
 
 import java.util.Date;
+import java.util.Objects;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageDetailEO;
@@ -61,7 +62,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	public HistoryEntry(SubscriptionEO subscription) {
 		type = HistoryEntryType.SUBSCRIPTION;
-		id = subscription.getId();
+		id = subscription.getSubscriptionId();
 		date = subscription.getDateSubscription();
 		comment = subscription.getComment();
 		detail = "Subscription type : " + subscription.getPriceCotisation().getMembershipType().getName();
@@ -95,6 +96,36 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	public UserEO getUser() {
 		return user;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 5;
+		hash = 29 * hash + this.id;
+		hash = 29 * hash + Objects.hashCode(this.type);
+		hash = 29 * hash + Objects.hashCode(this.date);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final HistoryEntry other = (HistoryEntry) obj;
+		if (this.id != other.id) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		if (!Objects.equals(this.date, other.date)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -31,8 +31,8 @@ public class ReservationTOHelper extends AbstractTOHelper<ReservationTO, Reserva
 		to.setReservationId(eo.getReservationId());
 		to.setDateStart(eo.getDateStart());
 		to.setDateEnd(eo.getDateEnd());
-		to.setUserId(eo.getUser().getId());
-		to.setMachineId(eo.getMachine().getId());
+		to.setUserId(eo.getUser().getUserId());
+		to.setMachineId(eo.getMachine().getMachineId());
 		return to;
 	}
 

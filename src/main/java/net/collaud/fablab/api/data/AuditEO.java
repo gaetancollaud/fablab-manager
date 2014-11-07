@@ -25,13 +25,13 @@ import net.collaud.fablab.api.data.type.AuditObject;
 @Entity
 @Table(name = "t_audit")
 @NamedQueries({
-	@NamedQuery(name = AuditEO.SElECT_LAST_ENTRIES, query = "SELECT a FROM AuditEO a ORDER BY a.when DESC"), //	@NamedQuery(name = "LogUserAccess.findAll", query = "SELECT l FROM LogUserAccess l"),
+	@NamedQuery(name = AuditEO.SELECT_LAST_ENTRIES, query = "SELECT a FROM AuditEO a ORDER BY a.when DESC"), //	@NamedQuery(name = "LogUserAccess.findAll", query = "SELECT l FROM LogUserAccess l"),
 })
 public class AuditEO extends AbstractDataEO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String SElECT_LAST_ENTRIES = "audit.selectLastEntries";
+	public static final String SELECT_LAST_ENTRIES = "audit.selectLastEntries";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,11 +80,6 @@ public class AuditEO extends AbstractDataEO implements Serializable {
 		this.success = success;
 		this.content = content;
 		this.detail = detail;
-	}
-
-	@Override
-	public Integer getId() {
-		return getAuditId();
 	}
 
 	public Integer getAuditId() {

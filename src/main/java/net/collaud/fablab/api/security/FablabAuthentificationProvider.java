@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -33,35 +34,37 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 		String login = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		UserEO user;
-		
+
 		try {
 			user = userService.findByLogin(login);
 		} catch (Exception ex) {
 			throw new AuthenticationServiceException("Cannot get user with login " + login, ex);
 		}
 		if (user != null) {
-//
-//			if(mdpwrong){
-//				throw new BadCredentialsException("wrong password");
-//			}
 
 			//FIXME test mdp
-			Set<GrantedAuthority> roles = new HashSet<>();
-			List<String> groupsStr = new ArrayList<>();
-			List<String> rolesStr = new ArrayList<>();
-			user.getGroups()
-					.forEach(g -> {
-						groupsStr.add(g.getTechnicalname());
-						g.getRoles()
+			String passwordHashed = password;
+			if (user.getPassword().equals(passwordHashed)) {
+
+				Set<GrantedAuthority> roles = new HashSet<>();
+				List<String> groupsStr = new ArrayList<>();
+				List<String> rolesStr = new ArrayList<>();
+				user.getGroups()
+						.forEach(g -> {
+							groupsStr.add(g.getTechnicalname());
+							g.getRoles()
 							.forEach(r -> {
 								roles.add(new SimpleGrantedAuthority(r.getTechnicalname()));
 								rolesStr.add(r.getTechnicalname());
 							});
-							});
-			LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
-			//FIXME audit this
+						});
+				LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
+				//FIXME audit this
 
-			return new UsernamePasswordAuthenticationToken(user.getUserId(), password, roles);
+				return new UsernamePasswordAuthenticationToken(user.getUserId(), password, roles);
+			} else {
+				throw new BadCredentialsException("wrong password");
+			}
 		} else {
 			throw new UsernameNotFoundException("Username " + login + " not found");
 		}

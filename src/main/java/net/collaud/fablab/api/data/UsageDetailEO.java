@@ -89,11 +89,6 @@ public class UsageDetailEO extends AbstractDataEO implements Serializable {
 	public UsageDetailEO() {
 	}
 
-	@Override
-	public Integer getId() {
-		return getUsageId();
-	}
-
 	public Integer getUsageId() {
 		return usageId;
 	}

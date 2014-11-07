@@ -63,11 +63,6 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 		this.name = name;
 	}
 
-	@Override
-	public Integer getId() {
-		return getMachineTypeId();
-	}
-
 	public Integer getMachineTypeId() {
 		return machineTypeId;
 	}
@@ -152,7 +147,7 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 
 	@Override
 	public int compareTo(MachineTypeEO o) {
-		return getId().compareTo(o.getId());
+		return getMachineTypeId().compareTo(o.getMachineTypeId());
 	}
 
 }

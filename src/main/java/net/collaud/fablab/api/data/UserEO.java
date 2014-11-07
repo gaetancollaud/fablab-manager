@@ -146,11 +146,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		this.userId = userId;
 	}
 
-	@Override
-	public Integer getId() {
-		return getUserId();
-	}
-
 	public String getLogin() {
 		return login;
 	}

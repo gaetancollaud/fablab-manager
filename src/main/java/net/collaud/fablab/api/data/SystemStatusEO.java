@@ -73,11 +73,6 @@ public class SystemStatusEO extends AbstractDataEO implements Serializable {
 		this.notify = notify;
 	}
 
-	@Override
-	public Integer getId() {
-		return getSystemStatusId();
-	}
-
 	public Integer getSystemStatusId() {
 		return systemStatusId;
 	}

@@ -54,11 +54,6 @@ public class PriceMachineEO extends AbstractDataEO implements Serializable {
 		this.pricePK = new PriceMachineEOPK(year, machineTypeId, membershipTypeId);
 	}
 
-	@Override
-	public Integer getId() {
-		throw new RuntimeException("Not implemented yet");
-	}
-
 	public PriceMachineEOPK getPricePK() {
 		return pricePK;
 	}

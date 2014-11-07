@@ -74,11 +74,6 @@ public class MachineEO extends AbstractDataEO implements Serializable {
 		this.machineId = machineId;
 	}
 
-	@Override
-	public Integer getId() {
-		return getMachineId();
-	}
-
 	public Integer getMachineId() {
 		return machineId;
 	}

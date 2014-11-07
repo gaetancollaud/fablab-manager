@@ -51,12 +51,6 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	@Secured({RolesHelper.ROLE_VIEW_RESERVATION})
 	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) throws FablabException {
-		if(dateStart==null || dateEnd==null){
-			throw new FablabWrongParameterException("DateStart and dateEnd cannot be null");
-		}
-		if(dateStart.after(dateEnd)){
-			throw  new FablabWrongParameterException("DateStart must be before dateEnd");
-		}
 		LOG.debug("find reservation from "+dateStart+" to "+dateEnd+" of machines "+machineIds);
 		return reservationDao.findReservations(dateStart, dateEnd, machineIds);
 	}

@@ -62,11 +62,6 @@ public class MembershipTypeEO extends AbstractDataEO implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public Integer getId() {
-		return getMembershipTypeId();
-	}
-
 	public Integer getMembershipTypeId() {
 		return membershipTypeId;
 	}

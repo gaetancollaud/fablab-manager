@@ -2,6 +2,7 @@ package net.collaud.fablab.api.rest;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,6 +12,7 @@ import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,16 @@ abstract public class AbstractRestTest extends TestCase {
 
 	private final String resourcePath;
 
-	private final StatefulRestTemplate restTemplate;
+	private StatefulRestTemplate restTemplate;
 
 	public AbstractRestTest(String resourcePath) {
 		assert resourcePath != null : "Path should not be null";
 		this.resourcePath = resourcePath;
+	}
+
+	@Before
+	public void setUpRestTest() {
+		//new statefull template for each test
 		restTemplate = new StatefulRestTemplate();
 	}
 
@@ -43,19 +50,32 @@ abstract public class AbstractRestTest extends TestCase {
 
 	protected <T> List<T> callForList(HttpMethod method, String path, Class<T> clazz) {
 		Class arr = Array.newInstance(clazz, 0).getClass();
-		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
-		Object o = restTemplate.getObject(method, completePath, arr);
+		Object o = restTemplate.getObject(method, getCompletePath(path), arr);
+		return Arrays.asList((T[]) o);
+	}
+
+	protected <T> List<T> callForList(HttpMethod method, String path, Object data, Class<T> clazz) {
+		Class arr = Array.newInstance(clazz, 0).getClass();
+		Object o = restTemplate.getObject(method, getCompletePath(path), data, arr);
 		return Arrays.asList((T[]) o);
 	}
 
 	protected <T> T callForObject(HttpMethod method, String path, Class<T> clazz) {
-		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
-		return restTemplate.getObject(method, completePath, clazz);
+		return restTemplate.getObject(method, getCompletePath(path), clazz);
 	}
 
 	protected <T> T callForObject(HttpMethod method, String path, Object data, Class<T> clazz) {
-		String completePath = "http://localhost:" + port + "/" + resourcePath + "/" + path;
-		return restTemplate.getObject(method, completePath, data, clazz);
+		return restTemplate.getObject(method, getCompletePath(path), data, clazz);
+	}
+
+	private String getCompletePath(String path) {
+		if (path == null) {
+			path = "";
+		}
+		if (!path.isEmpty()) {
+			path = "/" + path;
+		}
+		return "http://localhost:" + port + "/" + resourcePath + path;
 	}
 
 	protected void testRestrictedAccess(HttpMethod method, String path, String... roles) {
@@ -91,7 +111,7 @@ abstract public class AbstractRestTest extends TestCase {
 				try {
 					callForObject(method, path, data, Object.class);
 				} catch (HttpClientErrorException ex) {
-					fail("Role '" + role + " should have access to " + path+". Error :"+ex.getMessage());
+					fail("Role '" + role + " should have access to " + path + ". Error :" + ex.getMessage());
 				}
 			} else {
 				//this role should not have access
@@ -109,16 +129,41 @@ abstract public class AbstractRestTest extends TestCase {
 		}
 	}
 
-	protected void loginAs(String username) {
-		AuthCredential credential = new AuthCredential(username, "");
-
+	protected void loginAs(String username, String password) {
+		AuthCredential credential = new AuthCredential(username, password);
 		LoginResult result = restTemplate.post("http://localhost:" + getPort() + "/api/v1/auth/login", credential, LoginResult.class);
 		assertEquals("Login is not ok", result.getName(), LoginResult.OK.getName());
 		LOG.debug("Logged as " + username);
+
+	}
+
+	protected void loginAs(String username) {
+		loginAs(username, "");
+	}
+
+	protected void loginAsAdministrator() {
+		//FIXME
+		loginAs("administrator1", "94ad0573ed0f4a7607f857e571a2d997f1208b868d7f580c646267b63fea25ec");
 	}
 
 	protected void logout() {
-		Object result = restTemplate.get("http://localhost:" + port + "/api/v1/auth/logout", Object.class);
+		restTemplate.get("http://localhost:" + port + "/api/v1/auth/logout", Object.class);
 		LOG.debug("Logout sucessful");
+	}
+	
+	protected Date getDeltaDateMs(Date ref, long deltaMs){
+		return new Date(ref.getTime()+deltaMs);
+	}
+	
+	protected Date getDetlaDateSec(Date ref, long deltaSec){
+		return getDeltaDateMs(ref, deltaSec*1000);
+	}
+	
+	protected Date getDeltaDateMin(Date ref, long deltaMin){
+		return getDetlaDateSec(ref, deltaMin*60);
+	}
+	
+	protected Date getDeltaDateHour(Date ref, long deltaHour){
+		return getDetlaDateSec(ref, deltaHour*60);
 	}
 }

@@ -87,11 +87,6 @@ public class PaymentEO extends AbstractDataEO implements Serializable {
 		this.comment = comment;
 	}
 
-	@Override
-	public Integer getId() {
-		return getPaymentId();
-	}
-
 	public Integer getPaymentId() {
 		return paymentId;
 	}
