@@ -132,7 +132,7 @@ abstract public class AbstractRestTest extends TestCase {
 	protected void loginAs(String username, String password) {
 		AuthCredential credential = new AuthCredential(username, password);
 		LoginResult result = restTemplate.post("http://localhost:" + getPort() + "/api/v1/auth/login", credential, LoginResult.class);
-		assertEquals("Login is not ok", result.getName(), LoginResult.OK.getName());
+		assertEquals("Login is not ok", LoginResult.OK.getName(), result.getName());
 		LOG.debug("Logged as " + username);
 
 	}

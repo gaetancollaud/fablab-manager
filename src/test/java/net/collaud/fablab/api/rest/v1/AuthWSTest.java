@@ -78,6 +78,8 @@ public class AuthWSTest extends AbstractRestTest {
 		
 		result = callForObject(HttpMethod.POST, "login", credential, LoginResult.class);
 		assertEquals("User should be already connected", LoginResult.ALREADY_CONNECTED, result);
+		
+		logout();
 	}
 
 }

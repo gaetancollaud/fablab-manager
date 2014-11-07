@@ -190,4 +190,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<name>fablab-api</name>
+    <ciManagement>
+        <system>hudson</system>
+        <url>http://collaud2.collaud.me:8080/job/fablab-api/</url>
+    </ciManagement>
 </project>
