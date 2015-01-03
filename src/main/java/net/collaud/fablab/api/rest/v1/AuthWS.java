@@ -3,7 +3,9 @@ package net.collaud.fablab.api.rest.v1;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.log4j.Logger;
+import net.collaud.fablab.api.service.impl.SecurityServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaétan
  */
 @RestController()
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/v1/auth")
 public class AuthWS {
 
-	private static final Logger LOG = Logger.getLogger(AuthWS.class);
+	private static final Logger LOG = LogManager.getLogger(AuthWS.class);
 
 	@Autowired
 	private SecurityService securityService;

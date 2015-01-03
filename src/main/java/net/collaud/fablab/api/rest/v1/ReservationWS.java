@@ -6,11 +6,10 @@ import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
 import net.collaud.fablab.api.rest.v1.data.ReservationTO;
 import net.collaud.fablab.api.rest.v1.helper.ReservationTOHelper;
-import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.ReservationService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaétan
  */
 @RestController()
-@RequestMapping("/api/v1/reservation")
+@RequestMapping("/v1/reservation")
 public class ReservationWS {
 
-	private static final Logger LOG = Logger.getLogger(ReservationWS.class);
+	private static final Logger LOG = LogManager.getLogger(ReservationWS.class);
 
 	@Autowired
 	private ReservationTOHelper reservationHelper;

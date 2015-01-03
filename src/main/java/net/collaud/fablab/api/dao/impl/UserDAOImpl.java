@@ -3,20 +3,20 @@ package net.collaud.fablab.api.dao.impl;
 import java.util.List;
 import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author gaetan
  */
 @Repository
+@Transactional
 public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
 
-	private static final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;

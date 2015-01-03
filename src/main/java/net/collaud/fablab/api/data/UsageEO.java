@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -49,7 +48,6 @@ public class UsageEO extends AbstractDataEO implements Serializable {
 	@Column(name = "additional_cost", nullable = false)
 	private float additionalCost;
 
-	@Size(max = 255)
 	@Column(name = "comment")
 	private String comment;
 

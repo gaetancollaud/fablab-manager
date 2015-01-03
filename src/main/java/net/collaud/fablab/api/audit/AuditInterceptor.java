@@ -1,7 +1,6 @@
 package net.collaud.fablab.api.audit;
 
 import java.util.Date;
-import javax.ejb.EJB;
 import net.collaud.fablab.api.data.AbstractDataEO;
 import net.collaud.fablab.api.data.AuditEO;
 import net.collaud.fablab.api.data.PaymentEO;
@@ -20,7 +19,9 @@ import static net.collaud.fablab.api.data.type.AuditObject.USER;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -30,12 +31,12 @@ import org.apache.log4j.Logger;
 @Audit
 public class AuditInterceptor {
 
-	private static final Logger LOG = Logger.getLogger(AuditInterceptor.class);
+	private static final Logger LOG = LogManager.getLogger(AuditInterceptor.class);
 
-	@EJB
+	@Autowired
 	private AuditService auditService;
 
-	@EJB
+	@Autowired
 	private SecurityService securityService;
 
 	

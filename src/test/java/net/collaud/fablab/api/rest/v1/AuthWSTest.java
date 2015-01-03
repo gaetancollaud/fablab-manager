@@ -2,19 +2,12 @@ package net.collaud.fablab.api.rest.v1;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import net.collaud.fablab.api.ApplicationTest;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.AbstractRestTest;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,14 +21,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * @author Gaétan
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ApplicationTest.class)
 @WebAppConfiguration
-@IntegrationTest("server.port:0")
 @DatabaseSetup({"/data/roles_users.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
 	DirtiesContextTestExecutionListener.class,
 	TransactionalTestExecutionListener.class,
 	DbUnitTestExecutionListener.class})
+@Ignore
 public class AuthWSTest extends AbstractRestTest {
 
 	public AuthWSTest() {

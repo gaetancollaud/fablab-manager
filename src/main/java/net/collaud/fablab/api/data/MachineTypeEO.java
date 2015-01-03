@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -31,11 +30,9 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 	@Column(name = "machine_type_id", nullable = false)
 	private Integer machineTypeId;
 
-	@Size(max = 45)
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
 
-	@Size(max = 45)
 	@Column(name = "name", nullable = false)
 	private String name;
 

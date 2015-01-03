@@ -10,12 +10,4 @@
 	
 	<context:component-scan base-package="net.collaud.fablab.api" />
 	
-	<bean class="org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory" >
-		<property name="port" value="8888" />
-	</bean>
-	
-	
-	
-	<!--<bean class="org.piautomation.core.config.ConfigManagerImpl" />-->
-
 </beans>

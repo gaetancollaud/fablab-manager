@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.service.impl;
 
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -8,6 +7,5 @@ import org.apache.log4j.Logger;
  */
 public class AbstractServiceImpl {
 
-	private static final Logger LOG = Logger.getLogger(AbstractServiceImpl.class);
 
 }

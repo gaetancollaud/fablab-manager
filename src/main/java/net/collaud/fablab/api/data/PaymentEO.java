@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -63,7 +62,6 @@ public class PaymentEO extends AbstractDataEO implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePayment;
 
-	@Size(max = 255)
 	@Column(name = "comment")
 	private String comment;
 

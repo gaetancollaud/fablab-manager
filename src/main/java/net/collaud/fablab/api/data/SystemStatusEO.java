@@ -13,7 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -37,16 +36,13 @@ public class SystemStatusEO extends AbstractDataEO implements Serializable {
 	@Column(name = "system_status_id", nullable = false)
 	private Integer systemStatusId;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Size(min = 1, max = 255)
 	@Column(name = "type", nullable = false)
 	private String type;
 
 	@Lob
-	@Size(min = 1, max = 65535)
 	@Column(name = "content", nullable = false)
 	private String content;
 

@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Immutable;
 
 /**
@@ -63,7 +62,6 @@ public class UsageDetailEO extends AbstractDataEO implements Serializable {
 	@Column(name = "additional_cost", nullable = false)
 	private float additionalCost;
 
-	@Size(max = 255)
 	@Column(name = "comment")
 	private String comment;
 

@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -34,11 +33,9 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "role_id", nullable = false)
 	private Integer roleId;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
 

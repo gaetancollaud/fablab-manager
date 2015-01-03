@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,11 +25,9 @@ public class GroupEO extends AbstractDataEO implements Serializable {
 	@Column(name = "group_id", nullable = false)
 	private Integer groupId;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "name", nullable = false)
 	private String name;
 

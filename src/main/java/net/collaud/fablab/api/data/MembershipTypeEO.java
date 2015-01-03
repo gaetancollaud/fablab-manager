@@ -13,7 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -37,7 +36,6 @@ public class MembershipTypeEO extends AbstractDataEO implements Serializable {
 	@Column(name = "membership_type_id", nullable = false)
 	private Integer membershipTypeId;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "name", nullable = false)
 	private String name;
 

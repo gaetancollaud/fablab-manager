@@ -11,7 +11,8 @@ import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -24,7 +25,7 @@ import org.springframework.web.client.HttpClientErrorException;
  */
 abstract public class AbstractRestTest extends TestCase {
 
-	private static final Logger LOG = Logger.getLogger(AbstractRestTest.class);
+	private static final Logger LOG = LogManager.getLogger(AbstractRestTest.class);
 
 	@Value("${local.server.port}")
 	private int port;

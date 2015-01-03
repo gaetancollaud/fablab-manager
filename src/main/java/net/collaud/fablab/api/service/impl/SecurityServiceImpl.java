@@ -4,7 +4,8 @@ import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
 
-	private static final Logger LOG = Logger.getLogger(SecurityServiceImpl.class);
+	private static final Logger LOG = LogManager.getLogger(SecurityServiceImpl.class);
 
 	@Autowired
 	private UserDao userDao;
@@ -64,12 +65,13 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			return LoginResult.OK;
 		}catch(BadCredentialsException ex){
-			LOG.warn("Wrong password for login "+login, ex);
+			LOG.warn("Wrong password for login "+login);
 			return LoginResult.WRONG_PASSWORD;
 		}catch(UsernameNotFoundException ex){
-			LOG.warn("Login "+login+" not found", ex);
+			LOG.warn("Login "+login+" not found");
 			return LoginResult.UNKNOWN_USERNAME;
 		} catch (AuthenticationException ex) {
+			LOG.error("Error while login", ex);
 			return LoginResult.INTERNAL_ERROR;
 		}
 	}

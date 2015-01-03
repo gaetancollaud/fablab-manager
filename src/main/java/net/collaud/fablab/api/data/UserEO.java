@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -48,23 +47,18 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Column(name = "user_id", nullable = false)
 	private Integer userId;
 
-	@Size(min = 1, max = 45)
 	@Column(name = "login", nullable = false, unique = true)
 	private String login;
 
-	@Size(min = 0, max = 64)
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Size(min = 0, max = 45)
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
 
-	@Size(min = 0, max = 45)
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
-	@Size(min = 0, max = 100)
 	@Column(name = "email", nullable = true, unique = true)
 	private String email;
 

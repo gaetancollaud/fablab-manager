@@ -8,7 +8,8 @@ import net.collaud.fablab.api.rest.v1.helper.RoleTOHelper;
 import net.collaud.fablab.api.rest.v1.helper.UserTOHelper;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.UserService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaétan
  */
 @RestController()
-@RequestMapping("/api/v1/user")
+@RequestMapping("/v1/user")
 public class UserWS {
 
-	private static final Logger LOG = Logger.getLogger(UserWS.class);
+	private static final Logger LOG = LogManager.getLogger(UserWS.class);
 
 	@Autowired
 	private UserTOHelper userHelper;
