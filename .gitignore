@@ -5,4 +5,4 @@ pom.xml.versionsBackup
 pom.xml.next
 release.properties
 nbactions.xml
-fablab-api.log
+nb-configuration.xml

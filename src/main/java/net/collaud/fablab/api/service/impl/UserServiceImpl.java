@@ -29,12 +29,12 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		if(login==null || login.isEmpty()){
 			throw new FablabWrongParameterException("login cannot be null or empty");
 		}
-		return userDao.getByLogin(login);
+		return userDao.findOneByLogin(login);
 	}
 
 	@Override
-	public List<UserEO> getAllUsers() {
-		return userDao.getAllUsers();
+	public Iterable<UserEO> getAllUsers() {
+		return userDao.findAll();
 	}
 
 }

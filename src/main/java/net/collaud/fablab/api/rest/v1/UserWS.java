@@ -2,6 +2,7 @@ package net.collaud.fablab.api.rest.v1;
 
 import java.util.List;
 import net.collaud.fablab.api.dao.RoleDao;
+import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.rest.v1.data.RoleTO;
 import net.collaud.fablab.api.rest.v1.data.UserTO;
 import net.collaud.fablab.api.rest.v1.helper.RoleTOHelper;
@@ -39,9 +40,9 @@ public class UserWS {
 
 	@RequestMapping()
 	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	public List<UserTO> list() {
+	public Iterable<UserEO> list() {
 		try {
-			return userHelper.fromEOList(userService.getAllUsers());
+			return userService.getAllUsers();
 		} catch (Exception ex) {
 			LOG.error("Cannot list uers", ex);
 		}

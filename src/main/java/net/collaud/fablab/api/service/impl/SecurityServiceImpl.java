@@ -37,7 +37,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public UserEO getCurrentUser() {
 		Integer id = getCurrentUserId();
-		return userDao.getById(id);
+		return userDao.findOneById(id);
 	}
 
 	@Override

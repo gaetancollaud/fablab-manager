@@ -12,6 +12,6 @@ public interface UserService {
 
 	UserEO findByLogin(String login) throws FablabException;
 
-	List<UserEO> getAllUsers() throws FablabException;
+	Iterable<UserEO> getAllUsers() throws FablabException;
 
 }
