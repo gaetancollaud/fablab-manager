@@ -1,0 +1,18 @@
+.sc-datepicker-core  .sc-datepicker-date {
+	position: relative;
+}
+
+.sc-datepicker-core .datepicker-core-data {
+	width: 100%;
+}
+
+.sc-datepicker-core .sc-datepicker-core-buttons {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+.sc-datepicker-core .sc-datepicker-core-buttons .btn {
+	margin-left: 3px;
+	height: 25px;
+	width: 25px;
+}

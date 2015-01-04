@@ -7,7 +7,7 @@ import net.collaud.fablab.api.data.UserEO;
  */
 public interface UserDao{
 
-	UserEO findOneById(Integer id);
+	UserEO findOneByIdAndFetchRoles(Integer id);
 	UserEO findOneByLogin(String login);
 	Iterable<UserEO> findAll();
 }

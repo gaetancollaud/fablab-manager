@@ -1,9 +1,12 @@
 package net.collaud.fablab.api.rest.v1;
 
+import java.util.ArrayList;
+import java.util.List;
+import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
+import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
-import net.collaud.fablab.api.service.impl.SecurityServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +28,33 @@ public class AuthWS {
 	@Autowired
 	private SecurityService securityService;
 
-	@RequestMapping(value="isAuthenticated", method = RequestMethod.GET)
+	@RequestMapping(value = "isAuthenticated", method = RequestMethod.GET)
 	public Boolean isAuthenticated() {
 		return securityService.isAuthenticated();
 	}
 
-	@RequestMapping(value="login", method = RequestMethod.POST)
+	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public LoginResult login(@RequestBody AuthCredential credential) {
 		LOG.debug("Login for " + credential);
 		return securityService.login(credential.getLogin(), credential.getPassword());
 	}
 
-	@RequestMapping(value="logout")
+	@RequestMapping(value = "logout")
 	public void logout() {
 		securityService.logout();
+	}
+
+	@RequestMapping(value = "current")
+	public ConnectedUser getCurrentUser() {
+		if (securityService.isAuthenticated()) {
+			final UserEO eo = securityService.getCurrentUser();
+			List<String> roles = new ArrayList<>();
+			eo.getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
+			ConnectedUser user = new ConnectedUser(eo.getLogin(), roles);
+			return user;
+		} else {
+			return new ConnectedUser();
+		}
 	}
 
 }

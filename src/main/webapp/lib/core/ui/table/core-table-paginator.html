@@ -1,0 +1,31 @@
+<div class="sc-core-table-paginator" ng-show="dataSize > pageSize">
+  <div class="row">
+    <div class="sc-core-table-paginator-prev" ng-if="enableSlider">
+      <button type="button"
+        class="btn btn-default btn-sm sc-core-table-paginator-btn sc-core-table-paginator-btn-prev"
+        ng-click="previous()"
+        ng-disabled="pagination.page === 0"><span class="glyphicon glyphicon-step-backward"></span></button><button type="button"
+        class="btn btn-default btn-sm sc-core-table-paginator-btn sc-core-table-paginator-btn-prev"
+        ng-if="showFast !== 'false'"
+        ng-click="previousFast()"
+        ng-disabled="pagination.page === 0"><span class="glyphicon glyphicon-fast-backward"></span></button>
+    </div>
+    <div class="sc-core-table-paginator-center">
+      <button type="button" class="btn btn-default btn-sm stl-table-page"
+        ng-class="{'btn-primary' : pagination.page === page.index}"
+        ng-repeat="page in pages"
+        ng-click="selectPage(page.index)"
+        ng-disabled="page.index === null">{{page.label}}</button>
+    </div>
+    <div class="sc-core-table-paginator-next" ng-if="enableSlider">
+      <button type="button"
+        class="btn btn-default btn-sm sc-core-table-paginator-btn sc-core-table-paginator-btn-prev"
+        ng-if="showFast !== 'false'"
+        ng-click="nextFast()"
+        ng-disabled="pagination.page + 1 >= totalPages"><span class="glyphicon glyphicon-fast-forward"></span></button><button type="button"
+        class="btn btn-default btn-sm sc-core-table-paginator-btn sc-core-table-paginator-btn-prev"
+        ng-click="next()"
+        ng-disabled="pagination.page + 1 >= totalPages"><span class="glyphicon glyphicon-step-forward"></span></button>
+    </div>
+  </div>
+</div>

@@ -1,16 +1,9 @@
 package net.collaud.fablab.api.dao.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import net.collaud.fablab.api.dao.AuditDAO;
 import net.collaud.fablab.api.data.AuditEO;
-import net.collaud.fablab.api.data.AuditEO_;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditObject;
 import org.springframework.stereotype.Repository;
