@@ -7,8 +7,9 @@
     <!-- Bootstrap -->
     <link href="./ext-lib/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
 	
-	
     <link href="./css/application.css" rel="stylesheet">
+	
+    <link href="./components/auth/css/style.css" rel="stylesheet">
        
     <!-- MODULES -->
     <link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
@@ -60,7 +61,7 @@
 	<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 
 	<div class="container-fluid" id="main-container">
-		<nav class="navbar main-navbar" role="navigation">
+		<nav class="navbar main-navbar" role="navigation" ng-if="connectedUser.connected">
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">

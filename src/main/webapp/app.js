@@ -76,7 +76,7 @@ angular.module('App', [
 		App.interceptors.errorInterceptor.notificationService = NotificationService;
 		
 		AuthService.getCurrentUser(function(data){
-			$rootScope.user = data;
+			$rootScope.connectedUser = data;
 		});
 
 		// register listener to watch route changes
