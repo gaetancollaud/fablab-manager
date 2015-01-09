@@ -3,11 +3,23 @@ ctrl.controller('AuthLoginController',
 		[
 			'$scope',
 			'NotificationService',
-			'I18nService',
 			'AuthService',
-			function ($scope, NotificationService, I18nService, AuthService) {
+			function ($scope, NotificationService, AuthService) {
 				$scope.login = function () {
-					alert($scope.email + " - " + $scope.password);
+					var loginResult = function (result) {
+						if (result === 'OK' || result === 'ALREADY_CONNECTED') {
+							$rootScope.updateCurrentUser();
+							window.location = "#/";
+						} else if (result === 'INTERNAL_ERROR') {
+							NotificationService.notify('ERROR', 'error.internal', result);
+						} else {
+							NotificationService.notify('ERROR', 'auth.result.unknownUserPassword');
+						}
+					};
+					AuthService.login({
+						login: $scope.email,
+						password: $scope.password
+					}, loginResult);
 				};
 			}
 		]

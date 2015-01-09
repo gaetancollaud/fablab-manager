@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Fablab-Fribourg</title>
+	<head>
+		<meta charset="utf-8">
+		<title>Fablab-Fribourg</title>
 
-    <!-- Bootstrap -->
-    <link href="./ext-lib/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	
-    <link href="./css/application.css" rel="stylesheet">
-	
-    <link href="./components/auth/css/style.css" rel="stylesheet">
-       
-    <!-- MODULES -->
-    <link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
-    
-  </head>
-  <body ng-app="App">
-  
+		<!-- Bootstrap -->
+		<link href="./ext-lib/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="./css/application.css" rel="stylesheet">
+
+		<link href="./components/auth/css/style.css" rel="stylesheet">
+
+		<!-- MODULES -->
+		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
+
+	</head>
+	<body ng-app="App">
+
+	<toast></toast>
+
 
 	<script src="./constants.js"></script>
-	
+
     <script src="./ext-lib/jquery-2.1.3/jquery-2.1.3.min.js"></script>
-	
+
     <script src="./ext-lib/bootstrap-3.3.1/js/bootstrap.min.js"></script>
-	
+
 	<script src="./ext-lib/angular-1.3.8/angular.min.js"></script>
 	<script src="./ext-lib/angular-1.3.8/angular-route.min.js"></script>
 	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
 	<script src="./ext-lib/angular-1.3.8/angular-resource.min.js"></script>
 	<script src="./ext-lib/angular-1.3.8/angular-sanitize.min.js"></script>
 	<script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>
-	
+
     <script src="./ext-lib/moment-2.8.4/moment.js"></script>
-    
+
 	<script src="./ext-lib/angular-modules/ui-bootstrap-tpls-0.12.0.min.js"></script>
 	<script src="./ext-lib/angular-modules/ng-toast/ngToast.min.js"></script>
-	
+	<script src="./ext-lib/angular-modules/angular-translate-2.5.2/angular-translate.min.js"></script>
+
 	<script src="./lib/fablab/services/httpInterceptor.js"></script>
-	<script src="./lib/fablab/services/i18n.js"></script>
 	<script src="./lib/fablab/services/loader.js"></script>
 	<script src="./lib/fablab/services/notification.js"></script>
 	<script src="./lib/fablab/services/modal.js"></script>
-	
+
 	<script src="./lib/core/core.js"></script>
-	
+
 	<script src="./app.js"></script>
-	
-	
+
+	<script src="./i18n/en.js"></script>
+	<script src="./i18n/fr.js"></script>
+
 	<script src="./components/auth/service/auth.js"></script>
 	<script src="./components/auth/ctrl/login.js"></script>
-	
+
 	<script src="./components/user/service/user-services.js"></script>
 	<script src="./components/user/filter/user-filters.js"></script>
 	<script src="./components/user/ctrl/user-controllers.js"></script>
-	
+
 
 	<!-- Will contains messages from the app -->
 	<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
@@ -62,15 +66,15 @@
 		<nav class="navbar main-navbar" role="navigation" ng-if="connectedUser.connected">
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
+					 id="bs-example-navbar-collapse-1">
 					<ul class="nav nav-tabs">
 						<li><a href="#/login"><span class="glyphicon glyphicon-lock"></span>Login</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		
+
 		<div ng-view id="main-view" id="main-view"></div>
 	</div>
-  </body>
+</body>
 </html>

@@ -1,9 +1,23 @@
 <form class="form-signin">
-	<h2 class="form-signin-heading">Please sign in</h2>
-	<label for="inputEmail" class="sr-only">Email address</label>
-	<input ng-model="email" type="email" 
-		   id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-	<label for="inputPassword" class="sr-only">Password</label>
-	<input ng-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-	<button class="btn btn-lg btn-primary btn-block" type="button" ng-click="login()">Sign in</button>
+	<h2 class="form-signin-heading" translate="auth.pleaseSignIn"></h2>
+	<label for="inputEmail" class="sr-only" translate="auth.email"></label>
+	<input ng-model="email"
+		   type="input" 
+		   id="inputEmail" 
+		   class="form-control" 
+		   placeholder="Email address" 
+		   required autofocus>
+	<label for="inputPassword" class="sr-only" translate="auth.password"></label>
+	<input ng-model="password"
+		   type="password" 
+		   id="inputPassword" 
+		   class="form-control"
+		   placeholder="Password" 
+		   required>
+	<button 
+		class="btn btn-lg btn-primary btn-block" 
+		type="button" 
+		ng-disabled="!email || !password"
+		ng-click="login()"
+		translate="auth.signIn"></button>
 </form>

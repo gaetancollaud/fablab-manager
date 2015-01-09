@@ -10,6 +10,16 @@ angular.module('Auth', ['ngResource'], function ($provide) {
 							}
 					).success(successFn);
 				},
+				login : function(data, successFn){
+					$log.debug("AuthService: login");
+					$http(
+							{
+								method: 'POST',
+								url: App.API.AUTH_API + "/login",
+								data:data
+							}
+					).success(successFn);
+				}
 			};
 		}]);
 });

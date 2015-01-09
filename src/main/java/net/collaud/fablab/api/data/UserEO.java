@@ -34,7 +34,8 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups AS g "
 			+ " LEFT JOIN FETCH g.roles AS r "
-			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN;
+			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN + " "
+			+ " OR u.email=:" + UserEO.PARAM_LOGIN;
 
 	public static final String FIND_BY_ID_AND_FETCH_ROLES
 			= " SELECT u "
@@ -42,7 +43,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			+ " LEFT JOIN FETCH u.groups AS g "
 			+ " LEFT JOIN FETCH g.roles AS r "
 			+ " WHERE u.id = :" + UserEO.PARAM_ID;
-	
+
 	public static final String PARAM_LOGIN = "login";
 	public static final String PARAM_RFID = "rfid";
 	public static final String PARAM_IDS = "ids";

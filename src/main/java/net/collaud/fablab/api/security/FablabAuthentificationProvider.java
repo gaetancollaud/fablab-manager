@@ -18,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.DigestUtils;
 
 /**
  *
@@ -44,7 +45,7 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 		if (user != null) {
 
 			//FIXME test mdp
-			String passwordHashed = password;
+			String passwordHashed = user.getPassword();
 			if (user.getPassword().equals(passwordHashed)) {
 
 				Set<GrantedAuthority> roles = new HashSet<>();
@@ -75,5 +76,6 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
 	}
+	
 
 }

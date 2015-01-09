@@ -6,7 +6,6 @@ import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.service.SecurityService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

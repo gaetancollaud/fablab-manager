@@ -33,7 +33,7 @@ App.interceptors.XMLHttpRequestCall = function (xhr, progressBar, successFonc, e
 					response = $.parseJSON(xhr.responseText);
 				} catch (error) {
 					console.error("Cannot parse json : " + error);
-					response = {status : xhr.status};
+					response = {status: xhr.status};
 				}
 				App.interceptors.error(response);
 				if (errorFonc != undefined) {
