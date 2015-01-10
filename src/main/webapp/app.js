@@ -1,45 +1,33 @@
 angular.module('App', [
 	//ext-lib
 	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-	'pascalprecht.translate',
+	'pascalprecht.translate', 'ngTable',
 	// Core
 	'Notification', 'Loader', 'httpInterceptor',
-	// Table
-	//'core', 'core.ui.table',
-	// Controllers
-	'UserCtrls',
-	// Filters
-	'UserFilters',
-	// Services
-	'Auth', 'User',
-			// Directives
+	'FabNaviguation',
+	//Auth
+	'Auth',
+	//DashBoard
+	'Dashboard',
+	// Users
+	'UserCtrls', 'UserFilters', 'User',
 
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',
 	function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
-			redirectTo: '/users'
-		}).when('/login', {// PROJECTS
-			templateUrl: './components/auth/view/login.html',
+			templateUrl: './components/dashboard/home-view.html',
+			controller: 'DashboardHomeController'
+		}).when('/login', {
+			templateUrl: './components/auth/login-view.html',
 			controller: 'AuthLoginController'
-		}).when('/projects', {// PROJECTS
-			templateUrl: App.BASE_ROUTE_PROVIDER_URL
-					+ '/partials/project/project-list.html',
-			controller: 'ProjectListController'
-		}).when('/profil', {// USER
-			templateUrl: App.BASE_ROUTE_PROVIDER_URL
-					+ '/partials/user/profil-edit.html',
-			controller: 'UserProfilController'
-		}).when('/users', {// USER
-			templateUrl: App.BASE_ROUTE_PROVIDER_URL
-					+ '/partials/user/user-list.html',
+		}).when('/users', {
+			templateUrl: './components/user/view/list.html',
 			controller: 'UserListController'
 		}).when('/users/edit/:id', {
-			templateUrl: App.BASE_ROUTE_PROVIDER_URL
-					+ '/partials/user/user-edit.html',
+			templateUrl: './components/user/view/edit.html',
 			controller: 'UserEditController'
 		}).when('/users/edit', {
-			templateUrl: App.BASE_ROUTE_PROVIDER_URL
-					+ '/partials/user/user-edit.html',
+			templateUrl: './components/user/view/edit.html',
 			controller: 'UserNewController'
 		}).otherwise({
 			redirectTo: '/'
@@ -57,23 +45,41 @@ angular.module('App', [
 				$rootScope.updateCurrentUser = function () {
 					AuthService.getCurrentUser(function (data) {
 						$rootScope.connectedUser = data;
+						authRedirect();
 					});
 				};
-				
+
 				$rootScope.updateCurrentUser();
+				
+				var authRedirect = function(){
+					if (!$rootScope.isAuthenticated()) {
+						$location.path('/login');
+					}else{
+						if($location.$$path === '/login'){
+							$location.path('/');
+						}
+					}
+				};
 
 				// register listener to watch route changes
 				$rootScope.$on("$routeChangeStart", function (event, next, current) {
-					//FIXME check rights on page
-
+					authRedirect();
+					
 					var path = next.originalPath;
-					var secondSlah = path.indexOf('/', 2);
-					if (secondSlah === -1) {
-						secondSlah = path.length;
+					if (path) {
+						var secondSlah = path.indexOf('/', 2);
+						if (secondSlah === -1) {
+							secondSlah = path.length;
+						}
+						$rootScope.navModuleName = path.substring(1, secondSlah);
+						
 					}
-					$rootScope.navModuleName = path.substring(1, secondSlah);
 
 				});
+
+				$rootScope.isAuthenticated = function () {
+					return $rootScope.connectedUser && $rootScope.connectedUser.connected;
+				};
 
 				/**
 				 * Has the current user any of this roles

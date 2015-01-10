@@ -3,6 +3,11 @@ angular.module('App').config(function ($translateProvider) {
 		error:{
 			internal:'Internal error'
 		},
+		menu:{
+			home:'Home',
+			users:'Users',
+			reservation:'Reservation',
+		},
 		auth:{
 			result:{
 				ok:'Login Successful',

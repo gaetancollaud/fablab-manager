@@ -3,7 +3,6 @@
 
 	var core = angular.module('core', ['toaster', 'core.i18n']);
 
-
 	/**
 	 * You need to set the configuration to the core service to use certain functionalities of the core lib
 	 * You can do that with the following in your "app.js":
