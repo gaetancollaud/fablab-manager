@@ -2,7 +2,7 @@ package net.collaud.fablab.api.data.type;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public enum AuditObject {
 

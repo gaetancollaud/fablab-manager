@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Inherited
 //@InterceptorBinding//FIXME

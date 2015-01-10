@@ -2,7 +2,7 @@ package net.collaud.fablab.api.data.type;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 public enum LoginResult {
 	OK("ok"),

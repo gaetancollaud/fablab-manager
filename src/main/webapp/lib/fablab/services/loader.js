@@ -12,9 +12,9 @@ angular.module('Loader', [], function ($provide) {
 					'<div class="modal-dialog">' +
 					'<div class="modal-content">' +
 					'<div class="modal-header">' +
-					'<h4 class="modal-title" id="commonPopupLoadingPageTitle" translate="common.loading.title"></h4>' +
+					'<h4 class="modal-title" id="commonPopupLoadingPageTitle" translate="loading.title"></h4>' +
 					'</div> <div class="modal-body app-loader-body">' +
-					'<p translate="common.loading.text"></p>' +
+					'<p translate="loading.text"></p>' +
 					//'<p style="text-align:center"> <img src="' + App.BASE_ROUTE_PROVIDER_URL + '/images/ajax-loader.gif"> </p> '+
 					'</div> </div> </div></div>' +
 					'<div class="modal-backdrop fade in" id="app-loader-backdrop"></div>';

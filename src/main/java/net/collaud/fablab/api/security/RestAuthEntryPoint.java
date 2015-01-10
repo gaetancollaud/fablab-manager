@@ -9,7 +9,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 public class RestAuthEntryPoint implements AuthenticationEntryPoint {
 

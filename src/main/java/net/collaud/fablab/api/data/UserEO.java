@@ -23,11 +23,16 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_user")
 public class UserEO extends AbstractDataEO implements Serializable {
+
+	public static final String FIND_ALL
+			= " SELECT u "
+			+ " FROM UserEO u "
+			+ " LEFT JOIN FETCH u.membershipType AS mt ";
 
 	public static final String FIND_BY_LOGIN
 			= " SELECT u "

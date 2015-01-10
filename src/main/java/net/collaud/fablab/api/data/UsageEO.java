@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_usage")

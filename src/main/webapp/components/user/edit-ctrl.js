@@ -1,4 +1,4 @@
-var ctrl = angular.module('UserCtrls');
+var ctrl = angular.module('User');
 		ctrl.controller('GlobalUserEditController', [
 			'$scope',
 			'$location',

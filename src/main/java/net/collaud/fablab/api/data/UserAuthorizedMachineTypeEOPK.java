@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Embeddable
 public class UserAuthorizedMachineTypeEOPK implements Serializable {

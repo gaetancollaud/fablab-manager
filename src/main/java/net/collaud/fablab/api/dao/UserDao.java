@@ -3,7 +3,7 @@ package net.collaud.fablab.api.dao;
 import net.collaud.fablab.api.data.UserEO;
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface UserDao{
 

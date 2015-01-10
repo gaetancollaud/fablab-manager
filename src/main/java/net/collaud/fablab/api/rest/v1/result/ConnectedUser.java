@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 public class ConnectedUser {
 	boolean connected;

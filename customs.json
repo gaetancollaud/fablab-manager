@@ -2,5 +2,8 @@
 	"elements": {
 		"toast": {}
 	},
-	"attributes": {}
+	"attributes": {
+		"fab-nav-item": {},
+		"sortable": {}
+	}
 }

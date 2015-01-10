@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_role")

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "r_price_cotisation")

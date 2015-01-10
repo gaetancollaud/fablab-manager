@@ -3,7 +3,7 @@ package net.collaud.fablab.api.service.impl;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class AbstractServiceImpl {
 

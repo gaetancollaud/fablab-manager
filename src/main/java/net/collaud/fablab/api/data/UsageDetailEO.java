@@ -19,7 +19,7 @@ import org.hibernate.annotations.Immutable;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "v_usage_detail")

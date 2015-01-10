@@ -4,8 +4,8 @@ import java.util.List;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
+import net.collaud.fablab.api.rest.v1.data.AbstractTO;
 import net.collaud.fablab.api.rest.v1.data.ReservationTO;
-import net.collaud.fablab.api.rest.v1.helper.ReservationTOHelper;
 import net.collaud.fablab.api.service.ReservationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/v1/reservation")
@@ -26,8 +26,6 @@ public class ReservationWS {
 
 	private static final Logger LOG = LogManager.getLogger(ReservationWS.class);
 
-	@Autowired
-	private ReservationTOHelper reservationHelper;
 
 	@Autowired
 	private ReservationService reservationService;
@@ -40,12 +38,12 @@ public class ReservationWS {
 				criteria.getDateFrom(),
 				criteria.getDateTo(),
 				criteria.getMachineIds());
-		return reservationHelper.fromEOList(list);
+		return AbstractTO.fromEOList(list, ReservationEO.class, ReservationTO.class);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void create(@RequestBody ReservationTO to) throws FablabException {
-		ReservationEO eo = reservationHelper.fromTO(to);
+		ReservationEO eo = new ReservationTO().fromTO(to);
 		eo.setReservationId(0);
 		LOG.debug("create reservation " + eo);
 		reservationService.save(eo);
@@ -54,7 +52,7 @@ public class ReservationWS {
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public void edit(@PathVariable Integer id, @RequestBody ReservationTO to) throws FablabException {
 		LOG.debug("edit reservation " + to);
-		ReservationEO eo = reservationHelper.fromTO(to);
+		ReservationEO eo = new ReservationTO().fromTO(to);
 		eo.setReservationId(id);
 		reservationService.save(eo);
 	}

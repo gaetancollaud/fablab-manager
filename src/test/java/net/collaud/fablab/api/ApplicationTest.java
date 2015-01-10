@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ImportResource;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @Configuration
 @ImportResource({

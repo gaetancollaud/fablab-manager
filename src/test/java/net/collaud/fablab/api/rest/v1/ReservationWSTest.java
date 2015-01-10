@@ -30,7 +30,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

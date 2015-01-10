@@ -4,7 +4,7 @@ import javax.persistence.MappedSuperclass;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @MappedSuperclass
 abstract public class AbstractDataEO<ID> {

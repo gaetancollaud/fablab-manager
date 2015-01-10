@@ -20,7 +20,7 @@ import net.collaud.fablab.api.data.type.AuditObject;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_audit")

@@ -49,7 +49,14 @@ angular.module('Notification', [], function ($provide) {
 				 */
 				notify: notify,
 				showAjaxErrorMessage: function (status) {
-					notify('ERROR', 'common.error.ajax.message', status);
+					switch(status){
+						case 403:
+							notify('ERROR', 'error.ajax.unauthorized');
+							break;
+						default:
+							notify('ERROR', 'error.ajax.global', status);
+						
+					}
 				},
 				showOptimisticLock: function (message, fn) {
 					var optLockFn = function () {

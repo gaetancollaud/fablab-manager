@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Provide a statefull implementation of a RestTemplate.
  *
- * @author gaetancollaud@gmail.com
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>collaud@gmail.com
  */
 public class StatefulRestTemplate {
 

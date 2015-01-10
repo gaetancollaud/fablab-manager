@@ -10,7 +10,7 @@ import net.collaud.fablab.api.data.type.AuditObject;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Inherited
 //@InterceptorBinding//FIXME

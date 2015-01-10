@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
 @Transactional
@@ -25,9 +25,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	private UserDao userDao;
 
 	@Override
-	public UserEO findByLogin(String login) throws FablabException{
+	public UserEO findByLogin(String login){
 		if(login==null || login.isEmpty()){
-			throw new FablabWrongParameterException("login cannot be null or empty");
+			return null;
 		}
 		return userDao.findOneByLogin(login);
 	}

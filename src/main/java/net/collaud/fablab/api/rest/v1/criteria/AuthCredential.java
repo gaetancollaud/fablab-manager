@@ -2,7 +2,7 @@ package net.collaud.fablab.api.rest.v1.criteria;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 public class AuthCredential {
 

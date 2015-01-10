@@ -1,12 +1,15 @@
 package net.collaud.fablab.api.rest.v1.data;
 
 import java.util.Date;
+import net.collaud.fablab.api.data.MachineEO;
+import net.collaud.fablab.api.data.ReservationEO;
+import net.collaud.fablab.api.data.UserEO;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
-public class ReservationTO extends AbstractTO {
+public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
 
 	private Integer reservationId;
 
@@ -27,6 +30,27 @@ public class ReservationTO extends AbstractTO {
 		this.dateEnd = dateEnd;
 		this.userId = userId;
 		this.machineId = machineId;
+	}
+
+	@Override
+	public ReservationEO fromTO(ReservationTO to) {
+		ReservationEO eo = new ReservationEO();
+		eo.setReservationId(to.getReservationId());
+		eo.setDateStart(to.getDateStart());
+		eo.setDateEnd(to.getDateEnd());
+		eo.setMachine(new MachineEO(to.getMachineId()));
+		eo.setUser(new UserEO(to.getMachineId()));
+		return eo;
+	}
+
+	@Override
+	public ReservationTO fromEO(ReservationEO eo) {
+		setReservationId(eo.getReservationId());
+		setDateStart(eo.getDateStart());
+		setDateEnd(eo.getDateEnd());
+		setUserId(eo.getUser().getUserId());
+		setMachineId(eo.getMachine().getMachineId());
+		return this;
 	}
 
 	public Integer getReservationId() {

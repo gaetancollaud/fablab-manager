@@ -2,7 +2,7 @@ package net.collaud.fablab.api.exceptions;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class FablabConstraintException extends FablabException{
 	

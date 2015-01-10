@@ -1,17 +1,15 @@
 package net.collaud.fablab.api.service;
 
-import java.util.List;
 import net.collaud.fablab.api.data.UserEO;
-import net.collaud.fablab.api.exceptions.FablabException;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface UserService {
 
-	UserEO findByLogin(String login) throws FablabException;
+	UserEO findByLogin(String login);
 
-	Iterable<UserEO> getAllUsers() throws FablabException;
+	Iterable<UserEO> getAllUsers();
 
 }

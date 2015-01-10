@@ -2,7 +2,7 @@ package net.collaud.fablab.api.security;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class RolesHelper {
 

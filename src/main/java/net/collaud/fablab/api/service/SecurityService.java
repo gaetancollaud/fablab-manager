@@ -5,7 +5,7 @@ import net.collaud.fablab.api.data.type.LoginResult;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface SecurityService {
 

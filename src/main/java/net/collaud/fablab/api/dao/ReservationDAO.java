@@ -7,7 +7,7 @@ import net.collaud.fablab.api.exceptions.FablabException;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface ReservationDAO {
 

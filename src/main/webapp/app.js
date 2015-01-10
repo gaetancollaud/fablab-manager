@@ -5,13 +5,8 @@ angular.module('App', [
 	// Core
 	'Notification', 'Loader', 'httpInterceptor',
 	'FabNaviguation',
-	//Auth
-	'Auth',
-	//DashBoard
-	'Dashboard',
-	// Users
-	'UserCtrls', 'UserFilters', 'User',
-
+	//components
+	'Auth', 'Dashboard', 'User',
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',
 	function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
@@ -21,13 +16,13 @@ angular.module('App', [
 			templateUrl: './components/auth/login-view.html',
 			controller: 'AuthLoginController'
 		}).when('/users', {
-			templateUrl: './components/user/view/list.html',
+			templateUrl: './components/user/list-view.html',
 			controller: 'UserListController'
 		}).when('/users/edit/:id', {
-			templateUrl: './components/user/view/edit.html',
+			templateUrl: './components/user/edit-view.html',
 			controller: 'UserEditController'
 		}).when('/users/edit', {
-			templateUrl: './components/user/view/edit.html',
+			templateUrl: './components/user/edit-view.html',
 			controller: 'UserNewController'
 		}).otherwise({
 			redirectTo: '/'
@@ -50,13 +45,15 @@ angular.module('App', [
 				};
 
 				$rootScope.updateCurrentUser();
-				
-				var authRedirect = function(){
-					if (!$rootScope.isAuthenticated()) {
-						$location.path('/login');
-					}else{
-						if($location.$$path === '/login'){
-							$location.path('/');
+
+				var authRedirect = function () {
+					if ($rootScope.connectedUser) {
+						if (!$rootScope.isAuthenticated()) {
+							$location.path('/login');
+						} else {
+							if ($location.$$path === '/login') {
+								$location.path('/');
+							}
 						}
 					}
 				};
@@ -64,7 +61,7 @@ angular.module('App', [
 				// register listener to watch route changes
 				$rootScope.$on("$routeChangeStart", function (event, next, current) {
 					authRedirect();
-					
+
 					var path = next.originalPath;
 					if (path) {
 						var secondSlah = path.indexOf('/', 2);
@@ -72,7 +69,7 @@ angular.module('App', [
 							secondSlah = path.length;
 						}
 						$rootScope.navModuleName = path.substring(1, secondSlah);
-						
+
 					}
 
 				});
@@ -101,15 +98,14 @@ angular.module('App', [
 				 * @returns Boolean true if he has the role, false otherwise
 				 */
 				$rootScope.hasRole = function (role) {
-					if (!$rootScope.user) {
+					if (!$rootScope.connectedUser) {
 						return false;
 					}
 
 					role = 'ROLE_' + role;
-					for (var k in $rootScope.user.roles) {
-						var value = $rootScope.user.roles[k];
-						if (k === role) {
-							return value;
+					for (var k in $rootScope.connectedUser.roles) {
+						if ($rootScope.connectedUser.roles[k] === role) {
+							return true;
 						}
 					}
 					$log.error("Unkonwn role " + role);

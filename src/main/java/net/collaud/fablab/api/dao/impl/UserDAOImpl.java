@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Repository
 @Transactional
@@ -35,7 +35,8 @@ public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
 
 	@Override
 	public Iterable<UserEO> findAll() {
-		return findAllEntities();
+		Query query = sessionFactory.getCurrentSession().createQuery(UserEO.FIND_ALL);
+		return query.list();
 	}
 
 	@Override

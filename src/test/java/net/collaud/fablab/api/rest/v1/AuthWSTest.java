@@ -18,7 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

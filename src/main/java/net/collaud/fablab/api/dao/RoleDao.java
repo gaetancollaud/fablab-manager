@@ -4,7 +4,7 @@ import java.util.List;
 import net.collaud.fablab.api.data.RoleEO;
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface RoleDao {
 

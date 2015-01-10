@@ -1,7 +1,7 @@
 angular.module('User', ['ngResource'], function ($provide) {
 	$provide.factory('UserService', ['$log', '$resource', '$http', function ($log, $resource, $http) {
 
-			var Collaborateur = $resource(App.API.COLLABORATEUR_API + "/:id", {id: '@id'}, {
+			var User = $resource(App.API.USER_API + "/:id", {id: '@id'}, {
 				update: {method: 'PUT'}
 			});
 
@@ -11,7 +11,7 @@ angular.module('User', ['ngResource'], function ($provide) {
 					$http(
 							{
 								method: 'POST',
-								url: App.API.COLLABORATEUR_API + "/password",
+								url: App.API.USER_API + "/password",
 								data: user
 							}
 					).success(function (data, status, headers, config) {
@@ -25,20 +25,7 @@ angular.module('User', ['ngResource'], function ($provide) {
 					$http(
 							{
 								method: 'GET',
-								url: App.API.COLLABORATEUR_API,
-							}
-					).success(function (data, status, headers, config) {
-						successFn(data);
-					}
-					);
-				},
-				listRoles: function (successFn) {
-					$log.debug("RoleService: list...");
-					$http(
-							{
-								method: 'GET',
-								url: App.API.ROLE_API,
-								cache: true
+								url: App.API.USER_API,
 							}
 					).success(function (data, status, headers, config) {
 						successFn(data);
@@ -47,24 +34,24 @@ angular.module('User', ['ngResource'], function ($provide) {
 				},
 				remove: function (id, successFn) {
 					$log.debug("UserService: remove...");
-					Collaborateur.remove({id: id}, successFn);
+					User.remove({id: id}, successFn);
 					$log.debug("UserService: remove done.");
 				},
-				create: function (project, successFn, errorFn) {
+				create: function (user, successFn, errorFn) {
 					$log.debug("UserService: create...");
-					var saved = Collaborateur.save(project, successFn, errorFn);
+					var saved = User.save(user, successFn, errorFn);
 					$log.debug("UserService: create done.");
 					return saved;
 				},
-				update: function (project, successFn, errorFn) {
+				update: function (user, successFn, errorFn) {
 					$log.debug("UserService: save...");
-					var saved = Collaborateur.update(project, successFn, errorFn);
+					var saved = User.update(user, successFn, errorFn);
 					$log.debug("UserService: save done.");
 					return saved;
 				},
 				get: function (id, successFn) {
 					$log.debug("UserService: get...");
-					var prj = Collaborateur.get({id: id}, successFn);
+					var prj = User.get({id: id}, successFn);
 					$log.debug("UserService: get done.");
 					return prj;
 				}

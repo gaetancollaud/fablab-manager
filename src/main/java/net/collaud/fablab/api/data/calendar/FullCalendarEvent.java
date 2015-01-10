@@ -10,7 +10,7 @@ import net.collaud.fablab.api.data.UserEO;
  * This class is mapped from event object of the fullcalendar library
  * (http://arshaw.com/fullcalendar/docs/)
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class FullCalendarEvent {
 

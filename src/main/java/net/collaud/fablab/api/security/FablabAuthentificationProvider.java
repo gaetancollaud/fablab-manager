@@ -22,7 +22,7 @@ import org.springframework.util.DigestUtils;
 
 /**
  *
- * @author Gaétan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 

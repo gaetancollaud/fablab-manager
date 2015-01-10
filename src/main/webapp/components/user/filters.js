@@ -1,6 +1,4 @@
-var filters = angular.module('UserFilters', [])
-
-filters.filter('roleName', function () {
+angular.module('User').filter('roleName', function () {
 	return function (input) {
 		switch(input){
 			case 'ROLE_ADMIN':

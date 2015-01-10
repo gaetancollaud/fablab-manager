@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author gaetan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
