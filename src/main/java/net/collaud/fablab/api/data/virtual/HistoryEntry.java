@@ -6,8 +6,6 @@ import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageDetailEO;
 import net.collaud.fablab.api.data.UserEO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -15,7 +13,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
-	private static final Logger LOG = LogManager.getLogger(HistoryEntry.class);
 
 	public enum HistoryEntryType {
 

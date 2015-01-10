@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class StatefulRestTemplate {
 
-	private static final Logger LOG = LogManager.getLogger(StatefulRestTemplate.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StatefulRestTemplate.class);
 
 	private final RestTemplate template;
 	private final Map<String, String> cookies;

@@ -118,19 +118,18 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Column(name = "address", nullable = true)
 	private String address;
 
-	@JsonManagedReference
+	@JsonManagedReference("user-machineAuth")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<UserAuthorizedMachineTypeEO> machineTypesAuthorized;
 
-	@JsonManagedReference
+	@JsonManagedReference("user-subscription")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<SubscriptionEO> subscriptions;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<PaymentEO> payments;
 
-	@JsonManagedReference
 	@JoinTable(name = "r_group_user",
 			joinColumns = {
 				@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, updatable = false)},
@@ -139,11 +138,10 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<GroupEO> groups;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<ReservationEO> reservations;
 
-	@JsonManagedReference
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;

@@ -6,12 +6,11 @@ import net.collaud.fablab.api.dao.ReservationDAO;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.exceptions.FablabException;
-import net.collaud.fablab.api.exceptions.FablabWrongParameterException;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.ReservationService;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Secured({RolesHelper.ROLE_ADMIN})
 public class ReservationServiceImpl implements ReservationService {
 
-	private static final Logger LOG = LogManager.getLogger(ReservationServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
 	@Autowired
 	private ReservationDAO reservationDao;

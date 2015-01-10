@@ -3,8 +3,6 @@ package net.collaud.fablab.api.service.impl;
 import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl extends AbstractServiceImpl implements UserService {
 
-	private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserDao userDao;
@@ -42,7 +39,16 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	public UserEO save(UserEO user) {
-		return userDao.save(user);
+		if (user.getUserId() > 0) {
+			UserEO old = userDao.findOneById(user.getUserId());
+			old.setFirstname(user.getFirstname());
+			old.setLastname(user.getLastname());
+			old.setEmail(user.getEmail());
+			return userDao.save(old);
+		} else {
+			//FIXME references
+			return userDao.save(user);
+		}
 	}
 
 }

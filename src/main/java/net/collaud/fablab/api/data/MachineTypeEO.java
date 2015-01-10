@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -39,12 +40,15 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 	@Column(name = "restricted", nullable = false)
 	private boolean restricted;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType")
 	private List<UserAuthorizedMachineTypeEO> usersAuthorizedList;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType", fetch = FetchType.LAZY)
 	private List<MachineEO> machineList;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineTypeEO", fetch = FetchType.LAZY)
 	private List<PriceMachineEO> priceList;
 

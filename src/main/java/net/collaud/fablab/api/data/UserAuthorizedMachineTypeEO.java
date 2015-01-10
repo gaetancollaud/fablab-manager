@@ -34,12 +34,12 @@ public class UserAuthorizedMachineTypeEO implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date formationDate;
 
-	@JsonBackReference
+	@JsonBackReference("user-machineAuth")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private UserEO user;
 
-	@JsonManagedReference
+	
 	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private MachineTypeEO machineType;

@@ -3,8 +3,8 @@ package net.collaud.fablab.api.rest.v1.data;
 import java.util.ArrayList;
 import java.util.List;
 import net.collaud.fablab.api.data.AbstractDataEO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class AbstractTO<EO extends AbstractDataEO, TO extends AbstractTO> {
 
-	private static final Logger LOG = LogManager.getLogger(AbstractTO.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AbstractTO.class);
 
 	public AbstractTO() {
 	}
@@ -27,7 +27,7 @@ public abstract class AbstractTO<EO extends AbstractDataEO, TO extends AbstractT
 				T to = toClass.newInstance();
 				toList.add((T) to.fromEO(u));
 			} catch (InstantiationException | IllegalAccessException ex) {
-				LOG.error(ex);
+				LOG.error("error", ex);
 			}
 		});
 		return toList;

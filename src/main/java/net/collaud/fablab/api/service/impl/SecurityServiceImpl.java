@@ -4,8 +4,8 @@ import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,7 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
 
-	private static final Logger LOG = LogManager.getLogger(SecurityServiceImpl.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(SecurityServiceImpl.class);
 
 	@Autowired
 	private UserDao userDao;

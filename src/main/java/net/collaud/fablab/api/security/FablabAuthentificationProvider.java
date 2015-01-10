@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -18,7 +18,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.util.DigestUtils;
 
 /**
  *
@@ -26,7 +25,7 @@ import org.springframework.util.DigestUtils;
  */
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 
-	private static final Logger LOG = LogManager.getLogger(FablabAuthentificationProvider.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);
 
 	@Autowired
 	private UserService userService;

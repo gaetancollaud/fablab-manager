@@ -3,6 +3,16 @@
 		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 			http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 		 version="3.0">
+	
+	
+	<context-param>
+		<param-name>logback.configurationFile</param-name>
+		<param-value>logback/logback.xml</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>net.collaud.fablab.api.web.LogBackConfigurationListener</listener-class>
+	</listener>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

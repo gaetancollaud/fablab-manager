@@ -56,7 +56,7 @@ public class SubscriptionEO extends AbstractDataEO implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSubscription;
 
-	@JsonBackReference
+	@JsonBackReference("user-subscription")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private UserEO user;
