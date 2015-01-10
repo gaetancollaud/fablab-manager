@@ -12,7 +12,7 @@ public class MembershipTypeTO extends AbstractTO<MembershipTypeEO, MembershipTyp
 	private String name;
 	
 	@Override
-	public MembershipTypeEO fromTO(MembershipTypeTO to) {
+	public MembershipTypeEO convertToEO() {
 		throw new RuntimeException("Not implemented yet");
 	}
 

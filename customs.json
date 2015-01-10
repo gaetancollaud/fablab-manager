@@ -3,6 +3,9 @@
 		"toast": {}
 	},
 	"attributes": {
+		"fast-repeat": {
+			"context": "tr"
+		},
 		"fab-nav-item": {},
 		"sortable": {}
 	}

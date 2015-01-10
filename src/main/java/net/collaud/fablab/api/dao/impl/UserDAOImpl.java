@@ -1,7 +1,5 @@
 package net.collaud.fablab.api.dao.impl;
 
-import java.util.List;
-import javax.persistence.TypedQuery;
 import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.UserEO;
 import org.hibernate.Query;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
-
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -44,5 +41,17 @@ public class UserDAOImpl extends AbstractDAO<UserEO> implements UserDao {
 		Query query = sessionFactory.getCurrentSession().createQuery(UserEO.FIND_BY_ID_AND_FETCH_ROLES);
 		query.setParameter(UserEO.PARAM_ID, id);
 		return (UserEO) query.uniqueResult();
+	}
+
+	@Override
+	public UserEO findOneById(Integer id) {
+		Query query = sessionFactory.getCurrentSession().createQuery(UserEO.FIND_BY_ID_DETAIL);
+		query.setParameter(UserEO.PARAM_ID, id);
+		return (UserEO) query.uniqueResult();
+	}
+
+	@Override
+	public UserEO save(UserEO user) {
+		return super.saveEntity(user);
 	}
 }

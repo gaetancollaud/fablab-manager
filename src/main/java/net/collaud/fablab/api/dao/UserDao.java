@@ -10,4 +10,7 @@ public interface UserDao{
 	UserEO findOneByIdAndFetchRoles(Integer id);
 	UserEO findOneByLogin(String login);
 	Iterable<UserEO> findAll();
+	UserEO findOneById(Integer id);
+
+	public UserEO save(UserEO user);
 }

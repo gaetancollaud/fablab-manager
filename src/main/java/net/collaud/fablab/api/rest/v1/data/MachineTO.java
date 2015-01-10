@@ -16,7 +16,7 @@ public class MachineTO extends AbstractTO<MachineEO, MachineTO>{
 	//private MachineTypeEO machineType;
 	
 	@Override
-	public MachineEO fromTO(MachineTO to) {
+	public MachineEO convertToEO() {
 		throw new RuntimeException("Not implemented yet");
 	}
 

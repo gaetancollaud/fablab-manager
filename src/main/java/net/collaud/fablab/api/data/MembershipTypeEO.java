@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -39,12 +41,15 @@ public class MembershipTypeEO extends AbstractDataEO implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
 	private List<PriceMachineEO> priceList;
 
+	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
 	private List<UserEO> userList;
 	
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
 	private List<PriceCotisationEO> priceCotisationList;
 

@@ -1,9 +1,7 @@
 angular.module('User', ['ngResource'], function ($provide) {
 	$provide.factory('UserService', ['$log', '$resource', '$http', function ($log, $resource, $http) {
 
-			var User = $resource(App.API.USER_API + "/:id", {id: '@id'}, {
-				update: {method: 'PUT'}
-			});
+			var User = $resource(App.API.USER_API + "/:id", {id: '@id'});
 
 			return {
 				updatePassword: function (user, successFn) {
@@ -37,15 +35,9 @@ angular.module('User', ['ngResource'], function ($provide) {
 					User.remove({id: id}, successFn);
 					$log.debug("UserService: remove done.");
 				},
-				create: function (user, successFn, errorFn) {
-					$log.debug("UserService: create...");
-					var saved = User.save(user, successFn, errorFn);
-					$log.debug("UserService: create done.");
-					return saved;
-				},
-				update: function (user, successFn, errorFn) {
+				save: function (user, successFn, errorFn) {
 					$log.debug("UserService: save...");
-					var saved = User.update(user, successFn, errorFn);
+					var saved = User.save(user, successFn, errorFn);
 					$log.debug("UserService: save done.");
 					return saved;
 				},

@@ -43,7 +43,7 @@ public class ReservationWS {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void create(@RequestBody ReservationTO to) throws FablabException {
-		ReservationEO eo = new ReservationTO().fromTO(to);
+		ReservationEO eo = to.convertToEO();
 		eo.setReservationId(0);
 		LOG.debug("create reservation " + eo);
 		reservationService.save(eo);
@@ -52,7 +52,7 @@ public class ReservationWS {
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public void edit(@PathVariable Integer id, @RequestBody ReservationTO to) throws FablabException {
 		LOG.debug("edit reservation " + to);
-		ReservationEO eo = new ReservationTO().fromTO(to);
+		ReservationEO eo = to.convertToEO();
 		eo.setReservationId(id);
 		reservationService.save(eo);
 	}

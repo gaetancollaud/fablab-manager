@@ -1,31 +1,42 @@
 angular.module('User').controller('UserListController', [
 	'$scope',
 	'$filter',
+	'$location',
 	'ngTableParams',
 	'UserService',
-	function ($scope, $filter, ngTableParams, UserService) {
-
+	function ($scope, $filter, $location, ngTableParams, UserService) {
 
 		UserService.list(function (data) {
 			$scope.users = data;
-			$scope.tableParams = new ngTableParams({
-				page: 1, // show first page
-				count: 10, // count per page
-				sorting: {
-					name: 'asc'     // initial sorting
-				}
-			}, {
+			$scope.tableParams = new ngTableParams(
+					angular.extend({
+						page: 1, // show first page
+						count: 25, // count per page
+						sorting: {
+							lastname: 'asc',
+							firstname: 'asc',
+						}
+					}, $location.search()), {
 				total: data.length, // length of data
 				getData: function ($defer, params) {
-					// use build-in angular filter
-					var orderedData = params.sorting() ?
-							$filter('orderBy')(data, params.orderBy()) :
-							data;
+
+					$location.search(params.url()); // put params in url
+
+					var filteredData = params.filter() ? $filter('filter')(data, params.filter()) : data;
+
+					var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
 
 					$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 				}
 			});
 		});
+
+		$scope.$watch("searchUser", function () {
+			if ($scope.tableParams) {
+				$scope.tableParams.reload();
+			}
+		});
+
 	}
 ]);
 

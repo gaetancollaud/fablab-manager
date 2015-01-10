@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -46,10 +47,12 @@ public class ReservationEO extends AbstractDataEO implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateEnd;
 
+	@JsonManagedReference
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private UserEO user;
 
+	@JsonManagedReference
 	@JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineEO machine;

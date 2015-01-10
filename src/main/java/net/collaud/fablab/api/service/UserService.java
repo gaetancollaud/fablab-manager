@@ -9,7 +9,11 @@ import net.collaud.fablab.api.data.UserEO;
 public interface UserService {
 
 	UserEO findByLogin(String login);
+	
+	UserEO findById(Integer id);
 
 	Iterable<UserEO> getAllUsers();
+	
+	UserEO save(UserEO user);
 
 }

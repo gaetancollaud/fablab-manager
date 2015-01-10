@@ -1,10 +1,42 @@
 
-<table ng-table="tableParams" class="table">
-    <tr ng-repeat="user in users">
-        <td data-title="'user.firstname' | translate" sortable="'firstname'">{{user.firstname}}</td>
-        <td data-title="'user.lastname' | translate" sortable="'lastname'">{{user.lastname}}</td>
-        <td data-title="'user.email' | translate" sortable="'email'">{{user.email}}</td>
-        <td data-title="'user.balance' | translate" sortable="'balance'">{{user.balance}}</td>
-        <td data-title="'user.membership' | translate" sortable="'membershipType.name'">{{user.membershipType.name}}</td>
+<input type="text" ng-model="searchUser">
+
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in $data">
+        <td 
+			data-title="'user.firstname' | translate" 
+			sortable="'firstname'"
+			filter="{'firstname':'text'}">
+			{{user.firstname}}
+		</td>
+        <td 
+			data-title="'user.lastname' | translate" 
+			sortable="'lastname'"
+			filter="{'lastname':'text'}">
+			{{user.lastname}}
+		</td>
+        <td 
+			data-title="'user.email' | translate" 
+			sortable="'email'"
+			filter="{'email':'text'}">
+			{{user.email}}
+		</td>
+        <td 
+			data-title="'user.balance' | translate"
+			sortable="'balance'"
+			ng-class="{'negativBalance' : user.balance < 0}">
+			{{user.balance|number:2}}
+		</td>
+        <td 
+			data-title="'user.membership' | translate"
+			sortable="'membershipType.name'">
+			{{user.membershipType.name}}
+		</td>
+        <td>
+			<div class="btn-group">
+				<a class="btn btn-sm btn-default" href="#/users/edit/{{user.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+				<button class="btn btn-sm btn-danger" href="" ng-click="remove(user)"><span class="glyphicon glyphicon-trash"></span></button>
+			</div>
+		</td>
     </tr>
 </table> 

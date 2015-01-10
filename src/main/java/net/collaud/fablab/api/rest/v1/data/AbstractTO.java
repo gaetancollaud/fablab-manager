@@ -3,8 +3,6 @@ package net.collaud.fablab.api.rest.v1.data;
 import java.util.ArrayList;
 import java.util.List;
 import net.collaud.fablab.api.data.AbstractDataEO;
-import net.collaud.fablab.api.data.ReservationEO;
-import net.collaud.fablab.api.rest.v1.AuthWS;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +13,7 @@ import org.apache.logging.log4j.Logger;
  * @param <TO>
  */
 public abstract class AbstractTO<EO extends AbstractDataEO, TO extends AbstractTO> {
+
 	private static final Logger LOG = LogManager.getLogger(AbstractTO.class);
 
 	public AbstractTO() {
@@ -36,11 +35,13 @@ public abstract class AbstractTO<EO extends AbstractDataEO, TO extends AbstractT
 
 	public List<EO> fromTOList(Iterable<TO> to) {
 		List<EO> eo = new ArrayList<>();
-		to.forEach(t -> eo.add(fromTO(t)));
+		to.forEach(t -> {
+			eo.add((EO) t.convertToEO());
+		});
 		return eo;
 	}
 
-	abstract public EO fromTO(TO to);
+	abstract public EO convertToEO();
 
 	abstract public TO fromEO(EO eo);
 }

@@ -165,7 +165,7 @@ public class AuditInterceptor {
 		sb.append(" rfid=");
 		sb.append(user.getRfid());
 		sb.append(" authMachine=[");
-		for(UserAuthorizedMachineTypeEO auth : user.getMachineTypeAuthorizedSet()){
+		for(UserAuthorizedMachineTypeEO auth : user.getMachineTypesAuthorized()){
 			sb.append(auth.getMachineType().getName());
 			sb.append(",");
 		}

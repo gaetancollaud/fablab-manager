@@ -1,5 +1,8 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -14,12 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -48,6 +50,14 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			+ " LEFT JOIN FETCH u.groups AS g "
 			+ " LEFT JOIN FETCH g.roles AS r "
 			+ " WHERE u.id = :" + UserEO.PARAM_ID;
+	
+	public static final String FIND_BY_ID_DETAIL
+			= " SELECT u "
+			+ " FROM UserEO u "
+			+ " LEFT JOIN FETCH u.groups AS g "
+			+ " LEFT JOIN FETCH u.membershipType AS mt "
+			+ " LEFT JOIN FETCH u.machineTypesAuthorized AS mta "
+			+ " WHERE u.id = :" + UserEO.PARAM_ID;
 
 	public static final String PARAM_LOGIN = "login";
 	public static final String PARAM_RFID = "rfid";
@@ -64,8 +74,12 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Column(name = "login", nullable = false, unique = true)
 	private String login;
 
+	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+	@Transient
+	private String newPassword;
 
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
@@ -90,9 +104,11 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastSubscriptionConfirmation;
 
+	@JsonIgnore
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
+	@JsonIgnore
 	@Column(name = "auth_by_sql", nullable = false)
 	private boolean authBySql;
 
@@ -102,15 +118,19 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Column(name = "address", nullable = true)
 	private String address;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<UserAuthorizedMachineTypeEO> machineTypeAuthorizedSet;
+	private Set<UserAuthorizedMachineTypeEO> machineTypesAuthorized;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<SubscriptionEO> subscriptionsSet;
+	private Set<SubscriptionEO> subscriptions;
 
+	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<PaymentEO> paymentSet;
+	private Set<PaymentEO> payments;
 
+	@JsonManagedReference
 	@JoinTable(name = "r_group_user",
 			joinColumns = {
 				@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, updatable = false)},
@@ -119,9 +139,11 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<GroupEO> groups;
 
+	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-	private Set<ReservationEO> reservationSet;
+	private Set<ReservationEO> reservations;
 
+	@JsonManagedReference
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
@@ -226,6 +248,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		this.rfid = rfid;
 	}
 
+	@JsonIgnore
 	public String getFirstLastName() {
 		return firstname + " " + lastname;
 	}
@@ -262,14 +285,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		return "net.collaud.fablab.data.User[ userId=" + userId + " ]";
 	}
 
-	public Set<ReservationEO> getReservationSet() {
-		return reservationSet;
-	}
-
-	public void setReservationSet(Set<ReservationEO> reservationSet) {
-		this.reservationSet = reservationSet;
-	}
-
 	public Set<GroupEO> getGroups() {
 		return groups;
 	}
@@ -294,36 +309,13 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public Set<PaymentEO> getPaymentSet() {
-		return paymentSet;
-	}
-
-	public void setPaymentSet(Set<PaymentEO> paymentSet) {
-		this.paymentSet = paymentSet;
-	}
-
-	public Set<SubscriptionEO> getSubscriptionsSet() {
-		return subscriptionsSet;
-	}
-
-	public void setSubscriptionsSet(Set<SubscriptionEO> subscriptionsSet) {
-		this.subscriptionsSet = subscriptionsSet;
-	}
-
+	
 	public boolean getAuthBySql() {
 		return authBySql;
 	}
 
 	public void setAuthBySql(boolean authBySql) {
 		this.authBySql = authBySql;
-	}
-
-	public Set<UserAuthorizedMachineTypeEO> getMachineTypeAuthorizedSet() {
-		return machineTypeAuthorizedSet;
-	}
-
-	public void setMachineTypeAuthorizedSet(Set<UserAuthorizedMachineTypeEO> machineTypeAuthorizedSet) {
-		this.machineTypeAuthorizedSet = machineTypeAuthorizedSet;
 	}
 
 	public String getPhone() {
@@ -340,6 +332,46 @@ public class UserEO extends AbstractDataEO implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Set<UserAuthorizedMachineTypeEO> getMachineTypesAuthorized() {
+		return machineTypesAuthorized;
+	}
+
+	public void setMachineTypesAuthorized(Set<UserAuthorizedMachineTypeEO> machineTypesAuthorized) {
+		this.machineTypesAuthorized = machineTypesAuthorized;
+	}
+
+	public Set<SubscriptionEO> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Set<SubscriptionEO> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	public Set<PaymentEO> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(Set<PaymentEO> payments) {
+		this.payments = payments;
+	}
+
+	public Set<ReservationEO> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Set<ReservationEO> reservations) {
+		this.reservations = reservations;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 }

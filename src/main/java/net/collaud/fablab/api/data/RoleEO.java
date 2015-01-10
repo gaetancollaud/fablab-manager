@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -39,6 +41,7 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
 
+	@JsonBackReference
 	@JoinTable(name = "r_group_role",
 			joinColumns = {
 				@JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, updatable = false)},

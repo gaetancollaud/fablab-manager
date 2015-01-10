@@ -1,13 +1,12 @@
 package net.collaud.fablab.api.rest.v1.data;
 
-import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
-public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
+public class UserDetailTO extends AbstractTO<UserEO, UserDetailTO> {
 
 	private Integer id;
 	private String login;
@@ -23,7 +22,7 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 	}
 
 	@Override
-	public UserSimpleTO fromEO(UserEO eo) {
+	public UserDetailTO fromEO(UserEO eo) {
 		setId(eo.getUserId());
 		setLogin(eo.getLogin());
 		setFirstname(eo.getFirstname());
@@ -34,7 +33,7 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 		return this;
 	}
 
-	public UserSimpleTO() {
+	public UserDetailTO() {
 	}
 
 	public Integer getId() {

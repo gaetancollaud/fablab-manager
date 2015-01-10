@@ -13,7 +13,7 @@ public class RoleTO extends AbstractTO<RoleEO, RoleTO> {
 	private String technicalname;
 	
 	@Override
-	public RoleEO fromTO(RoleTO to) {
+	public RoleEO convertToEO() {
 		throw new RuntimeException("Not implemented yet");
 	}
 

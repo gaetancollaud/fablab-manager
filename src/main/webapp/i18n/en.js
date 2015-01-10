@@ -16,6 +16,10 @@ angular.module('App').config(function ($translateProvider) {
 			title:'Loading',
 			text:'Loading...'
 		},
+		button:{
+			cancel:'Cancel',
+			save:'Save'
+		},
 		auth:{
 			result:{
 				ok:'Login Successful',

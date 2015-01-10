@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -65,10 +66,12 @@ public class PaymentEO extends AbstractDataEO implements Serializable {
 	@Column(name = "comment")
 	private String comment;
 
+	@JsonManagedReference
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEO user;
 
+	@JsonManagedReference
 	@JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEO cashier;

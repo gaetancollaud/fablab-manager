@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
@@ -31,9 +33,11 @@ public class GroupEO extends AbstractDataEO implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@JsonBackReference
 	@ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
 	private Set<UserEO> users;
 
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
 	private Set<RoleEO> roles;
 

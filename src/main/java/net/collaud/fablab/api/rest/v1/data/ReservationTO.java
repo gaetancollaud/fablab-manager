@@ -33,13 +33,13 @@ public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
 	}
 
 	@Override
-	public ReservationEO fromTO(ReservationTO to) {
+	public ReservationEO convertToEO() {
 		ReservationEO eo = new ReservationEO();
-		eo.setReservationId(to.getReservationId());
-		eo.setDateStart(to.getDateStart());
-		eo.setDateEnd(to.getDateEnd());
-		eo.setMachine(new MachineEO(to.getMachineId()));
-		eo.setUser(new UserEO(to.getMachineId()));
+		eo.setReservationId(getReservationId());
+		eo.setDateStart(getDateStart());
+		eo.setDateEnd(getDateEnd());
+		eo.setMachine(new MachineEO(getMachineId()));
+		eo.setUser(new UserEO(getMachineId()));
 		return eo;
 	}
 

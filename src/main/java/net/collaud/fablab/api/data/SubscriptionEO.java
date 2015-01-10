@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -54,6 +56,7 @@ public class SubscriptionEO extends AbstractDataEO implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSubscription;
 
+	@JsonBackReference
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private UserEO user;
