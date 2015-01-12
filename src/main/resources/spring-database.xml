@@ -33,10 +33,12 @@
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="txManager"/>
-	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<!--	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>-->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceWebsube" />
 	</bean>
-	
 	<data:repositories base-package="net.collaud.fablab.api.dao"
 					   entity-manager-factory-ref="entityManagerFactory"
 					   transaction-manager-ref="txManager"/> 

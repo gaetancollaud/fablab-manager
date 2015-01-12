@@ -1,7 +1,7 @@
 package net.collaud.fablab.api.rest.v1.data;
 
+import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
-import org.hibernate.LazyInitializationException;
 
 /**
  *
@@ -9,13 +9,13 @@ import org.hibernate.LazyInitializationException;
  */
 public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 
-	private Integer id;
+	private Integer userId;
 	private String login;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private double balance;
-	private MembershipTypeTO membershipType;
+	private MembershipTypeEO membershipType;
 
 	@Override
 	public UserEO convertToEO() {
@@ -24,29 +24,25 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 
 	@Override
 	public UserSimpleTO fromEO(UserEO eo) {
-		setId(eo.getUserId());
+		setUserId(eo.getUserId());
 		setLogin(eo.getLogin());
 		setFirstname(eo.getFirstname());
 		setLastname(eo.getLastname());
 		setEmail(eo.getEmail());
 		setBalance(eo.getBalance());
-		try {
-			setMembershipType(new MembershipTypeTO().fromEO(eo.getMembershipType()));
-		} catch (LazyInitializationException ex) {
-			//fuck off hibernate
-		}
+		setMembershipType(eo.getMembershipType());
 		return this;
 	}
 
 	public UserSimpleTO() {
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getLogin() {
@@ -89,11 +85,12 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 		this.balance = balance;
 	}
 
-	public MembershipTypeTO getMembershipType() {
+	public MembershipTypeEO getMembershipType() {
 		return membershipType;
 	}
 
-	public void setMembershipType(MembershipTypeTO membershipType) {
+	public void setMembershipType(MembershipTypeEO membershipType) {
 		this.membershipType = membershipType;
 	}
+
 }

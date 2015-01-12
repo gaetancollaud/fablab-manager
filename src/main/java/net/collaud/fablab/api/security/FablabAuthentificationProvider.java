@@ -28,7 +28,6 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);
 	
-	public static final String DIGEST_ALGORITHM = "SHA-256";
 
 	@Autowired
 	private UserService userService;
@@ -45,10 +44,7 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 			throw new AuthenticationServiceException("Cannot get user with login " + login, ex);
 		}
 		if (user != null) {
-			
-			 MessageDigestPasswordEncoder sha = new MessageDigestPasswordEncoder(DIGEST_ALGORITHM);
-			 
-			 if(sha.isPasswordValid(user.getPassword(), password, user.getPasswordSalt())){
+			 if(PasswordUtils.isPasswordValue(user, password)){
 
 				Set<GrantedAuthority> roles = new HashSet<>();
 				List<String> groupsStr = new ArrayList<>();

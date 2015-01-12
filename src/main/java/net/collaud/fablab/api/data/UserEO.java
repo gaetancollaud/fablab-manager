@@ -56,7 +56,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups AS g "
 			+ " LEFT JOIN FETCH u.membershipType AS mt "
-			+ " LEFT JOIN FETCH u.machineTypesAuthorized AS mta "
 			+ " WHERE u.id = :" + UserEO.PARAM_ID;
 
 	public static final String PARAM_LOGIN = "login";
@@ -121,10 +120,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 
 	@Column(name = "address", nullable = true)
 	private String address;
-
-	@JsonManagedReference("user-machineAuth")
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<UserAuthorizedMachineTypeEO> machineTypesAuthorized;
 
 	@JsonManagedReference("user-subscription")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -342,14 +337,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public Set<UserAuthorizedMachineTypeEO> getMachineTypesAuthorized() {
-		return machineTypesAuthorized;
-	}
-
-	public void setMachineTypesAuthorized(Set<UserAuthorizedMachineTypeEO> machineTypesAuthorized) {
-		this.machineTypesAuthorized = machineTypesAuthorized;
 	}
 
 	public Set<SubscriptionEO> getSubscriptions() {

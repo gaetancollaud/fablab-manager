@@ -8,6 +8,10 @@ angular.module('User').directive('fabUserGroups', function () {
 		templateUrl: 'components/user/directive-groups.html',
 		controller: function ($scope) {
 			$scope.selected = {};
+			
+			if(!$scope.ngModel){
+				$scope.ngModel = [];
+			}
 
 			$scope.isSelected = function (group) {
 				if ($scope.ngModel) {

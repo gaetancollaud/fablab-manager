@@ -16,4 +16,6 @@ public interface UserService {
 	
 	UserEO save(UserEO user);
 
+	void removeById(Integer id);
+
 }

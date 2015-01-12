@@ -19,6 +19,8 @@ ctrl.controller('GlobalUserEditController', [
 		$scope.save = function(){
 			UserService.save($scope.user, function (data) {
 				$scope.user = data;
+				NotificationService.notify("success", "Utilisateur enregistré");
+				$location.path("users");
 			});
 		};
 		

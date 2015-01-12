@@ -1,11 +1,8 @@
 package net.collaud.fablab.api.rest.v1;
 
 import net.collaud.fablab.api.dao.MembershipTypeDao;
-import net.collaud.fablab.api.dao.RoleDao;
-import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.rest.v1.data.AbstractTO;
-import net.collaud.fablab.api.rest.v1.data.MembershipTypeTO;
 import net.collaud.fablab.api.rest.v1.data.UserSimpleTO;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,9 +27,6 @@ public class UserWS {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private RoleDao roleDao;
 	
 	@Autowired
 	private MembershipTypeDao membershipTypeDao;
@@ -56,13 +49,17 @@ public class UserWS {
 		return new DataModel(userService.save(user));
 	}
 	
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@Secured(RolesHelper.ROLE_MANAGE_USER)
+	public BaseModel delete(@PathVariable Integer id) {
+		userService.removeById(id);
+		return new BaseModel();
+	}
+	
 	@RequestMapping(value="membershipType", method = RequestMethod.GET)
 	@Secured(RolesHelper.ROLE_MANAGE_USER)
 	public BaseModel getallMembershipType() {
-		return new DataModel(MembershipTypeTO.fromEOList(
-				membershipTypeDao.getAllMembershipType(),
-				MembershipTypeEO.class,
-				MembershipTypeTO.class));
+		return new DataModel(membershipTypeDao.findAll());
 	}
 
 }

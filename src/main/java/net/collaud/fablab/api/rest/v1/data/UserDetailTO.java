@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.rest.v1.data;
 
+import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 
 /**
@@ -8,13 +9,13 @@ import net.collaud.fablab.api.data.UserEO;
  */
 public class UserDetailTO extends AbstractTO<UserEO, UserDetailTO> {
 
-	private Integer id;
+	private Integer userId;
 	private String login;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private double balance;
-	private MembershipTypeTO membershipType;
+	private MembershipTypeEO membershipType;
 
 	@Override
 	public UserEO convertToEO() {
@@ -23,25 +24,25 @@ public class UserDetailTO extends AbstractTO<UserEO, UserDetailTO> {
 
 	@Override
 	public UserDetailTO fromEO(UserEO eo) {
-		setId(eo.getUserId());
+		setUserId(eo.getUserId());
 		setLogin(eo.getLogin());
 		setFirstname(eo.getFirstname());
 		setLastname(eo.getLastname());
 		setEmail(eo.getEmail());
 		setBalance(eo.getBalance());
-		setMembershipType(new MembershipTypeTO().fromEO(eo.getMembershipType()));
+		setMembershipType(eo.getMembershipType());
 		return this;
 	}
 
 	public UserDetailTO() {
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getLogin() {
@@ -84,11 +85,12 @@ public class UserDetailTO extends AbstractTO<UserEO, UserDetailTO> {
 		this.balance = balance;
 	}
 
-	public MembershipTypeTO getMembershipType() {
+	public MembershipTypeEO getMembershipType() {
 		return membershipType;
 	}
 
-	public void setMembershipType(MembershipTypeTO membershipType) {
+	public void setMembershipType(MembershipTypeEO membershipType) {
 		this.membershipType = membershipType;
 	}
+
 }

@@ -5,7 +5,7 @@ angular.module('App', [
 	// Core
 	'Notification', 'Loader', 'httpInterceptor', 'core.filter.core', 'core.filter.date',
 	// Fablab 
-	'FabNaviguation', 'FabFilters',
+	'FabNaviguation', 'FabFilters', 'FabReallyClick',
 	//components
 	'Auth', 'Dashboard', 'User', 'Reservation',
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',

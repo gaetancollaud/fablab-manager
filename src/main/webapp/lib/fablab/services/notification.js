@@ -24,20 +24,6 @@ angular.module('Notification', [], function ($provide) {
 					content: content,
 					compileContent: true,
 				});
-//				switch (level) {
-//					case 'SUCCESS':
-//						toaster.create('success', title, html, 5000, 'trustedHtml');
-//						break;
-//					case 'ERROR':
-//						toaster.pop('error', title, html, 15000, 'trustedHtml');
-//						break;
-//					case 'INFO':
-//						toaster.pop('note', title, html, 5000, 'trustedHtml');
-//						break;
-//					case 'WARN':
-//						toaster.pop('warning', title, html, 15000, 'trustedHtml');
-//						break;
-//				}
 			};
 			return {
 				/**
