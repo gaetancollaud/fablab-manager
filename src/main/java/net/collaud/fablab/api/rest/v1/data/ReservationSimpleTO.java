@@ -9,7 +9,7 @@ import net.collaud.fablab.api.data.UserEO;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
-public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
+public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSimpleTO> {
 
 	private Integer reservationId;
 
@@ -17,19 +17,11 @@ public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
 
 	private Date dateEnd;
 
-	private Integer userId;
+	private UserSimpleTO user;
 
 	private Integer machineId;
 
-	public ReservationTO() {
-	}
-
-	public ReservationTO(Integer reservationId, Date dateStart, Date dateEnd, Integer userId, Integer machineId) {
-		this.reservationId = reservationId;
-		this.dateStart = dateStart;
-		this.dateEnd = dateEnd;
-		this.userId = userId;
-		this.machineId = machineId;
+	public ReservationSimpleTO() {
 	}
 
 	@Override
@@ -44,11 +36,11 @@ public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
 	}
 
 	@Override
-	public ReservationTO fromEO(ReservationEO eo) {
+	public ReservationSimpleTO fromEO(ReservationEO eo) {
 		setReservationId(eo.getReservationId());
 		setDateStart(eo.getDateStart());
 		setDateEnd(eo.getDateEnd());
-		setUserId(eo.getUser().getUserId());
+		setUser(new UserSimpleTO().fromEO(eo.getUser()));
 		setMachineId(eo.getMachine().getMachineId());
 		return this;
 	}
@@ -77,12 +69,12 @@ public class ReservationTO extends AbstractTO<ReservationEO, ReservationTO> {
 		this.dateEnd = dateEnd;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public UserSimpleTO getUser() {
+		return user;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUser(UserSimpleTO user) {
+		this.user = user;
 	}
 
 	public Integer getMachineId() {

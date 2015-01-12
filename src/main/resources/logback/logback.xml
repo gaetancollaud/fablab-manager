@@ -25,11 +25,12 @@
 	</appender>
 
 	<logger name="net.collaud.fablab.api" level="DEBUG" />
+	<logger name="org.springframework" level="INFO" />
 	<logger name="org.springframework.http.converter" level="DEBUG" />
 	
 	
 
-	<root level="info">
+	<root level="INFO">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
 	</root>

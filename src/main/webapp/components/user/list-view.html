@@ -1,5 +1,10 @@
 
-<input type="text" ng-model="searchUser">
+<div class="header-control">
+	<div class="btn-group">
+		<a class="btn btn-success" href="#/users/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+		<a class="btn btn-danger" href="#/users/export">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
+	</div>
+</div>
 
 <table ng-table="tableParams" class="table" show-filter="true">
     <tr ng-repeat="user in $data">

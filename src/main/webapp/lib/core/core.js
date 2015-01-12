@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var core = angular.module('core', ['toaster', 'core.i18n']);
+	var core = angular.module('core', []);
 
 	/**
 	 * You need to set the configuration to the core service to use certain functionalities of the core lib

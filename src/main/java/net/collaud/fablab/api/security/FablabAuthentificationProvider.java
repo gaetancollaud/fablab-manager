@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);
+	
+	public static final String DIGEST_ALGORITHM = "SHA-256";
 
 	@Autowired
 	private UserService userService;
@@ -42,10 +45,10 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 			throw new AuthenticationServiceException("Cannot get user with login " + login, ex);
 		}
 		if (user != null) {
-
-			//FIXME test mdp
-			String passwordHashed = user.getPassword();
-			if (user.getPassword().equals(passwordHashed)) {
+			
+			 MessageDigestPasswordEncoder sha = new MessageDigestPasswordEncoder(DIGEST_ALGORITHM);
+			 
+			 if(sha.isPasswordValid(user.getPassword(), password, user.getPasswordSalt())){
 
 				Set<GrantedAuthority> roles = new HashSet<>();
 				List<String> groupsStr = new ArrayList<>();

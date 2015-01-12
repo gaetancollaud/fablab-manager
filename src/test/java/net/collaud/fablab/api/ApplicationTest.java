@@ -14,5 +14,5 @@ import org.springframework.context.annotation.ImportResource;
 	"classpath:/spring-security.xml",//standard env
 })
 public class ApplicationTest {
-	
+
 }

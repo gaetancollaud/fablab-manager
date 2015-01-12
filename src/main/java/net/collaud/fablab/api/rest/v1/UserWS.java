@@ -1,8 +1,11 @@
 package net.collaud.fablab.api.rest.v1;
 
+import net.collaud.fablab.api.dao.MembershipTypeDao;
 import net.collaud.fablab.api.dao.RoleDao;
+import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.rest.v1.data.AbstractTO;
+import net.collaud.fablab.api.rest.v1.data.MembershipTypeTO;
 import net.collaud.fablab.api.rest.v1.data.UserSimpleTO;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
@@ -31,6 +34,9 @@ public class UserWS {
 
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private MembershipTypeDao membershipTypeDao;
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Secured(RolesHelper.ROLE_MANAGE_USER)
@@ -46,9 +52,17 @@ public class UserWS {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	@ResponseBody
 	public BaseModel save(@RequestBody UserEO user) {
 		return new DataModel(userService.save(user));
+	}
+	
+	@RequestMapping(value="membershipType", method = RequestMethod.GET)
+	@Secured(RolesHelper.ROLE_MANAGE_USER)
+	public BaseModel getallMembershipType() {
+		return new DataModel(MembershipTypeTO.fromEOList(
+				membershipTypeDao.getAllMembershipType(),
+				MembershipTypeEO.class,
+				MembershipTypeTO.class));
 	}
 
 }

@@ -3,10 +3,11 @@ angular.module('App', [
 	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
 	'pascalprecht.translate', 'ngTable',
 	// Core
-	'Notification', 'Loader', 'httpInterceptor',
-	'FabNaviguation',
+	'Notification', 'Loader', 'httpInterceptor', 'core.filter.core', 'core.filter.date',
+	// Fablab 
+	'FabNaviguation', 'FabFilters',
 	//components
-	'Auth', 'Dashboard', 'User',
+	'Auth', 'Dashboard', 'User', 'Reservation',
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',
 	function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
@@ -24,6 +25,9 @@ angular.module('App', [
 		}).when('/users/edit', {
 			templateUrl: './components/user/edit-view.html',
 			controller: 'UserNewController'
+		}).when('/reservations', {
+			templateUrl: './components/reservation/list-view.html',
+			controller: 'ReservationListController'
 		}).otherwise({
 			redirectTo: '/'
 		});

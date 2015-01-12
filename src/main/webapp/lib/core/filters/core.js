@@ -2,6 +2,29 @@
 	'use strict';
 
 	var cmp = angular.module('core.filter.core', ['ngSanitize']);
+	
+	cmp.filter('inlineList', function(){
+		return function(list, separator, param){
+			if(!separator){
+				separator = ', ';
+			}
+			
+			var first = true;
+			var ret = "";
+			for(var k in list){
+				if(!first){
+					ret += separator;
+				}
+				first = false;
+				if(param){
+					ret += list[k][param];
+				}else{
+					ret += list[k];
+				}
+			}
+			return ret;
+		}
+	});
 
 	//new line to <br />
 	cmp.filter('nl2br', ['$sce', '$sanitize', function ($sce, $sanitize) {

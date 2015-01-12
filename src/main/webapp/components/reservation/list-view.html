@@ -1,0 +1,39 @@
+
+<div class="header-control">
+	<div class="btn-group">
+		<a class="btn btn-success" href="#/reservations/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+		<a class="btn btn-danger" href="#/reservations/export">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
+	</div>
+</div>
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="reservation in $data">
+        <td 
+			data-title="'reservation.start' | translate" 
+			sortable="'firstname'"
+			filter="{'firstname':'text'}">
+			{{reservation.dateStart | formatTimestamp}}
+		</td>
+        <td 
+			data-title="'reservation.end' | translate" 
+			sortable="'lastname'"
+			filter="{'lastname':'text'}">
+			{{reservation.dateEnd | formatTimestamp}}
+		</td>
+        <td 
+			data-title="'reservation.user' | translate" 
+			sortable="'user.lastname'">
+			{{reservation.user | prettyUser}}
+		</td>
+        <td 
+			data-title="'reservation.machine' | translate"
+			sortable="'machine.name'">
+			{{reservation.machine}}
+		</td>
+        <td>
+			<div class="btn-group">
+				<a class="btn btn-sm btn-default" href="#/reservations/edit/{{reservation.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+				<button class="btn btn-sm btn-danger" href="" ng-click="remove(reservation)"><span class="glyphicon glyphicon-trash"></span></button>
+			</div>
+		</td>
+    </tr>
+</table> 

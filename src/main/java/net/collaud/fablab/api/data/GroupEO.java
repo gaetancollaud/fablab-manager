@@ -28,6 +28,7 @@ public class GroupEO extends AbstractDataEO implements Serializable {
 	@Column(name = "group_id", nullable = false)
 	private Integer groupId;
 
+	@JsonIgnore
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
 

@@ -4,11 +4,11 @@ ctrl.controller('GlobalUserEditController', [
 	'$location',
 	'$filter',
 	'$q',
-	'ngTableParams',
 	'UserService',
+	'GroupService',
 	'NotificationService',
-	function ($scope, $location, $filter, $q, ngTableParams,
-			UserService, NotificationService) {
+	function ($scope, $location, $filter, $q,
+			UserService, GroupService, NotificationService) {
 
 		$scope.loadUser = function (userId) {
 			UserService.get(userId, function (data) {
@@ -21,6 +21,14 @@ ctrl.controller('GlobalUserEditController', [
 				$scope.user = data;
 			});
 		};
+		
+		UserService.membershipTypeList(function(data){
+			$scope.membershipTypeList = data;
+		});
+		
+		GroupService.list(function(data){
+			$scope.groups = data;
+		});
 	}
 ]);
 ctrl.controller('UserNewController',

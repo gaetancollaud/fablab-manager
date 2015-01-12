@@ -78,6 +78,10 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@JsonIgnore
+	@Column(name = "password_salt", nullable = false)
+	private String passwordSalt;
+	
 	@Transient
 	private String newPassword;
 
@@ -196,6 +200,14 @@ public class UserEO extends AbstractDataEO implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
 	}
 
 	public String getFirstname() {

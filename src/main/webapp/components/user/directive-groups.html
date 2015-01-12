@@ -1,0 +1,8 @@
+<div class="checkbox"  ng-repeat="group in groups" 
+			   title="{{group.roles|inlineList:', ':'name'}}">
+	<label>
+		<input type="checkbox" ng-checked="isSelected(group)" ng-click="toggleGroupSelect(group)">
+		{{group.name}}
+		</div>
+	</label>
+</div>

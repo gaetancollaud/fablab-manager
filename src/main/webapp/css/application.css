@@ -7,3 +7,7 @@
 .clear{
 	clear: both;
 }
+.header-control{
+	text-align: center;
+	margin-bottom: 10px;
+}

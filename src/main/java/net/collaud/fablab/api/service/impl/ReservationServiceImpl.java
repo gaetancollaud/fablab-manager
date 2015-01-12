@@ -45,14 +45,14 @@ public class ReservationServiceImpl implements ReservationService {
 	@Secured({RolesHelper.ROLE_MANAGE_RESERVATION, RolesHelper.ROLE_USE_RESERVATION})
 	public void remove(Integer reservationId) throws FablabException {
 		LOG.debug("Remove with id"+reservationId);
-		reservationDao.remove(reservationId);
+		reservationDao.delete(reservationId);
 	}
 
 	@Override
 	@Secured({RolesHelper.ROLE_VIEW_RESERVATION})
 	public List<ReservationEO> findReservations(Date dateStart, Date dateEnd, List<Integer> machineIds) throws FablabException {
 		LOG.debug("find reservation from "+dateStart+" to "+dateEnd+" of machines "+machineIds);
-		return reservationDao.findReservations(dateStart, dateEnd, machineIds);
+		return reservationDao.findReservations(dateStart, dateEnd);
 	}
 
 }

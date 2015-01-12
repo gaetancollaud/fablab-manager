@@ -18,7 +18,9 @@ angular.module('App').config(function ($translateProvider) {
 		},
 		button:{
 			cancel:'Cancel',
-			save:'Save'
+			save:'Save',
+			create:'Create',
+			export:'Export'
 		},
 		auth:{
 			result:{
@@ -36,6 +38,17 @@ angular.module('App').config(function ($translateProvider) {
 			email:'Email',
 			balance:'Balance',
 			membership:'Membership',
+			newpassword:'New password',
+			phone:'Phone',
+			address:'Address',
+			rfid:'RFID',
+			groups:'Groups'
+		},
+		reservation:{
+			start:'Start',
+			end:'End',
+			user:'User',
+			machine:'Machine'
 		}
 	});
 });

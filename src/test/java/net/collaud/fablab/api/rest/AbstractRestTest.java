@@ -21,7 +21,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 /**
  *
- * @author GaÃ©tan
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 abstract public class AbstractRestTest extends TestCase {
 

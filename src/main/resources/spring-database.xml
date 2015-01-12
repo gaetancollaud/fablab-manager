@@ -36,6 +36,32 @@
 	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<data:repositories base-package="net.collaud.fablab.api.dao"
+					   entity-manager-factory-ref="entityManagerFactory"
+					   transaction-manager-ref="txManager"/> 
+	
+	<bean id="entityManagerFactory"
+		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="packagesToScan" value="net.collaud.fablab.api.data" />
+		<property name="dataSource" ref="fablabDataSource" />
+
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
+		</property>
+
+	</bean>
+	
+	
+	
+	
 
 <!--
 <bean id="persistenceUnitManager"

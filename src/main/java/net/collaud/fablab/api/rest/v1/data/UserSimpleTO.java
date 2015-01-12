@@ -1,7 +1,7 @@
 package net.collaud.fablab.api.rest.v1.data;
 
-import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
+import org.hibernate.LazyInitializationException;
 
 /**
  *
@@ -30,7 +30,11 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 		setLastname(eo.getLastname());
 		setEmail(eo.getEmail());
 		setBalance(eo.getBalance());
-		setMembershipType(new MembershipTypeTO().fromEO(eo.getMembershipType()));
+		try {
+			setMembershipType(new MembershipTypeTO().fromEO(eo.getMembershipType()));
+		} catch (LazyInitializationException ex) {
+			//fuck off hibernate
+		}
 		return this;
 	}
 
