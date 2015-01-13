@@ -1,4 +1,4 @@
-fablab-api
+fablab-api [![Build Status](https://travis-ci.org/gaetancollaud/fablab-api.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-api)
 ==========
 
-A simple REST API for the fablab application
+The new version of fablab-manager
