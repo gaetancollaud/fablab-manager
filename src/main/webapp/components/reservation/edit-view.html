@@ -1,0 +1,75 @@
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span ng-if="newUser">Création d'un utilisation</span>
+		<span ng-if="!newUser">Edition de : {{user.firstname}} {{user.lastname}}</span>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="reservation.machine"></label>
+				<div class="col-sm-8">
+					<select class="form-control" 
+							ng-model="reservation.machine"
+							ng-options="m.name group by m.machineType.name for m in machines track by m.machineId"></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="reservation.date"></label>
+				<div class="col-sm-8">
+					<p class="input-group">
+						<input type="text" 
+							   class="form-control" 
+							   datepicker-popup="{{dateFormat}}" 
+							   ng-model="date" 
+							   is-open="opened" 
+							   min-date="minDate" 
+							   max-date="'2015-06-22'" 
+							   datepicker-options="dateOptions" 
+							   date-disabled="disabled(date, mode)" 
+							   ng-required="true" 
+							   close-text="Close" />
+						<span class="input-group-btn">
+							<button type="button" 
+									class="btn btn-default" 
+									ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="reservation.startTime"></label>
+				<div class="col-sm-8">
+					<timepicker ng-model="startTime" 
+								ng-change="changed()" 
+								hour-step="hstep" 
+								minute-step="mstep" 
+								show-meridian="ismeridian"></timepicker>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="reservation.endTime"></label>
+				<div class="col-sm-8">
+					<timepicker ng-model="endTime" 
+								ng-change="changed()" 
+								hour-step="hstep" 
+								minute-step="mstep" 
+								show-meridian="ismeridian"></timepicker>
+				</div>
+			</div>
+
+			<pre>
+{{reservation|stringify}}
+			</pre>
+
+		</form>
+	</div>
+	<div class="panel-footer right">
+		<a href="#/users" class="btn btn-default btn-glyph" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
+		<button class="btn btn-success btn-glyph" ng-click="save(false)">{{'button.save'| translate}} <span class="glyphicon glyphicon-floppy-disk"></span></button>
+	</div>
+</div>

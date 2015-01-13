@@ -1,8 +1,8 @@
 package net.collaud.fablab.api.dao;
 
+import java.util.List;
 import net.collaud.fablab.api.data.UserEO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +31,9 @@ public interface UserDao extends JpaRepository<UserEO, Integer>{
 			+ " FROM UserEO u "
 			+ " WHERE u.login=:login OR u.email=:login")
 	UserEO findByLogin(@Param("login") String login);
+	
+	@Override
+	@Query("SELECT u FROM UserEO u WHERE u.enabled=1")
+	List<UserEO> findAll();
 	
 }

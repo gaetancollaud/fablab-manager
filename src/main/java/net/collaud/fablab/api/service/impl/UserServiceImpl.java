@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl extends AbstractServiceImpl implements UserService {
 
-
 	@Autowired
 	private UserDao userDao;
 	

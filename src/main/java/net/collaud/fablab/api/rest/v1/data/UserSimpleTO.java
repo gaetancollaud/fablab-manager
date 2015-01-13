@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.rest.v1.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 
@@ -7,6 +9,8 @@ import net.collaud.fablab.api.data.UserEO;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
+@Getter
+@Setter
 public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 
 	private Integer userId;
@@ -35,62 +39,6 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 	}
 
 	public UserSimpleTO() {
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
-
-	public MembershipTypeEO getMembershipType() {
-		return membershipType;
-	}
-
-	public void setMembershipType(MembershipTypeEO membershipType) {
-		this.membershipType = membershipType;
 	}
 
 }

@@ -7,7 +7,7 @@ angular.module('App', [
 	// Fablab 
 	'FabNaviguation', 'FabFilters', 'FabReallyClick',
 	//components
-	'Auth', 'Dashboard', 'User', 'Reservation',
+	'Auth', 'Dashboard', 'User', 'Reservation', 'Machine'
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',
 	function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
@@ -28,6 +28,12 @@ angular.module('App', [
 		}).when('/reservations', {
 			templateUrl: './components/reservation/list-view.html',
 			controller: 'ReservationListController'
+		}).when('/reservations/edit/:id', {
+			templateUrl: './components/reservation/edit-view.html',
+			controller: 'ReservationEditController'
+		}).when('/reservations/edit', {
+			templateUrl: './components/reservation/edit-view.html',
+			controller: 'ReservationNewController'
 		}).otherwise({
 			redirectTo: '/'
 		});

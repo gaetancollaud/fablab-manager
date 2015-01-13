@@ -1,12 +1,11 @@
-angular.module('Dashboard').controller('DashboardHomeController',
+angular.module('Dashboard', []).controller('DashboardHomeController',
 		[
 			'$rootScope',
 			'$scope',
 			'$location',
 			'NotificationService',
-			'DashboardService',
-			function ($rootScope, $scope, $location, NotificationService, DashboardService) {
-				
+			function ($rootScope, $scope, $location, NotificationService) {
+
 			}
 		]
 		);

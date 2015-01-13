@@ -2,7 +2,6 @@
 <div class="header-control">
 	<div class="btn-group">
 		<a class="btn btn-success" href="#/reservations/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
-		<a class="btn btn-danger" href="#/reservations/export">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
 	</div>
 </div>
 <table ng-table="tableParams" class="table" show-filter="true">
@@ -31,7 +30,7 @@
 		</td>
         <td>
 			<div class="btn-group">
-				<a class="btn btn-sm btn-default" href="#/reservations/edit/{{reservation.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a class="btn btn-sm btn-default" href="#/reservations/edit/{{reservation.reservationId}}"><span class="glyphicon glyphicon-pencil"></span></a>
 				<button class="btn btn-sm btn-danger" href="" ng-click="remove(reservation)"><span class="glyphicon glyphicon-trash"></span></button>
 			</div>
 		</td>

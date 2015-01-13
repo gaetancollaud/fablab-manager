@@ -3,6 +3,7 @@
 	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:data="http://www.springframework.org/schema/data/jpa"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
 	   xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -32,16 +33,18 @@
 		</property>
 	</bean>
 	
+	
+    <bean id="txManager" 
+          class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
+	
 	<tx:annotation-driven transaction-manager="txManager"/>
-	<!--	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+<!--	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>-->
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSourceWebsube" />
-	</bean>
 	<data:repositories base-package="net.collaud.fablab.api.dao"
 					   entity-manager-factory-ref="entityManagerFactory"
-					   transaction-manager-ref="txManager"/> 
+					   transaction-manager-ref="txManager"/>
 	
 	<bean id="entityManagerFactory"
 		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -58,11 +61,7 @@
 		<property name="persistenceProvider">
 			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
 		</property>
-
 	</bean>
-	
-	
-	
 	
 
 <!--
