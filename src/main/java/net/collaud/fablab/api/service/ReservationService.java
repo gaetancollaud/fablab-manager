@@ -3,7 +3,6 @@ package net.collaud.fablab.api.service;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.ReservationEO;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.global.ReadWriteService;
 
 /**

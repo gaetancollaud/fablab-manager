@@ -1,54 +1,69 @@
 angular.module('App').config(function ($translateProvider) {
 	$translateProvider.translations('en', {
-		error:{
-			internal:'Internal error',
+		error: {
+			internal: 'Internal error',
 			ajax: {
-				unauthorized:'Unauthorized',
-				global:'Ajax error'
+				unauthorized: 'Unauthorized',
+				global: 'Ajax error'
 			}
 		},
-		menu:{
-			home:'Home',
-			users:'Users',
-			reservation:'Reservation',
+		menu: {
+			home: 'Home',
+			users: 'Users',
+			reservation: 'Reservation',
 		},
-		loading:{
-			title:'Loading',
-			text:'Loading...'
+		loading: {
+			title: 'Loading',
+			text: 'Loading...'
 		},
-		button:{
-			cancel:'Cancel',
-			save:'Save',
-			create:'Create',
-			export:'Export'
+		button: {
+			cancel: 'Cancel',
+			save: 'Save',
+			create: 'Create',
+			export: 'Export',
+			search: 'Search'
 		},
-		auth:{
-			result:{
-				ok:'Login Successful',
-				unknownUserPassword:'Login and/or password incorrect'
+		panel: {
+			search:'Filters'
+		},
+		filter:{
+			from:'From',
+			to:'To',
+		},
+		auth: {
+			result: {
+				ok: 'Login Successful',
+				unknownUserPassword: 'Login and/or password incorrect'
 			},
-			pleaseSignIn:'Please sign in',
-			email:'Email address',
-			password:'Password',
-			signIn:'Sign In'
+			pleaseSignIn: 'Please sign in',
+			email: 'Email address',
+			password: 'Password',
+			signIn: 'Sign In'
 		},
-		user:{
-			firstname:'Firstname',
-			lastname:'Lastname',
-			email:'Email',
-			balance:'Balance',
-			membership:'Membership',
-			newpassword:'New password',
-			phone:'Phone',
-			address:'Address',
-			rfid:'RFID',
-			groups:'Groups'
+		user: {
+			firstname: 'Firstname',
+			lastname: 'Lastname',
+			email: 'Email',
+			balance: 'Balance',
+			membership: 'Membership',
+			newpassword: 'New password',
+			phone: 'Phone',
+			address: 'Address',
+			rfid: 'RFID',
+			groups: 'Groups'
 		},
-		reservation:{
-			start:'Start',
-			end:'End',
-			user:'User',
-			machine:'Machine'
+		reservation: {
+			day: 'Day',
+			start: 'Start',
+			end: 'End',
+			user: 'User',
+			machine: 'Machine',
+			date: 'Date',
+			startTime: 'Heure de début',
+			endTime: 'Heure de fin',
+			edit: {
+				title: "Réservation d'une machine"
+			}
 		}
 	});
 });

@@ -1,0 +1,24 @@
+<p class="input-group">
+	<input type="text" 
+		   class="form-control" 
+		   datepicker-popup="dd MMMM yyyy" 
+		   ng-model="ngModel" 
+		   is-open="opened" 
+		   datepicker-options="dateOptions" 
+		   disabled="true"
+		   close-text="X" />
+	<span class="input-group-btn">
+		<button type="button" 
+				class="btn btn-default" 
+				ng-click="open($event)">
+			<i class="glyphicon glyphicon-calendar"></i>
+		</button>
+	</span>
+	<span class="input-group-btn">
+		<button type="button" 
+				class="btn btn-danger" 
+				ng-click="clear($event)">
+			<i class="glyphicon glyphicon-remove"></i>
+		</button>
+	</span>
+</p>

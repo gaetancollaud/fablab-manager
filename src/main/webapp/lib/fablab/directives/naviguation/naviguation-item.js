@@ -1,4 +1,4 @@
-var naviguation = angular.module('FabNaviguation', []);
+var naviguation = angular.module('Fablab');
 naviguation.directive('fabNavItem', function(){
 	return {
 		restrict:'EA',

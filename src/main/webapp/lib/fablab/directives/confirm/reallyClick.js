@@ -1,4 +1,4 @@
-angular.module('FabReallyClick', []).directive('ngReallyClick', [function() {
+angular.module('Fablab').directive('ngReallyClick', [function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {

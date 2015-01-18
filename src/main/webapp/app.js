@@ -1,11 +1,11 @@
 angular.module('App', [
 	//ext-lib
 	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-	'pascalprecht.translate', 'ngTable',
+	'pascalprecht.translate', 'ngTable','ui.calendar', 
 	// Core
 	'Notification', 'Loader', 'httpInterceptor', 'core.filter.core', 'core.filter.date',
 	// Fablab 
-	'FabNaviguation', 'FabFilters', 'FabReallyClick',
+	'Fablab',
 	//components
 	'Auth', 'Dashboard', 'User', 'Reservation', 'Machine'
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',

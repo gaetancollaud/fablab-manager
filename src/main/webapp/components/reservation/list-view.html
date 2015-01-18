@@ -1,38 +1,67 @@
 
-<div class="header-control">
-	<div class="btn-group">
-		<a class="btn btn-success" href="#/reservations/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+<div class="panel panel-default">
+	<div class="panel-heading" translate="panel.search"></div>
+	<div class="panel-body">
+		<form name="form" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="filter.from"></label>
+				<div class="col-sm-4">
+					<filter-date ng-model="criteria.dateFrom" />
+				</div>
+				<label class="col-sm-2 control-label" translate="filter.to"></label>
+				<div class="col-sm-4">
+					<filter-date ng-model="criteria.dateTo" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="panel-footer text-right">
+		<a class="btn btn-primary" ng-click="updateReservationList()">
+			{{'button.search'| translate}} 
+			<span class="glyphicon glyphicon-search"> </span>
+		</a>
+		<a class="btn btn-success" href="#/reservations/edit">
+			{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> 
+			</span></a>
 	</div>
 </div>
+
 <table ng-table="tableParams" class="table" show-filter="true">
     <tr ng-repeat="reservation in $data">
         <td 
-			data-title="'reservation.start' | translate" 
-			sortable="'firstname'"
-			filter="{'firstname':'text'}">
-			{{reservation.dateStart | formatTimestamp}}
+			data-title="'reservation.day' | translate" 
+			sortable="'dateStart'">
+			{{reservation.dateStart| formatTimestamp:'D MMMM YYYY'}}
 		</td>
         <td 
-			data-title="'reservation.end' | translate" 
-			sortable="'lastname'"
-			filter="{'lastname':'text'}">
-			{{reservation.dateEnd | formatTimestamp}}
+			data-title="'reservation.startTime' | translate" >
+			{{reservation.dateStart| formatTimestamp:'HH:mm'}}
+		</td>
+        <td 
+			data-title="'reservation.endTime' | translate" >
+			{{reservation.dateEnd| formatTimestamp:'HH:mm'}}
 		</td>
         <td 
 			data-title="'reservation.user' | translate" 
 			sortable="'user.lastname'">
-			{{reservation.user | prettyUser}}
+			{{reservation.user| prettyUser}}
 		</td>
         <td 
 			data-title="'reservation.machine' | translate"
 			sortable="'machine.name'">
-			{{reservation.machine}}
+			{{reservation.machine.name}}
 		</td>
         <td>
 			<div class="btn-group">
 				<a class="btn btn-sm btn-default" href="#/reservations/edit/{{reservation.reservationId}}"><span class="glyphicon glyphicon-pencil"></span></a>
-				<button class="btn btn-sm btn-danger" href="" ng-click="remove(reservation)"><span class="glyphicon glyphicon-trash"></span></button>
+				<button class="btn btn-sm btn-danger" href=""
+						ng-really-click="remove(reservation)"
+						ng-really-message="Really remove this reservation ?">
+					<span class="glyphicon glyphicon-trash"></span></button>
 			</div>
 		</td>
     </tr>
 </table> 
+<hr />
+
+<div ui-calendar="uiConfig.calendar" class="calendar" ng-model="eventSources"></div> 

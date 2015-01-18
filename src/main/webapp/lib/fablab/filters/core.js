@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var cmp = angular.module('FabFilters', ['ngSanitize']);
+	var cmp = angular.module('Fablab');
 
 	cmp.filter('prettyUser', function () {
 		return function (user) {
