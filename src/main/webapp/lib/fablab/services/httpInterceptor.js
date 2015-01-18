@@ -84,7 +84,7 @@ App.interceptors.error = function (response, scope) {
 	}
 
 	if (status == 401) { // unauthorized - redirect to login again
-		window.location = "/";
+		window.location = App.Constants.rootUrl;
 	} else if (response.data == null) {
 		if (App.interceptors.isEventDriven()) {
 			App.interceptors.fireEvent(App.interceptors.createEvent(

@@ -1,17 +1,15 @@
 package net.collaud.fablab.api.rest.v1;
 
-import net.collaud.fablab.api.dao.MembershipTypeDao;
+import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.data.UserEO;
-import net.collaud.fablab.api.rest.v1.data.AbstractTO;
-import net.collaud.fablab.api.rest.v1.data.UserSimpleTO;
+import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
 import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.service.MembershipTypeService;
 import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,43 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("/v1/user")
 @Secured(RolesHelper.ROLE_ADMIN)
-public class UserWS {
+public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
-	private MembershipTypeDao membershipTypeDao;
+	private MembershipTypeService membershipTypeService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	public DataModel<Iterable<UserSimpleTO>> list() {
-		return new DataModel(AbstractTO.fromEOList(userService.getAllUsers(), UserEO.class, UserSimpleTO.class));
-	}
-
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	public BaseModel get(@PathVariable Integer id) {
-		return new DataModel(userService.findById(id));
+	@PostConstruct
+	private void postConstruct() {
+		super.setService(userService);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	public BaseModel save(@RequestBody UserEO user) {
-		return new DataModel(userService.save(user));
-	}
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	@Secured(RolesHelper.ROLE_MANAGE_USER)
-	public BaseModel delete(@PathVariable Integer id) {
-		userService.removeById(id);
-		return new BaseModel();
-	}
-	
-	@RequestMapping(value="membershipType", method = RequestMethod.GET)
-	@Secured(RolesHelper.ROLE_MANAGE_USER)
+	//FIXME put in standalone WS
+	@RequestMapping(value = "membershipType", method = RequestMethod.GET)
 	public BaseModel getallMembershipType() {
-		return new DataModel(membershipTypeDao.findAll());
+		return new DataModel(membershipTypeService.findAll());
 	}
 
 }

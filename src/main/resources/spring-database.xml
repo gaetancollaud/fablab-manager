@@ -33,15 +33,11 @@
 		</property>
 	</bean>
 	
-	
+	<tx:annotation-driven transaction-manager="txManager"/>
     <bean id="txManager" 
           class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 	
-	<tx:annotation-driven transaction-manager="txManager"/>
-<!--	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>-->
 	<data:repositories base-package="net.collaud.fablab.api.dao"
 					   entity-manager-factory-ref="entityManagerFactory"
 					   transaction-manager-ref="txManager"/>

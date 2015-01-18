@@ -3,6 +3,7 @@ package net.collaud.fablab.api.data;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -22,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -29,6 +32,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "t_user")
+@Getter
+@Setter
 public class UserEO extends AbstractDataEO implements Serializable {
 
 	public static final String FIND_ALL
@@ -82,7 +87,8 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	private String passwordSalt;
 	
 	@Transient
-	private String newPassword;
+	@JsonProperty
+	private String passwordNew;
 
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
@@ -165,98 +171,6 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		this.enabled = true;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public boolean isAuthBySql() {
-		return authBySql;
-	}
-
-	public void setAuthBySql(Boolean authBySql) {
-		this.authBySql = authBySql;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPasswordSalt() {
-		return passwordSalt;
-	}
-
-	public void setPasswordSalt(String passwordSalt) {
-		this.passwordSalt = passwordSalt;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getDateInscr() {
-		return dateInscr;
-	}
-
-	public void setDateInscr(Date dateInscr) {
-		this.dateInscr = dateInscr;
-	}
-
-	public float getBalance() {
-		return balance;
-	}
-
-	public void setBalance(float balance) {
-		this.balance = balance;
-	}
-
-	public String getRfid() {
-		return rfid;
-	}
-
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-	}
-
-	@JsonIgnore
-	public String getFirstLastName() {
-		return firstname + " " + lastname;
-	}
 
 	@Override
 	public int hashCode() {
@@ -290,85 +204,8 @@ public class UserEO extends AbstractDataEO implements Serializable {
 		return "net.collaud.fablab.data.User[ userId=" + userId + " ]";
 	}
 
-	public Set<GroupEO> getGroups() {
-		return groups;
+	@JsonIgnore
+	public String getFirstLastName() {
+		return firstname+" "+lastname;
 	}
-
-	public void setGroups(Set<GroupEO> groups) {
-		this.groups = groups;
-	}
-
-	public MembershipTypeEO getMembershipType() {
-		return membershipType;
-	}
-
-	public void setMembershipType(MembershipTypeEO membershipType) {
-		this.membershipType = membershipType;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	
-	public boolean getAuthBySql() {
-		return authBySql;
-	}
-
-	public void setAuthBySql(boolean authBySql) {
-		this.authBySql = authBySql;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public Set<SubscriptionEO> getSubscriptions() {
-		return subscriptions;
-	}
-
-	public void setSubscriptions(Set<SubscriptionEO> subscriptions) {
-		this.subscriptions = subscriptions;
-	}
-
-	public Set<PaymentEO> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(Set<PaymentEO> payments) {
-		this.payments = payments;
-	}
-
-	public Set<ReservationEO> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(Set<ReservationEO> reservations) {
-		this.reservations = reservations;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
 }

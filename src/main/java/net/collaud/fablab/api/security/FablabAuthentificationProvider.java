@@ -3,6 +3,7 @@ package net.collaud.fablab.api.security;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.service.UserService;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,7 +27,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);
-	
 
 	@Autowired
 	private UserService userService;
@@ -35,17 +34,13 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String login = authentication.getName();
-		String password = authentication.getCredentials().toString();
+		String password = authentication.getCredentials() != null
+				? authentication.getCredentials().toString() : "";
 		UserEO user;
 
-		try {
-			user = userService.findByLogin(login);
-		} catch (Exception ex) {
-			throw new AuthenticationServiceException("Cannot get user with login " + login, ex);
-		}
+		user = userService.findByLogin(login);
 		if (user != null) {
-			 if(PasswordUtils.isPasswordValue(user, password)){
-
+			if (PasswordUtils.isPasswordValid(user, password)) {
 				Set<GrantedAuthority> roles = new HashSet<>();
 				List<String> groupsStr = new ArrayList<>();
 				List<String> rolesStr = new ArrayList<>();
@@ -74,6 +69,5 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
 	}
-	
 
 }

@@ -2,6 +2,8 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import net.collaud.fablab.api.dao.GroupDao;
 import net.collaud.fablab.api.dao.MembershipTypeDao;
@@ -9,10 +11,12 @@ import net.collaud.fablab.api.dao.UserDao;
 import net.collaud.fablab.api.data.GroupEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.PasswordUtils;
+import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +30,10 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private MembershipTypeDao membershipTypeDao;
-	
+
 	@Autowired
 	private GroupDao groupDao;
 
@@ -42,21 +46,24 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	public Iterable<UserEO> getAllUsers() {
+	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	public List<UserEO> findAll() {
 		return userDao.findAll();
 	}
 
 	@Override
-	public UserEO findById(Integer id) {
-		return userDao.findOneDetails(id);
+	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	public Optional<UserEO> getById(Integer id) {
+		return Optional.ofNullable(userDao.findOneDetails(id));
 	}
 
 	@Override
+	@Secured({RolesHelper.ROLE_MANAGE_USER})
 	public UserEO save(UserEO user) {
-		boolean changePassword = !StringUtils.isBlank(user.getNewPassword());
-		if(changePassword){
-			user = PasswordUtils.setUseEONewPassword(user, user.getNewPassword());
-		}else if(user.getUserId()==0){
+		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
+		if (changePassword) {
+			user = PasswordUtils.setUseEONewPassword(user, user.getPasswordNew());
+		} else if (user.getUserId() == 0) {
 			//set random password for new user
 			user = PasswordUtils.setUseEONewPassword(user, RandomStringUtils.random(20, true, true));
 		}
@@ -72,8 +79,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 			old.setRfid(user.getRfid());
 			old.setMembershipType(user.getMembershipType());
 			old.setGroups(user.getGroups());
-			if(changePassword){
+			if (changePassword) {
 				old.setPassword(user.getPassword());
+				old.setPasswordSalt(user.getPasswordSalt());
 			}
 			return userDao.saveAndFlush(old);
 		} else {
@@ -83,7 +91,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	public void removeById(Integer id) {
+	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	public void remove(Integer id) {
 		UserEO user = userDao.findOne(id);
 		user.setEnabled(false);
 		userDao.saveAndFlush(user);

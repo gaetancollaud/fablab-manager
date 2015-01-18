@@ -1,21 +1,13 @@
 package net.collaud.fablab.api.service;
 
 import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.service.global.ReadWriteService;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface UserService {
+public interface UserService extends ReadWriteService<UserEO>{
 
 	UserEO findByLogin(String login);
-	
-	UserEO findById(Integer id);
-
-	Iterable<UserEO> getAllUsers();
-	
-	UserEO save(UserEO user);
-
-	void removeById(Integer id);
-
 }
