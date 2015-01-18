@@ -8,9 +8,7 @@ package net.collaud.fablab.api.security;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.data.UserEO;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
