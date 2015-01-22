@@ -60,6 +60,12 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	@Override
 	@Secured({RolesHelper.ROLE_MANAGE_USER})
 	public UserEO save(UserEO user) {
+		if(user.getUserId()==null){
+			user.setUserId(0);
+		}
+		if(user.getLogin()==null){
+			user.setLogin(user.getFirstLastName());
+		}
 		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
 		if (changePassword) {
 			user = PasswordUtils.setUseEONewPassword(user, user.getPasswordNew());
@@ -85,6 +91,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 			}
 			return userDao.saveAndFlush(old);
 		} else {
+			user.setEnabled(true);
 			user.setDateInscr(new Date());
 			return userDao.saveAndFlush(user);
 		}
