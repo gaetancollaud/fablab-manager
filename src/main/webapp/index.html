@@ -68,6 +68,7 @@
 		<script src="./components/services/reservation-services.js"></script>
 		<script src="./components/services/user-services.js"></script>
 		<script src="./components/services/machine-services.js"></script>
+		<script src="./components/services/payment-services.js"></script>
 
 		<script src="./components/dashboard/home-ctrl.js"></script>
 
@@ -80,6 +81,8 @@
 		<script src="./components/reservation/list-ctrl.js"></script>
 		<script src="./components/reservation/edit-ctrl.js"></script>
 		
+		<script src="./components/payment/by-user-ctrl.js"></script>
+		
 		<!-- endbuild -->
 
 	<toast></toast>
@@ -89,10 +92,15 @@
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse"
 					 id="bs-example-navbar-collapse-1">
-					<ul class="nav nav-tabs">
+					<ul class="nav navbar-nav">
 						<li fab-nav-item link="" icon="home" label="menu.home"></li>
 						<li fab-nav-item link="users" icon="user" label="menu.users"  ng-if="hasAnyRole('MANAGE_USER')"></li>
 						<li fab-nav-item link="reservations" icon="calendar" label="menu.reservation"></li>
+						<li fab-nav-item link="payments" icon="euro" label="menu.payments"></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li fab-nav-item link="logout" icon="log-out" label="menu.logout"></li>
+						
 					</ul>
 				</div>
 			</div>

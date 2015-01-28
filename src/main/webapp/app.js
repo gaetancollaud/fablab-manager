@@ -34,6 +34,9 @@ angular.module('App', [
 		}).when('/reservations/edit', {
 			templateUrl: './components/reservation/edit-view.html',
 			controller: 'ReservationNewController'
+		}).when('/payments', {
+			templateUrl: './components/payment/by-user-view.html',
+			controller: 'PaymentByUserController'
 		}).otherwise({
 			redirectTo: '/'
 		});
