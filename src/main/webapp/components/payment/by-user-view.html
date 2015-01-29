@@ -4,6 +4,23 @@
 		User
 	</div>
 	<div class="panel-body">
-		todo ui-select
+		<div class="form-group">
+			<div class="label">User</div>
+			<ui-select 
+				ng-model="selected.user"
+				on-select="onSelectUser($item)"
+				theme="bootstrap">
+				<ui-select-match placeholder="{{'payment.enterName'|translate}}">
+					{{$select.selected.firstname}} {{$select.selected.lastname}} 
+				</ui-select-match>
+				<ui-select-choices repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
+					<div ng-bind-html="u.firstname | highlight: $select.search"></div>
+					<small>
+						{{u.address}}
+					</small>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+		{{selected.user}}
 	</div>
 </div>

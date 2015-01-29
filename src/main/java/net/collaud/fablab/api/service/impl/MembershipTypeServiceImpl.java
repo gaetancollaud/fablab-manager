@@ -2,7 +2,7 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import net.collaud.fablab.api.dao.MembershipTypeDao;
+import net.collaud.fablab.api.dao.MembershipTypeRepository;
 import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.MembershipTypeService;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MembershipTypeServiceImpl extends AbstractServiceImpl implements MembershipTypeService {
 
 	@Autowired
-	private MembershipTypeDao membershipTypeDao;
+	private MembershipTypeRepository membershipTypeDao;
 
 	@Override
 	@Secured({RolesHelper.ROLE_MANAGE_USER})

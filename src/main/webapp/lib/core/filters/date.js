@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var cmp = angular.module('core.filter.date', ['ngSanitize']);
+	var cmp = angular.module('core');
 	
 		cmp.filter('formatTimestamp', function () {
 			return function (input, format) {

@@ -2,7 +2,7 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import net.collaud.fablab.api.dao.GroupDao;
+import net.collaud.fablab.api.dao.GroupRepository;
 import net.collaud.fablab.api.data.GroupEO;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.GroupService;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupServiceImpl extends AbstractServiceImpl implements GroupService {
 
 	@Autowired
-	private GroupDao groupDao;
+	private GroupRepository groupDao;
 
 	@Override
 	@Secured({RolesHelper.ROLE_MANAGE_USER})

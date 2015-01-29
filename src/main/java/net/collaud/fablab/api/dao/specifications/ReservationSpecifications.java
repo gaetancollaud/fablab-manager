@@ -6,7 +6,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.MachineEO_;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.data.ReservationEO_;
@@ -40,7 +39,7 @@ public class ReservationSpecifications {
 		return new Specification<ReservationEO>() {
 			@Override
 			public Predicate toPredicate(Root<ReservationEO> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				return root.get(ReservationEO_.machine).get(MachineEO_.machineId).in(machineIds);
+				return root.get(ReservationEO_.machine).get(MachineEO_.id).in(machineIds);
 			}
 		};
 	}

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
-import net.collaud.fablab.api.dao.GroupDao;
-import net.collaud.fablab.api.dao.MembershipTypeDao;
-import net.collaud.fablab.api.dao.UserDao;
+import net.collaud.fablab.api.dao.GroupRepository;
+import net.collaud.fablab.api.dao.MembershipTypeRepository;
+import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.GroupEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.PasswordUtils;
@@ -29,13 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends AbstractServiceImpl implements UserService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Autowired
-	private MembershipTypeDao membershipTypeDao;
+	private MembershipTypeRepository membershipTypeDao;
 
 	@Autowired
-	private GroupDao groupDao;
+	private GroupRepository groupDao;
 
 	@Override
 	public UserEO findByLogin(String login) {
@@ -60,8 +60,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	@Override
 	@Secured({RolesHelper.ROLE_MANAGE_USER})
 	public UserEO save(UserEO user) {
-		if(user.getUserId()==null){
-			user.setUserId(0);
+		if(user.getId()==null){
+			user.setId(0);
 		}
 		if(user.getLogin()==null){
 			user.setLogin(user.getFirstLastName());
@@ -69,14 +69,14 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
 		if (changePassword) {
 			user = PasswordUtils.setUseEONewPassword(user, user.getPasswordNew());
-		} else if (user.getUserId() == 0) {
+		} else if (user.getId() == 0) {
 			//set random password for new user
 			user = PasswordUtils.setUseEONewPassword(user, RandomStringUtils.random(20, true, true));
 		}
-		user.setMembershipType(membershipTypeDao.findOne(user.getMembershipType().getMembershipTypeId()));
-		user.setGroups(new HashSet<>(groupDao.findAll(user.getGroups().stream().map(GroupEO::getGroupId).collect(toList()))));
-		if (user.getUserId() > 0) {
-			UserEO old = userDao.findOne(user.getUserId());
+		user.setMembershipType(membershipTypeDao.findOne(user.getMembershipType().getId()));
+		user.setGroups(new HashSet<>(groupDao.findAll(user.getGroups().stream().map(GroupEO::getId).collect(toList()))));
+		if (user.getId() > 0) {
+			UserEO old = userDao.findOne(user.getId());
 			old.setFirstname(user.getFirstname());
 			old.setLastname(user.getLastname());
 			old.setEmail(user.getEmail());

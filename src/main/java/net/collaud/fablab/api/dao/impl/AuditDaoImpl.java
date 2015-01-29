@@ -2,7 +2,7 @@ package net.collaud.fablab.api.dao.impl;
 
 import java.util.Date;
 import java.util.List;
-import net.collaud.fablab.api.dao.AuditDAO;
+import net.collaud.fablab.api.dao.AuditRepository;
 import net.collaud.fablab.api.data.AuditEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditObject;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class AuditDaoImpl extends AbstractDAO<AuditEO> implements AuditDAO {
+public class AuditDaoImpl extends AbstractDAO<AuditEO> implements AuditRepository {
 	
 	public AuditDaoImpl() {
 		super(AuditEO.class);

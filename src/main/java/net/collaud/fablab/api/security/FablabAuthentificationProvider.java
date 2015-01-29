@@ -56,7 +56,7 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 				LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
 				//FIXME audit this
 
-				return new UsernamePasswordAuthenticationToken(user.getUserId(), password, roles);
+				return new UsernamePasswordAuthenticationToken(user.getId(), password, roles);
 			} else {
 				throw new BadCredentialsException("wrong password");
 			}

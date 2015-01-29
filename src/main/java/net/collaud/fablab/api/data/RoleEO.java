@@ -1,8 +1,6 @@
 package net.collaud.fablab.api.data;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -15,9 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -25,8 +24,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "t_role")
-@NamedQueries({
-	@NamedQuery(name = "RoleEO.findAll", query = "SELECT r FROM RoleEO r")})
+@Getter
+@Setter
+@ToString
 public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id", nullable = false)
-	private Integer roleId;
+	private Integer id;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -54,70 +54,13 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	public RoleEO() {
 	}
 
-	public RoleEO(Integer roleId) {
-		this.roleId = roleId;
+	public RoleEO(Integer id) {
+		this.id = id;
 	}
 
 	public RoleEO(Integer roleId, String name) {
-		this.roleId = roleId;
+		this.id = roleId;
 		this.name = name;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getTechnicalname() {
-		return technicalname;
-	}
-
-	public void setTechnicalname(String technicalname) {
-		this.technicalname = technicalname;
-	}
-
-	public Set<GroupEO> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<GroupEO> groups) {
-		this.groups = groups;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (roleId != null ? roleId.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof RoleEO)) {
-			return false;
-		}
-		RoleEO other = (RoleEO) object;
-		if ((this.roleId == null && other.roleId != null) || (this.roleId != null && !this.roleId.equals(other.roleId))) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "net.collaud.fablab.api.data.RoleEO[ roleId=" + roleId + " ]";
 	}
 
 }

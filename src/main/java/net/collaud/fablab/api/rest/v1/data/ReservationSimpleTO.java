@@ -1,6 +1,8 @@
 package net.collaud.fablab.api.rest.v1.data;
 
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.data.UserEO;
@@ -9,9 +11,11 @@ import net.collaud.fablab.api.data.UserEO;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
+@Getter
+@Setter
 public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSimpleTO> {
 
-	private Integer reservationId;
+	private Integer id;
 
 	private Date dateStart;
 
@@ -27,7 +31,7 @@ public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSi
 	@Override
 	public ReservationEO convertToEO() {
 		ReservationEO eo = new ReservationEO();
-		eo.setReservationId(getReservationId());
+		eo.setId(getId());
 		eo.setDateStart(getDateStart());
 		eo.setDateEnd(getDateEnd());
 		eo.setMachine(new MachineEO(getMachineId()));
@@ -37,52 +41,13 @@ public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSi
 
 	@Override
 	public ReservationSimpleTO fromEO(ReservationEO eo) {
-		setReservationId(eo.getReservationId());
+		setId(eo.getId());
 		setDateStart(eo.getDateStart());
 		setDateEnd(eo.getDateEnd());
 		setUser(new UserSimpleTO().fromEO(eo.getUser()));
-		setMachineId(eo.getMachine().getMachineId());
+		setMachineId(eo.getMachine().getId());
 		return this;
 	}
 
-	public Integer getReservationId() {
-		return reservationId;
-	}
-
-	public void setReservationId(Integer reservationId) {
-		this.reservationId = reservationId;
-	}
-
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public Date getDateEnd() {
-		return dateEnd;
-	}
-
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = dateEnd;
-	}
-
-	public UserSimpleTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserSimpleTO user) {
-		this.user = user;
-	}
-
-	public Integer getMachineId() {
-		return machineId;
-	}
-
-	public void setMachineId(Integer machineId) {
-		this.machineId = machineId;
-	}
 
 }

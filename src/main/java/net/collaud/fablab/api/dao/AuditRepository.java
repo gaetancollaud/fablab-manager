@@ -11,7 +11,7 @@ import net.collaud.fablab.api.exceptions.FablabException;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface AuditDAO {
+public interface AuditRepository {
 
 	public AuditEO addEntry(AuditEO entry) throws FablabException;
 

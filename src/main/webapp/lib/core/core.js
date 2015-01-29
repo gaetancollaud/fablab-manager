@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var core = angular.module('core', []);
+	var core = angular.module('core', ['ngSanitize']);
 
 	/**
 	 * You need to set the configuration to the core service to use certain functionalities of the core lib

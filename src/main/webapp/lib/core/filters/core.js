@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var cmp = angular.module('core.filter.core', ['ngSanitize']);
+	var cmp = angular.module('core');
 	
 	cmp.filter('inlineList', function(){
 		return function(list, separator, param){

@@ -11,3 +11,6 @@
 	text-align: center;
 	margin-bottom: 10px;
 }
+.ui-select-container small{
+	color:#A0A0A0;
+}

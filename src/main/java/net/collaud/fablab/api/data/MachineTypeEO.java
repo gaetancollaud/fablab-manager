@@ -10,12 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -23,17 +22,15 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "t_machine_type")
-@NamedQueries({})
 @Getter
 @Setter
-public class MachineTypeEO extends AbstractDataEO implements Serializable, Comparable<MachineTypeEO> {
-
-	private static final long serialVersionUID = 1L;
+@ToString
+public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "machine_type_id", nullable = false)
-	private Integer machineTypeId;
+	private Integer id;
 
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
@@ -44,10 +41,6 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 	@JsonIgnore
 	@Column(name = "restricted", nullable = false)
 	private boolean restricted;
-
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType")
-	private List<UserAuthorizedMachineTypeEO> usersAuthorizedList;
 
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType", fetch = FetchType.LAZY)
@@ -61,17 +54,12 @@ public class MachineTypeEO extends AbstractDataEO implements Serializable, Compa
 	}
 
 	public MachineTypeEO(Integer machineTypeId) {
-		this.machineTypeId = machineTypeId;
+		this.id = machineTypeId;
 	}
 
 	public MachineTypeEO(Integer machineTypeId, String name) {
-		this.machineTypeId = machineTypeId;
+		this.id = machineTypeId;
 		this.name = name;
-	}
-
-	@Override
-	public int compareTo(MachineTypeEO o) {
-		return getMachineTypeId().compareTo(o.getMachineTypeId());
 	}
 
 }

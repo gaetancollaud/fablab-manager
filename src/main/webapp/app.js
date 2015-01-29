@@ -1,9 +1,9 @@
 angular.module('App', [
 	//ext-lib
 	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-	'pascalprecht.translate', 'ngTable','ui.calendar', 
+	'pascalprecht.translate', 'ngTable','ui.calendar', 'ui.select',
 	// Core
-	'Notification', 'Loader', 'httpInterceptor', 'core.filter.core', 'core.filter.date',
+	'Notification', 'Loader', 'httpInterceptor', 'core',
 	// Fablab 
 	'Fablab',
 	//components
@@ -35,6 +35,9 @@ angular.module('App', [
 			templateUrl: './components/reservation/edit-view.html',
 			controller: 'ReservationNewController'
 		}).when('/payments', {
+			templateUrl: './components/payment/by-user-view.html',
+			controller: 'PaymentByUserController'
+		}).when('/payments/:id', {
 			templateUrl: './components/payment/by-user-view.html',
 			controller: 'PaymentByUserController'
 		}).otherwise({

@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -21,7 +24,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "t_reservation")
-public class ReservationEO extends AbstractDataEO implements Serializable {
+@Getter
+@Setter
+@ToString
+public class ReservationEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +43,7 @@ public class ReservationEO extends AbstractDataEO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reservation_id", nullable = false)
-	private Integer reservationId;
+	private Integer id;
 
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -58,49 +64,5 @@ public class ReservationEO extends AbstractDataEO implements Serializable {
 	public ReservationEO() {
 	}
 
-	public Integer getReservationId() {
-		return reservationId;
-	}
-
-	public void setReservationId(Integer reservationId) {
-		this.reservationId = reservationId;
-	}
-
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public Date getDateEnd() {
-		return dateEnd;
-	}
-
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = dateEnd;
-	}
-
-	public UserEO getUser() {
-		return user;
-	}
-
-	public void setUser(UserEO user) {
-		this.user = user;
-	}
-
-	public MachineEO getMachine() {
-		return machine;
-	}
-
-	public void setMachine(MachineEO machine) {
-		this.machine = machine;
-	}
-
-	@Override
-	public String toString() {
-		return "net.collaud.fablab.data.ReservationEO[ reservationId=" + reservationId + " ]";
-	}
-
+	
 }

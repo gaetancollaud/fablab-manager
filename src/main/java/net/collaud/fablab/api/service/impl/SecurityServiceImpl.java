@@ -1,6 +1,6 @@
 package net.collaud.fablab.api.service.impl;
 
-import net.collaud.fablab.api.dao.UserDao;
+import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.service.SecurityService;
@@ -30,7 +30,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			.getLogger(SecurityServiceImpl.class);
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Autowired
 	private AuthenticationProvider authManager;

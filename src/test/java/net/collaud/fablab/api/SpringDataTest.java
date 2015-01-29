@@ -1,7 +1,7 @@
 package net.collaud.fablab.api;
 
 import java.util.List;
-import net.collaud.fablab.api.dao.GroupDao;
+import net.collaud.fablab.api.dao.GroupRepository;
 import net.collaud.fablab.api.data.GroupEO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SpringDataTest extends BaseTest {
 
 	@Autowired
-	private GroupDao groupDao;
+	private GroupRepository groupDao;
 
 	@Autowired
 	private PlatformTransactionManager txManager;

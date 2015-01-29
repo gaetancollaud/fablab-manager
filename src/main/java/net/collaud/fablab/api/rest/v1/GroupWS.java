@@ -1,6 +1,6 @@
 package net.collaud.fablab.api.rest.v1;
 
-import net.collaud.fablab.api.dao.GroupDao;
+import net.collaud.fablab.api.dao.GroupRepository;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
 import net.collaud.fablab.api.security.RolesHelper;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupWS {
 
 	@Autowired
-	private GroupDao groupDao;
+	private GroupRepository groupDao;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@Secured(RolesHelper.ROLE_MANAGE_USER)

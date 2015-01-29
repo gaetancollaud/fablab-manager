@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +26,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -34,7 +36,8 @@ import lombok.Setter;
 @Table(name = "t_user")
 @Getter
 @Setter
-public class UserEO extends AbstractDataEO implements Serializable {
+@ToString
+public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
 	public static final String FIND_ALL
 			= " SELECT u "
@@ -73,7 +76,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
-	private Integer userId;
+	private Integer id;
 
 	@Column(name = "login", nullable = false, unique = true)
 	private String login;
@@ -154,12 +157,12 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	public UserEO() {
 	}
 
-	public UserEO(Integer userId) {
-		this.userId = userId;
+	public UserEO(Integer id) {
+		this.id = id;
 	}
 
-	public UserEO(Integer userId, boolean authBySql, String login, String password, String firstname, String lastname, Date dateInscr, float balance, String rfid) {
-		this.userId = userId;
+	public UserEO(Integer id, boolean authBySql, String login, String password, String firstname, String lastname, Date dateInscr, float balance, String rfid) {
+		this.id = id;
 		this.authBySql = authBySql;
 		this.login = login;
 		this.firstname = firstname;
@@ -175,7 +178,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		hash += (userId != null ? userId.hashCode() : 0);
+		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
 
@@ -193,7 +196,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 			return false;
 		}
 		UserEO other = (UserEO) object;
-		if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
@@ -201,7 +204,7 @@ public class UserEO extends AbstractDataEO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "net.collaud.fablab.data.User[ userId=" + userId + " ]";
+		return "net.collaud.fablab.data.User[ userId=" + id + " ]";
 	}
 
 	@JsonIgnore

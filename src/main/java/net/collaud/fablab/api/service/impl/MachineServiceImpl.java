@@ -2,7 +2,7 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import net.collaud.fablab.api.dao.MachineDao;
+import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.security.RolesHelper;
 import net.collaud.fablab.api.service.MachineService;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MachineServiceImpl extends AbstractServiceImpl implements MachineService {
 
 	@Autowired
-	private MachineDao machineDao;
+	private MachineRepository machineDao;
 
 	@Override
 	@Secured({RolesHelper.ROLE_USE_RESERVATION, RolesHelper.ROLE_MANAGE_PAYMENT})

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.rest.AbstractRestTest;
-import net.collaud.fablab.api.dao.ReservationDAO;
+import net.collaud.fablab.api.dao.ReservationRepository;
 import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
 import net.collaud.fablab.api.rest.v1.data.ReservationSimpleTO;
 import net.collaud.fablab.api.security.RolesHelper;

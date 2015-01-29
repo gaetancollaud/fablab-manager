@@ -11,20 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Transactional
-public interface UserDao extends JpaRepository<UserEO, Integer>{
+public interface UserRepository extends JpaRepository<UserEO, Integer>{
 
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups g "
 			+ " LEFT JOIN FETCH u.membershipType mt "
-			+ " WHERE u.userId=:id")
+			+ " WHERE u.id=:id")
 	UserEO findOneDetails(@Param("id")Integer id);
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups g "
 			+ " LEFT JOIN FETCH g.roles "
-			+ " WHERE u.userId=:id")
+			+ " WHERE u.id=:id")
 	UserEO findOneByIdAndFetchRoles(@Param("id")Integer id);
 	
 	@Query("SELECT u "

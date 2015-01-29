@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import net.collaud.fablab.api.dao.ReservationDAO;
+import net.collaud.fablab.api.dao.ReservationRepository;
 import net.collaud.fablab.api.dao.specifications.ReservationSpecifications;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.data.UserEO;
@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
-	private ReservationDAO reservationDao;
+	private ReservationRepository reservationDao;
 	
 	@Autowired
 	private SecurityService securityService;

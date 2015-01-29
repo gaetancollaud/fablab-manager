@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -24,19 +27,17 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "t_usage")
-@NamedQueries({
+@Getter
+@Setter
+@ToString
+public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	
-})
-public class UsageEO extends AbstractDataEO implements Serializable {
-	
-	public static final String SELECT_USAGE_DETAIL = "UsageEO.selectUsageDetail";
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usage_id", nullable = false)
-	private Integer usageId;
+	private Integer id;
 
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -72,7 +73,7 @@ public class UsageEO extends AbstractDataEO implements Serializable {
 	}
 
 	public UsageEO(UserEO user, MembershipTypeEO membershipType, PriceRevisionEO priceRevision, MachineEO machine, Date dateStart, int minutes, float additionalCost, String comment) {
-		this.usageId = 0;
+		this.id = 0;
 		this.user = user;
 		this.membershipType = membershipType;
 		this.priceRevision = priceRevision;
@@ -81,102 +82,6 @@ public class UsageEO extends AbstractDataEO implements Serializable {
 		this.minutes = minutes;
 		this.additionalCost = additionalCost;
 		this.comment = comment;
-	}
-
-	public Integer getUsageId() {
-		return usageId;
-	}
-
-	public void setUsageId(Integer usageId) {
-		this.usageId = usageId;
-	}
-
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public int getMinutes() {
-		return minutes;
-	}
-
-	public void setMinutes(int minutes) {
-		this.minutes = minutes;
-	}
-
-	public float getAdditionalCost() {
-		return additionalCost;
-	}
-
-	public void setAdditionalCost(float additionalCost) {
-		this.additionalCost = additionalCost;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public UserEO getUser() {
-		return user;
-	}
-
-	public void setUser(UserEO user) {
-		this.user = user;
-	}
-
-	public MachineEO getMachine() {
-		return machine;
-	}
-
-	public void setMachine(MachineEO machine) {
-		this.machine = machine;
-	}
-
-	public MembershipTypeEO getMembershipType() {
-		return membershipType;
-	}
-
-	public void setMembershipType(MembershipTypeEO membershipType) {
-		this.membershipType = membershipType;
-	}
-
-	public PriceRevisionEO getPriceRevision() {
-		return priceRevision;
-	}
-
-	public void setPriceRevision(PriceRevisionEO priceRevision) {
-		this.priceRevision = priceRevision;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (usageId != null ? usageId.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (!(object instanceof UsageEO)) {
-			return false;
-		}
-		UsageEO other = (UsageEO) object;
-		if (this.usageId == null || other.usageId == null || !this.usageId.equals(other.usageId)) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "net.collaud.fablab.data.UsageEO[ utilisationId=" + usageId + " ]";
 	}
 
 }

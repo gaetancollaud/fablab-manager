@@ -9,17 +9,17 @@ import javax.persistence.Embeddable;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Embeddable
-public class PriceCotisationPK implements Serializable {
+public class PriceCotisationEOPK implements Serializable {
     @Column(name = "price_revision_id", nullable = false)
 	private int priceRevisionId;
 	
     @Column(name = "membership_type_id", nullable = false)
 	private int membershipTypeId;
 
-	public PriceCotisationPK() {
+	public PriceCotisationEOPK() {
 	}
 
-	public PriceCotisationPK(int priceRevisionId, int membershipTypeId) {
+	public PriceCotisationEOPK(int priceRevisionId, int membershipTypeId) {
 		this.priceRevisionId = priceRevisionId;
 		this.membershipTypeId = membershipTypeId;
 	}
@@ -50,10 +50,10 @@ public class PriceCotisationPK implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof PriceCotisationPK)) {
+		if (!(object instanceof PriceCotisationEOPK)) {
 			return false;
 		}
-		PriceCotisationPK other = (PriceCotisationPK) object;
+		PriceCotisationEOPK other = (PriceCotisationEOPK) object;
 		if (this.priceRevisionId != other.priceRevisionId) {
 			return false;
 		}

@@ -1,4 +1,4 @@
-var ctrl = angular.module('User');
+	var ctrl = angular.module('User');
 ctrl.controller('GlobalUserEditController', [
 	'$scope',
 	'$location',
@@ -10,25 +10,27 @@ ctrl.controller('GlobalUserEditController', [
 	function ($scope, $location, $filter, $q,
 			UserService, GroupService, NotificationService) {
 
-		$scope.loadUser = function (userId) {
-			UserService.get(userId, function (data) {
+		$scope.selected = {user: undefined};
+
+		$scope.loadUser = function (id) {
+			UserService.get(id, function (data) {
 				$scope.user = data;
 			});
 		};
-		
-		$scope.save = function(){
+
+		$scope.save = function () {
 			UserService.save($scope.user, function (data) {
 				$scope.user = data;
 				NotificationService.notify("success", "Utilisateur enregistré");
 				$location.path("users");
 			});
 		};
-		
-		UserService.membershipTypeList(function(data){
+
+		UserService.membershipTypeList(function (data) {
 			$scope.membershipTypeList = data;
 		});
-		
-		GroupService.list(function(data){
+
+		GroupService.list(function (data) {
 			$scope.groups = data;
 		});
 	}

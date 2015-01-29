@@ -2,7 +2,7 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.Date;
 import java.util.List;
-import net.collaud.fablab.api.dao.AuditDAO;
+import net.collaud.fablab.api.dao.AuditRepository;
 import net.collaud.fablab.api.data.AuditEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditObject;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuditServiceImpl extends AbstractServiceImpl implements AuditService {
 
 	@Autowired
-	private AuditDAO auditDAO;
+	private AuditRepository auditDAO;
 
 	@Override
 	public AuditEO addEntry(AuditEO entry) throws FablabException {

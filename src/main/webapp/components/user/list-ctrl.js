@@ -38,7 +38,7 @@ angular.module('User').controller('UserListController', [
 			});
 		};
 		$scope.remove = function (user) {
-			UserService.remove(user.userId, function () {
+			UserService.remove(user.id, function () {
 				updateUserList();
 			});
 		};

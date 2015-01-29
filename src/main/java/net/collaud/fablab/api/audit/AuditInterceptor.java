@@ -5,7 +5,6 @@ import net.collaud.fablab.api.data.AbstractDataEO;
 import net.collaud.fablab.api.data.AuditEO;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.UsageEO;
-import net.collaud.fablab.api.data.UserAuthorizedMachineTypeEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import static net.collaud.fablab.api.data.type.AuditAction.DELETE;

@@ -15,6 +15,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Immutable;
 
 /**
@@ -24,17 +27,10 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Table(name = "v_usage_detail")
 @Immutable
-@NamedQueries({
-	@NamedQuery(name = UsageDetailEO.SELECT_FROM_DATES,
-			query = "SELECT u FROM UsageDetailEO u "
-			+ " JOIN FETCH u.user"
-			+ " WHERE u.dateStart<=:" + UsageDetailEO.PARAM_DATE_BEFORE
-			+ " AND u.dateStart>=:" + UsageDetailEO.PARAM_DATE_AFTER),
-	@NamedQuery(name = UsageDetailEO.SELECT_FROM_USER,
-			query = "SELECT u FROM UsageDetailEO u WHERE u.user=:" + UsageDetailEO.PARAM_USER),
-	@NamedQuery(name = UsageDetailEO.SELECT_FROM_IDS,
-			query = "SELECT u FROM UsageDetailEO u WHERE u.usageId IN :" + UsageDetailEO.PARAM_IDS),})
-public class UsageDetailEO extends AbstractDataEO implements Serializable {
+@Getter
+@Setter
+@ToString
+public class UsageDetailEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +46,7 @@ public class UsageDetailEO extends AbstractDataEO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usage_id", nullable = false)
-	private Integer usageId;
+	private Integer id;
 
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -83,88 +79,5 @@ public class UsageDetailEO extends AbstractDataEO implements Serializable {
 
 	@Column(name = "price", nullable = false)
 	private float price;
-
-	public UsageDetailEO() {
-	}
-
-	public Integer getUsageId() {
-		return usageId;
-	}
-
-	public void setUsageId(Integer usageId) {
-		this.usageId = usageId;
-	}
-
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public int getMinutes() {
-		return minutes;
-	}
-
-	public void setMinutes(int minutes) {
-		this.minutes = minutes;
-	}
-
-	public float getAdditionalCost() {
-		return additionalCost;
-	}
-
-	public void setAdditionalCost(float additionalCost) {
-		this.additionalCost = additionalCost;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public UserEO getUser() {
-		return user;
-	}
-
-	public void setUser(UserEO user) {
-		this.user = user;
-	}
-
-	public MachineEO getMachine() {
-		return machine;
-	}
-
-	public void setMachine(MachineEO machine) {
-		this.machine = machine;
-	}
-
-	public MembershipTypeEO getMembershipType() {
-		return membershipType;
-	}
-
-	public void setMembershipType(MembershipTypeEO membershipType) {
-		this.membershipType = membershipType;
-	}
-
-	public PriceRevisionEO getPriceRevision() {
-		return priceRevision;
-	}
-
-	public void setPriceRevision(PriceRevisionEO priceRevision) {
-		this.priceRevision = priceRevision;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
 
 }
