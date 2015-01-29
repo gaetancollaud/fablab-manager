@@ -29,6 +29,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEO, Inte
 			+ " FROM ReservationEO r "
 			+ " JOIN FETCH r.machine "
 			+ " JOIN FETCH r.user "
-			+ " WHERE r.reservationId=:id")
+			+ " WHERE r.id=:id")
 	ReservationEO findOne(@Param("id") Integer id);
 }
