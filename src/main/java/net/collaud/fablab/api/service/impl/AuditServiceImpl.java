@@ -7,7 +7,7 @@ import net.collaud.fablab.api.data.AuditEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditObject;
 import net.collaud.fablab.api.exceptions.FablabException;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({RolesHelper.ROLE_ADMIN})
+@Secured({Roles.ADMIN})
 public class AuditServiceImpl extends AbstractServiceImpl implements AuditService {
 
 	@Autowired
@@ -32,7 +32,7 @@ public class AuditServiceImpl extends AbstractServiceImpl implements AuditServic
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_VIEW_AUDIT})
+	@Secured({Roles.AUDIT_VIEW})
 	public List<AuditEO> search(UserEO user, List<AuditObject> type, Date after, Date before, String content, int limit) throws FablabException {
 		return auditDAO.search(user, type, after, before, content, limit);
 	}

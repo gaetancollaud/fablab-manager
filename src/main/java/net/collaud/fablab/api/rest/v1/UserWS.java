@@ -5,7 +5,7 @@ import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.MembershipTypeService;
 import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/v1/user")
-@Secured(RolesHelper.ROLE_ADMIN)
 public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
 
 	@Autowired

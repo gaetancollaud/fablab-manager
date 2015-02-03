@@ -11,7 +11,7 @@ import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.GroupEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.PasswordUtils;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,24 +46,24 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public List<UserEO> findAll() {
 		return userDao.findAll();
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public Optional<UserEO> getById(Integer id) {
 		return Optional.ofNullable(userDao.findOneDetails(id));
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public UserEO save(UserEO user) {
-		if(user.getId()==null){
+		if (user.getId() == null) {
 			user.setId(0);
 		}
-		if(user.getLogin()==null){
+		if (user.getLogin() == null) {
 			user.setLogin(user.getFirstLastName());
 		}
 		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
@@ -98,7 +98,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public void remove(Integer id) {
 		UserEO user = userDao.findOne(id);
 		user.setEnabled(false);

@@ -1,12 +1,15 @@
 package net.collaud.fablab.api.service.impl;
 
+import javax.management.relation.Role;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@Secured(Roles.ADMIN)
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
 
 	private static final Logger LOG = LoggerFactory

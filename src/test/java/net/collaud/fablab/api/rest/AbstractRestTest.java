@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import junit.framework.TestCase;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.util.StatefulRestTemplate;
 import org.junit.Before;
 import org.slf4j.Logger;
@@ -85,7 +85,7 @@ abstract public class AbstractRestTest extends TestCase {
 
 	protected void testRestrictedAccess(HttpMethod method, String path, Object data, String... roles) {
 		Set<String> rolesToTestSet = new TreeSet<>(Arrays.asList(roles));
-		Set<String> allRolesSet = new TreeSet<>(Arrays.asList(RolesHelper.LIST_ROLES));
+		Set<String> allRolesSet = new TreeSet<>(Arrays.asList(Roles.LIST_ROLES));
 		LOG.debug("Testing path '" + path + "' for roles " + rolesToTestSet.toString());
 
 		//check if all roles to test exist.
@@ -103,7 +103,7 @@ abstract public class AbstractRestTest extends TestCase {
 			assertEquals("Status should be 401 (Unauthorized)", HttpStatus.UNAUTHORIZED, ex.getStatusCode());
 		}
 
-		for (String role : RolesHelper.LIST_ROLES) {
+		for (String role : Roles.LIST_ROLES) {
 			//login as role to test
 			loginAs(role);
 

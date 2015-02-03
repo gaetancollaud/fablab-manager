@@ -11,6 +11,7 @@ angular.module('App').config(function ($translateProvider) {
 			home: 'Home',
 			users: 'Users',
 			reservation: 'Reservation',
+			payment: 'Payment',
 		},
 		loading: {
 			title: 'Loading',

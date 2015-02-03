@@ -12,7 +12,7 @@ import net.collaud.fablab.api.rest.AbstractRestTest;
 import net.collaud.fablab.api.dao.ReservationRepository;
 import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
 import net.collaud.fablab.api.rest.v1.data.ReservationSimpleTO;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;

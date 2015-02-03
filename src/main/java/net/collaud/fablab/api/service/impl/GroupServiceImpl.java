@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.GroupRepository;
 import net.collaud.fablab.api.data.GroupEO;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -17,20 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({RolesHelper.ROLE_ADMIN})
+@Secured({Roles.ADMIN})
 public class GroupServiceImpl extends AbstractServiceImpl implements GroupService {
 
 	@Autowired
 	private GroupRepository groupDao;
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public List<GroupEO> findAll() {
 		return groupDao.findAllWithRoles();
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_USER})
+	@Secured({Roles.USER_MANAGE})
 	public Optional<GroupEO> getById(Integer id) {
 		return Optional.ofNullable(groupDao.findOne(id));
 	}

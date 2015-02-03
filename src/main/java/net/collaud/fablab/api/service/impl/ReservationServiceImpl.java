@@ -9,7 +9,7 @@ import net.collaud.fablab.api.dao.ReservationRepository;
 import net.collaud.fablab.api.dao.specifications.ReservationSpecifications;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.data.UserEO;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.ReservationService;
 import net.collaud.fablab.api.service.SecurityService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({RolesHelper.ROLE_ADMIN})
+@Secured({Roles.ADMIN})
 @Slf4j
 public class ReservationServiceImpl implements ReservationService {
 
@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
 	private SecurityService securityService;
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_RESERVATION, RolesHelper.ROLE_USE_RESERVATION})
+	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
 	public ReservationEO save(ReservationEO reservation) {
 		log.debug("Save "+reservation);
 		reservation.setUser(new UserEO(securityService.getCurrentUserId()));
@@ -47,14 +47,14 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_MANAGE_RESERVATION, RolesHelper.ROLE_USE_RESERVATION})
+	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
 	public void remove(Integer reservationId) {
 		log.debug("Remove with id"+reservationId);
 		reservationDao.delete(reservationId);
 	}
 
 	@Override
-	@Secured({RolesHelper.ROLE_VIEW_RESERVATION})
+	@Secured({Roles.RESERVATION_VIEW})
 	public List<ReservationEO> findReservations(Date dateFrom, Date dateTo, List<Integer> machineIds){
 		log.debug("find reservation from "+dateFrom+" to "+dateTo+" of machines "+machineIds);
 		Specifications spec = Specifications.where(ReservationSpecifications.joins());

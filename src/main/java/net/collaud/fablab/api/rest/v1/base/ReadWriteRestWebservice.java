@@ -10,7 +10,7 @@ import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.data.ReservationSimpleTO;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
-import net.collaud.fablab.api.security.RolesHelper;
+import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.global.ReadService;
 import net.collaud.fablab.api.service.global.ReadWriteService;
 import org.springframework.security.access.annotation.Secured;
@@ -43,7 +43,7 @@ abstract public class ReadWriteRestWebservice<ENTITY extends AbstractDataEO, SER
 		service.save(entity);
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	public void edit(@PathVariable Integer id, @RequestBody ENTITY entity) {
 		log.debug("edit entity " + entity);
 		service.save(entity);
