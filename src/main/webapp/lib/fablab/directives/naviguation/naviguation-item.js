@@ -1,12 +1,15 @@
 var naviguation = angular.module('Fablab');
-naviguation.directive('fabNavItem', function(){
+naviguation.directive('fabNavItem', function () {
 	return {
-		restrict:'EA',
-		scope:{
-			link :'@',
-			icon:'@',
-			label:'@'
+		restrict: 'EA',
+		scope: {
+			link: '@',
+			icon: '@',
+			label: '@',
+			show: '='
 		},
-		template: '<a href="#/{{link}}"><span class="glyphicon glyphicon-{{icon}}"></span> {{label | translate}}</a>',
+		template: '<a ng-show="show===undefined || show" href="#/{{link}}">'
+				+ '	<span class="glyphicon glyphicon-{{icon}}"></span> {{label | translate}}'
+				+ '</a>'
 	};
 });

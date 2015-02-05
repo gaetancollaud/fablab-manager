@@ -6,6 +6,7 @@
 		"fast-repeat": {
 			"context": "tr"
 		},
+		"aria-expanded": {},
 		"fab-nav-item": {},
 		"sortable": {}
 	}

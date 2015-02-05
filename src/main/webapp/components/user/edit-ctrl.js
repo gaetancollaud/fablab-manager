@@ -7,8 +7,9 @@ ctrl.controller('GlobalUserEditController', [
 	'UserService',
 	'GroupService',
 	'NotificationService',
+	'StaticDataService',
 	function ($scope, $location, $filter, $q,
-			UserService, GroupService, NotificationService) {
+			UserService, GroupService, NotificationService, StaticDataService) {
 
 		$scope.selected = {user: undefined};
 
@@ -26,11 +27,11 @@ ctrl.controller('GlobalUserEditController', [
 			});
 		};
 
-		UserService.membershipTypeList(function (data) {
+		StaticDataService.loadMemberShipTypes(function (data) {
 			$scope.membershipTypeList = data;
 		});
 
-		GroupService.list(function (data) {
+		StaticDataService.listGroups(function (data) {
 			$scope.groups = data;
 		});
 	}

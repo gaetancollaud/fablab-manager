@@ -12,6 +12,8 @@ angular.module('App').config(function ($translateProvider) {
 			users: 'Users',
 			reservation: 'Reservation',
 			payment: 'Payment',
+			login:'Login',
+			logout:'Logout'
 		},
 		loading: {
 			title: 'Loading',
@@ -39,7 +41,8 @@ angular.module('App').config(function ($translateProvider) {
 			pleaseSignIn: 'Please sign in',
 			email: 'Email address',
 			password: 'Password',
-			signIn: 'Sign In'
+			signIn: 'Sign In',
+			signUp: 'Sign Up'
 		},
 		user: {
 			firstname: 'Firstname',

@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured(Roles.ADMIN)
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
 
 	private static final Logger LOG = LoggerFactory

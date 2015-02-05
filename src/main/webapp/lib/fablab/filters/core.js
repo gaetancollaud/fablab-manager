@@ -5,6 +5,9 @@
 
 	cmp.filter('prettyUser', function () {
 		return function (user) {
+			if(!user){
+				return '';
+			}
 			return user.firstname + " " + user.lastname;
 		};
 	});

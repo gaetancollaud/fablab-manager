@@ -8,7 +8,8 @@ angular.module('App').config(function ($translateProvider) {
 			pleaseSignIn:'Veuillez vous connecter',
 			email:'Adresse email',
 			password:'Mot de passe',
-			signIn:'Se connecter'
+			signIn:'Se connecter',
+			signUp:'S\'inscrire'
 		}
 	});
 });

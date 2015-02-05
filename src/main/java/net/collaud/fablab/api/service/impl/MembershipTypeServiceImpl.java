@@ -17,21 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
 public class MembershipTypeServiceImpl extends AbstractServiceImpl implements MembershipTypeService {
 
 	@Autowired
-	private MembershipTypeRepository membershipTypeDao;
+	private MembershipTypeRepository membershipTypeRepository;
 
 	@Override
-	@Secured({Roles.USER_MANAGE})
 	public List<MembershipTypeEO> findAll() {
-		return membershipTypeDao.findAll();
+		return membershipTypeRepository.findAll();
 	}
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
 	public Optional<MembershipTypeEO> getById(Integer id) {
-		return Optional.ofNullable(membershipTypeDao.findOne(id));
+		return Optional.ofNullable(membershipTypeRepository.findOne(id));
 	}
 }

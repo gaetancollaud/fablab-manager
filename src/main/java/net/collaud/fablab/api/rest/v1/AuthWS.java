@@ -2,6 +2,7 @@ package net.collaud.fablab.api.rest.v1;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
@@ -21,9 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/v1/auth")
+@Slf4j
 public class AuthWS {
-
-	private static final Logger LOG = LoggerFactory.getLogger(AuthWS.class);
 
 	@Autowired
 	private SecurityService securityService;
@@ -35,7 +35,7 @@ public class AuthWS {
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public LoginResult login(@RequestBody AuthCredential credential) {
-		LOG.debug("Login for " + credential);
+		log.debug("Login for " + credential);
 		return securityService.login(credential.getLogin(), credential.getPassword());
 	}
 
@@ -50,7 +50,7 @@ public class AuthWS {
 			final UserEO eo = securityService.getCurrentUser();
 			List<String> roles = new ArrayList<>();
 			eo.getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
-			ConnectedUser user = new ConnectedUser(eo.getLogin(), roles);
+			ConnectedUser user = new ConnectedUser(eo.getFirstname(), eo.getLastname(), roles);
 			return user;
 		} else {
 			return new ConnectedUser();

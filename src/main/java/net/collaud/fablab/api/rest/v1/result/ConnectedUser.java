@@ -1,36 +1,28 @@
 package net.collaud.fablab.api.rest.v1.result;
 
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> 
  */
+@Getter
 public class ConnectedUser {
 	boolean connected;
-	private String login;
+	private String firstname;
+	private String lastname;
 	private List<String> roles;
 	
 	public ConnectedUser(){
 		this.connected = false;
 	}
 
-	public ConnectedUser(String login, List<String> roles) {
+	public ConnectedUser(String firstname, String lastname, List<String> roles) {
 		this.connected = true;
 		this.roles = roles;
-		this.login = login;
+		this.firstname = firstname;
+		this.lastname = lastname;
 	}
-
-	public boolean isConnected() {
-		return connected;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public List<String> getRoles() {
-		return roles;
-	}
-
 }

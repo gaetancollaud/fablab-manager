@@ -86,5 +86,5 @@ angular.module('Notification', [], function ($provide) {
 		recursive(object);
 
 		return ret;
-	}
+	};
 });

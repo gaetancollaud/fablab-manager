@@ -18,7 +18,7 @@ angular.module('Reservation').controller('PaymentByUserController', [
 			$scope.users = data;
 			if ($routeParams.id) {
 				for(var k in data){
-					if(data[k].id==$routeParams.id){
+					if(data[k].id===$routeParams.id){
 						$scope.onSelectUser(data[k]);
 						break;
 					}

@@ -7,7 +7,7 @@ angular.module('App', [
 	// Fablab 
 	'Fablab',
 	//components
-	'Auth', 'Dashboard', 'User', 'Reservation', 'Machine'
+	'Auth', 'Dashboard', 'User', 'Reservation', 'Machine', 'Payment'
 ]).config(['$routeProvider', '$httpProvider', '$translateProvider',
 	function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
@@ -16,6 +16,12 @@ angular.module('App', [
 		}).when('/login', {
 			templateUrl: './components/auth/login-view.html',
 			controller: 'AuthLoginController'
+		}).when('/logout', {
+			templateUrl: './components/auth/logout-view.html',
+			controller: 'AuthLogoutController'
+		}).when('/signup', {
+			templateUrl: './components/auth/signup-view.html',
+			controller: 'AuthSignUpController'
 		}).when('/users', {
 			templateUrl: './components/user/list-view.html',
 			controller: 'UserListController'
@@ -48,8 +54,8 @@ angular.module('App', [
 		$httpProvider.interceptors.push('httpInterceptor');
 		$translateProvider.preferredLanguage('en');
 	}])
-		.run(['LoaderService', 'NotificationService', '$rootScope', '$location', 'AuthService',
-			function (LoaderService, NotificationService, $rootScope, $location, AuthService) {
+		.run(['$log', 'LoaderService', 'NotificationService', '$rootScope', '$location', 'AuthService',
+			function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService) {
 				App.interceptors.errorInterceptor.loaderService = LoaderService;
 				App.interceptors.errorInterceptor.notificationService = NotificationService;
 
@@ -65,7 +71,7 @@ angular.module('App', [
 				var authRedirect = function () {
 					if ($rootScope.connectedUser) {
 						if (!$rootScope.isAuthenticated()) {
-							$location.path('/login');
+							//$location.path('/login');
 						} else {
 							if ($location.$$path === '/login') {
 								$location.path('/');
@@ -114,17 +120,15 @@ angular.module('App', [
 				 * @returns Boolean true if he has the role, false otherwise
 				 */
 				$rootScope.hasRole = function (role) {
-					if (!$rootScope.connectedUser) {
+					if(!$rootScope.connectedUser ||!$rootScope.connectedUser.roles){
 						return false;
 					}
-
 					role = 'ROLE_' + role;
 					for (var k in $rootScope.connectedUser.roles) {
 						if ($rootScope.connectedUser.roles[k] === role) {
 							return true;
 						}
 					}
-					$log.error("Unkonwn role " + role);
 					return false;
 				};
 
