@@ -41,7 +41,7 @@ angular.module('App').config(function ($translateProvider) {
 			pleaseSignIn: 'Please sign in',
 			email: 'Email address',
 			password: 'Password',
-			signIn: 'Sign In',
+			signiIn: 'Sign In',
 			signUp: 'Sign Up'
 		},
 		user: {
@@ -51,6 +51,7 @@ angular.module('App').config(function ($translateProvider) {
 			balance: 'Balance',
 			membership: 'Membership',
 			newpassword: 'New password',
+			password: 'Password',
 			phone: 'Phone',
 			address: 'Address',
 			rfid: 'RFID',
