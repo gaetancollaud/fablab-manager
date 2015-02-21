@@ -12,12 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -29,6 +27,7 @@ import lombok.ToString;
 @Table(name = "t_machine")
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -47,9 +46,6 @@ public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineTypeEO machineType;
-
-	public MachineEO() {
-	}
 
 	public MachineEO(Integer id) {
 		this.id = id;

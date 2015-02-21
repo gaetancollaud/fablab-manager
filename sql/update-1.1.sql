@@ -1,14 +1,45 @@
-CREATE TABLE `r_group_role` (
-  `role_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`,`group_id`),
-  KEY `fk_t_roles_has_t_group_t_group1_idx` (`group_id`),
-  KEY `fk_t_roles_has_t_group_t_roles1_idx` (`role_id`),
-  CONSTRAINT `fk_t_roles_has_t_group_t_group1` FOREIGN KEY (`group_id`) REFERENCES `t_group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_roles_has_t_group_t_roles1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (1, 'Administration', 'ROLE_ADMIN');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (2, 'View user', 'ROLE_USER_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (3, 'Manage user', 'ROLE_USER_MANAGE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (4, 'View machine', 'ROLE_MACHINE_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (5, 'Manage machine', 'ROLE_MACHINE_MANAGE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (6, 'View payment', 'ROLE_PAYMENT_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (7, 'Manage payment', 'ROLE_PAYMENT_MANAGE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (8, 'View accounting', 'ROLE_ACCOUNTING_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (9, 'Manage accounting', 'ROLE_ACCOUNTING_MANAGE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (10, 'View audit', 'ROLE_AUDIT_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (11, 'View reservation', 'ROLE_RESERVATION_VIEW');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (12, 'Use reservation', 'ROLE_RESERVATION_USE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (13, 'Manage reservation', 'ROLE_RESERVATION_MANAGE');
+
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (1, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (2, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (3, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (4, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (5, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (7, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (8, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (9, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (4, 2);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (9, 2);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (9, 3);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (10, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (10, 2);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (10, 3);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (11, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (11, 2);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (11, 3);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 2);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 3);
 
 
-INSERT INTO `t_role` VALUES (1,'Administration','ROLE_ADMIN'),(2,'Manage access','ROLE_MANAGE_ACCESS'),(3,'Manage machines','ROLE_MANAGE_MACHINE'),(4,'Manage payment','ROLE_MANAGE_PAYMENT'),(5,'Manage users','ROLE_MANAGE_USER'),(6,'System','ROLE_SYSTEM'),(7,'View accounting','ROLE_VIEW_ACCOUNTING'),(8,'View audit','ROLE_VIEW_AUDIT'),(9,'View machines','ROLE_VIEW_MACHINE'),(10,'Manage reservation','ROLE_MANAGE_RESERVATION'),(11,'View reservation','ROLE_VIEW_RESERVATION'),(12,'Use reservation','ROLE_USER_RESERVATION');
 
-INSERT INTO `r_group_role` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(4,2),(9,2),(10,2),(11,2),(12,2),(9,3),(10,3),(11,3),(12,3);
+UPDATE t_user SET 
+password_manager=password, 
+password="a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28",
+password_salt="hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN"
+ WHERE user_id!=0;
+ 
+ -- Ne pas oublier de changer le realm pour password_manager (redémarré aussi)
+
