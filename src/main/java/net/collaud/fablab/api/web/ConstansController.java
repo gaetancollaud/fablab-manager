@@ -32,12 +32,12 @@ public class ConstansController {
 	@RequestMapping("/constants.js")
 	public @ResponseBody
 	String constants(Model model) {
-		String rootUrl = "/fablab-api";
+		String rootUrl = propertyUtils.getProperty("url.root").orElse("/");
 		
 		Map<String, String> csts = new HashMap<>();
 		
 		//from fablab-config.properties
-		csts.put("rootUrl", propertyUtils.getProperty(rootUrl).orElse("/"));
+		csts.put("rootUrl", rootUrl);
 		csts.put("GOOGLE_API", propertyUtils.getProperty("google.api").orElse(""));
 
 		StringBuilder sb = new StringBuilder("var App = {};\n");
