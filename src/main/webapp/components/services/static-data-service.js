@@ -1,5 +1,9 @@
 angular.module('App').service('StaticDataService',
-			function (UserService, GroupService) {
+			function (AuthService, UserService, GroupService) {
+				
+				this.loadConstants = function(successFn){
+					AuthService.constants(successFn);
+				}
 				//FIXME implement cache !
 				this.loadMemberShipTypes = function (successFn) {
 					UserService.membershipTypeList(successFn);

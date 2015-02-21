@@ -1,16 +1,14 @@
 package net.collaud.fablab.api.rest.v1;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
-import net.collaud.fablab.api.web.SpringPropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
+@JavascriptAPIConstant("AUTH_API")
 @RequestMapping("/v1/auth")
 @Slf4j
 public class AuthWS {
-	
-	@Autowired
-	private SpringPropertiesUtil properties;
 
 	@Autowired
 	private SecurityService securityService;
@@ -61,11 +57,4 @@ public class AuthWS {
 		}
 	}
 	
-	
-	@RequestMapping(value = "constants")
-	public Map<String, String> constants() {
-		return properties.getProperties(
-				new AbstractMap.SimpleEntry<>("google.api", "GOOGLE_API")
-		);
-	}
 }

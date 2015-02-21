@@ -12,4 +12,9 @@
 	</context:component-scan>
 	
 	
+	<bean class="net.collaud.fablab.api.web.SpringPropertiesUtil">
+		<property name="location" value="fablab-config.properties"/>
+	</bean>
+	
+	
 </beans>

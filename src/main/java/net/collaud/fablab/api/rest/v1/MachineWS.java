@@ -2,6 +2,7 @@ package net.collaud.fablab.api.rest.v1;
 
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.rest.v1.base.ReadRestWebservice;
 import net.collaud.fablab.api.service.MachineService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/v1/machine")
+@JavascriptAPIConstant("MACHINE_API")
 @Slf4j
 public class MachineWS extends ReadRestWebservice<MachineEO, MachineService>{
 
