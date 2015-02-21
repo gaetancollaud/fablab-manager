@@ -1,11 +1,11 @@
 var ctrl = angular.module('Auth');
-ctrl.controller('AuthSignUpController', function ($rootScope, $filter, $scope,
+ctrl.controller('AuthSignUpController', function ($rootScope, $location, $filter, $scope,
 		NotificationService, AuthService, StaticDataService) {
 	$scope.user = {
-		firstname: "test",
-		lastname: "test",
-		email: "test@test.com",
-		password: "123"
+//		firstname: "test",
+//		lastname: "test",
+//		email: "test@test.com",
+//		password: "123"
 	};
 	StaticDataService.loadMemberShipTypes(function (data) {
 		$scope.membershipTypeList = data;
@@ -26,7 +26,8 @@ ctrl.controller('AuthSignUpController', function ($rootScope, $filter, $scope,
 			AuthService.signup($scope.user, {
 				recaptcha: $scope.recaptchaReponse
 			}, function (result) {
-				alert('ok');
+				NotificationService.notify("success", "TODO Utilisateur enregistré");
+				$location.path("login");
 			});
 		}
 	};

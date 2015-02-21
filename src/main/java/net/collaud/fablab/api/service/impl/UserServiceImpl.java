@@ -125,16 +125,17 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	public void signup(UserEO user, String recaptcha) {
+	public void signup(UserEO user, String recaptchaResponse) {
 		String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
-		ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptcha);
-		if (rep.isSuccess()) {
+		ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);
+		if (rep.getSuccess()) {
 			save(user);
 			Map<String, Object> scope = new HashMap<>();
 			scope.put("email", user.getEmail());
 			mailService.sendMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
 		} else {
 			log.error("Recaptcha check failed because of " + rep.getErrorCodes());
+			throw new RuntimeException("Captcha fail");
 		}
 	}
 

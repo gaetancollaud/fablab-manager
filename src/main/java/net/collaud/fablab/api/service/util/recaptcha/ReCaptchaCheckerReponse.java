@@ -14,8 +14,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ReCaptchaCheckerReponse {
-	@JsonProperty
-	private boolean success;
+	@JsonProperty("success")
+	private Boolean success;
 	
 	@JsonProperty("error-codes")
 	private List<String> errorCodes;
