@@ -23,7 +23,7 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
-	<bean class="net.collaud.fablab.api.web.SpringPropertiesUtil">
+	<bean name="propertyUtils" class="net.collaud.fablab.api.web.SpringPropertiesUtils">
 		<property name="location" value="file:${catalina.home}/conf/fablab-config.properties"/>
 	</bean>
 	

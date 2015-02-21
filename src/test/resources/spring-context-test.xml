@@ -7,12 +7,9 @@
 				http://www.springframework.org/schema/context
 				http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<context:component-scan base-package="net.collaud.fablab.api">
-		<context:exclude-filter type="regex" expression="net\.collaud\.fablab\.api\.Application" />
-	</context:component-scan>
+	<context:component-scan base-package="net.collaud.fablab.api" />
 	
-	
-	<bean class="net.collaud.fablab.api.web.SpringPropertiesUtil">
+	<bean name="propertyUtils" class="net.collaud.fablab.api.web.SpringPropertiesUtils">
 		<property name="location" value="fablab-config.properties"/>
 	</bean>
 	

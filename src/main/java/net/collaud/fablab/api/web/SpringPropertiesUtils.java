@@ -12,7 +12,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public class SpringPropertiesUtil extends PropertyPlaceholderConfigurer {
+public class SpringPropertiesUtils extends PropertyPlaceholderConfigurer {
 	
 	private Map<String, String> propertiesMap;
 

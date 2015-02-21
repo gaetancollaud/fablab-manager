@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ConstansController {
 
 	@Autowired
-	private SpringPropertiesUtil properties;
+	private SpringPropertiesUtils propertyUtils;
 
 	@RequestMapping("/constants.js")
 	public @ResponseBody
@@ -37,8 +37,8 @@ public class ConstansController {
 		Map<String, String> csts = new HashMap<>();
 		
 		//from fablab-config.properties
-		csts.put("rootUrl", properties.getProperty(rootUrl).orElse("/"));
-		csts.put("GOOGLE_API", properties.getProperty("google.api").orElse(""));
+		csts.put("rootUrl", propertyUtils.getProperty(rootUrl).orElse("/"));
+		csts.put("GOOGLE_API", propertyUtils.getProperty("google.api").orElse(""));
 
 		StringBuilder sb = new StringBuilder("var App = {};\n");
 		addConstants(sb, "App.Constants", csts);
