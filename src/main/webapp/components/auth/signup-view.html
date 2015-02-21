@@ -1,32 +1,32 @@
 
-<div class="panel panel-default">
-	<div class="panel-heading" translate="auth.signUp">
-		 
-	</div>
-	<div class="panel-body">
-		<form class="form-horizontal">
+<form class="form-horizontal" name="signupForm" ng-submit="signup()">
+	<div class="panel panel-default">
+		<div class="panel-heading" translate="auth.signUp">
+
+		</div>
+		<div class="panel-body">
 			<div class="form-group">
-				<label class="col-sm-2 control-label" translate="user.firstname"></label>
+				<label class="col-sm-2 control-label">{{'user.firstname'|translate}}*</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" ng-model="user.firstname">
+					<input type="text" class="form-control" ng-model="user.firstname" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" translate="user.lastname"></label>
+				<label class="col-sm-2 control-label">{{'user.lastname'|translate}}*</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" ng-model="user.lastname">
+					<input type="text" class="form-control" ng-model="user.lastname" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" translate="user.email"></label>
+				<label class="col-sm-2 control-label">{{'user.email'|translate}}*</label>
 				<div class="col-sm-8">
-					<input type="email" class="form-control" ng-model="user.email">
+					<input type="email" class="form-control" ng-model="user.email" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" translate="user.password"></label>
+				<label class="col-sm-2 control-label">{{'user.password'|translate}}*</label>
 				<div class="col-sm-8">
-					<input type="password" class="form-control" ng-model="user.passwordNew">
+					<input type="password" class="form-control" ng-model="user.passwordNew" required>
 				</div>
 			</div>
 			<div class="form-group">
@@ -42,17 +42,27 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" translate="user.membership"></label>
+				<label class="col-sm-2 control-label">{{'user.membership'|translate}}*</label>
 				<div class="col-sm-8">
 					<select class="form-control" 
+							required
 							ng-model="user.membershipType"
 							ng-options="mt as mt.name for mt in membershipTypeList track by mt.id"></select>
 				</div>
 			</div>
-		</form>
+			<div class="form-group" ng-class="{'has-error':!recaptchaReponse}">
+				<label class="col-sm-2 control-label">{{'auth.captcha'|translate}}*</label>
+				<div class="col-sm-8">
+					<div vc-recaptcha
+						 on-success="captchaResponse(response)"
+						 key="'6LeMcgITAAAAAGneRR7maYlG7i9LUatinVYBQZV-'"></div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer right">
+			<button class="btn btn-success btn-glyph" 
+					type="submit">{{'auth.signUp'| translate}} 
+				<span class="glyphicon glyphicon glyphicon-heart"></span></button>
+		</div>
 	</div>
-	<div class="panel-footer right">
-		<button class="btn btn-success btn-glyph" ng-click="signup()">{{'auth.signUp'| translate}} 
-			<span class="glyphicon glyphicon glyphicon-heart"></span></button>
-	</div>
-</div>
+</form>

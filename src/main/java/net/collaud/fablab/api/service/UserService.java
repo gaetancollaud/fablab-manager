@@ -10,4 +10,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 public interface UserService extends ReadWriteService<UserEO>{
 
 	UserEO findByLogin(String login);
+	
+	void signup(UserEO user, String recaptcha);
 }

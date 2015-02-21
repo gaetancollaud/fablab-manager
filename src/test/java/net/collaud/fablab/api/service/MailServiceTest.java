@@ -35,10 +35,11 @@ public class MailServiceTest extends BaseTest {
 	@Test
 	public void testSendMail() {
 		Map<String, Object> scopes = new HashMap<>();
-		String content = mailService.buildMailTemplate(
-				MailServiceImpl.Template.TEMPLATE_FORGOT_PASSWORD,
-				scopes);
-		mailService.sendMail("no-reply@fablab-fribourg.ch", "test", content, "gaetancollaud@gmail.com");
+		mailService.sendMail(
+				"subject",
+				MailServiceImpl.Template.FORGOT_PASSWORD,
+				scopes,
+				"gaetancollaud@gmail.com");
 	}
 
 }

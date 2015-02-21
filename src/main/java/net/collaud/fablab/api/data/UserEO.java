@@ -78,7 +78,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "user_id", nullable = false)
 	private Integer id;
 
-	@Column(name = "login", nullable = false, unique = true)
+	@Column(name = "login", unique = true)
 	private String login;
 
 	@JsonIgnore
@@ -99,7 +99,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
-	@Column(name = "email", nullable = true, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "date_inscr", nullable = false)

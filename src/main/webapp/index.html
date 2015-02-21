@@ -60,6 +60,9 @@
 
 						</a>
 					</li>
+					<li fab-nav-item link="signup" icon="heart" 
+						label="menu.signup"
+						show="!connectedUser.connected"></li>
 					<li fab-nav-item link="login" icon="log-in" 
 						label="menu.login"
 						show="!connectedUser.connected"></li>
@@ -100,11 +103,13 @@
 	<script src="./ext-lib/angular-modules/ng-table-0.3.3/ng-table.min.js"></script>
 	<script src="./ext-lib/angular-modules/calendar/calendar.js"></script>
 	<script src="./ext-lib/angular-modules/ui-select-0.9.6/select.js"></script>
+	<script src="./ext-lib/angular-modules/angular-recaptcha/angular-recaptcha.min.js"></script>
 
 	<script src="./lib/core/core.js"></script>
 	<script src="./lib/core/filters/core.js"></script>
 	<script src="./lib/core/filters/date.js"></script>
 	<script src="./lib/core/filters/select.js"></script>
+	<script src="./lib/core/directives/form.js"></script>
 
 	<script src="./lib/fablab/module.js"></script>
 	<script src="./lib/fablab/services/httpInterceptor.js"></script>
@@ -146,6 +151,7 @@
 	<script src="./components/payment/by-user-ctrl.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 
 	<!-- endbuild -->
 </body>

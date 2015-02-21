@@ -25,6 +25,14 @@ angular.module('Auth', ['ngResource'], function ($provide) {
 						method: 'GET',
 						url: App.API.AUTH_API + "/logout"
 					}).success(successFn);
+				},
+				signup:function(user, params, successFn){
+					$http({
+						method: 'POST',
+						url: App.API.AUTH_API + "/signup",
+						data: user,
+						params:params
+					}).success(successFn);
 				}
 			};
 		}]);

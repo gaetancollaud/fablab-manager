@@ -13,7 +13,8 @@ angular.module('App').config(function ($translateProvider) {
 			reservation: 'Reservation',
 			payment: 'Payment',
 			login:'Login',
-			logout:'Logout'
+			logout:'Logout',
+			signup:'Signup'
 		},
 		loading: {
 			title: 'Loading',
@@ -42,7 +43,8 @@ angular.module('App').config(function ($translateProvider) {
 			email: 'Email address',
 			password: 'Password',
 			signiIn: 'Sign In',
-			signUp: 'Sign Up'
+			signUp: 'Sign Up',
+			captcha: 'Are you human ?'
 		},
 		user: {
 			firstname: 'Firstname',

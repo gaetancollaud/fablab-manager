@@ -1,7 +1,7 @@
 angular.module('App', [
 	//ext-lib
 	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-	'pascalprecht.translate', 'ngTable','ui.calendar', 'ui.select',
+	'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha',
 	// Core
 	'Notification', 'Loader', 'httpInterceptor', 'core',
 	// Fablab 
@@ -120,7 +120,7 @@ angular.module('App', [
 				 * @returns Boolean true if he has the role, false otherwise
 				 */
 				$rootScope.hasRole = function (role) {
-					if(!$rootScope.connectedUser ||!$rootScope.connectedUser.roles){
+					if (!$rootScope.connectedUser || !$rootScope.connectedUser.roles) {
 						return false;
 					}
 					role = 'ROLE_' + role;

@@ -18,3 +18,8 @@ body{
 .ui-select-container small{
 	color:#A0A0A0;
 }
+
+/*input.ng-invalid, select.ng-invalid{
+	border: 1px solid #DD0000;
+	background: red;
+}*/

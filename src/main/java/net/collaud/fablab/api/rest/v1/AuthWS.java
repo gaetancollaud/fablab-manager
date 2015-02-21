@@ -2,6 +2,7 @@ package net.collaud.fablab.api.rest.v1;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.UserEO;
@@ -9,7 +10,9 @@ import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
+import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +30,9 @@ public class AuthWS {
 
 	@Autowired
 	private SecurityService securityService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "isAuthenticated", method = RequestMethod.GET)
 	public Boolean isAuthenticated() {
@@ -55,6 +61,12 @@ public class AuthWS {
 		} else {
 			return new ConnectedUser();
 		}
+	}
+	
+	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	public void signup(@RequestBody UserEO user,
+			@Param("recaptcha") String recaptcha){
+		userService.signup(user, recaptcha);
 	}
 	
 }

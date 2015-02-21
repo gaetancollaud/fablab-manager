@@ -43,6 +43,7 @@ public class MailServiceImpl implements MailService {
 	public static final String PROP_PORT = "mail.smtp.port";
 	public static final String PROP_USERNAME = "mail.smtp.username";
 	public static final String PROP_PASSWORD = "mail.smtp.password";
+	public static final String PROP_FROM = "mail.from";
 	public static final String PROP_BASE_URL = "mail.baseurl";
 	public static final String PROP_SUBJECT_PREFIX = "mail.subjectprefix";
 
@@ -50,7 +51,8 @@ public class MailServiceImpl implements MailService {
 	
 	public enum Template {
 
-		TEMPLATE_FORGOT_PASSWORD("mail/forgotPassword.html");
+		SIGNUP("mail/signup.html"),
+		FORGOT_PASSWORD("mail/forgotPassword.html");
 
 		@Getter
 		private final String path;
@@ -64,7 +66,39 @@ public class MailServiceImpl implements MailService {
 	private SpringPropertiesUtils propertyUtils;
 
 	@Override
-	public String buildMailTemplate(Template template, Map<String, Object> scopes) {
+	public boolean sendMail(String subject, Template template, Map<String, Object> scopes, String... to) {
+		return sendMail(subject, buildMailTemplate(template, scopes), to);
+	}
+	
+	@Override
+	public boolean sendMail(String subject, String content, String... to){
+		try {
+			//add prefix to mail subject
+			subject = propertyUtils.getProperty(PROP_SUBJECT_PREFIX).orElse("") + subject;
+
+			Properties props = getMailProperties();
+			Session session = Session.getInstance(props, null);
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(propertyUtils.getProperty(PROP_FROM).orElse("no-reply@no-domain.com")));
+			msg.setRecipients(Message.RecipientType.TO, getRecipients(to));
+			msg.setSubject(subject);
+			msg.setContent(content, "text/html; charset=UTF-8");
+			msg.setSentDate(new Date());
+			Transport t = session.getTransport("smtp");
+			t.connect(
+					propertyUtils.getProperty(PROP_HOST).orElse("localhost"),
+					propertyUtils.getProperty(PROP_USERNAME).orElse(""),
+					propertyUtils.getProperty(PROP_PASSWORD).orElse("")
+			);
+			t.sendMessage(msg, msg.getAllRecipients());
+			t.close();
+			return true;
+		} catch (MessagingException ex) {
+			log.error("Cannot send message");
+		}
+		return false;
+	}
+	private String buildMailTemplate(Template template, Map<String, Object> scopes) {
 		if(scopes==null){
 			scopes = new HashMap<>();
 		}
@@ -87,35 +121,6 @@ public class MailServiceImpl implements MailService {
 			log.error("Cannot open template file " + path, ex);
 			return "";
 		}
-	}
-
-	@Override
-	public boolean sendMail(String from, String subject, String content, String... to){
-		try {
-			//add prefix to mail subject
-			subject = propertyUtils.getProperty(PROP_SUBJECT_PREFIX).orElse("") + subject;
-
-			Properties props = getMailProperties();
-			Session session = Session.getInstance(props, null);
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(from));
-			msg.setRecipients(Message.RecipientType.TO, getRecipients(to));
-			msg.setSubject(subject);
-			msg.setContent(content, "text/html; charset=UTF-8");
-			msg.setSentDate(new Date());
-			Transport t = session.getTransport("smtp");
-			t.connect(
-					propertyUtils.getProperty(PROP_HOST).orElse("localhost"),
-					propertyUtils.getProperty(PROP_USERNAME).orElse(""),
-					propertyUtils.getProperty(PROP_PASSWORD).orElse("")
-			);
-			t.sendMessage(msg, msg.getAllRecipients());
-			t.close();
-			return true;
-		} catch (MessagingException ex) {
-			log.error("Cannot send message");
-		}
-		return false;
 	}
 
 	private String newLineToBr(String in) {
