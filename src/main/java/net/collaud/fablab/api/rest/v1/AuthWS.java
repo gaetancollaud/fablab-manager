@@ -1,14 +1,10 @@
 package net.collaud.fablab.api.rest.v1;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
-import net.collaud.fablab.api.rest.v1.exception.ErrorMessage;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
 import net.collaud.fablab.api.service.UserService;

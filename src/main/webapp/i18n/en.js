@@ -25,7 +25,8 @@ angular.module('App').config(function ($translateProvider) {
 			save: 'Save',
 			create: 'Create',
 			export: 'Export',
-			search: 'Search'
+			search: 'Search',
+			updateMailingList: 'Update mailing list'
 		},
 		panel: {
 			search:'Filters'

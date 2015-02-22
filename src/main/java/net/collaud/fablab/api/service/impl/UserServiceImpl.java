@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.dao.GroupRepository;
@@ -127,7 +128,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		save(user);
 		Map<String, Object> scope = new HashMap<>();
 		scope.put("email", user.getEmail());
-		mailService.sendMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
+		mailService.sendHTMLMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
 	}
 
 	@Override
@@ -138,7 +139,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 			final String newPassword = PasswordUtils.setUserEONewRandomPassword(user.get());
 			Map<String, Object> scope = new HashMap<>();
 			scope.put("password", newPassword);
-			mailService.sendMail("Mot de passe oublié", MailServiceImpl.Template.FORGOT_PASSWORD, scope, email);
+			mailService.sendHTMLMail("Mot de passe oublié", MailServiceImpl.Template.FORGOT_PASSWORD, scope, email);
 			userDao.save(user.get());
 		} else {
 			throw new RuntimeException("No user found for email " + email);
@@ -152,6 +153,16 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 			log.error("Recaptcha check failed because of " + rep.getErrorCodes());
 			throw new RuntimeException("Captcha fail");
 		}
+	}
+
+	@Override
+	@Secured({Roles.USER_MANAGE})
+	public void updateMailingList() {
+		//FIXME fit the mailing list API
+		StringBuilder sb = new StringBuilder();
+		userDao.findAll().stream()
+				.forEach(u -> sb.append("mail:").append(u.getEmail()).append("\n"));
+		mailService.sendPlainTextMail("Update mailing list", sb.toString(), "mailingListUpdater@gmail.com");
 	}
 
 }

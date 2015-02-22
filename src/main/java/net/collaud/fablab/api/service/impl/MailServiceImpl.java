@@ -66,12 +66,16 @@ public class MailServiceImpl implements MailService {
 	private SpringPropertiesUtils propertyUtils;
 
 	@Override
-	public boolean sendMail(String subject, Template template, Map<String, Object> scopes, String... to) {
-		return sendMail(subject, buildMailTemplate(template, scopes), to);
+	public boolean sendHTMLMail(String subject, Template template, Map<String, Object> scopes, String... to) {
+		return sendMail(subject, buildMailTemplate(template, scopes), "text/html; charset=UTF-8", to);
 	}
 	
 	@Override
-	public boolean sendMail(String subject, String content, String... to){
+	public boolean sendPlainTextMail(String subject, String content, String... to){
+		return sendMail(subject, content, "text/plain; charset=UTF-8", to);
+	}
+	
+	public boolean sendMail(String subject, String content, String contentType, String... to){
 		try {
 			//add prefix to mail subject
 			subject = propertyUtils.getProperty(PROP_SUBJECT_PREFIX).orElse("") + subject;
@@ -82,7 +86,7 @@ public class MailServiceImpl implements MailService {
 			msg.setFrom(new InternetAddress(propertyUtils.getProperty(PROP_FROM).orElse("no-reply@no-domain.com")));
 			msg.setRecipients(Message.RecipientType.TO, getRecipients(to));
 			msg.setSubject(subject);
-			msg.setContent(content, "text/html; charset=UTF-8");
+			msg.setContent(content, contentType);
 			msg.setSentDate(new Date());
 			Transport t = session.getTransport("smtp");
 			t.connect(
@@ -98,6 +102,7 @@ public class MailServiceImpl implements MailService {
 		}
 		return false;
 	}
+	
 	private String buildMailTemplate(Template template, Map<String, Object> scopes) {
 		if(scopes==null){
 			scopes = new HashMap<>();

@@ -38,5 +38,10 @@ public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
 	public BaseModel getallMembershipType() {
 		return new DataModel(membershipTypeService.findAll());
 	}
+	
+	@RequestMapping(value = "updateMailingList", method = RequestMethod.GET)
+	public void updateMailingList(){
+		userService.updateMailingList();
+	}
 
 }

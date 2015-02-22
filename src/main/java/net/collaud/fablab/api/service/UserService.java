@@ -15,4 +15,6 @@ public interface UserService extends ReadWriteService<UserEO>{
 	void signup(UserEO user, String recaptcha);
 	
 	void forgotPassword(String email, String recaptchaResponse);
+
+	public void updateMailingList();
 }

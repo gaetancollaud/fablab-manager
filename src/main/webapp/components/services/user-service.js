@@ -5,27 +5,21 @@ angular.module('User', ['ngResource'], function ($provide) {
 
 			return {
 				updatePassword: function (user, successFn) {
-					$http(
-							{
-								method: 'POST',
-								url: App.API.USER_API + "/password",
-								data: user
-							}
-					).success(function (data, status, headers, config) {
+					$http({
+						method: 'POST',
+						url: App.API.USER_API + "/password",
+						data: user
+					}).success(function (data, status, headers, config) {
 						successFn(data);
-					}
-					);
+					});
 				},
 				list: function (successFn) {
-					$http(
-							{
-								method: 'GET',
-								url: App.API.USER_API,
-							}
-					).success(function (data, status, headers, config) {
+					$http({
+						method: 'GET',
+						url: App.API.USER_API,
+					}).success(function (data, status, headers, config) {
 						successFn(data);
-					}
-					);
+					});
 				},
 				remove: function (id, successFn) {
 					User.remove({id: id}, successFn);
@@ -38,13 +32,17 @@ angular.module('User', ['ngResource'], function ($provide) {
 					var prj = User.get({id: id}, successFn);
 					return prj;
 				},
+				updateMailingList: function (successFn) {
+					$http({
+						method: 'GET',
+						url: App.API.USER_API + "/updateMailingList",
+					}).success(successFn);
+				},
 				membershipTypeList: function (successFn) {
-					$http(
-							{
-								method: 'GET',
-								url: App.API.USER_API + "/membershipType",
-							}
-					).success(successFn);
+					$http({
+						method: 'GET',
+						url: App.API.USER_API + "/membershipType",
+					}).success(successFn);
 
 				}
 			};

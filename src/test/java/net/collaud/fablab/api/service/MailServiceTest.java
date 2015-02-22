@@ -35,7 +35,7 @@ public class MailServiceTest extends BaseTest {
 	@Test
 	public void testSendMail() {
 		Map<String, Object> scopes = new HashMap<>();
-		mailService.sendMail(
+		mailService.sendHTMLMail(
 				"subject",
 				MailServiceImpl.Template.FORGOT_PASSWORD,
 				scopes,
