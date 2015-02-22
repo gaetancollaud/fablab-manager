@@ -27,6 +27,13 @@ angular.module('Auth', ['ngResource'], function ($provide) {
 						data: user,
 						params:params
 					}).success(successFn);
+				},
+				forgotPassword:function(params, successFn){
+					$http({
+						method: 'POST',
+						url: App.API.AUTH_API + "/forgotPassword",
+						params:params
+					}).success(successFn);
 				}
 			};
 		}]);

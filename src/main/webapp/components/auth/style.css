@@ -36,3 +36,7 @@
 .form-signin .btn-signup{
 	margin-top: 20px;
 }
+.form-signin .forgot-password{
+	margin-top: 10px;
+	text-align: center;
+}

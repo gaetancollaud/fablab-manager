@@ -2,17 +2,15 @@ package net.collaud.fablab.api.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.management.relation.Role;
+import java.util.Optional;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
-import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,20 +40,26 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	private AuthenticationProvider authManager;
 
 	@Override
-	public UserEO getCurrentUser() {
+	public Optional<UserEO> getCurrentUser() {
 		Integer id = getCurrentUserId();
-		UserEO eo = userDao.findOneByIdAndFetchRoles(id);
-		return eo;
+		if (id < 0) {
+			return Optional.empty();
+		}
+		return userDao.findOneByIdAndFetchRoles(id);
 	}
 
 	@Override
 	public ConnectedUser getConnectedUser() {
 		if (isAuthenticated()) {
-			final UserEO eo = getCurrentUser();
-			List<String> roles = new ArrayList<>();
-			eo.getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
-			ConnectedUser user = new ConnectedUser(eo.getFirstname(), eo.getLastname(), roles);
-			return user;
+			final Optional<UserEO> eo = getCurrentUser();
+			if (eo.isPresent()) {
+				List<String> roles = new ArrayList<>();
+				eo.get().getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
+				ConnectedUser user = new ConnectedUser(eo.get().getFirstname(), eo.get().getLastname(), roles);
+				return user;
+			} else {
+				return new ConnectedUser();
+			}
 		} else {
 			return new ConnectedUser();
 		}

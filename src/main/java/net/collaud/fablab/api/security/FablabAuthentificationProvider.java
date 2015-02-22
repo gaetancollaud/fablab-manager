@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,10 +35,10 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 		String login = authentication.getName();
 		String password = authentication.getCredentials() != null
 				? authentication.getCredentials().toString() : "";
-		UserEO user;
 
-		user = userService.findByLogin(login);
-		if (user != null) {
+		final Optional<UserEO> opt = userService.findByLogin(login);
+		if (opt.isPresent()) {
+			UserEO user = opt.get();
 			if (PasswordUtils.isPasswordValid(user, password)) {
 				Set<GrantedAuthority> roles = new HashSet<>();
 				List<String> groupsStr = new ArrayList<>();

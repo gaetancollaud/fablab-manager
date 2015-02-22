@@ -26,9 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -58,11 +55,11 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	private SpringPropertiesUtils propertyUtils;
 
 	@Override
-	public UserEO findByLogin(String login) {
+	public Optional<UserEO> findByLogin(String login) {
 		if (login == null || login.isEmpty()) {
-			return null;
+			return Optional.empty();
 		}
-		return userDao.findByLogin(login);
+		return userDao.findByLoginOrEmail(login);
 	}
 
 	@Override
@@ -74,7 +71,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	@Override
 	@Secured({Roles.USER_MANAGE})
 	public Optional<UserEO> getById(Integer id) {
-		return Optional.ofNullable(userDao.findOneDetails(id));
+		return userDao.findOneDetails(id);
 	}
 
 	@Override
@@ -126,14 +123,32 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	public void signup(UserEO user, String recaptchaResponse) {
+		checkRecaptcha(recaptchaResponse);
+		save(user);
+		Map<String, Object> scope = new HashMap<>();
+		scope.put("email", user.getEmail());
+		mailService.sendMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
+	}
+
+	@Override
+	public void forgotPassword(String email, String recaptchaResponse) {
+		checkRecaptcha(recaptchaResponse);
+		final Optional<UserEO> user = userDao.findByLoginOrEmail(email);
+		if (user.isPresent()) {
+			final String newPassword = PasswordUtils.setUserEONewRandomPassword(user.get());
+			Map<String, Object> scope = new HashMap<>();
+			scope.put("password", newPassword);
+			mailService.sendMail("Mot de passe oublié", MailServiceImpl.Template.FORGOT_PASSWORD, scope, email);
+			userDao.save(user.get());
+		} else {
+			throw new RuntimeException("No user found for email " + email);
+		}
+	}
+
+	private void checkRecaptcha(String recaptchaResponse) {
 		String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
 		ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);
-		if (rep.getSuccess()) {
-			save(user);
-			Map<String, Object> scope = new HashMap<>();
-			scope.put("email", user.getEmail());
-			mailService.sendMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
-		} else {
+		if (!rep.getSuccess()) {
 			log.error("Recaptcha check failed because of " + rep.getErrorCodes());
 			throw new RuntimeException("Captcha fail");
 		}

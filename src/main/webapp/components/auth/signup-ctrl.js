@@ -1,6 +1,8 @@
 var ctrl = angular.module('Auth');
 ctrl.controller('AuthSignUpController', function ($rootScope, $location, $filter, $scope,
 		NotificationService, AuthService, StaticDataService) {
+
+	$scope.siteKey = App.Constants.RECAPTCHA_SITE_KEY;
 	$scope.user = {
 //		firstname: "test",
 //		lastname: "test",

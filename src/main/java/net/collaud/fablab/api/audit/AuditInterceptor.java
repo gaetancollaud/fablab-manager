@@ -62,7 +62,7 @@ public class AuditInterceptor {
 		if (detail != null && detail.isEmpty()) {
 			detail = null;
 		}
-		auditService.addEntry(new AuditEO(securityService.getCurrentUser(), action, object, objectId, new Date(), success, content, detail));
+		auditService.addEntry(new AuditEO(securityService.getCurrentUser().orElse(null), action, object, objectId, new Date(), success, content, detail));
 	}
 
 	private Object getObjectOutOfResultAndParameters(AuditDetail ann, Object o, Object[] parameters) {

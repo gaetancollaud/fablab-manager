@@ -22,6 +22,12 @@ angular.module('App', [
 		}).when('/signup', {
 			templateUrl: './components/auth/signup-view.html',
 			controller: 'AuthSignUpController'
+		}).when('/forgotPassword', {
+			templateUrl: './components/auth/forgot-password-view.html',
+			controller: 'AuthForgotPasswordController'
+		}).when('/profil', {
+			templateUrl: './components/user/profil-view.html',
+			controller: 'UserProfilController'
 		}).when('/users', {
 			templateUrl: './components/user/list-view.html',
 			controller: 'UserListController'

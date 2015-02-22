@@ -43,6 +43,7 @@ public class ConstansController {
 		//from fablab-config.properties
 		csts.put("rootUrl", rootUrl);
 		csts.put("GOOGLE_API", propertyUtils.getProperty("google.api").orElse(""));
+		csts.put("RECAPTCHA_SITE_KEY", propertyUtils.getProperty("google.recaptcha.site").orElse(""));
 
 		StringBuilder sb = new StringBuilder("var App = {};\n");
 		addConstants(sb, "App.Constants", csts);

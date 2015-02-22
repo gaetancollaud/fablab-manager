@@ -8,6 +8,7 @@ import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
 import net.collaud.fablab.api.rest.v1.criteria.AuthCredential;
+import net.collaud.fablab.api.rest.v1.exception.ErrorMessage;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
 import net.collaud.fablab.api.service.UserService;
@@ -52,21 +53,19 @@ public class AuthWS {
 
 	@RequestMapping(value = "current")
 	public ConnectedUser getCurrentUser() {
-		if (securityService.isAuthenticated()) {
-			final UserEO eo = securityService.getCurrentUser();
-			List<String> roles = new ArrayList<>();
-			eo.getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
-			ConnectedUser user = new ConnectedUser(eo.getFirstname(), eo.getLastname(), roles);
-			return user;
-		} else {
-			return new ConnectedUser();
-		}
+		return securityService.getConnectedUser();
 	}
 	
 	@RequestMapping(value = "signup", method = RequestMethod.POST)
 	public void signup(@RequestBody UserEO user,
 			@Param("recaptcha") String recaptcha){
 		userService.signup(user, recaptcha);
+	}
+	
+	@RequestMapping(value = "forgotPassword", method = RequestMethod.POST)
+	public void forgotPassword(@Param("email") String email,
+			@Param("recaptcha") String recaptcha){
+		userService.forgotPassword(email, recaptcha);
 	}
 	
 }

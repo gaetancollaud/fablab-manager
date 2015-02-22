@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.dao;
 
 import java.util.List;
+import java.util.Optional;
 import net.collaud.fablab.api.data.UserEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,19 +19,19 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 			+ " LEFT JOIN FETCH u.groups g "
 			+ " LEFT JOIN FETCH u.membershipType mt "
 			+ " WHERE u.id=:id")
-	UserEO findOneDetails(@Param("id")Integer id);
+	Optional<UserEO> findOneDetails(@Param("id")Integer id);
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups g "
 			+ " LEFT JOIN FETCH g.roles "
 			+ " WHERE u.id=:id")
-	UserEO findOneByIdAndFetchRoles(@Param("id")Integer id);
+	Optional<UserEO> findOneByIdAndFetchRoles(@Param("id")Integer id);
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " WHERE u.login=:login OR u.email=:login")
-	UserEO findByLogin(@Param("login") String login);
+	Optional<UserEO> findByLoginOrEmail(@Param("login") String login);
 	
 	@Override
 	@Query("SELECT u FROM UserEO u WHERE u.enabled=1")

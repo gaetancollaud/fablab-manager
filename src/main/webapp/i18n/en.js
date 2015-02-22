@@ -44,7 +44,9 @@ angular.module('App').config(function ($translateProvider) {
 			password: 'Password',
 			signiIn: 'Sign In',
 			signUp: 'Sign Up',
-			captcha: 'Are you human ?'
+			captcha: 'Are you human ?',
+			forgotPasswordQuestion:"Forgot your password ?",
+			requestNewPasswod:"Send me a new password"
 		},
 		user: {
 			firstname: 'Firstname',

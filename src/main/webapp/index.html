@@ -55,19 +55,18 @@
 						show="hasAnyRole('USER_VIEW')"></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li ng-show="connectedUser.connected">
-						<a>
-
-						</a>
-					</li>
+					
 					<li fab-nav-item link="signup" icon="heart" 
 						label="menu.signup"
 						show="!connectedUser.connected"></li>
 					<li fab-nav-item link="login" icon="log-in" 
 						label="menu.login"
 						show="!connectedUser.connected"></li>
-					<li fab-nav-item link="logout" icon="log-out"
+					<li fab-nav-item link="profil" icon="cog"
 						label="{{connectedUser| prettyUser}}"
+						show="connectedUser.connected"></li>
+					<li fab-nav-item link="logout" icon="log-out"
+						label="menu.logout"
 						show="connectedUser.connected"></li>
 				</ul>
 			</div>
@@ -140,10 +139,12 @@
 	<script src="./components/auth/login-ctrl.js"></script>
 	<script src="./components/auth/logout-ctrl.js"></script>
 	<script src="./components/auth/signup-ctrl.js"></script>
+	<script src="./components/auth/forgot-password-ctrl.js"></script>
 
 	<script src="./components/user/directive-groups.js"></script>
 	<script src="./components/user/list-ctrl.js"></script>
 	<script src="./components/user/edit-ctrl.js"></script>
+	<script src="./components/user/profil-ctrl.js"></script>
 
 	<script src="./components/reservation/list-ctrl.js"></script>
 	<script src="./components/reservation/edit-ctrl.js"></script>

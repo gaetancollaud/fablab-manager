@@ -28,4 +28,10 @@ abstract public class PasswordUtils {
 		user.setPasswordSalt(salt);
 		return user;
 	}
+	
+	public static String setUserEONewRandomPassword(UserEO user){
+		String password = RandomStringUtils.randomAlphanumeric(10);
+		setUseEONewPassword(user, password);
+		return password;
+	}
 }
