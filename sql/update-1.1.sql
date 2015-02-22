@@ -11,6 +11,7 @@ INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (10, '
 INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (11, 'View reservation', 'ROLE_RESERVATION_VIEW');
 INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (12, 'Use reservation', 'ROLE_RESERVATION_USE');
 INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (13, 'Manage reservation', 'ROLE_RESERVATION_MANAGE');
+INSERT INTO `fablab`.`t_role` (`role_id`, `name`, `technicalname`) VALUES (14, 'Manage Mailing list', 'ROLE_MAILINGLIST_MANAGE');
 
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (1, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (2, 1);
@@ -32,6 +33,8 @@ INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (11, 3);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 2);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (12, 3);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (13, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (14, 1);
 
 
 
