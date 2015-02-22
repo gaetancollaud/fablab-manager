@@ -66,7 +66,7 @@ angular.module('App', [
 					});
 				};
 
-				$rootScope.updateCurrentUser();
+				$rootScope.connectedUser = App.connectedUser;
 
 				var authRedirect = function () {
 					if ($rootScope.connectedUser) {

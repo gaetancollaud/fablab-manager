@@ -16,7 +16,7 @@ angular.module('User').directive('fabUserGroups', function () {
 			$scope.isSelected = function (group) {
 				if ($scope.ngModel) {
 					for (var k in $scope.ngModel) {
-						if ($scope.ngModel[k].groupId === group.groupId) {
+						if ($scope.ngModel[k].id === group.id) {
 							return true;
 						}
 					}
@@ -26,7 +26,7 @@ angular.module('User').directive('fabUserGroups', function () {
 
 			$scope.toggleGroupSelect = function (group) {
 				for (var k in $scope.ngModel) {
-						if ($scope.ngModel[k].groupId === group.groupId) {
+						if ($scope.ngModel[k].id === group.id) {
 							//remove
 							$scope.ngModel.splice(k, 1);
 							return;
@@ -34,7 +34,7 @@ angular.module('User').directive('fabUserGroups', function () {
 					}
 					//add
 					$scope.ngModel[$scope.ngModel.length] = {
-						groupId:group.groupId,
+						id:group.id,
 						name:group.name,
 					};
 			};

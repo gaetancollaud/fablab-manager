@@ -1,9 +1,12 @@
 package net.collaud.fablab.api.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.management.relation.Role;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
+import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.SecurityService;
 import org.slf4j.Logger;
@@ -46,6 +49,19 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	}
 
 	@Override
+	public ConnectedUser getConnectedUser() {
+		if (isAuthenticated()) {
+			final UserEO eo = getCurrentUser();
+			List<String> roles = new ArrayList<>();
+			eo.getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
+			ConnectedUser user = new ConnectedUser(eo.getFirstname(), eo.getLastname(), roles);
+			return user;
+		} else {
+			return new ConnectedUser();
+		}
+	}
+
+	@Override
 	public Integer getCurrentUserId() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null) {
@@ -62,18 +78,18 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 
 	@Override
 	public LoginResult login(String login, String password) {
-		if(isAuthenticated()){
+		if (isAuthenticated()) {
 			return LoginResult.ALREADY_CONNECTED;
 		}
 		try {
 			Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(login, password));
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			return LoginResult.OK;
-		}catch(BadCredentialsException ex){
-			LOG.warn("Wrong password for login "+login);
+		} catch (BadCredentialsException ex) {
+			LOG.warn("Wrong password for login " + login);
 			return LoginResult.WRONG_PASSWORD;
-		}catch(UsernameNotFoundException ex){
-			LOG.warn("Login "+login+" not found");
+		} catch (UsernameNotFoundException ex) {
+			LOG.warn("Login " + login + " not found");
 			return LoginResult.UNKNOWN_USERNAME;
 		} catch (AuthenticationException ex) {
 			LOG.error("Error while login", ex);
@@ -85,7 +101,5 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	public void logout() {
 		SecurityContextHolder.clearContext();
 	}
-	
-	
 
 }

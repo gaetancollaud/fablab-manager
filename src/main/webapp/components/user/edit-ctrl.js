@@ -31,7 +31,7 @@ ctrl.controller('GlobalUserEditController', [
 			$scope.membershipTypeList = data;
 		});
 
-		StaticDataService.listGroups(function (data) {
+		StaticDataService.loadGroups(function (data) {
 			$scope.groups = data;
 		});
 	}

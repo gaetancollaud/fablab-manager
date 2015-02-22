@@ -9,64 +9,58 @@ reservation.directive('datepickerPopup', function () {
 		}
 	}
 });
-reservation.controller('GlobalReservationEditController', [
-	'$scope',
-	'$location',
-	'$filter',
-	'$q',
-	'ReservationService',
-	'MachineService',
-	'NotificationService',
-	function ($scope, $location, $filter, $q,
-			ReservationService, MachineService, NotificationService) {
-		$scope.dateFormat = 'dd MMMM yyyy';
-		$scope.hstep = 1;
-		$scope.mstep = 15;
-		$scope.dateOptions = {
-			formatYear: 'yy',
-			startingDay: 1,
-		};
-		$scope.minDate = moment().format($scope.dateFormat);
-		$scope.maxDate = moment().add(14, 'days').format($scope.dateFormat);
+reservation.controller('GlobalReservationEditController', function ($scope, $rootScope, $location, $filter, $q,
+		ReservationService, MachineService, NotificationService) {
+	$scope.dateFormat = 'dd MMMM yyyy';
+	$scope.hstep = 1;
+	$scope.mstep = 15;
+	$scope.dateOptions = {
+		formatYear: 'yy',
+		startingDay: 1,
+	};
+	$scope.minDate = moment().format($scope.dateFormat);
+	$scope.maxDate = moment().add(14, 'days').format($scope.dateFormat);
 
-		$scope.disabled = function (date, mode) {
-			return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-		};
+	$scope.disabled = function (date, mode) {
+		return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+	};
 
-		var extractDates = function () {
-			$scope.reservationDate = new Date($scope.reservation.dateStart);
-			$scope.startTime = new Date($scope.reservation.dateStart);
-			$scope.endTime = new Date($scope.reservation.dateEnd);
+	var extractDates = function () {
+		$scope.reservationDate = new Date($scope.reservation.dateStart);
+		$scope.startTime = new Date($scope.reservation.dateStart);
+		$scope.endTime = new Date($scope.reservation.dateEnd);
 
-		};
+	};
 
-		$scope.loadReservation = function (id) {
-			ReservationService.get(id, function (data) {
-				$scope.reservation = data;
-				extractDates();
-			});
-		};
-		$scope.createNewReservation = function () {
-			var now = moment().hour(18).minute(0).second(0);
-			$scope.reservation = {
-				dateStart: now,
-				dateEnd: now.clone().add(1, 'hour')
-			};
+	$scope.loadReservation = function (id) {
+		ReservationService.get(id, function (data) {
+			$scope.reservation = data;
 			extractDates();
+		});
+	};
+	$scope.createNewReservation = function () {
+		var now = moment().hour(18).minute(0).second(0);
+		$scope.reservation = {
+			dateStart: now,
+			dateEnd: now.clone().add(1, 'hour'),
+			user: $rootScope.connectedUser
 		};
+		extractDates();
+	};
 
-		$scope.open = function ($event) {
-			$event.preventDefault();
-			$event.stopPropagation();
+	$scope.open = function ($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
 
-			$scope.opened = true;
-		};
+		$scope.opened = true;
+	};
 
-		$scope.timeChanged = function () {
-			$scope.timeError = moment($scope.startTime).unix() >= moment($scope.endTime).unix();
-		};
+	$scope.timeChanged = function () {
+		$scope.timeError = moment($scope.startTime).unix() >= moment($scope.endTime).unix();
+	};
 
-		$scope.save = function () {
+	$scope.save = function () {
+		if (!$scope.timeError && $scope.reservation.machine) {
 			var day = moment($scope.reservationDate);
 			var start = moment($scope.startTime);
 			var end = moment($scope.endTime);
@@ -76,40 +70,21 @@ reservation.controller('GlobalReservationEditController', [
 				NotificationService.notify("success", "Reservation enregistrée");
 				$location.path("reservations");
 			});
-		};
+		}
+	};
 
-		MachineService.list(function (data) {
-			$scope.machines = data;
-		});
+	MachineService.list(function (data) {
+		$scope.machines = data;
+	});
 
-	}
-]);
-reservation.controller('ReservationNewController',
-		[
-			'$rootScope',
-			'$scope',
-			'$location',
-			'ReservationService',
-			'$controller',
-			function ($rootScope, $scope, $location, ReservationService, $controller) {
-				$controller('GlobalReservationEditController', {$scope: $scope});
-				$scope.newReservation = true;
-				$scope.createNewReservation();
-			}
-		]
-		);
-reservation.controller('ReservationEditController',
-		[
-			'$rootScope',
-			'$scope',
-			'$location',
-			'$routeParams',
-			'ReservationService',
-			'$controller',
-			function ($rootScope, $scope, $location, $routeParams, ReservationService, $controller) {
-				$controller('GlobalReservationEditController', {$scope: $scope});
-				$scope.newReservation = false;
-				$scope.loadReservation($routeParams.id);
-			}
-		]
-		);
+});
+reservation.controller('ReservationNewController', function ($rootScope, $scope, $location, ReservationService, $controller) {
+	$controller('GlobalReservationEditController', {$scope: $scope});
+	$scope.newReservation = true;
+	$scope.createNewReservation();
+});
+reservation.controller('ReservationEditController', function ($rootScope, $scope, $location, $routeParams, ReservationService, $controller) {
+	$controller('GlobalReservationEditController', {$scope: $scope});
+	$scope.newReservation = false;
+	$scope.loadReservation($routeParams.id);
+});

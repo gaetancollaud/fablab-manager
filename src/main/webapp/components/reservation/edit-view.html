@@ -1,16 +1,24 @@
 
-<div class="panel panel-default">
-	<div class="panel-heading" translate="reservation.edit.title">
-	</div>
-	<div class="panel-body">
-		<form name="form" class="form-horizontal">
+<form name="form" class="form-horizontal" name="editReservation" ng-submit="save(false)">
+	<div class="panel panel-default">
+		<div class="panel-heading" translate="reservation.edit.title">
+		</div>
+		<div class="panel-body">
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="reservation.user"></label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" value="{{reservation.user|prettyUser}}" disabled />
+				</div>
+			</div>
+
 			<div class="form-group" ng-class="{'has-error':form.machine.$error.required}">
 				<label class="col-sm-2 control-label" translate="reservation.machine"></label>
 				<div class="col-sm-8">
 					<select class="form-control" 
 							name="machine"
 							ng-model="reservation.machine"
-							required="true"
+							required
 							ng-options="m.name group by m.machineType.name for m in machines track by m.id"></select>
 				</div>
 			</div>
@@ -19,9 +27,10 @@
 				<div class="col-sm-8">
 					<p class="input-group">
 						<input type="text" 
+							   required
 							   class="form-control" 
 							   datepicker-popup="dd MMMM yyyy" 
-							   ng-model="reservationDate" 
+							   ng-model="reservationDate"
 							   is-open="opened" 
 							   min-date="minDate" 
 							   max-date="'2015-06-22'" 
@@ -65,14 +74,12 @@
 				</div>
 			</div>
 
-		</form>
+		</div>
+		<div class="panel-footer right">
+			<a href="#/reservations" class="btn btn-default btn-glyph" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
+			<button type="submit" class="btn btn-success btn-glyph">{{'button.save'| translate}} 
+				<span class="glyphicon glyphicon-floppy-disk"></span>
+			</button>
+		</div>
 	</div>
-	<div class="panel-footer right">
-		<a href="#/reservations" class="btn btn-default btn-glyph" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
-		<button class="btn btn-success btn-glyph" 
-				ng-disabled="form.$error.required || timeError"
-				ng-click="save(false)">{{'button.save'| translate}} 
-			<span class="glyphicon glyphicon-floppy-disk"></span>
-		</button>
-	</div>
-</div>
+</form>
