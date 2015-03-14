@@ -52,6 +52,7 @@ angular.module('App').config(function ($translateProvider) {
 		user: {
 			firstname: 'Firstname',
 			lastname: 'Lastname',
+			name:'Name',
 			email: 'Email',
 			balance: 'Balance',
 			membership: 'Membership',
@@ -74,6 +75,21 @@ angular.module('App').config(function ($translateProvider) {
 			edit: {
 				title: "Réservation d'une machine"
 			}
+		},
+		payment:{
+			userTitle:'User',
+			usageTitle:'Add an usage',
+			paymentTitle:'Add a payment',
+			machine:'Machine',
+			date:'Date',
+			time:'Time',
+			additionalCost:'Additional cost',
+			comment:'Comment',
+			directPaid:'User paid directly',
+			amount:'Amount',
+			total:'Total',
+			addPayment:'Add payment',
+			addUsage:'Add usage'
 		}
 	});
 });
