@@ -61,7 +61,8 @@ angular.module('App').config(function ($translateProvider) {
 			phone: 'Phone',
 			address: 'Address',
 			rfid: 'RFID',
-			groups: 'Groups'
+			groups: 'Groups',
+			lastSubscription:'Last subscription'
 		},
 		reservation: {
 			day: 'Day',
@@ -80,6 +81,7 @@ angular.module('App').config(function ($translateProvider) {
 			userTitle:'User',
 			usageTitle:'Add an usage',
 			paymentTitle:'Add a payment',
+			enterName:'Enter a name',
 			machine:'Machine',
 			date:'Date',
 			time:'Time',

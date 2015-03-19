@@ -13,6 +13,11 @@ angular.module('Reservation').controller('PaymentByUserController', function ($s
 		amount:10,
 		date:new Date()
 	};
+	
+	$scope.paidDirectlyOptions = [
+		{value:false,label:'No, use its credit'},
+		{value:true,label:'Yes, he gives the money'}
+	];
 
 	StaticDataService.loadMachines(function (data) {
 		$scope.machines = data;

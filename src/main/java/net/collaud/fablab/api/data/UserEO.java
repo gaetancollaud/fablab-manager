@@ -110,9 +110,9 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "rfid", nullable = true)
 	private String rfid;
 
-	@Column(name = "last_subscription_confirmation", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastSubscriptionConfirmation;
+//	@Column(name = "last_subscription_confirmation", nullable = true)
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Date lastSubscriptionConfirmation;
 
 	@JsonIgnore
 	@Column(name = "enabled", nullable = false)
@@ -129,7 +129,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	private String address;
 
 	@JsonManagedReference("user-subscription")
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private Set<SubscriptionEO> subscriptions;
 
 	@JsonIgnore
@@ -180,14 +180,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 		return hash;
 	}
 
-	public Date getLastSubscriptionConfirmation() {
-		return lastSubscriptionConfirmation;
-	}
-
-	public void setLastSubscriptionConfirmation(Date lastSubscriptionConfirmation) {
-		this.lastSubscriptionConfirmation = lastSubscriptionConfirmation;
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (!(object instanceof UserEO)) {
@@ -198,11 +190,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "net.collaud.fablab.data.User[ userId=" + id + " ]";
 	}
 
 	@JsonIgnore

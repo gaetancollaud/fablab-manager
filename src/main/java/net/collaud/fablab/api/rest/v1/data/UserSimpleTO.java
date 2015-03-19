@@ -3,6 +3,7 @@ package net.collaud.fablab.api.rest.v1.data;
 import lombok.Getter;
 import lombok.Setter;
 import net.collaud.fablab.api.data.MembershipTypeEO;
+import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UserEO;
 
 /**
