@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -12,11 +11,7 @@ import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.ReservationService;
 import net.collaud.fablab.api.service.SecurityService;
-import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;

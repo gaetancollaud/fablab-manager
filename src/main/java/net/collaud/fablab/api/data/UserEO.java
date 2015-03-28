@@ -37,37 +37,37 @@ import lombok.ToString;
 @ToString
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
-	public static final String FIND_ALL
-			= " SELECT u "
-			+ " FROM UserEO u "
-			+ " LEFT JOIN FETCH u.membershipType AS mt ";
-
-	public static final String FIND_BY_LOGIN
-			= " SELECT u "
-			+ " FROM UserEO u "
-			+ " LEFT JOIN FETCH u.groups AS g "
-			+ " LEFT JOIN FETCH g.roles AS r "
-			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN + " "
-			+ " OR u.email=:" + UserEO.PARAM_LOGIN;
-
-	public static final String FIND_BY_ID_AND_FETCH_ROLES
-			= " SELECT u "
-			+ " FROM UserEO u "
-			+ " LEFT JOIN FETCH u.groups AS g "
-			+ " LEFT JOIN FETCH g.roles AS r "
-			+ " WHERE u.id = :" + UserEO.PARAM_ID;
-	
-	public static final String FIND_BY_ID_DETAIL
-			= " SELECT u "
-			+ " FROM UserEO u "
-			+ " LEFT JOIN FETCH u.groups AS g "
-			+ " LEFT JOIN FETCH u.membershipType AS mt "
-			+ " WHERE u.id = :" + UserEO.PARAM_ID;
-
-	public static final String PARAM_LOGIN = "login";
-	public static final String PARAM_RFID = "rfid";
-	public static final String PARAM_IDS = "ids";
-	public static final String PARAM_ID = "id";
+//	public static final String FIND_ALL
+//			= " SELECT u "
+//			+ " FROM UserEO u "
+//			+ " LEFT JOIN FETCH u.membershipType AS mt ";
+//
+//	public static final String FIND_BY_LOGIN
+//			= " SELECT u "
+//			+ " FROM UserEO u "
+//			+ " LEFT JOIN FETCH u.groups AS g "
+//			+ " LEFT JOIN FETCH g.roles AS r "
+//			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN + " "
+//			+ " OR u.email=:" + UserEO.PARAM_LOGIN;
+//
+//	public static final String FIND_BY_ID_AND_FETCH_ROLES
+//			= " SELECT u "
+//			+ " FROM UserEO u "
+//			+ " LEFT JOIN FETCH u.groups AS g "
+//			+ " LEFT JOIN FETCH g.roles AS r "
+//			+ " WHERE u.id = :" + UserEO.PARAM_ID;
+//
+//	public static final String FIND_BY_ID_DETAIL
+//			= " SELECT u "
+//			+ " FROM UserEO u "
+//			+ " LEFT JOIN FETCH u.groups AS g "
+//			+ " LEFT JOIN FETCH u.membershipType AS mt "
+//			+ " WHERE u.id = :" + UserEO.PARAM_ID;
+//
+//	public static final String PARAM_LOGIN = "login";
+//	public static final String PARAM_RFID = "rfid";
+//	public static final String PARAM_IDS = "ids";
+//	public static final String PARAM_ID = "id";
 
 	private static final long serialVersionUID = 1L;
 
@@ -82,11 +82,11 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+
 	@JsonIgnore
 	@Column(name = "password_salt", nullable = false)
 	private String passwordSalt;
-	
+
 	@Transient
 	@JsonProperty
 	private String passwordNew;
@@ -113,7 +113,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 //	@Column(name = "last_subscription_confirmation", nullable = true)
 //	@Temporal(TemporalType.TIMESTAMP)
 //	private Date lastSubscriptionConfirmation;
-
 	@JsonIgnore
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
@@ -172,7 +171,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 		this.enabled = true;
 	}
 
-
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -194,6 +192,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
 	@JsonIgnore
 	public String getFirstLastName() {
-		return firstname+" "+lastname;
+		return firstname + " " + lastname;
 	}
 }

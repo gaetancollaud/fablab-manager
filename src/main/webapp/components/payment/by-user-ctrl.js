@@ -1,6 +1,8 @@
 angular.module('Reservation').controller('PaymentByUserController', function ($scope, $log, $filter,
 		$location, $routeParams, ngTableParams, StaticDataService, PaymentService, UserService) {
 	$scope.selected = {user: undefined};
+	
+	$scope.minDate = moment().subtract(7, 'days').format('YYYY-MM-D');
 
 	$scope.addUsage = {
 		date:new Date(),
@@ -10,7 +12,7 @@ angular.module('Reservation').controller('PaymentByUserController', function ($s
 		total:0
 	};
 	$scope.addPayment = {
-		amount:10,
+		amount:null,
 		date:new Date()
 	};
 	

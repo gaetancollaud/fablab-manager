@@ -3,7 +3,6 @@ package net.collaud.fablab.api.data.virtual;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageDetailEO;
@@ -15,7 +14,7 @@ import net.collaud.fablab.api.data.UserEO;
  */
 @Getter
 @Setter
-public class HistoryEntry {
+public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	public enum HistoryEntryType {
 
@@ -69,6 +68,11 @@ public class HistoryEntry {
 		detail = "Subscription type : " + subscription.getPriceCotisation().getMembershipType().getName();
 		amount = -subscription.getPriceCotisation().getPrice();
 		user = subscription.getUser();
+	}
+
+	@Override
+	public int compareTo(HistoryEntry o) {
+		return this.date.compareTo(o.getDate());
 	}
 
 }

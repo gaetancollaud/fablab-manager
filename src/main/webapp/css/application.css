@@ -23,3 +23,13 @@ body{
 	border: 1px solid #DD0000;
 	background: red;
 }*/
+
+.bg-danger, bg-info, bg-warning, bg-success{
+	padding:15px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.text-bold{
+	font-weight: bold;
+}

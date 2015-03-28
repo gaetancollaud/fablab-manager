@@ -1,5 +1,12 @@
 angular.module('App').config(function ($translateProvider) {
 	$translateProvider.translations('en', {
+		date:{
+			format:{
+				date:'DD/MM/YYYY',
+				datetime:'DD/MM/YYYY hh:mm:ss',
+				time:'hh:mm:ss'
+			}
+		},
 		error: {
 			internal: 'Internal error',
 			ajax: {
@@ -62,7 +69,9 @@ angular.module('App').config(function ($translateProvider) {
 			address: 'Address',
 			rfid: 'RFID',
 			groups: 'Groups',
-			lastSubscription:'Last subscription'
+			lastSubscription:'Last subscription',
+			subscriptionLeft:'{{days}} days left',
+			subscriptionExpired:'expired'
 		},
 		reservation: {
 			day: 'Day',
@@ -91,7 +100,9 @@ angular.module('App').config(function ($translateProvider) {
 			amount:'Amount',
 			total:'Total',
 			addPayment:'Add payment',
-			addUsage:'Add usage'
+			addUsage:'Add usage',
+			details:'Details',
+			balanceText:'Balance for user {{firstname}} {{lastname}} : <b>{{balance}}</b>'
 		}
 	});
 });

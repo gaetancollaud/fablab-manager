@@ -1,24 +1,14 @@
 package net.collaud.fablab.api.rest.v1.base;
 
-import java.util.List;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.data.AbstractDataEO;
-import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.exceptions.FablabException;
-import net.collaud.fablab.api.rest.v1.data.ReservationSimpleTO;
-import net.collaud.fablab.api.rest.v1.model.BaseModel;
-import net.collaud.fablab.api.rest.v1.model.DataModel;
-import net.collaud.fablab.api.security.Roles;
-import net.collaud.fablab.api.service.global.ReadService;
 import net.collaud.fablab.api.service.global.ReadWriteService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
