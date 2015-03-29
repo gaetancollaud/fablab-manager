@@ -31,9 +31,9 @@
 		</td>
         <td 
 			data-title="'user.balance' | translate"
-			sortable="'balance'"
-			ng-class="{'negativBalance' : user.balance < 0}">
-			{{user.balance|number:2}}
+			sortable="'balance.value'"
+			ng-class="{'negativBalance' : user.balance.value < 0}">
+			{{user.balance.value|number:2}}
 		</td>
         <td 
 			data-title="'user.membership' | translate"

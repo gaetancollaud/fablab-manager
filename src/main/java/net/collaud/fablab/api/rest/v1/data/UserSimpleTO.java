@@ -34,7 +34,7 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 		setFirstname(eo.getFirstname());
 		setLastname(eo.getLastname());
 		setEmail(eo.getEmail());
-		setBalance(eo.getBalance());
+		setBalance(eo.getBalance().getValue());
 		setMembershipType(eo.getMembershipType());
 		return this;
 	}

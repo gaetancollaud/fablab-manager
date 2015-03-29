@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -104,9 +105,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateInscr;
 
-	@Column(name = "balance", nullable = false)
-	private float balance;
-
 	@Column(name = "rfid", nullable = true)
 	private String rfid;
 
@@ -150,6 +148,11 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
+	
+	
+	@OneToOne
+	@JoinColumn(name="user_id", referencedColumnName = "user_id")
+	private UserBalanceEO balance;
 
 	public UserEO() {
 	}
@@ -158,7 +161,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 		this.id = id;
 	}
 
-	public UserEO(Integer id, boolean authBySql, String login, String password, String firstname, String lastname, Date dateInscr, float balance, String rfid) {
+	public UserEO(Integer id, boolean authBySql, String login, String password, String firstname, String lastname, Date dateInscr, String rfid) {
 		this.id = id;
 		this.authBySql = authBySql;
 		this.login = login;
@@ -166,7 +169,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 		this.lastname = lastname;
 		this.password = password;
 		this.dateInscr = dateInscr;
-		this.balance = balance;
 		this.rfid = rfid;
 		this.enabled = true;
 	}

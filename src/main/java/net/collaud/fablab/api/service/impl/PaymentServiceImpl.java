@@ -78,7 +78,9 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Secured({Roles.PAYMENT_MANAGE})
 	public UsageEO useMachine(UserEO user, MachineEO machine, Date startDate, int minutes, float additionalCost, String comment) {
 		PriceRevisionEO priceRev = priceRepository.findAll().get(0);
-		UsageEO usage = new UsageEO(user, user.getMembershipType(), priceRev, machine, startDate, minutes, additionalCost, comment);
+		//FIXME find price per hour
+		double price = -1;
+		UsageEO usage = new UsageEO(0, startDate, price, minutes, additionalCost, comment, user, machine, user.getMembershipType(), priceRev);
 		usage = usageRepository.save(usage);
 		return usage;
 	}

@@ -17,7 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,6 +32,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -42,6 +46,10 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateStart;
+	
+	
+	@Column(name = "price_hour", nullable = false)
+	private double pricePerHour;
 
 	@Column(name = "minutes")
 	private int minutes;
@@ -69,19 +77,5 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	private PriceRevisionEO priceRevision;
 	
 	
-	public UsageEO() {
-	}
-
-	public UsageEO(UserEO user, MembershipTypeEO membershipType, PriceRevisionEO priceRevision, MachineEO machine, Date dateStart, int minutes, float additionalCost, String comment) {
-		this.id = 0;
-		this.user = user;
-		this.membershipType = membershipType;
-		this.priceRevision = priceRevision;
-		this.machine = machine;
-		this.dateStart = dateStart;
-		this.minutes = minutes;
-		this.additionalCost = additionalCost;
-		this.comment = comment;
-	}
 
 }
