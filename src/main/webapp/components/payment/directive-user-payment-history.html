@@ -16,13 +16,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<tr ng-repeat="h in history"
+					ng-class="{'info' : h.type === 'SUBSCRIPTION',
+							'success' : h.type === 'PAYMENT',
+						'warning':h.type === 'USAGE'}">
+					<td>{{h.date}}</td>
+					<td>{{h.amount}}</td>
+					<td>{{h.detail}}</td>
+					<td>{{h.comment}}</td>
 					<td>
-						delete
+						<a href class="btn btn-xs btn-default">
+							<span class="glyphicon glyphicon-remove"></span>
+						</a>
 					</td>
 				</tr>
 			</tbody>

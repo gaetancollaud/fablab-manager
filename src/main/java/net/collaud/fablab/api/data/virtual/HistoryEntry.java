@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
-import net.collaud.fablab.api.data.UsageDetailEO;
+import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 
 /**
@@ -36,7 +36,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final HistoryEntryType type;
 	private final String comment;
 	private final Date date;
-	private final float amount;
+	private final double amount;
 	private final String detail;
 	private final UserEO user;
 
@@ -50,13 +50,13 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		user = payment.getUser();
 	}
 
-	public HistoryEntry(UsageDetailEO usage) {
+	public HistoryEntry(UsageEO usage) {
 		type = HistoryEntryType.USAGE;
 		id = usage.getId();
 		date = usage.getDateStart();
 		comment = usage.getComment();
 		detail = usage.getMachine().getName() + " | " + usage.getMinutes() + "min" + " | " + usage.getAdditionalCost() + " CHF additional";
-		amount = -((usage.getPrice() * usage.getMinutes()) / 60 + usage.getAdditionalCost());
+		amount = -((usage.getPricePerHour() * usage.getMinutes()) / 60 + usage.getAdditionalCost());
 		user = usage.getUser();
 	}
 

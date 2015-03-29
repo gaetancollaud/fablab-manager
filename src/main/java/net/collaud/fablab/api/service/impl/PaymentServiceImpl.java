@@ -17,13 +17,10 @@ import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.PriceCotisationEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
-import net.collaud.fablab.api.data.UsageDetailEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import net.collaud.fablab.api.data.type.AuditObject;
-import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
-import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.security.Roles;
@@ -91,7 +88,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		if (dateBefore == null || dateAfter == null) {
 			throw new FablabException("Dates cannot be null");
 		}
-		List<UsageDetailEO> listUsage = usageRepository.getAllBetween(dateBefore, dateAfter);
+		List<UsageEO> listUsage = usageRepository.getAllBetween(dateBefore, dateAfter);
 		List<PaymentEO> listPayment = paymentRepository.getAllBetween(dateBefore, dateAfter);
 		List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(dateBefore, dateAfter);
 		return convertToHistoryEntry(listUsage, listPayment, listSubscription);
@@ -100,7 +97,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public List<HistoryEntry> getLastPaymentEntries(Integer userId) {
-		List<UsageDetailEO> listUsage = usageRepository.getByUser(userId);
+		List<UsageEO> listUsage = usageRepository.getByUser(userId);
 		List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
 		List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
 
@@ -108,10 +105,10 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		return listHistory;
 	}
 
-	protected List<HistoryEntry> convertToHistoryEntry(List<UsageDetailEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
+	protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
 		TreeSet<HistoryEntry> setHistory = new TreeSet<>();
 
-		for (UsageDetailEO usage : listUsage) {
+		for (UsageEO usage : listUsage) {
 			setHistory.add(new HistoryEntry(usage));
 		}
 
