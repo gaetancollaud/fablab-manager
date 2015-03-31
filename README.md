@@ -1,6 +1,8 @@
 fablab-api [![Build Status](https://travis-ci.org/gaetancollaud/fablab-api.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-api)
 ==========
 
+[![Join the chat at https://gitter.im/gaetancollaud/fablab-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The new version of fablab-manager
 
 Live demo on [collaud2.collaud.me/fablab-api](http://collaud2.collaud.me/fablab-api-1.1-SNAPSHOT)
