@@ -26,6 +26,7 @@ import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.PaymentService;
+import net.collaud.fablab.api.service.PriceService;
 import net.collaud.fablab.api.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -61,7 +62,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	private UsageRepository usageRepository;
 
 	@Autowired
-	private PriceRepository priceRepository;
+	private PriceService priceService;
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
@@ -74,7 +75,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public UsageEO useMachine(UserEO user, MachineEO machine, Date startDate, int minutes, float additionalCost, String comment) {
-		PriceRevisionEO priceRev = priceRepository.findAll().get(0);
+		PriceRevisionEO priceRev = priceService.getLastPriceRevision();
 		//FIXME find price per hour
 		double price = -1;
 		UsageEO usage = new UsageEO(0, startDate, price, minutes, additionalCost, comment, user, machine, user.getMembershipType(), priceRev);
@@ -148,7 +149,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		SubscriptionEO subscription = new SubscriptionEO();
 		subscription.setUser(user);
 		subscription.setDateSubscription(now);
-		final PriceCotisationEO pc = priceRepository.findAll().get(0).getPriceCotisationList()
+		final PriceCotisationEO pc = priceService.getLastPriceRevision().getPriceCotisationList()
 				.stream()
 				.filter(v -> v.getMembershipType().equals(user.getMembershipType()))
 				.findFirst().get();

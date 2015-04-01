@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,9 +41,11 @@ public class PriceRevisionEO extends AbstractDataEO<Integer> implements Serializ
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateRevision;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "priceRevision", fetch = FetchType.LAZY)
 	private List<PriceCotisationEO> priceCotisationList;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "priceRevision", fetch = FetchType.LAZY)
 	private List<PriceMachineEO> priceMachineList;
 

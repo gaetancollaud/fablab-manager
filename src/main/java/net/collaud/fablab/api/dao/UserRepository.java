@@ -35,7 +35,10 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 	Optional<UserEO> findByLoginOrEmail(@Param("login") String login);
 	
 	@Override
-	@Query("SELECT u FROM UserEO u WHERE u.enabled=1")
+	@Query("SELECT u "
+			+ " FROM UserEO u "
+			+ " LEFT JOIN FETCH u.balance b "
+			+ " WHERE u.enabled=1 ")
 	List<UserEO> findAll();
 	
 }

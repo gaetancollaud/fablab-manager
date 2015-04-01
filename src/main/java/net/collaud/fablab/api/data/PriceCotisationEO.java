@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -34,6 +36,7 @@ public class PriceCotisationEO extends AbstractDataEO<PriceCotisationEOPK> imple
 	@Column(name = "price", nullable = false)
 	private float price;
 
+	@JsonBackReference
 	@JoinColumn(name = "price_revision_id", referencedColumnName = "price_revision_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private PriceRevisionEO priceRevision;
@@ -42,6 +45,7 @@ public class PriceCotisationEO extends AbstractDataEO<PriceCotisationEOPK> imple
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "priceCotisation")
 	private List<SubscriptionEO> subscriptionList;
 

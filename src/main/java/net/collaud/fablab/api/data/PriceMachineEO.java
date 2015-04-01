@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -38,6 +39,7 @@ public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
 
+	@JsonBackReference
 	@JoinColumn(name = "price_revision_id", referencedColumnName = "price_revision_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private PriceRevisionEO priceRevision;
