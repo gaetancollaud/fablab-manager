@@ -99,6 +99,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 			old.setPhone(user.getPhone());
 			old.setAddress(user.getAddress());
 			old.setRfid(user.getRfid());
+			old.setBirthdate(user.getBirthdate());
+			old.setGender(user.getGender());
+			old.setComment(user.getComment());
 			old.setMembershipType(user.getMembershipType());
 			old.setGroups(user.getGroups());
 			if (changePassword) {

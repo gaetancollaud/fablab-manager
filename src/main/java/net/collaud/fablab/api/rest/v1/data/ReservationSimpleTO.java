@@ -35,7 +35,7 @@ public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSi
 		eo.setDateStart(getDateStart());
 		eo.setDateEnd(getDateEnd());
 		eo.setMachine(new MachineEO(getMachineId()));
-		eo.setUser(new UserEO(getMachineId()));
+		eo.setUser(new UserEO(getUser().getId()));
 		return eo;
 	}
 

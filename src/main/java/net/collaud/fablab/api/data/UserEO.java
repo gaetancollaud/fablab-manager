@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +25,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import net.collaud.fablab.api.data.type.Gender;
 
 /**
  *
@@ -36,39 +41,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
-
-//	public static final String FIND_ALL
-//			= " SELECT u "
-//			+ " FROM UserEO u "
-//			+ " LEFT JOIN FETCH u.membershipType AS mt ";
-//
-//	public static final String FIND_BY_LOGIN
-//			= " SELECT u "
-//			+ " FROM UserEO u "
-//			+ " LEFT JOIN FETCH u.groups AS g "
-//			+ " LEFT JOIN FETCH g.roles AS r "
-//			+ " WHERE u.login = :" + UserEO.PARAM_LOGIN + " "
-//			+ " OR u.email=:" + UserEO.PARAM_LOGIN;
-//
-//	public static final String FIND_BY_ID_AND_FETCH_ROLES
-//			= " SELECT u "
-//			+ " FROM UserEO u "
-//			+ " LEFT JOIN FETCH u.groups AS g "
-//			+ " LEFT JOIN FETCH g.roles AS r "
-//			+ " WHERE u.id = :" + UserEO.PARAM_ID;
-//
-//	public static final String FIND_BY_ID_DETAIL
-//			= " SELECT u "
-//			+ " FROM UserEO u "
-//			+ " LEFT JOIN FETCH u.groups AS g "
-//			+ " LEFT JOIN FETCH u.membershipType AS mt "
-//			+ " WHERE u.id = :" + UserEO.PARAM_ID;
-//
-//	public static final String PARAM_LOGIN = "login";
-//	public static final String PARAM_RFID = "rfid";
-//	public static final String PARAM_IDS = "ids";
-//	public static final String PARAM_ID = "id";
 
 	private static final long serialVersionUID = 1L;
 
@@ -108,22 +83,26 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "rfid", nullable = true)
 	private String rfid;
 
-//	@Column(name = "last_subscription_confirmation", nullable = true)
-//	@Temporal(TemporalType.TIMESTAMP)
-//	private Date lastSubscriptionConfirmation;
+	@Column(name = "birthdate", nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date birthdate;
+
+	@Column(name = "gender", nullable = true)
+	@Enumerated(EnumType.ORDINAL)
+	private Gender gender;
+
 	@JsonIgnore
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
-
-	@JsonIgnore
-	@Column(name = "auth_by_sql", nullable = false)
-	private boolean authBySql;
 
 	@Column(name = "phone", nullable = true)
 	private String phone;
 
 	@Column(name = "address", nullable = true)
 	private String address;
+
+	@Column(name = "comment", nullable = true)
+	private String comment;
 
 	@JsonManagedReference("user-subscription")
 	@OneToMany(mappedBy = "user")
@@ -148,48 +127,13 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
-	
-	
-	@OneToOne
-	@JoinColumn(name="user_id", referencedColumnName = "user_id")
-	private UserBalanceEO balance;
 
-	public UserEO() {
-	}
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private UserBalanceEO balance;
 
 	public UserEO(Integer id) {
 		this.id = id;
-	}
-
-	public UserEO(Integer id, boolean authBySql, String login, String password, String firstname, String lastname, Date dateInscr, String rfid) {
-		this.id = id;
-		this.authBySql = authBySql;
-		this.login = login;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.password = password;
-		this.dateInscr = dateInscr;
-		this.rfid = rfid;
-		this.enabled = true;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (id != null ? id.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (!(object instanceof UserEO)) {
-			return false;
-		}
-		UserEO other = (UserEO) object;
-		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-			return false;
-		}
-		return true;
 	}
 
 	@JsonIgnore

@@ -19,6 +19,24 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="user.gender"></label>
+				<div class="col-sm-8">
+					<select class="form-control"
+							required
+							ng-model="user.gender">
+						<option value="UNKNOWN" translate="user.genderEnum.unknown"></option>
+						<option value="MALE" translate="user.genderEnum.male"></option>
+						<option value="FEMALE" translate="user.genderEnum.female"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="user.birthdate"></label>
+				<div class="col-sm-8">
+					<input class="form-control" type="date" ng-model="user.birthdate" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label" translate="user.email"></label>
 				<div class="col-sm-8">
 					<input type="email" class="form-control" ng-model="user.email" required>
@@ -64,10 +82,16 @@
 					 fab-user-groups groups="groups" ng-model="user.groups">
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="user.comment"></label>
+				<div class="col-sm-8">
+					<textarea rows="5" class="form-control" ng-model="user.comment"></textarea>
+				</div>
+			</div>
 		</div>
 		<div class="panel-footer right">
-			<a href="#/users" class="btn btn-default btn-glyph" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
-			<button type="submit" class="btn btn-success btn-glyph" ng-click="">{{'button.save'| translate}} <span class="glyphicon glyphicon-floppy-disk"></span></button>
+			<btn-cancel link="#/users"></btn-cancel>
+			<btn-submit form="editUser"></btn-submit>
 		</div>
 	</div>
 </form>

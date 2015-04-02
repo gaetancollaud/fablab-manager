@@ -71,7 +71,15 @@ angular.module('App').config(function ($translateProvider) {
 			groups: 'Groups',
 			lastSubscription:'Last subscription',
 			subscriptionLeft:'{{days}} days left',
-			subscriptionExpired:'expired'
+			subscriptionExpired:'expired',
+			comment:'comment',
+			birthdate:'Birth date',
+			gender:'Gender',
+			genderEnum:{
+				unknown:'Unknown',
+				male:'Male',
+				female:'Female'
+			}
 		},
 		reservation: {
 			day: 'Day',

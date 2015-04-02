@@ -1,4 +1,4 @@
-	var ctrl = angular.module('User');
+var ctrl = angular.module('User');
 ctrl.controller('GlobalUserEditController', [
 	'$scope',
 	'$location',
@@ -16,11 +16,17 @@ ctrl.controller('GlobalUserEditController', [
 		$scope.loadUser = function (id) {
 			UserService.get(id, function (data) {
 				$scope.user = data;
+				if ($scope.user.birthdate) {
+					$scope.user.birthdate = new Date($scope.user.birthdate);
+				}
 			});
 		};
 
 		$scope.save = function () {
-			UserService.save($scope.user, function (data) {
+			var user = angular.copy($scope.user);
+			delete user.subscriptions;
+			delete user.balance;
+			UserService.save(user, function (data) {
 				$scope.user = data;
 				NotificationService.notify("success", "Utilisateur enregistré");
 				$location.path("users");
