@@ -20,7 +20,7 @@ angular.module('App', [
 			templateUrl: './components/auth/logout-view.html',
 			controller: 'AuthLogoutController'
 		}).when('/signup', {
-			templateUrl: './components/auth/signup-view.html',
+			templateUrl: './components/user/signup-view.html',
 			controller: 'AuthSignUpController'
 		}).when('/forgotPassword', {
 			templateUrl: './components/auth/forgot-password-view.html',

@@ -38,7 +38,7 @@
 			return {
 				restrict: "EA",
 				template: '<button type="submit" class="btn btn-success btn-glyph" ng-disabled="form.$invalid">'
-						+ '  <span translate="button.{{label}}"></span>'
+						+ '  <span translate="{{label}}"></span>'
 						+ '  <span class="glyphicon glyphicon-{{icon}}"></span>'
 						+ '</button>',
 				scope: {
@@ -48,7 +48,7 @@
 				},
 				controller:function($scope){
 					if(!$scope.label){
-						$scope.label = 'save';
+						$scope.label = 'button.save';
 					}
 					if(!$scope.icon){
 						$scope.icon = 'floppy-disk';

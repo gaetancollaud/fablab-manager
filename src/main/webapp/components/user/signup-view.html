@@ -18,6 +18,23 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="user.gender"></label>
+				<div class="col-sm-8">
+					<select class="form-control"
+							required
+							ng-model="user.gender">
+						<option value="MALE" translate="user.genderEnum.male"></option>
+						<option value="FEMALE" translate="user.genderEnum.female"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="user.birthdate"></label>
+				<div class="col-sm-8">
+					<input class="form-control" required type="date" ng-model="user.birthdate" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">{{'user.email'|translate}}*</label>
 				<div class="col-sm-8">
 					<input type="email" class="form-control" ng-model="user.email" required>
@@ -60,9 +77,7 @@
 			</div>
 		</div>
 		<div class="panel-footer right">
-			<button class="btn btn-success btn-glyph" 
-					type="submit">{{'auth.signUp'| translate}} 
-				<span class="glyphicon glyphicon glyphicon-heart"></span></button>
+			<btn-submit icon="heart" label="auth.signUp"></btn-submit>
 		</div>
 	</div>
 </form>
