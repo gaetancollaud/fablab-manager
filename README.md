@@ -1,5 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-api.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-api)
-fablab-api [![Build Status](https://travis-ci.org/gaetancollaud/fablab-api.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-api) [![Join the chat at https://gitter.im/gaetancollaud/fablab-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+fablab-api [![Build Status](https://travis-ci.org/gaetancollaud/fablab-api.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-api) [![Join the chat at https://gitter.im/gaetancollaud/fablab-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-api.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-api)
 ==========
 
 
