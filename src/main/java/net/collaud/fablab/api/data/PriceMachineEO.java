@@ -1,11 +1,14 @@
 package net.collaud.fablab.api.data;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,19 +25,30 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@IdClass(PriceMachineEOPK.class)
 public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@EmbeddedId
-	protected PriceMachineEOPK id;
+	@Id
+	@Column(name = "price_revision_id", nullable = false)
+	private int priceRevisionId;
+
+	@Id
+	@Column(name = "machine_type_id", nullable = false)
+	private int machineTypeId;
+
+	@Id
+	@Column(name = "membership_type_id", nullable = false)
+	private int membershipTypeId;
 
 	@Column(name = "price", nullable = false)
 	private float price;
 
+	@JsonIgnore
 	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineTypeEO machineTypeEO;
 
+	@JsonIgnore
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
@@ -43,5 +57,12 @@ public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements 
 	@JoinColumn(name = "price_revision_id", referencedColumnName = "price_revision_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private PriceRevisionEO priceRevision;
+
+	@JsonIgnore
+	@Override
+	public PriceMachineEOPK getId() {
+		return new PriceMachineEOPK(priceRevisionId, machineTypeId, membershipTypeId);
+	}
+
 
 }

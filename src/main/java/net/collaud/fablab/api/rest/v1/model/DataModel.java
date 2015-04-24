@@ -3,6 +3,7 @@ package net.collaud.fablab.api.rest.v1.model;
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @param <T>
  */
 public class DataModel<T> extends BaseModel{
 	

@@ -9,6 +9,5 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 abstract public class AbstractDataEO<ID> {
-	abstract ID getId();
-	abstract void setId(ID id);
+	abstract public ID getId();
 }

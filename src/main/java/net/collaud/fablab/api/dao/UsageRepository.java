@@ -22,7 +22,7 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
 
 	@Query(" SELECT u "
 			+ " FROM  UsageEO u "
-			+ " WHERE u.user.id=:userId")
+			+ " WHERE u.user.id=:userId ")
 	public List<UsageEO> getByUser(@Param("userId") Integer userId);
 
 }

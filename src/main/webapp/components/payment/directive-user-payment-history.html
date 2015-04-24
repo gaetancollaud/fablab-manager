@@ -20,7 +20,7 @@
 					ng-class="{'info' : h.type === 'SUBSCRIPTION',
 							'success' : h.type === 'PAYMENT',
 						'warning':h.type === 'USAGE'}">
-					<td>{{h.date}}</td>
+					<td>{{h.date|formatTimestamp}}</td>
 					<td>{{h.amount}}</td>
 					<td>{{h.detail}}</td>
 					<td>{{h.comment}}</td>

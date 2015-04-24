@@ -21,7 +21,7 @@ public interface PaymentService {
 
 	PaymentEO addPayment(UserEO user, Date datePayment, float amount, String comment);
 
-	UsageEO useMachine(UserEO user, MachineEO machine, Date startDate, int minutes, float additionalCost, String comment);
+	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, float additionalCost, String comment);
 
 	List<HistoryEntry> getLastPaymentEntries(Integer userId);
 

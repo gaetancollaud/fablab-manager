@@ -2,16 +2,21 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 	return {
 		restrict: 'EA',
 		scope: {
-			user: '='
+			user: '=',
+			reload: '&'
 		},
 		templateUrl: 'components/payment/directive-user-payment-history.html',
 		controller: function ($scope) {
+			$scope.reload = function () {
+				console.log('reload history');
+				PaymentService.history($scope.user.id, function (data) {
+					$scope.history = data;
+				});
+			};
 			$scope.$watch('user', function (newValue) {
 				$scope.history = [];
 				if (newValue) {
-					PaymentService.history(newValue.id, function(data){
-						$scope.history = data;
-					});
+					$scope.reload();
 				}
 			});
 

@@ -72,7 +72,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	@Override
 	public int compareTo(HistoryEntry o) {
-		return this.date.compareTo(o.getDate());
+		return -this.date.compareTo(o.getDate());
 	}
 
 }

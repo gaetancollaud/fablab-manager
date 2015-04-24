@@ -1,12 +1,14 @@
 package net.collaud.fablab.api.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.audit.AuditUtils;
+import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.dao.PaymentRepository;
 import net.collaud.fablab.api.dao.PriceRepository;
 import net.collaud.fablab.api.dao.SubscriptionRepository;
@@ -15,6 +17,7 @@ import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.PriceCotisationEO;
+import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
@@ -64,6 +67,9 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Autowired
 	private PriceService priceService;
 
+	@Autowired
+	private MachineRepository machineRepository;
+
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public PaymentEO addPayment(UserEO user, Date datePayment, float amount, String comment) {
@@ -74,11 +80,17 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(UserEO user, MachineEO machine, Date startDate, int minutes, float additionalCost, String comment) {
+	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, float additionalCost, String comment) {
+		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
+		MachineEO machine = machineRepository.findOne(machineId);
+		double hourPrice = priceService.getAllCurrentMachinePrices().stream()
+				.filter(mp -> mp.getMachineTypeId() == machine.getMachineType().getId())
+				.filter(mp -> mp.getMembershipTypeId() == user.getMembershipType().getId())
+				.findFirst()
+				.map(pm -> pm.getPrice())
+				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
 		PriceRevisionEO priceRev = priceService.getLastPriceRevision();
-		//FIXME find price per hour
-		double price = -1;
-		UsageEO usage = new UsageEO(0, startDate, price, minutes, additionalCost, comment, user, machine, user.getMembershipType(), priceRev);
+		UsageEO usage = new UsageEO(0, startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType(), priceRev);
 		usage = usageRepository.save(usage);
 		return usage;
 	}
@@ -122,7 +134,6 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		}
 
 		List<HistoryEntry> listHistory = new ArrayList<>(setHistory);
-
 		return listHistory;
 	}
 

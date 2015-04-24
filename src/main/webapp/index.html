@@ -3,9 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Fablab-Fribourg</title>
-		
+		<link rel="icon" type="image/ico" href="./favicon.ico">
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<!-- build:css css/app-name.min.css -->
 		<!-- Bootstrap -->
 		<link href="./ext-lib/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +60,7 @@
 						show="hasAnyRole('USER_VIEW')"></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					
+
 					<li fab-nav-item link="signup" icon="heart" 
 						label="menu.signup"
 						show="!connectedUser.connected"></li>
@@ -82,7 +83,7 @@
 	</div>
 
 	<script src="./api/constants.js"></script>
-	
+
 	<!-- build:js js/app-name.min.js -->
 
 	<script src="./ext-lib/jquery-2.1.3/jquery-2.1.3.min.js"></script>
@@ -156,6 +157,8 @@
 
 	<script src="./components/payment/by-user-ctrl.js"></script>
 	<script src="./components/payment/directive-user-payment-history.js"></script>
+	<script src="./components/payment/directive-add-usage.js"></script>
+	<script src="./components/payment/directive-add-payment.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>

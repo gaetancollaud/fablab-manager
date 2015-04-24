@@ -1,29 +1,9 @@
 angular.module('Reservation').controller('PaymentByUserController', function ($scope, $log, $filter,
 		$location, $routeParams, ngTableParams, StaticDataService, PaymentService, UserService) {
 	$scope.selected = {user: undefined};
-	
+	$scope.reloadHistory = function(){alert('function undefined')};
+
 	$scope.minDate = moment().subtract(7, 'days').format('YYYY-MM-D');
-
-	$scope.addUsage = {
-		date:new Date(),
-		time:new Date(0,0,0,1,0,0),
-		additionalCost:0,
-		directPaid:false,
-		total:0
-	};
-	$scope.addPayment = {
-		amount:null,
-		date:new Date()
-	};
-	
-	$scope.paidDirectlyOptions = [
-		{value:false,label:'No, use its credit'},
-		{value:true,label:'Yes, he gives the money'}
-	];
-
-	StaticDataService.loadMachines(function (data) {
-		$scope.machines = data;
-	});
 
 	$scope.loadUser = function (userId) {
 		UserService.get(userId, function (data) {
@@ -52,8 +32,6 @@ angular.module('Reservation').controller('PaymentByUserController', function ($s
 	if ($routeParams.id) {
 		$scope.loadUser($routeParams.id);
 	}
-
-}
-);
+});
 
 	

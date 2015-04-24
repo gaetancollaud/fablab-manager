@@ -1,5 +1,5 @@
 angular.module('App').service('StaticDataService', function (AuthService, UserService, GroupService,
-		MachineService) {
+		MachineService, PaymentService) {
 
 	//FIXME implement cache !
 	this.loadMemberShipTypes = function (successFn) {
@@ -10,5 +10,8 @@ angular.module('App').service('StaticDataService', function (AuthService, UserSe
 	};
 	this.loadMachines = function (successFn) {
 		MachineService.list(successFn);
+	};
+	this.loadMachinePrice = function(successFn){
+		PaymentService.machinePrice(successFn);
 	};
 });
