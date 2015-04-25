@@ -19,6 +19,13 @@ angular.module('Payment', ['ngResource'], function ($provide) {
 					data:usage,
 					url: App.API.PAYMENT_API + '/add_usage'
 				}).success(successFn);
+			},
+			addPayment: function (payment, successFn) {
+				$http({
+					method: 'POST',
+					data:payment,
+					url: App.API.PAYMENT_API + '/add_payment'
+				}).success(successFn);
 			}
 		};
 	});

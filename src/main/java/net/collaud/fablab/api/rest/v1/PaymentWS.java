@@ -3,6 +3,7 @@ package net.collaud.fablab.api.rest.v1;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
+import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
@@ -49,6 +50,12 @@ public class PaymentWS {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),
 				usage.getMachine().getId(), usage.getDateStart(), usage.getMinutes(),
 				usage.getAdditionalCost(), usage.getComment()));
+	}
+
+	@RequestMapping(value = "add_payment", method = RequestMethod.POST)
+	public BaseModel addPayment(@RequestBody @Validated PaymentEO payment) {
+		return new DataModel(paymentService.addPayment(payment.getUser().getId()
+				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
 	}
 
 }

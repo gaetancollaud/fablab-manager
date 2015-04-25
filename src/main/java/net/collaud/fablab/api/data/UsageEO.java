@@ -50,7 +50,7 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	private int minutes;
 
 	@Column(name = "additional_cost", nullable = false)
-	private float additionalCost;
+	private double additionalCost;
 
 	@Column(name = "comment")
 	private String comment;

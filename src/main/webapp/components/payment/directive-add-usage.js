@@ -4,9 +4,8 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 		scope: {
 			user: '=',
 			minDate: '=',
-			historyReload:'&'
+			callback: '&'
 		},
-		require:['userPaymentHistory'],
 		templateUrl: 'components/payment/directive-add-usage.html',
 		controller: function ($scope, $filter, StaticDataService, PaymentService) {
 
@@ -69,8 +68,8 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 					comment: $scope.addUsage.comment,
 				};
 				PaymentService.addUsage(data, function () {
-					console.info('success');
-					$scope.historyReload();
+					//FIXME success message
+					$scope.callback();
 				});
 			};
 		}

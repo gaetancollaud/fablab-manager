@@ -1,7 +1,6 @@
 package net.collaud.fablab.api.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -10,14 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.audit.AuditUtils;
 import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.dao.PaymentRepository;
-import net.collaud.fablab.api.dao.PriceRepository;
 import net.collaud.fablab.api.dao.SubscriptionRepository;
 import net.collaud.fablab.api.dao.UsageRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.PriceCotisationEO;
-import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
@@ -72,7 +69,8 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public PaymentEO addPayment(UserEO user, Date datePayment, float amount, String comment) {
+	public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
+		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
 		payment = paymentRepository.save(payment);
 		return payment;
@@ -80,7 +78,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, float additionalCost, String comment) {
+	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
 		double hourPrice = priceService.getAllCurrentMachinePrices().stream()

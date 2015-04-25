@@ -3,7 +3,7 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 		restrict: 'EA',
 		scope: {
 			user: '=',
-			reload: '&'
+			reload: '='
 		},
 		templateUrl: 'components/payment/directive-user-payment-history.html',
 		controller: function ($scope) {

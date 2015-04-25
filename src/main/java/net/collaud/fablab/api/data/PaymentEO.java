@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.data;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -11,12 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -28,6 +28,7 @@ import lombok.ToString;
 @Table(name = "t_payment")
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -37,7 +38,7 @@ public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
 	private Integer id;
 
 	@Column(name = "total", nullable = false)
-	private float total;
+	private double total;
 
 	@Column(name = "date_payement", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -46,20 +47,17 @@ public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "comment")
 	private String comment;
 
-	@JsonManagedReference("payment-user")
+	@JsonProperty("payment-user")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEO user;
 
-	@JsonManagedReference("payement-cashier")
+	@JsonProperty("payement-cashier")
 	@JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEO cashier;
 
-	public PaymentEO() {
-	}
-
-	public PaymentEO(Date datePayement, float total, UserEO user, UserEO cashier, String comment) {
+	public PaymentEO(Date datePayement, double total, UserEO user, UserEO cashier, String comment) {
 		this.id = 0;
 		this.datePayment = datePayement;
 		this.total = total;
@@ -67,5 +65,4 @@ public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
 		this.cashier = cashier;
 		this.comment = comment;
 	}
-
 }

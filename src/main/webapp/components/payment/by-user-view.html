@@ -45,16 +45,15 @@
 
 <div class="row" ng-show="selected.user">
 	<div class="col-md-6">
-		<user-payment-add-usage user="selected.user" min-date="minDate" history-realod="reloadHistory"/>
+		<user-payment-add-usage user="selected.user" min-date="minDate" callback="reloadHistory()"/>
 	</div>
 	<div class="col-md-6">
-		<user-payment-add-payment user="selected.user" min-date="minDate" />
+		<user-payment-add-payment user="selected.user" min-date="minDate" callback="reloadHistory()" />
 	</div>
 </div>
 
 <div class="row" ng-show="selected.user">
 	<div class="col-md-12">
-		<pre>{{reloadHistory|stringify}}</pre>
 		<user-payment-history user="selected.user" reload="reloadHistory" />
 	</div>
 </div>

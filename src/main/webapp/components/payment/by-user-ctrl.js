@@ -1,7 +1,6 @@
 angular.module('Reservation').controller('PaymentByUserController', function ($scope, $log, $filter,
 		$location, $routeParams, ngTableParams, StaticDataService, PaymentService, UserService) {
 	$scope.selected = {user: undefined};
-	$scope.reloadHistory = function(){alert('function undefined')};
 
 	$scope.minDate = moment().subtract(7, 'days').format('YYYY-MM-D');
 
@@ -32,6 +31,7 @@ angular.module('Reservation').controller('PaymentByUserController', function ($s
 	if ($routeParams.id) {
 		$scope.loadUser($routeParams.id);
 	}
+	
 });
 
 	
