@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.data.virtual;
 
 import java.util.Date;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import net.collaud.fablab.api.data.PaymentEO;
@@ -14,6 +15,7 @@ import net.collaud.fablab.api.data.UserEO;
  */
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"id", "type"})
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	public enum HistoryEntryType {
@@ -72,7 +74,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	@Override
 	public int compareTo(HistoryEntry o) {
-		return -this.date.compareTo(o.getDate());
+		int res = -this.date.compareTo(o.getDate());
+		return res==0 ? Integer.compare(this.id, o.id) : res;
 	}
 
 }
