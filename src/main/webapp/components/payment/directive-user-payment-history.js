@@ -3,7 +3,8 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 		restrict: 'EA',
 		scope: {
 			user: '=',
-			reload: '='
+			reload: '=',
+			editable: '='
 		},
 		templateUrl: 'components/payment/directive-user-payment-history.html',
 		controller: function ($scope) {
@@ -19,6 +20,16 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 					$scope.reload();
 				}
 			});
+			
+			$scope.remove = function(h){
+				//FIXME check roles !
+				//FIXME confirmation
+				PaymentService.removeHistory(h, function(){
+					//FIXME add notif
+					console.log('history removed');
+					$scope.reload();
+				});
+			};
 
 
 		}

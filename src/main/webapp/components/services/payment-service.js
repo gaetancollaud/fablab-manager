@@ -26,6 +26,13 @@ angular.module('Payment', ['ngResource'], function ($provide) {
 					data:payment,
 					url: App.API.PAYMENT_API + '/add_payment'
 				}).success(successFn);
+			},
+			removeHistory: function (history, successFn) {
+				$http({
+					method: 'POST',
+					data:history,
+					url: App.API.PAYMENT_API + '/delete_history'
+				}).success(successFn);
 			}
 		};
 	});

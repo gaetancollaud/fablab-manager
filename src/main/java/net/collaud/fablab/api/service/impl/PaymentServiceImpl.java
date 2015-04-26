@@ -1,5 +1,10 @@
 package net.collaud.fablab.api.service.impl;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -179,20 +184,40 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
-	public void removeHistoryEntry(UserEO user, HistoryEntry entry) {
+	public HistoryEntry removeHistoryEntry(HistoryEntry entry) {
+		final int id = entry.getId();
 		switch (entry.getType()) {
 			case PAYMENT:
-				paymentRepository.delete(entry.getId());
+				PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
+						.orElseThrow(() -> new RuntimeException("Cannot find payment with id " + id));
+				checkDateAccounting(payment.getDatePayment());
+				paymentRepository.delete(payment);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Payment (amount " + entry.getAmount() + ") removed for user " + user.getFirstLastName());
+						"Payment (amount " + entry.getAmount() + ") removed for user " + payment.getUser().getFirstLastName());
 				break;
 			case USAGE:
-				usageRepository.delete(entry.getId());
+				UsageEO usage = Optional.ofNullable(usageRepository.getOne(id))
+						.orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
+				checkDateAccounting(usage.getDateStart());
+				usageRepository.delete(usage);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Machine usage (amount " + (-entry.getAmount()) + ") removed for user " + user.getFirstLastName());
+						"Machine usage (amount " + (-entry.getAmount()) + ") removed for user " + usage.getUser().getFirstLastName());
 				break;
+			//FIXME implement subscription
+			default:
+				log.error("Cannot remove {} history entry", entry.getType());
+				return null;
 		}
+		return entry;
+	}
 
+	private void checkDateAccounting(Date date) {
+		Duration duration = Duration.between(date.toInstant(), Instant.now());
+		long limit = 7;
+		final long days = duration.toDays();
+		if(days>limit){
+			throw new RuntimeException("Cannot edit accounting information of more than "+limit+" days (current was "+days+" day old)");
+		}
 	}
 
 }

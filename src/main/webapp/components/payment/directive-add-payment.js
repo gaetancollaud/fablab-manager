@@ -8,10 +8,13 @@ angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentSer
 		},
 		templateUrl: 'components/payment/directive-add-payment.html',
 		controller: function ($scope) {
-			$scope.addPayment = {
-				amount: null,
-				date: new Date(),
-				comment: null
+
+			var resetValues = function () {
+				$scope.addPayment = {
+					amount: null,
+					date: new Date(),
+					comment: null
+				};
 			};
 
 			$scope.execute = function () {
@@ -19,13 +22,15 @@ angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentSer
 					total: $scope.addPayment.amount,
 					datePayment: $scope.addPayment.date,
 					comment: $scope.addPayment.comment,
-					'payment-user':$scope.user
+					'payment-user': $scope.user
 				};
 				PaymentService.addPayment(payment, function () {
 					//FIXME success message
 					$scope.callback();
+					resetValues();
 				});
 			}
+			resetValues();
 		}
 	};
 });

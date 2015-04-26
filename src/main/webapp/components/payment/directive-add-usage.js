@@ -9,12 +9,14 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 		templateUrl: 'components/payment/directive-add-usage.html',
 		controller: function ($scope, $filter, StaticDataService, PaymentService) {
 
-			$scope.addUsage = {
-				date: new Date(),
-				time: new Date(0, 0, 0, 1, 0, 0),
-				additionalCost: 0,
-				directPaid: false,
-				total: 0
+			var resetValues = function () {
+				$scope.addUsage = {
+					date: new Date(),
+					time: new Date(0, 0, 0, 1, 0, 0),
+					additionalCost: 0,
+					directPaid: false,
+					total: 0
+				};
 			};
 
 			$scope.total = 0;
@@ -70,8 +72,10 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 				PaymentService.addUsage(data, function () {
 					//FIXME success message
 					$scope.callback();
+					resetValues();
 				});
 			};
+			resetValues();
 		}
 	};
 });

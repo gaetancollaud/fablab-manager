@@ -1,17 +1,13 @@
 package net.collaud.fablab.api.rest.v1;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.PaymentEO;
-import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.UsageEO;
-import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
 import net.collaud.fablab.api.service.PaymentService;
 import net.collaud.fablab.api.service.PriceService;
-import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +52,11 @@ public class PaymentWS {
 	public BaseModel addPayment(@RequestBody @Validated PaymentEO payment) {
 		return new DataModel(paymentService.addPayment(payment.getUser().getId()
 				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
+	}
+
+	@RequestMapping(value = "delete_history", method = RequestMethod.POST)
+	public BaseModel removeHistory(@RequestBody @Validated HistoryEntry entry) {
+		return new DataModel(paymentService.removeHistoryEntry(entry));
 	}
 
 }

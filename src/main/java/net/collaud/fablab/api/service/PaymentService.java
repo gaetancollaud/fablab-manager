@@ -37,5 +37,5 @@ public interface PaymentService {
 
 	List<HistoryEntry> getPaymentEntriesForCurrentUser();
 
-	void removeHistoryEntry(UserEO user, HistoryEntry entry);
+	HistoryEntry removeHistoryEntry(HistoryEntry entry);
 }

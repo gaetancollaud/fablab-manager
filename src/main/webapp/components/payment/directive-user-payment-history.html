@@ -25,7 +25,7 @@
 					<td>{{h.detail}}</td>
 					<td>{{h.comment}}</td>
 					<td>
-						<a href class="btn btn-xs btn-default">
+						<a ng-show="editable" href class="btn btn-xs btn-default" ng-click="remove(h)">
 							<span class="glyphicon glyphicon-remove"></span>
 						</a>
 					</td>
