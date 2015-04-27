@@ -8,6 +8,7 @@ import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.data.type.HistoryEntryType;
 
 /**
  *
@@ -18,22 +19,6 @@ import net.collaud.fablab.api.data.UserEO;
 @EqualsAndHashCode(of = {"id", "type"})
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
-	public enum HistoryEntryType {
-
-		PAYMENT("payment"),
-		USAGE("usage"),
-		SUBSCRIPTION("subscription");
-		private final String css;
-
-		private HistoryEntryType(String css) {
-			this.css = css;
-		}
-
-		public String getCss() {
-			return css;
-		}
-
-	}
 	private final int id;
 	private final HistoryEntryType type;
 	private final String comment;
@@ -75,7 +60,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	@Override
 	public int compareTo(HistoryEntry o) {
 		int res = -this.date.compareTo(o.getDate());
-		return res==0 ? Integer.compare(this.id, o.id) : res;
+		return res == 0 ? Integer.compare(this.id, o.id) : res;
 	}
 
 }

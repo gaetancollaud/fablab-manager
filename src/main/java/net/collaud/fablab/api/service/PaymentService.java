@@ -2,11 +2,11 @@ package net.collaud.fablab.api.service;
 
 import java.util.Date;
 import java.util.List;
-import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
+import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.exceptions.FablabException;
 
 /**
@@ -37,5 +37,5 @@ public interface PaymentService {
 
 	List<HistoryEntry> getPaymentEntriesForCurrentUser();
 
-	HistoryEntry removeHistoryEntry(HistoryEntry entry);
+	HistoryEntryId removeHistoryEntry(HistoryEntryId entry);
 }

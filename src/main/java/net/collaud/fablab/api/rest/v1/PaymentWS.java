@@ -4,6 +4,7 @@ import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
+import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
 import net.collaud.fablab.api.service.PaymentService;
@@ -55,8 +56,8 @@ public class PaymentWS {
 	}
 
 	@RequestMapping(value = "delete_history", method = RequestMethod.POST)
-	public BaseModel removeHistory(@RequestBody @Validated HistoryEntry entry) {
-		return new DataModel(paymentService.removeHistoryEntry(entry));
+	public BaseModel removeHistory(@RequestBody @Validated HistoryEntryId id) {
+		return new DataModel(paymentService.removeHistoryEntry(id));
 	}
 
 }

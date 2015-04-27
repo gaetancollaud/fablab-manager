@@ -21,10 +21,19 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 				}
 			});
 			
-			$scope.remove = function(h){
+			$scope.canRemove = function(h){
+				//FIXME get from constants 
+				return moment.duration(moment().diff(moment(h.date))).asDays()<=7;
+			};
+
+			$scope.remove = function (h) {
 				//FIXME check roles !
 				//FIXME confirmation
-				PaymentService.removeHistory(h, function(){
+				var data = {
+					id: h.id,
+					type: h.type
+				};
+				PaymentService.removeHistory(data, function () {
 					//FIXME add notif
 					console.log('history removed');
 					$scope.reload();

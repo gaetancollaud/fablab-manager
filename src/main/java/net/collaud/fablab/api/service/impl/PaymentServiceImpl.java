@@ -2,9 +2,6 @@ package net.collaud.fablab.api.service.impl;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +23,10 @@ import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import net.collaud.fablab.api.data.type.AuditObject;
+import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
+import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
+import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
@@ -184,16 +184,16 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
-	public HistoryEntry removeHistoryEntry(HistoryEntry entry) {
-		final int id = entry.getId();
-		switch (entry.getType()) {
+	public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
+		final int id = historyId.getId();
+		switch (historyId.getType()) {
 			case PAYMENT:
 				PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
 						.orElseThrow(() -> new RuntimeException("Cannot find payment with id " + id));
 				checkDateAccounting(payment.getDatePayment());
 				paymentRepository.delete(payment);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Payment (amount " + entry.getAmount() + ") removed for user " + payment.getUser().getFirstLastName());
+						"Payment (amount " + payment.getTotal()+ ") removed for user " + payment.getUser().getFirstLastName());
 				break;
 			case USAGE:
 				UsageEO usage = Optional.ofNullable(usageRepository.getOne(id))
@@ -201,14 +201,14 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				checkDateAccounting(usage.getDateStart());
 				usageRepository.delete(usage);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Machine usage (amount " + (-entry.getAmount()) + ") removed for user " + usage.getUser().getFirstLastName());
+						"Machine usage (amount " + (-usage.getTotalPrice()) + ") removed for user " + usage.getUser().getFirstLastName());
 				break;
 			//FIXME implement subscription
 			default:
-				log.error("Cannot remove {} history entry", entry.getType());
+				log.error("Cannot remove {} history entry", historyId.getType());
 				return null;
 		}
-		return entry;
+		return historyId;
 	}
 
 	private void checkDateAccounting(Date date) {
