@@ -1,4 +1,4 @@
-angular.module('Reservation').controller('PaymentByUserController', function ($scope, $log, $filter,
+angular.module('Fablab').controller('PaymentByUserController', function ($scope, $log, $filter,
 		$location, $routeParams, ngTableParams, StaticDataService, PaymentService, UserService) {
 	$scope.selected = {user: undefined};
 
