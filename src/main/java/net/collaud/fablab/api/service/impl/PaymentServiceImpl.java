@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.audit.AuditUtils;
 import net.collaud.fablab.api.dao.MachineRepository;
@@ -23,10 +25,9 @@ import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import net.collaud.fablab.api.data.type.AuditObject;
-import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
-import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
+import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
@@ -112,31 +113,33 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public List<HistoryEntry> getLastPaymentEntries(Integer userId) {
+	public UserPaymentHistory getLastPaymentEntries(Integer userId) {
+		List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
+		double balance = userRepository.getUserBalanceFromUserId(userId)
+				.map(ub -> ub.getValue())
+				.orElse(0d);
+		return new UserPaymentHistory(listHistory, balance);
+	}
+
+	protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
 		List<UsageEO> listUsage = usageRepository.getByUser(userId);
 		List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
 		List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
 
-		List<HistoryEntry> listHistory = convertToHistoryEntry(listUsage, listPayment, listSubscription);
-		return listHistory;
+		return convertToHistoryEntry(listUsage, listPayment, listSubscription);
 	}
 
 	protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
-		TreeSet<HistoryEntry> setHistory = new TreeSet<>();
-
-		for (UsageEO usage : listUsage) {
-			setHistory.add(new HistoryEntry(usage));
-		}
-
-		for (PaymentEO payment : listPayment) {
-			setHistory.add(new HistoryEntry(payment));
-		}
-
-		for (SubscriptionEO payment : listSubscription) {
-			setHistory.add(new HistoryEntry(payment));
-		}
-
-		List<HistoryEntry> listHistory = new ArrayList<>(setHistory);
+		final List<HistoryEntry> listHistory = Stream.concat(
+				Stream.concat(
+						listUsage.stream()
+								.map(u -> new HistoryEntry(u)),
+						listPayment.stream()
+								.map(p -> new HistoryEntry(p))),
+				listSubscription.stream()
+						.map(s -> new HistoryEntry(s)))
+				.sorted()
+				.collect(Collectors.toList());
 		return listHistory;
 	}
 
@@ -177,7 +180,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	public List<HistoryEntry> getPaymentEntriesForCurrentUser() {
 		final Optional<UserEO> currentUser = securityService.getCurrentUser();
 		if (currentUser.isPresent()) {
-			return getLastPaymentEntries(currentUser.get().getId());
+			return getHistoryEntriesForuser(currentUser.get().getId());
 		} else {
 			return new ArrayList<>();
 		}
@@ -193,7 +196,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				checkDateAccounting(payment.getDatePayment());
 				paymentRepository.delete(payment);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Payment (amount " + payment.getTotal()+ ") removed for user " + payment.getUser().getFirstLastName());
+						"Payment (amount " + payment.getTotal() + ") removed for user " + payment.getUser().getFirstLastName());
 				break;
 			case USAGE:
 				UsageEO usage = Optional.ofNullable(usageRepository.getOne(id))
@@ -215,8 +218,8 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		Duration duration = Duration.between(date.toInstant(), Instant.now());
 		long limit = 7;
 		final long days = duration.toDays();
-		if(days>limit){
-			throw new RuntimeException("Cannot edit accounting information of more than "+limit+" days (current was "+days+" day old)");
+		if (days > limit) {
+			throw new RuntimeException("Cannot edit accounting information of more than " + limit + " days (current was " + days + " day old)");
 		}
 	}
 

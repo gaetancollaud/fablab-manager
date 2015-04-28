@@ -8,15 +8,22 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 		},
 		templateUrl: 'components/payment/directive-user-payment-history.html',
 		controller: function ($scope) {
+			$scope.userBalance = {};
+			
 			$scope.reload = function () {
 				console.log('reload history');
+				//FIXME get user balance !
 				PaymentService.history($scope.user.id, function (data) {
-					$scope.history = data;
+					$scope.history = data.history;
+					$scope.userBalance.balance = data.balance;
 				});
 			};
 			$scope.$watch('user', function (newValue) {
 				$scope.history = [];
+				$scope.userBalance = {};
 				if (newValue) {
+					$scope.userBalance.firstname = newValue.firstname;
+					$scope.userBalance.lastname = newValue.lastname;
 					$scope.reload();
 				}
 			});

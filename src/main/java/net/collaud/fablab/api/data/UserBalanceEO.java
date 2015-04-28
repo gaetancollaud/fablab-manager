@@ -27,7 +27,7 @@ public class UserBalanceEO implements Serializable {
 	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
-	private Integer id;
+	private Integer userId;
 
 	@Column(name = "balance", nullable = false)
 	private double value;

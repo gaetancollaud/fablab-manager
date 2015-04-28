@@ -2,6 +2,7 @@ package net.collaud.fablab.api.dao;
 
 import java.util.List;
 import java.util.Optional;
+import net.collaud.fablab.api.data.UserBalanceEO;
 import net.collaud.fablab.api.data.UserEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,5 +41,11 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 			+ " LEFT JOIN FETCH u.balance b "
 			+ " WHERE u.enabled=1 ")
 	List<UserEO> findAll();
+	
+	
+	@Query("SELECT ub "
+			+ " FROM UserBalanceEO ub "
+			+ " WHERE ub.userId=:userId ")
+	Optional<UserBalanceEO> getUserBalanceFromUserId(@Param("userId")Integer userId);
 	
 }

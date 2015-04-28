@@ -111,7 +111,7 @@ angular.module('App').config(function ($translateProvider) {
 			addUsage:'Add usage',
 			details:'Details',
 			history:'History',
-			balanceText:'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance.value}}</b>'
+			balanceText:'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>'
 		}
 	});
 });

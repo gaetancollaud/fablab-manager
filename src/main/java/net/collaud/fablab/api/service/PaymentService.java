@@ -7,6 +7,7 @@ import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
+import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
 import net.collaud.fablab.api.exceptions.FablabException;
 
 /**
@@ -23,7 +24,7 @@ public interface PaymentService {
 
 	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment);
 
-	List<HistoryEntry> getLastPaymentEntries(Integer userId);
+	UserPaymentHistory getLastPaymentEntries(Integer userId);
 
 	/**
 	 * Get the list of entry for accounting.
