@@ -1,4 +1,4 @@
-angular.module('Fablab').directive('userPaymentHistory', function (PaymentService) {
+angular.module('Fablab').directive('userPaymentHistory', function (PaymentService, NotificationService) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -9,7 +9,7 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 		templateUrl: 'components/payment/directive-user-payment-history.html',
 		controller: function ($scope) {
 			$scope.userBalance = {};
-			
+
 			$scope.reload = function () {
 				console.log('reload history');
 				//FIXME get user balance !
@@ -27,10 +27,10 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 					$scope.reload();
 				}
 			});
-			
-			$scope.canRemove = function(h){
+
+			$scope.canRemove = function (h) {
 				//FIXME get from constants 
-				return moment.duration(moment().diff(moment(h.date))).asDays()<=7;
+				return moment.duration(moment().diff(moment(h.date))).asDays() <= 7;
 			};
 
 			$scope.remove = function (h) {
@@ -41,8 +41,7 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 					type: h.type
 				};
 				PaymentService.removeHistory(data, function () {
-					//FIXME add notif
-					console.log('history removed');
+					NotificationService.notify("success", "payment.notification.historyRemoved");
 					$scope.reload();
 				});
 			};

@@ -79,6 +79,13 @@ angular.module('App').config(function ($translateProvider) {
 				unknown:'Unknown',
 				male:'Male',
 				female:'Female'
+			},
+			confirmation:{
+				remove:'Do you really want to remove this user ?'
+			},
+			notification:{
+				saved:'User saved',
+				removed:'User removed'
 			}
 		},
 		reservation: {
@@ -111,7 +118,15 @@ angular.module('App').config(function ($translateProvider) {
 			addUsage:'Add usage',
 			details:'Details',
 			history:'History',
-			balanceText:'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>'
+			balanceText:'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>',
+			confirmation:{
+				historyRemove:'Do you really want to remove this history entry ?'
+			},
+			notification:{
+				historyRemoved:'Historique supprimé',
+				usageAdded:'Usage added',
+				paymentAdded:'Payment added'
+			}
 		}
 	});
 });

@@ -1,4 +1,4 @@
-angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentService) {
+angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentService, NotificationService) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -25,7 +25,7 @@ angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentSer
 					'payment-user': $scope.user
 				};
 				PaymentService.addPayment(payment, function () {
-					//FIXME success message
+					NotificationService.notify("success", "payment.notification.paymentAdded");
 					$scope.callback();
 					resetValues();
 				});

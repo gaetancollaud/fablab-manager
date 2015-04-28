@@ -1,4 +1,4 @@
-angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService) {
+angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, NotificationService) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -8,7 +8,6 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 		},
 		templateUrl: 'components/payment/directive-add-usage.html',
 		controller: function ($scope, $filter, StaticDataService, PaymentService) {
-
 			var resetValues = function () {
 				$scope.addUsage = {
 					date: new Date(),
@@ -70,7 +69,7 @@ angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentServi
 					comment: $scope.addUsage.comment,
 				};
 				PaymentService.addUsage(data, function () {
-					//FIXME success message
+					NotificationService.notify("success", "payment.notification.usageAdded");
 					$scope.callback();
 					resetValues();
 				});

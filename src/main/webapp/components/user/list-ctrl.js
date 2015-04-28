@@ -34,6 +34,7 @@ angular.module('User').controller('UserListController', function ($scope, $filte
 	};
 	$scope.remove = function (user) {
 		UserService.remove(user.id, function () {
+			NotificationService.notify("success", "user.notification.removed");
 			updateUserList();
 		});
 	};
