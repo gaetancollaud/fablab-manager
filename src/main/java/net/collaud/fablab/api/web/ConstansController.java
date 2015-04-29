@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
+import net.collaud.fablab.api.service.ConfigurationService;
 import net.collaud.fablab.api.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -16,7 +18,6 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -32,6 +33,9 @@ public class ConstansController {
 
 	@Autowired
 	private SecurityService securityService;
+	
+	@Autowired
+	private ConfigurationService configurationService;
 
 	@RequestMapping(value="/constants.js", produces = "application/javascript; charset=utf-8")
 	public @ResponseBody
@@ -49,8 +53,15 @@ public class ConstansController {
 		addConstants(sb, "App.Constants", csts);
 		addConstants(sb, "App.API", getRestConstants(rootUrl));
 		addConstant(sb, "App.connectedUser", securityService.getConnectedUser());
-
+		addConfiguration(sb);
+		
 		return sb.toString();
+	}
+	
+	private void addConfiguration(StringBuilder sb){
+		final Map<String, String> config = configurationService.getAllConfiguration().entrySet().stream()
+				.collect(Collectors.toMap(e -> e.getKey().name(), e -> e.getValue()));
+		addConstant(sb, "App.CONFIG", config);
 	}
 
 	private void addConstant(StringBuilder sb, String name, Object value) {

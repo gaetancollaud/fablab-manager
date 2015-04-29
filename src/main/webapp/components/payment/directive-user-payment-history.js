@@ -30,7 +30,7 @@ angular.module('Fablab').directive('userPaymentHistory', function (PaymentServic
 
 			$scope.canRemove = function (h) {
 				//FIXME get from constants 
-				return moment.duration(moment().diff(moment(h.date))).asDays() <= 7;
+				return moment.duration(moment().diff(moment(h.date))).asDays() <= App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT;
 			};
 
 			$scope.remove = function (h) {

@@ -2,6 +2,7 @@ package net.collaud.fablab.api.service;
 
 import net.collaud.fablab.api.service.impl.*;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
 				.filter(c -> c.getKey() != null)
 				.collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
 		return Stream.of(ConfigurationKey.values())
-				.collect(Collectors.toMap(k -> k, k -> map.getOrDefault(k, k.getDef())));
+				.collect(Collectors.toMap(k -> k, k -> Optional.ofNullable(map.get(k)).orElse(k.getDef())));
 	}
 
 }
