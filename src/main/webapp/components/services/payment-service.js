@@ -1,4 +1,4 @@
-angular.module('Fablab', ['ngResource'], function ($provide) {
+angular.module('Payment', ['ngResource'], function ($provide) {
 	$provide.factory('PaymentService', function ($log, $resource, $http) {
 		return {
 			history: function (userId, successFn) {
