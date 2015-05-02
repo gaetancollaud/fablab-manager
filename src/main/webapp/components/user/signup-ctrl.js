@@ -1,4 +1,4 @@
-var ctrl = angular.module('Auth');
+var ctrl = angular.module('Fablab');
 ctrl.controller('AuthSignUpController', function ($rootScope, $location, $filter, $scope,
 		NotificationService, AuthService, StaticDataService) {
 

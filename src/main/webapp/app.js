@@ -1,15 +1,13 @@
-angular.module('App', [
-	//ext-lib
-	'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-	'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha',
-	// Core
-	'Notification', 'Loader', 'httpInterceptor', 'core',
-	// Fablab 
-	'Fablab',
-	//components
-	'Auth', 'Dashboard', 'User', 'Reservation', 'Machine', 'Payment'
-]).config(['$routeProvider', '$httpProvider', '$translateProvider',
-	function ($routeProvider, $httpProvider, $translateProvider) {
+(function () {
+	'use strict';
+
+	angular.module('Fablab', [
+		//ext-lib
+		'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
+		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha',
+		// Core
+		'Notification', 'Loader', 'httpInterceptor'
+	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
 		$routeProvider.when('/', {
 			templateUrl: './components/dashboard/home-view.html',
 			controller: 'DashboardHomeController'
@@ -59,83 +57,81 @@ angular.module('App', [
 		// HTTP Interceptor
 		$httpProvider.interceptors.push('httpInterceptor');
 		$translateProvider.preferredLanguage('en');
-	}])
-		.run(['$log', 'LoaderService', 'NotificationService', '$rootScope', '$location', 'AuthService',
-			function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService) {
-				App.interceptors.errorInterceptor.loaderService = LoaderService;
-				App.interceptors.errorInterceptor.notificationService = NotificationService;
+	}).run(function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService) {
+		App.interceptors.errorInterceptor.loaderService = LoaderService;
+		App.interceptors.errorInterceptor.notificationService = NotificationService;
 
-				$rootScope.updateCurrentUser = function () {
-					AuthService.getCurrentUser(function (data) {
-						$rootScope.connectedUser = data;
-						authRedirect();
-					});
-				};
+		$rootScope.updateCurrentUser = function () {
+			AuthService.getCurrentUser(function (data) {
+				$rootScope.connectedUser = data;
+				authRedirect();
+			});
+		};
 
-				$rootScope.connectedUser = App.connectedUser;
+		$rootScope.connectedUser = App.connectedUser;
 
-				var authRedirect = function () {
-					if ($rootScope.connectedUser) {
-						if (!$rootScope.isAuthenticated()) {
-							//$location.path('/login');
-						} else {
-							if ($location.$$path === '/login') {
-								$location.path('/');
-							}
-						}
+		var authRedirect = function () {
+			if ($rootScope.connectedUser) {
+				if (!$rootScope.isAuthenticated()) {
+					//$location.path('/login');
+				} else {
+					if ($location.$$path === '/login') {
+						$location.path('/');
 					}
-				};
+				}
+			}
+		};
 
-				// register listener to watch route changes
-				$rootScope.$on("$routeChangeStart", function (event, next, current) {
-					authRedirect();
+		// register listener to watch route changes
+		$rootScope.$on("$routeChangeStart", function (event, next, current) {
+			authRedirect();
 
-					var path = next.originalPath;
-					if (path) {
-						var secondSlah = path.indexOf('/', 2);
-						if (secondSlah === -1) {
-							secondSlah = path.length;
-						}
-						$rootScope.navModuleName = path.substring(1, secondSlah);
+			var path = next.originalPath;
+			if (path) {
+				var secondSlah = path.indexOf('/', 2);
+				if (secondSlah === -1) {
+					secondSlah = path.length;
+				}
+				$rootScope.navModuleName = path.substring(1, secondSlah);
 
-					}
+			}
 
-				});
+		});
 
-				$rootScope.isAuthenticated = function () {
-					return $rootScope.connectedUser && $rootScope.connectedUser.connected;
-				};
+		$rootScope.isAuthenticated = function () {
+			return $rootScope.connectedUser && $rootScope.connectedUser.connected;
+		};
 
-				/**
-				 * Has the current user any of this roles
-				 * @param String role...
-				 * @returns Boolean true if any role found
-				 */
-				$rootScope.hasAnyRole = function () {
-					for (var i = 0; i < arguments.length; i++) {
-						if ($rootScope.hasRole(arguments[i])) {
-							return true;
-						}
-					}
-					return false;
-				};
+		/**
+		 * Has the current user any of this roles
+		 * @param String role...
+		 * @returns Boolean true if any role found
+		 */
+		$rootScope.hasAnyRole = function () {
+			for (var i = 0; i < arguments.length; i++) {
+				if ($rootScope.hasRole(arguments[i])) {
+					return true;
+				}
+			}
+			return false;
+		};
 
-				/**
-				 * Has the current user this role
-				 * @param String role role to test
-				 * @returns Boolean true if he has the role, false otherwise
-				 */
-				$rootScope.hasRole = function (role) {
-					if (!$rootScope.connectedUser || !$rootScope.connectedUser.roles) {
-						return false;
-					}
-					role = 'ROLE_' + role;
-					for (var k in $rootScope.connectedUser.roles) {
-						if ($rootScope.connectedUser.roles[k] === role) {
-							return true;
-						}
-					}
-					return false;
-				};
-
-			}]);
+		/**
+		 * Has the current user this role
+		 * @param String role role to test
+		 * @returns Boolean true if he has the role, false otherwise
+		 */
+		$rootScope.hasRole = function (role) {
+			if (!$rootScope.connectedUser || !$rootScope.connectedUser.roles) {
+				return false;
+			}
+			role = 'ROLE_' + role;
+			for (var k in $rootScope.connectedUser.roles) {
+				if ($rootScope.connectedUser.roles[k] === role) {
+					return true;
+				}
+			}
+			return false;
+		};
+	});
+}());

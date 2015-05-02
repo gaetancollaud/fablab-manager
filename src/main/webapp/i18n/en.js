@@ -1,4 +1,4 @@
-angular.module('App').config(function ($translateProvider) {
+angular.module('Fablab').config(function ($translateProvider) {
 	$translateProvider.translations('en', {
 		date:{
 			format:{

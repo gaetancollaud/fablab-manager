@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var cmp = angular.module('core');
+	var cmp = angular.module('Fablab');
 	
 		cmp.filter('formatTimestamp', function () {
 			return function (input, format) {

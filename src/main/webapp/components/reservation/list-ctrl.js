@@ -1,4 +1,7 @@
-angular.module('Reservation').controller('ReservationListController', function ($scope, $filter,
+(function () {
+	'use strict';
+	
+	angular.module('Fablab').controller('ReservationListController', function ($scope, $filter,
 		$location, ngTableParams, ReservationService) {
 	$scope.criteria = {
 		dateFrom: moment().add(0, 'day').toDate(),
@@ -113,3 +116,4 @@ angular.module('Reservation').controller('ReservationListController', function (
 });
 
 	
+}());

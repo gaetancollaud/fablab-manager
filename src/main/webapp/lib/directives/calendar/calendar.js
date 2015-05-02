@@ -4,7 +4,7 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 		scope: {
 			ngModel: '='
 		},
-		templateUrl: 'lib/fablab/directives/calendar/calendar.html',
+		templateUrl: 'lib/directives/calendar/calendar.html',
 		controller: function ($scope) {
 
 			var date = new Date();

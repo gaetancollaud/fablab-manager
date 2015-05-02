@@ -1,4 +1,4 @@
-angular.module('User').directive('fabUserGroups', function () {
+angular.module('Fablab').directive('fabUserGroups', function () {
 	return {
 		restrict: 'EA',
 		scope: {

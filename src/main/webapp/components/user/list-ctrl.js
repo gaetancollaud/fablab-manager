@@ -1,4 +1,4 @@
-angular.module('User').controller('UserListController', function ($scope, $filter, $location,
+angular.module('Fablab').controller('UserListController', function ($scope, $filter, $location,
 		ngTableParams, UserService, NotificationService) {
 
 	$scope.tableParams = new ngTableParams(

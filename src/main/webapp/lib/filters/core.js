@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var cmp = angular.module('core');
+	var cmp = angular.module('Fablab');
 	
 	cmp.filter('inlineList', function(){
 		return function(list, separator, param){
@@ -23,7 +23,7 @@
 				}
 			}
 			return ret;
-		}
+		};
 	});
 
 	//new line to <br />
@@ -64,6 +64,12 @@
 			if (reverse)
 				filtered.reverse();
 			return filtered;
+		};
+	});
+	
+	cmp.filter('stringify', function () {
+		return function (user) {
+			return JSON.stringify(user, null, 2);
 		};
 	});
 

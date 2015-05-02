@@ -4,7 +4,7 @@ angular.module('Fablab').directive('filterDate', function () {
 		scope: {
 			ngModel: '='
 		},
-		templateUrl: 'lib/fablab/directives/filters/date.html',
+		templateUrl: 'lib/directives/filters/date.html',
 		controller: function ($scope) {
 			$scope.opened = false;
 			

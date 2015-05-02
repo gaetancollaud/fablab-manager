@@ -1,5 +1,8 @@
-angular.module('Payment', ['ngResource'], function ($provide) {
-	$provide.factory('PaymentService', function ($log, $resource, $http) {
+(function () {
+	'use strict';
+
+	var app = angular.module('Fablab');
+	app.factory('PaymentService', function ($log, $resource, $http) {
 		return {
 			history: function (userId, successFn) {
 				$http({
@@ -16,24 +19,25 @@ angular.module('Payment', ['ngResource'], function ($provide) {
 			addUsage: function (usage, successFn) {
 				$http({
 					method: 'POST',
-					data:usage,
+					data: usage,
 					url: App.API.PAYMENT_API + '/add_usage'
 				}).success(successFn);
 			},
 			addPayment: function (payment, successFn) {
 				$http({
 					method: 'POST',
-					data:payment,
+					data: payment,
 					url: App.API.PAYMENT_API + '/add_payment'
 				}).success(successFn);
 			},
 			removeHistory: function (history, successFn) {
 				$http({
 					method: 'POST',
-					data:history,
+					data: history,
 					url: App.API.PAYMENT_API + '/delete_history'
 				}).success(successFn);
 			}
 		};
 	});
-});
+
+}());

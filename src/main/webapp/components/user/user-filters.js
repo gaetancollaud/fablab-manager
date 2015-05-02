@@ -1,7 +1,16 @@
 (function () {
 	'use strict';
 
-	var app = angular.module('User');
+	var app = angular.module('Fablab');
+	
+	app.filter('prettyUser', function () {
+		return function (user) {
+			if(!user){
+				return '';
+			}
+			return user.firstname + " " + user.lastname;
+		};
+	});
 
 	app.filter('lastSubscription', function ($filter, $translate) {
 		var dateFormat;

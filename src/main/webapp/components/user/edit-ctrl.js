@@ -1,4 +1,4 @@
-var ctrl = angular.module('User');
+var ctrl = angular.module('Fablab');
 ctrl.controller('GlobalUserEditController', function ($scope, $location, $filter, $q,
 		UserService, GroupService, NotificationService, StaticDataService) {
 

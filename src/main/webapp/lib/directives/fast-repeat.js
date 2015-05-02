@@ -18,7 +18,7 @@
  *
  * @author Steven Czerwinski <czerwin@scalyr.com>
  */
-var dir = angular.module('CoreOptimisationDirectives', []);
+var dir = angular.module('Fablab');
 
 dir.directive('fastRepeat', ['$animate', '$parse', function ($animate, $parse) {
 

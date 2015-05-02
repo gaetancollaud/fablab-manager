@@ -1,36 +1,40 @@
-angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentService, NotificationService) {
-	return {
-		restrict: 'EA',
-		scope: {
-			user: '=',
-			minDate: '=',
-			callback: '&'
-		},
-		templateUrl: 'components/payment/directive-add-payment.html',
-		controller: function ($scope) {
+(function () {
+	'use strict';
 
-			var resetValues = function () {
-				$scope.addPayment = {
-					amount: null,
-					date: new Date(),
-					comment: null
-				};
-			};
+	angular.module('Fablab').directive('userPaymentAddPayment', function (PaymentService, NotificationService) {
+		return {
+			restrict: 'EA',
+			scope: {
+				user: '=',
+				minDate: '=',
+				callback: '&'
+			},
+			templateUrl: 'components/payment/directive-add-payment.html',
+			controller: function ($scope) {
 
-			$scope.execute = function () {
-				var payment = {
-					total: $scope.addPayment.amount,
-					datePayment: $scope.addPayment.date,
-					comment: $scope.addPayment.comment,
-					'payment-user': $scope.user
+				var resetValues = function () {
+					$scope.addPayment = {
+						amount: null,
+						date: new Date(),
+						comment: null
+					};
 				};
-				PaymentService.addPayment(payment, function () {
-					NotificationService.notify("success", "payment.notification.paymentAdded");
-					$scope.callback();
-					resetValues();
-				});
+
+				$scope.execute = function () {
+					var payment = {
+						total: $scope.addPayment.amount,
+						datePayment: $scope.addPayment.date,
+						comment: $scope.addPayment.comment,
+						'payment-user': $scope.user
+					};
+					PaymentService.addPayment(payment, function () {
+						NotificationService.notify("success", "payment.notification.paymentAdded");
+						$scope.callback();
+						resetValues();
+					});
+				}
+				resetValues();
 			}
-			resetValues();
-		}
-	};
-});
+		};
+	});
+}());

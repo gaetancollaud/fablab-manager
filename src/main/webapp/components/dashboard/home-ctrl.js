@@ -1,11 +1,8 @@
-angular.module('Dashboard', []).controller('DashboardHomeController',
-		[
-			'$rootScope',
-			'$scope',
-			'$location',
-			'NotificationService',
-			function ($rootScope, $scope, $location, NotificationService) {
+(function () {
+	'use strict';
 
-			}
-		]
-		);
+	var app = angular.module('Fablab');
+	app.controller('DashboardHomeController', function ($rootScope, $scope, $location, NotificationService) {
+
+	});
+}());
