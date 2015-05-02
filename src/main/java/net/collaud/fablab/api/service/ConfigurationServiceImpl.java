@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.dao.ConfigurationRepository;
 import net.collaud.fablab.api.data.type.ConfigurationKey;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
 				.filter(c -> c.getKey() != null)
 				.collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
 		return Stream.of(ConfigurationKey.values())
-				.collect(Collectors.toMap(k -> k, k -> Optional.ofNullable(map.get(k)).orElse(k.getDef())));
+				.collect(Collectors.toMap(k -> k, k -> Optional.ofNullable(map.get(k)).orElse(k.getDef().orElse(StringUtils.EMPTY))));
 	}
 
 }

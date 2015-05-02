@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data.type;
 
+import java.util.Optional;
 import lombok.Getter;
 
 /**
@@ -14,9 +15,9 @@ public enum ConfigurationKey {
 	RECAPTCHA_SITE_KEY(null);
 	
 	@Getter
-	private final String def;
+	private final Optional<String> def;
 
 	private ConfigurationKey(String def) {
-		this.def = def;
+		this.def = Optional.ofNullable(def);
 	}
 }
