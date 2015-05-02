@@ -55,7 +55,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			if (eo.isPresent()) {
 				List<String> roles = new ArrayList<>();
 				eo.get().getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
-				ConnectedUser user = new ConnectedUser(eo.get().getFirstname(), eo.get().getLastname(), roles);
+				ConnectedUser user = new ConnectedUser(eo.get().getId(), eo.get().getFirstname(), eo.get().getLastname(), roles);
 				return user;
 			} else {
 				return new ConnectedUser();

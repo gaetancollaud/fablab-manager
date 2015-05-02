@@ -5,9 +5,9 @@
 		return {
 			restrict: 'EA',
 			scope: {
-				user: '=',
-				reload: '=',
-				editable: '='
+				user: '=?',
+				reload: '=?',
+				editable: '=?'
 			},
 			templateUrl: 'components/payment/directive-user-payment-history.html',
 			controller: function ($scope) {

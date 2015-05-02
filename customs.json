@@ -1,6 +1,12 @@
 {
 	"elements": {
-		"toast": {}
+		"toast": {},
+		"user-payment-history": {
+			"attributes": {
+				"user": {}
+			}
+		},
+		"fablab-calendar": {}
 	},
 	"attributes": {
 		"fast-repeat": {

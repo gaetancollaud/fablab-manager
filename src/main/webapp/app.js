@@ -64,6 +64,8 @@
 		$rootScope.updateCurrentUser = function () {
 			AuthService.getCurrentUser(function (data) {
 				$rootScope.connectedUser = data;
+				$rootScope.$broadcast('connectedUserChanged', data);
+				console.log('emit event');
 				authRedirect();
 			});
 		};
