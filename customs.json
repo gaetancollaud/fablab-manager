@@ -1,6 +1,11 @@
 {
 	"elements": {
 		"toast": {},
+		"fab-user-subscription": {
+			"attributes": {
+				"user": {}
+			}
+		},
 		"user-payment-history": {
 			"attributes": {
 				"user": {}

@@ -20,6 +20,7 @@
 					};
 				};
 				$scope.total = 0;
+				$scope.currency = App.CONFIG.CURRENCY;
 				var marchinePrice = [];
 				StaticDataService.loadMachines(function (data) {
 					$scope.machines = data;

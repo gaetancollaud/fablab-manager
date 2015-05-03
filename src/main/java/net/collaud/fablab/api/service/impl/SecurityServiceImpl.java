@@ -1,8 +1,9 @@
 package net.collaud.fablab.api.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
@@ -53,9 +54,12 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 		if (isAuthenticated()) {
 			final Optional<UserEO> eo = getCurrentUser();
 			if (eo.isPresent()) {
-				List<String> roles = new ArrayList<>();
-				eo.get().getGroups().forEach(g -> g.getRoles().forEach(r -> roles.add(r.getTechnicalname())));
-				ConnectedUser user = new ConnectedUser(eo.get().getId(), eo.get().getFirstname(), eo.get().getLastname(), roles);
+				UserEO u = eo.get();
+				Set<String> roles = u.getGroups().stream()
+						.flatMap(g -> g.getRoles().stream())
+						.map(r -> r.getTechnicalname())
+						.collect(Collectors.toSet());
+				ConnectedUser user = new ConnectedUser(u, roles);
 				return user;
 			} else {
 				return new ConnectedUser();

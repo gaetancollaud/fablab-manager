@@ -30,7 +30,7 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 			/* config object */
 			$scope.uiConfig = {
 				calendar: {
-					googleCalendarApiKey: 'AIzaSyB6WpKyvia6OD1ePfE6JGlYXBWIjBJGOLk',
+					googleCalendarApiKey: App.CONFIG.GOOGLE_CALENDAR_API_KEY,
 					height: 450,
 					editable: false,
 					firstDay: 1,

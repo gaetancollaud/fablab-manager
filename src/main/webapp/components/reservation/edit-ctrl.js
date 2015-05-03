@@ -44,7 +44,7 @@
 		};
 		$scope.createNewReservation = function () {
 			var now = moment().hour(18).minute(0).second(0);
-			$scope.reservationUser = $rootScope.connectedUser;
+			$scope.reservationUser = $rootScope.connectedUser.user;
 			$scope.reservation = {
 				dateStart: now,
 				dateEnd: now.clone().add(1, 'hour'),

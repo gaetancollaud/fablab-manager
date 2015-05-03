@@ -66,7 +66,7 @@
 						label="menu.login"
 						show="!connectedUser.connected"></li>
 					<li fab-nav-item link="profil" icon="cog"
-						label="{{connectedUser| prettyUser}}"
+						label="{{connectedUser.user| prettyUser}}"
 						show="connectedUser.connected"></li>
 					<li fab-nav-item link="logout" icon="log-out"
 						label="menu.logout"
@@ -116,6 +116,7 @@
 	<script src="./lib/filters/core.js"></script>
 	<script src="./lib/filters/date.js"></script>
 	<script src="./lib/filters/select.js"></script>
+	<script src="./lib/filters/currency.js"></script>
 	<script src="./lib/directives/naviguation/naviguation-item.js"></script>
 	<script src="./lib/directives/confirm/reallyClick.js"></script>
 	<script src="./lib/directives/form/form.js"></script>
@@ -143,6 +144,7 @@
 
 	<script src="./components/user/user-filters.js"></script>
 	<script src="./components/user/directive-groups.js"></script>
+	<script src="./components/user/directive-subscription.js"></script>
 	<script src="./components/user/list-ctrl.js"></script>
 	<script src="./components/user/edit-ctrl.js"></script>
 	<script src="./components/user/profil-ctrl.js"></script>

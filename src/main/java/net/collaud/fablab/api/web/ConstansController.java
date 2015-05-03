@@ -2,12 +2,14 @@ package net.collaud.fablab.api.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
+import net.collaud.fablab.api.rest.HibernateAwareObjectMapper;
 import net.collaud.fablab.api.service.ConfigurationService;
 import net.collaud.fablab.api.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,11 +36,11 @@ public class ConstansController {
 
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private ConfigurationService configurationService;
 
-	@RequestMapping(value="/constants.js", produces = "application/javascript; charset=utf-8")
+	@RequestMapping(value = "/constants.js", produces = "application/javascript; charset=utf-8")
 	public @ResponseBody
 	String constants() {
 		String rootUrl = propertyUtils.getProperty("url.root").orElse("/");
@@ -46,19 +49,17 @@ public class ConstansController {
 
 		//from fablab-config.properties
 		csts.put("rootUrl", rootUrl);
-		csts.put("GOOGLE_API", propertyUtils.getProperty("google.api").orElse(""));
-		csts.put("RECAPTCHA_SITE_KEY", propertyUtils.getProperty("google.recaptcha.site").orElse(""));
 
 		StringBuilder sb = new StringBuilder("var App = {};\n");
 		addConstants(sb, "App.Constants", csts);
 		addConstants(sb, "App.API", getRestConstants(rootUrl));
 		addConstant(sb, "App.connectedUser", securityService.getConnectedUser());
 		addConfiguration(sb);
-		
+
 		return sb.toString();
 	}
-	
-	private void addConfiguration(StringBuilder sb){
+
+	private void addConfiguration(StringBuilder sb) {
 		final Map<String, String> config = configurationService.getAllConfiguration().entrySet().stream()
 				.collect(Collectors.toMap(e -> e.getKey().name(), e -> e.getValue()));
 		addConstant(sb, "App.CONFIG", config);
@@ -104,11 +105,12 @@ public class ConstansController {
 	}
 
 	private String stringify(Object o) {
-		try {
-			final ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().build();
-			return mapper.writeValueAsString(o);
-		} catch (JsonProcessingException ex) {
-			log.error("Cannot parse object " + o, ex);
+		if (o != null) {
+			try {
+				return new HibernateAwareObjectMapper().writeValueAsString(o);
+			} catch (JsonProcessingException ex) {
+				log.error("Cannot parse object " + o, ex);
+			}
 		}
 		return "";
 	}

@@ -26,7 +26,9 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups g "
-			+ " LEFT JOIN FETCH g.roles "
+			+ " LEFT JOIN FETCH g.roles r"
+			+ " LEFT JOIN FETCH u.subscriptions sub"
+			+ " LEFT JOIN FETCH u.membershipType mt "
 			+ " WHERE u.id=:id")
 	Optional<UserEO> findOneByIdAndFetchRoles(@Param("id")Integer id);
 	

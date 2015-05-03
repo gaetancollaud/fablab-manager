@@ -1,0 +1,8 @@
+<div  class="alert" ng-show="visible"
+	  ng-class="{'alert-danger' : status === 'never' || status === 'expired',
+		  'alert-success':status === 'ok'}" >
+	<button type="button" class="close" data-dismiss="alert"
+			ng-show="status === 'never' || status === 'expired'"
+			ng-click="confirm()">TODO confirm</button>
+	<span translate="user.subscription.{{status}}.{{who}}" translate-values="{{data}}"></span>
+</div>

@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('Fablab').directive('userPaymentHistory', function (PaymentService, NotificationService) {
+	angular.module('Fablab').directive('userPaymentHistory', function (PaymentService, NotificationService, $filter) {
 		return {
 			restrict: 'EA',
 			scope: {
@@ -18,7 +18,7 @@
 					//FIXME get user balance !
 					PaymentService.history($scope.user.id, function (data) {
 						$scope.history = data.history;
-						$scope.userBalance.balance = data.balance;
+						$scope.userBalance.balance = $filter('currency')(data.balance);
 					});
 				};
 				$scope.$watch('user', function (newValue) {

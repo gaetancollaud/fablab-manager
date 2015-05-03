@@ -2,7 +2,7 @@ var ctrl = angular.module('Fablab');
 ctrl.controller('AuthSignUpController', function ($rootScope, $location, $filter, $scope,
 		NotificationService, AuthService, StaticDataService) {
 
-	$scope.siteKey = App.Constants.RECAPTCHA_SITE_KEY;
+	$scope.siteKey = App.CONFIG.RECAPTCHA_SITE_KEY;
 	$scope.user = {
 //		firstname: "test",
 //		lastname: "test",

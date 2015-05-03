@@ -1,10 +1,10 @@
 angular.module('Fablab').config(function ($translateProvider) {
 	$translateProvider.translations('en', {
-		date:{
-			format:{
-				date:'DD/MM/YYYY',
-				datetime:'DD/MM/YYYY hh:mm:ss',
-				time:'hh:mm:ss'
+		date: {
+			format: {
+				date: 'DD/MM/YYYY',
+				datetime: 'DD/MM/YYYY hh:mm:ss',
+				time: 'hh:mm:ss'
 			}
 		},
 		error: {
@@ -19,9 +19,9 @@ angular.module('Fablab').config(function ($translateProvider) {
 			users: 'Users',
 			reservation: 'Reservation',
 			payment: 'Payment',
-			login:'Login',
-			logout:'Logout',
-			signup:'Signup'
+			login: 'Login',
+			logout: 'Logout',
+			signup: 'Signup'
 		},
 		loading: {
 			title: 'Loading',
@@ -36,11 +36,11 @@ angular.module('Fablab').config(function ($translateProvider) {
 			updateMailingList: 'Update mailing list'
 		},
 		panel: {
-			search:'Filters'
+			search: 'Filters'
 		},
-		filter:{
-			from:'From',
-			to:'To',
+		filter: {
+			from: 'From',
+			to: 'To',
 		},
 		auth: {
 			result: {
@@ -53,13 +53,13 @@ angular.module('Fablab').config(function ($translateProvider) {
 			signiIn: 'Sign In',
 			signUp: 'Sign Up',
 			captcha: 'Are you human ?',
-			forgotPasswordQuestion:"Forgot your password ?",
-			requestNewPasswod:"Send me a new password"
+			forgotPasswordQuestion: "Forgot your password ?",
+			requestNewPasswod: "Send me a new password"
 		},
 		user: {
 			firstname: 'Firstname',
 			lastname: 'Lastname',
-			name:'Name',
+			name: 'Name',
 			email: 'Email',
 			balance: 'Balance',
 			membership: 'Membership',
@@ -69,23 +69,37 @@ angular.module('Fablab').config(function ($translateProvider) {
 			address: 'Address',
 			rfid: 'RFID',
 			groups: 'Groups',
-			lastSubscription:'Last subscription',
-			subscriptionLeft:'{{days}} days left',
-			subscriptionExpired:'expired',
-			comment:'comment',
-			birthdate:'Birth date',
-			gender:'Gender',
-			genderEnum:{
-				unknown:'Unknown',
-				male:'Male',
-				female:'Female'
+			lastSubscription: 'Last subscription',
+			subscriptionLeft: '{{days}} days left',
+			subscriptionExpired: 'expired',
+			comment: 'comment',
+			birthdate: 'Birth date',
+			gender: 'Gender',
+			genderEnum: {
+				unknown: 'Unknown',
+				male: 'Male',
+				female: 'Female'
 			},
-			confirmation:{
-				remove:'Do you really want to remove this user ?'
+			subscription: {
+				never: {
+					myself: 'You haven\'t confirm your subription yet !',
+					user: 'The user {{user.firstname}} {{user.lastname}} has not confirm its subription yet !'
+				},
+				expired: {
+					myself: 'Your subscription has expired since {{epirationDate}} ({{dayLeft}} days left)',
+					user: 'The subscription of the user {{user.firstname}} {{user.lastname}} has expired since {{epirationDate}} ({{dayLeft}} days left)'
+				},
+				ok: {
+					myself: 'Your subscription will expire on {{epirationDate}} ({{dayLeft}} days left)',
+					user: 'The subscription of the user {{user.firstname}} {{user.lastname}} will expired on {{epirationDate}} ({{dayLeft}} days left)'
+				}
 			},
-			notification:{
-				saved:'User saved',
-				removed:'User removed'
+			confirmation: {
+				remove: 'Do you really want to remove this user ?'
+			},
+			notification: {
+				saved: 'User saved',
+				removed: 'User removed'
 			}
 		},
 		reservation: {
@@ -101,31 +115,31 @@ angular.module('Fablab').config(function ($translateProvider) {
 				title: "Réservation d'une machine"
 			}
 		},
-		payment:{
-			userTitle:'User',
-			usageTitle:'Add an usage',
-			paymentTitle:'Add a payment',
-			enterName:'Enter a name',
-			machine:'Machine',
-			date:'Date',
-			time:'Time',
-			additionalCost:'Additional cost',
-			comment:'Comment',
-			directPaid:'User paid directly',
-			amount:'Amount',
-			total:'Total',
-			addPayment:'Add payment',
-			addUsage:'Add usage',
-			details:'Details',
-			history:'History',
-			balanceText:'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>',
-			confirmation:{
-				historyRemove:'Do you really want to remove this history entry ?'
+		payment: {
+			userTitle: 'User',
+			usageTitle: 'Add an usage',
+			paymentTitle: 'Add a payment',
+			enterName: 'Enter a name',
+			machine: 'Machine',
+			date: 'Date',
+			time: 'Time',
+			additionalCost: 'Additional cost',
+			comment: 'Comment',
+			directPaid: 'User paid directly',
+			amount: 'Amount',
+			total: 'Total',
+			addPayment: 'Add payment',
+			addUsage: 'Add usage',
+			details: 'Details',
+			history: 'History',
+			balanceText: 'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>',
+			confirmation: {
+				historyRemove: 'Do you really want to remove this history entry ?'
 			},
-			notification:{
-				historyRemoved:'Historique supprimé',
-				usageAdded:'Usage added',
-				paymentAdded:'Payment added'
+			notification: {
+				historyRemoved: 'Historique supprimé',
+				usageAdded: 'Usage added',
+				paymentAdded: 'Payment added'
 			}
 		}
 	});

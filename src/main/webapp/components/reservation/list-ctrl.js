@@ -24,9 +24,14 @@
 			}
 		}
 	});
+	
 
 	$scope.updateReservationList = function () {
-		ReservationService.search($scope.criteria, function (data) {
+		var criteria = {
+			dateFrom:$filter('cropToDate')($scope.criteria.dateFrom),
+			dateTo:$filter('cropToDate')($scope.criteria.dateTo)
+		};
+		ReservationService.search(criteria, function (data) {
 			$scope.reservations = data;
 			$scope.tableParams.reload();
 			updateCalendarEvent();

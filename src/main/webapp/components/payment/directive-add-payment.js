@@ -19,6 +19,7 @@
 						comment: null
 					};
 				};
+				$scope.currency = App.CONFIG.CURRENCY;
 
 				$scope.execute = function () {
 					var payment = {

@@ -35,11 +35,12 @@
 				<th translate="user.membership"></th>
 				<td>{{selected.user.membershipType.name}}</td>
 			</tr>
-			<tr ng-show="selected.user">
+<!--			<tr ng-show="selected.user">
 				<th translate="user.lastSubscription"></th>
 				<td ng-bind-html="selected.user.subscriptions | lastSubscription"></td>
-			</tr>
+			</tr>-->
 		</table>
+		<fab-user-subscription user="selected.user" ></fab-user-subscription>
 	</div>
 </div>
 

@@ -1,7 +1,8 @@
 package net.collaud.fablab.api.rest.v1.result;
 
-import java.util.List;
+import java.util.Set;
 import lombok.Getter;
+import net.collaud.fablab.api.data.UserEO;
 
 /**
  *
@@ -10,20 +11,16 @@ import lombok.Getter;
 @Getter
 public class ConnectedUser {
 	boolean connected;
-	private Integer id;
-	private String firstname;
-	private String lastname;
-	private List<String> roles;
+	private Set<String> roles;
+	private UserEO user;
 	
 	public ConnectedUser(){
 		this.connected = false;
 	}
 
-	public ConnectedUser(Integer id, String firstname, String lastname, List<String> roles) {
+	public ConnectedUser(UserEO user, Set<String> roles) {
 		this.connected = true;
-		this.id = id;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.user = user;
 		this.roles = roles;
 	}
 }

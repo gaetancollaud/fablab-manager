@@ -2,6 +2,7 @@ package net.collaud.fablab.api.data.type;
 
 import java.util.Optional;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -11,8 +12,10 @@ public enum ConfigurationKey {
 	ACCOUNTING_EDIT_HISTORY_LIMIT("7"),
 	FABLAB_NAME("No-Name fablab"),
 	FABLAB_URL("http://perdu.com"),
-	GOOGLE_CALENDAR_API_KEY(null),
-	RECAPTCHA_SITE_KEY(null);
+	GOOGLE_CALENDAR_API_KEY(""),
+	RECAPTCHA_SITE_KEY(""),
+	RECAPTCHA_SECRET(""),
+	CURRENCY("$");
 	
 	@Getter
 	private final Optional<String> def;
