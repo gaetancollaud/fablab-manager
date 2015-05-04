@@ -69,9 +69,6 @@ angular.module('Fablab').config(function ($translateProvider) {
 			address: 'Address',
 			rfid: 'RFID',
 			groups: 'Groups',
-			lastSubscription: 'Last subscription',
-			subscriptionLeft: '{{days}} days left',
-			subscriptionExpired: 'expired',
 			comment: 'comment',
 			birthdate: 'Birth date',
 			gender: 'Gender',
@@ -81,6 +78,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 				female: 'Female'
 			},
 			subscription: {
+				subscribe:'Subscribe',
 				never: {
 					myself: 'You haven\'t confirm your subription yet !',
 					user: 'The user {{user.firstname}} {{user.lastname}} has not confirm its subription yet !'

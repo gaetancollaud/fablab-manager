@@ -1,8 +1,34 @@
-<div  class="alert" ng-show="visible"
-	  ng-class="{'alert-danger' : status === 'never' || status === 'expired',
+<div>
+	<div  class="alert" ng-show="visible"
+		  ng-class="{'alert-danger' : status === 'never' || status === 'expired',
 		  'alert-success':status === 'ok'}" >
-	<button type="button" class="close" data-dismiss="alert"
-			ng-show="status === 'never' || status === 'expired'"
-			ng-click="confirm()">TODO confirm</button>
-	<span translate="user.subscription.{{status}}.{{who}}" translate-values="{{data}}"></span>
+		<button type="button" class="close"
+				ng-show="status === 'never' || status === 'expired'"
+				ng-click="openModal()"
+				translate="user.subscription.subscribe"
+				></button>
+		<span translate="user.subscription.{{status}}.{{who}}" translate-values="{{data}}"></span>
+	</div>
+	{{modalOpen|stringify}}
+	<div class="modal fade " id="subscribeModal" ng-class="{'in' : modalOpen}">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" translate="user.subscription.subscribe"></h4>
+				</div>
+				<div class="modal-body">
+					<p>One fine body&hellip;</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+							ng-click="confirmSubscription()"
+							translate="user.subscription.subscribe"></button>
+					<button type="button" class="btn btn-default" 
+							ng-click="cancel()" 
+							translate="button.cancel"></button>
+				</div>
+		</div>
+	</div><!-- /.modal -->
+
+</div>
 </div>
