@@ -79,6 +79,9 @@ angular.module('Fablab').config(function ($translateProvider) {
 			},
 			subscription: {
 				subscribe:'Subscribe',
+				confirmButton:'Confirm',
+				confirmTitle:'Confirm subscription',
+				price:'Price',
 				never: {
 					myself: 'You haven\'t confirm your subription yet !',
 					user: 'The user {{user.firstname}} {{user.lastname}} has not confirm its subription yet !'

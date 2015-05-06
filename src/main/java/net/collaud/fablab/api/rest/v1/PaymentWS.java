@@ -37,11 +37,6 @@ public class PaymentWS {
 		return new DataModel(paymentService.getLastPaymentEntries(userId));
 	}
 
-	@RequestMapping(value = "machine_price", method = RequestMethod.GET)
-	public BaseModel getAllPriceMachine() {
-		return new DataModel(priceService.getAllCurrentMachinePrices());
-	}
-
 	@RequestMapping(value = "add_usage", method = RequestMethod.POST)
 	public BaseModel addUsage(@RequestBody @Validated UsageEO usage) {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),

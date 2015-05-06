@@ -28,11 +28,10 @@ import javax.mail.internet.MimeMessage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.dao.PriceRepository;
+import net.collaud.fablab.api.data.PriceCotisationEO;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.PriceRevisionEO_;
-import net.collaud.fablab.api.service.MailService;
-import net.collaud.fablab.api.web.SpringPropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,6 +63,13 @@ public class PriceServiceImpl implements PriceService {
 	public PriceRevisionEO getLastPriceRevision() {
 		final Page<PriceRevisionEO> all = priceRepository.findAll(new PageRequest(0, 1, Sort.Direction.DESC, PriceRevisionEO_.dateRevision.getName()));
 		return all.getSize() > 0 ? all.getContent().get(0) : null;
+	}
+
+	@Override
+	public List<PriceCotisationEO> getAllSubscriptionInfo() {
+		List<PriceCotisationEO> list = getLastPriceRevision().getPriceCotisationList();
+		Hibernate.initialize(list);
+		return list;
 	}
 
 }

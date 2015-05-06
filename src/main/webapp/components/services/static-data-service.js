@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('Fablab').service('StaticDataService', function (AuthService, UserService, GroupService,
+	angular.module('Fablab').service('StaticDataService', function (PriceService, UserService, GroupService,
 			MachineService, PaymentService) {
 
 		//FIXME implement cache !
@@ -15,7 +15,10 @@
 			MachineService.list(successFn);
 		};
 		this.loadMachinePrice = function (successFn) {
-			PaymentService.machinePrice(successFn);
+			PriceService.machine(successFn);
+		};
+		this.loadSubscriptionPrice = function (successFn) {
+			PriceService.subscription(successFn);
 		};
 	});
 

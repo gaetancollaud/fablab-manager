@@ -1,4 +1,5 @@
-angular.module('Fablab').directive('fabUserSubscription', function ($filter) {
+angular.module('Fablab').directive('fabUserSubscription', function ($filter, StaticDataService) {
+
 	return {
 		restrict: 'EA',
 		scope: {
@@ -6,12 +7,15 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter) {
 		},
 		templateUrl: 'components/user/directive-subscription.html',
 		controller: function ($rootScope, $scope) {
+
+
 			$scope.visible = false;
 			$scope.modalOpen = false;
 			$scope.data = {
 				user: null,
 				epirationDate: null,
-				dayLeft: null
+				dayLeft: null,
+				price: null
 			};
 			$scope.$watch('user', function (newValue) {
 				$scope.data.user = newValue;
@@ -40,6 +44,15 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter) {
 			});
 
 			$scope.openModal = function () {
+				$scope.data.price = -1;
+				var membershipTypeId = $scope.user.membershipType.id;
+				StaticDataService.loadSubscriptionPrice(function (data) {
+					angular.forEach(data, function (p) {
+						if (p.membershipTypeId === membershipTypeId) {
+							$scope.data.price = p.price;
+						}
+					});
+				});
 				$('#subscribeModal').modal();
 			};
 			$scope.cancel = function () {
@@ -49,7 +62,7 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter) {
 				alert('toto');
 				$('#subscribeModal').modal('hide');
 			};
-			
+
 		}
 	};
 });
