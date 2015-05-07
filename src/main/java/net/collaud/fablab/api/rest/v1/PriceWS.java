@@ -26,9 +26,4 @@ public class PriceWS {
 		return new DataModel(priceService.getAllCurrentMachinePrices());
 	}
 
-	@RequestMapping(value = "subscription", method = RequestMethod.GET)
-	public BaseModel getAllSubscriptionInfo() {
-		return new DataModel(priceService.getAllSubscriptionInfo());
-	}
-
 }

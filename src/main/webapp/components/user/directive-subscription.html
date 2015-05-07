@@ -34,7 +34,13 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label" translate="user.subscription.price"></label>
 							<div class="col-sm-7">
-								<input type="text" disabled class="form-control" value="{{data.price}}" />
+								<input type="text" disabled class="form-control" value="{{user.membershipType.price}}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-5 control-label" translate="general.form.duration"></label>
+							<div class="col-sm-7">
+								<input type="text" disabled class="form-control" value="{{user.membershipType.duration +' '+ ('general.days'|translate)}}" />
 							</div>
 						</div>
 					</div>

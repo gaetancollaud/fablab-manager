@@ -43,10 +43,6 @@ public class PriceRevisionEO extends AbstractDataEO<Integer> implements Serializ
 
 	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "priceRevision", fetch = FetchType.LAZY)
-	private List<PriceCotisationEO> priceCotisationList;
-
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "priceRevision", fetch = FetchType.LAZY)
 	private List<PriceMachineEO> priceMachineList;
 
 	@Column(name = "membership_duration", nullable = false)

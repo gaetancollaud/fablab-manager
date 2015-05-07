@@ -40,22 +40,26 @@ public class SubscriptionEO extends AbstractDataEO<Integer> implements Serializa
 	@Column(name = "subscription_id", nullable = false)
 	private Integer id;
 
-	@Column(name = "comment")
-	private String comment;
-
 	@Column(name = "date_subscription", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSubscription;
+
+	@Column(name = "price")
+	private Double price;
+
+	@Column(name = "duration")
+	private Integer duration;
+
+	@Column(name = "comment")
+	private String comment;
 
 	@JsonBackReference("user-subscription")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private UserEO user;
 
-	@JoinColumns({
-		@JoinColumn(name = "price_revision_id", referencedColumnName = "price_revision_id"),
-		@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")})
-	@ManyToOne(optional = false)
-	private PriceCotisationEO priceCotisation;
+	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private MembershipTypeEO membershipType;
 
 }

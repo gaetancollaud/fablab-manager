@@ -2,7 +2,7 @@
 	<div class="panel-heading" translate="payment.history">
 	</div>
 	<div class="panel-body">
-		<div class="bg-danger">
+		<div class="alert" ng-class="{'alert-danger':userBalance.balanceRaw<0, 'alert-success':userBalance.balanceRaw>=0}">
 			<span translate="payment.balanceText" translate-values="{{userBalance}}"></span>
 		</div>
 		<table class="table">

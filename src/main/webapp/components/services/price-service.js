@@ -9,12 +9,6 @@
 					method: 'GET',
 					url: App.API.PRICE_API + '/machine'
 				}).success(successFn);
-			},
-			subscription: function (successFn) {
-				$http({
-					method: 'GET',
-					url: App.API.PRICE_API + '/subscription'
-				}).success(successFn);
 			}
 		};
 	});

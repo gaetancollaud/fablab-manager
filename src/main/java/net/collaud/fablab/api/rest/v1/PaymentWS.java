@@ -55,4 +55,14 @@ public class PaymentWS {
 		return new DataModel(paymentService.removeHistoryEntry(id));
 	}
 
+	@RequestMapping(value = "subscription/confirm/{id}", method = RequestMethod.GET)
+	public BaseModel confirmSubscription(@PathVariable Integer id) {
+		return new DataModel(paymentService.addSubscriptionConfirmation(id));
+	}
+
+	@RequestMapping(value = "subscription/confirm", method = RequestMethod.GET)
+	public BaseModel confirmSubscriptionForCurrentUser() {
+		return new DataModel(paymentService.addSubscriptionConfirmationForCurrentUser());
+	}
+
 }

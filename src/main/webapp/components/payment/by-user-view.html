@@ -25,7 +25,7 @@
 			</tr>
 			<tr ng-show="selected.user">
 				<th translate="user.email"></th>
-				<td>{{selected.user.email}}</td>
+				<td ng-bind-html="selected.user.email|emailLink"></td>
 			</tr>
 			<tr ng-show="selected.user">
 				<th translate="user.address"></th>
@@ -35,12 +35,8 @@
 				<th translate="user.membership"></th>
 				<td>{{selected.user.membershipType.name}}</td>
 			</tr>
-<!--			<tr ng-show="selected.user">
-				<th translate="user.lastSubscription"></th>
-				<td ng-bind-html="selected.user.subscriptions | lastSubscription"></td>
-			</tr>-->
 		</table>
-		<fab-user-subscription user="selected.user" ></fab-user-subscription>
+		<fab-user-subscription user="selected.user" confirm-callback="updateUser(user)" ></fab-user-subscription>
 	</div>
 </div>
 
@@ -55,6 +51,6 @@
 
 <div class="row" ng-show="selected.user">
 	<div class="col-md-12">
-		<user-payment-history user="selected.user" reload="reloadHistory" editable="true" />
+		<user-payment-history user="selected.user" reload="reloadHistory" editable="true" need-reload-user="updateUser()" />
 	</div>
 </div>

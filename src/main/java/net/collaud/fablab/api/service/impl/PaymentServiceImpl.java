@@ -2,11 +2,14 @@ package net.collaud.fablab.api.service.impl;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +21,6 @@ import net.collaud.fablab.api.dao.UsageRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
-import net.collaud.fablab.api.data.PriceCotisationEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
@@ -133,11 +135,11 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		final List<HistoryEntry> listHistory = Stream.concat(
 				Stream.concat(
 						listUsage.stream()
-								.map(u -> new HistoryEntry(u)),
+						.map(u -> new HistoryEntry(u)),
 						listPayment.stream()
-								.map(p -> new HistoryEntry(p))),
+						.map(p -> new HistoryEntry(p))),
 				listSubscription.stream()
-						.map(s -> new HistoryEntry(s)))
+				.map(s -> new HistoryEntry(s)))
 				.sorted()
 				.collect(Collectors.toList());
 		return listHistory;
@@ -145,35 +147,41 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UserEO addSubscriptionConfirmation(UserEO user) {
-		return addSubscriptionConfirmationIntern(user);
+	public SubscriptionEO addSubscriptionConfirmation(Integer userId) {
+		return addSubscriptionConfirmationIntern(userId);
 	}
 
 	@Override
-	public UserEO addSubscriptionConfirmationForCurrentUser() {
-		UserEO user = securityService.getCurrentUser().get();
-		addSubscriptionConfirmationIntern(user);
-		return user;
+	public SubscriptionEO addSubscriptionConfirmationForCurrentUser() {
+		return addSubscriptionConfirmationIntern(securityService.getCurrentUserId());
 	}
 
-	private UserEO addSubscriptionConfirmationIntern(UserEO userParam) {
+	private SubscriptionEO addSubscriptionConfirmationIntern(Integer userId) {
 		Date now = new Date();
 
 		//save user last subscription date
-		UserEO user = userRepository.findOne(userParam.getId());
+		UserEO user = userRepository.findOneDetails(userId)
+				.orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
+
+		//Check if there is a current subscription
+		user.getSubscriptions().stream()
+				.sorted(Comparator.comparing(SubscriptionEO::getDateSubscription).reversed())
+				.findFirst()
+				.ifPresent(s -> {
+					Instant end = s.getDateSubscription().toInstant().plus(s.getDuration(), ChronoUnit.DAYS);
+					if (end.isAfter(Instant.now())) {
+						throw new RuntimeException("Last subscription has not ended yet !");
+					}
+				});
 
 		//insert subscription
 		SubscriptionEO subscription = new SubscriptionEO();
 		subscription.setUser(user);
 		subscription.setDateSubscription(now);
-		final PriceCotisationEO pc = priceService.getLastPriceRevision().getPriceCotisationList()
-				.stream()
-				.filter(v -> v.getMembershipType().equals(user.getMembershipType()))
-				.findFirst().get();
-		subscription.setPriceCotisation(pc);
-		subscriptionRepository.save(subscription);
-
-		return userRepository.save(user);
+		subscription.setDuration(user.getMembershipType().getDuration());
+		subscription.setPrice(user.getMembershipType().getPrice());
+		subscription.setMembershipType(user.getMembershipType());
+		return subscriptionRepository.save(subscription);
 	}
 
 	@Override
@@ -187,6 +195,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
+	@Secured({Roles.PAYMENT_MANAGE})
 	public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
 		final int id = historyId.getId();
 		switch (historyId.getType()) {
@@ -206,7 +215,14 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
 						"Machine usage (amount " + (-usage.getTotalPrice()) + ") removed for user " + usage.getUser().getFirstLastName());
 				break;
-			//FIXME implement subscription
+			case SUBSCRIPTION:
+				SubscriptionEO subscription = Optional.ofNullable(subscriptionRepository.getOne(id))
+						.orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
+				checkDateAccounting(subscription.getDateSubscription());
+				subscriptionRepository.delete(subscription);
+				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
+						"Subscription (type: "+subscription.getMembershipType().getName()+", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
+				break;
 			default:
 				log.error("Cannot remove {} history entry", historyId.getType());
 				return null;

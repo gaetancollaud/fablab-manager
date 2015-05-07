@@ -8,6 +8,7 @@
 		},
 		"user-payment-history": {
 			"attributes": {
+				"confirm-callback": {},
 				"user": {}
 			}
 		},
@@ -18,6 +19,7 @@
 			"context": "tr"
 		},
 		"aria-expanded": {},
+		"confirm-callback": {},
 		"fab-nav-item": {},
 		"sortable": {}
 	}

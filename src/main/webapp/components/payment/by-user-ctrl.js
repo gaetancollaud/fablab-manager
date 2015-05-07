@@ -31,9 +31,13 @@
 			}
 		});
 
-		if ($routeParams.id) {
-			$scope.loadUser($routeParams.id);
-		}
+		$scope.updateUser = function () {
+			if ($routeParams.id) {
+				$scope.loadUser($routeParams.id);
+			}
+		};
+		
+		$scope.updateUser();
 
 	});
 

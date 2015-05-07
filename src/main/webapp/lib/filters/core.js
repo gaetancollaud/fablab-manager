@@ -72,5 +72,12 @@
 			return JSON.stringify(user, null, 2);
 		};
 	});
+	cmp.filter('emailLink', function () {
+		return function (email) {
+			if(email){
+				return '<a href="mailto:'+email+'">'+email+"</a>";
+			}
+		};
+	});
 
 }());

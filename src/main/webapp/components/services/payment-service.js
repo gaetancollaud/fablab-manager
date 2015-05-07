@@ -36,6 +36,18 @@
 					data: history,
 					url: App.API.PAYMENT_API + '/delete_history'
 				}).success(successFn);
+			},
+			subscriptionConfirmUser: function (userId, successFn) {
+				$http({
+					method: 'GET',
+					url: App.API.PAYMENT_API + '/subscription/confirm/'+userId
+				}).success(successFn);
+			},
+			subscriptionConfirmCurrentUser: function (successFn) {
+				$http({
+					method: 'GET',
+					url: App.API.PAYMENT_API + '/subscription/confirm'
+				}).success(successFn);
 			}
 		};
 	});

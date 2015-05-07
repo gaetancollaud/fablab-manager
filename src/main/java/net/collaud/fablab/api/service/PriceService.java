@@ -1,7 +1,6 @@
 package net.collaud.fablab.api.service;
 
 import java.util.List;
-import net.collaud.fablab.api.data.PriceCotisationEO;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.PriceRevisionEO;
 
@@ -14,6 +13,5 @@ public interface PriceService {
 	List<PriceMachineEO> getAllCurrentMachinePrices();
 	
 	PriceRevisionEO getLastPriceRevision();
-
-	public List<PriceCotisationEO> getAllSubscriptionInfo();
+	
 }

@@ -7,6 +7,12 @@ angular.module('Fablab').config(function ($translateProvider) {
 				time: 'hh:mm:ss'
 			}
 		},
+		general: {
+			days: 'days',
+			form: {
+				duration: 'Duration'
+			}
+		},
 		error: {
 			internal: 'Internal error',
 			ajax: {
@@ -78,17 +84,17 @@ angular.module('Fablab').config(function ($translateProvider) {
 				female: 'Female'
 			},
 			subscription: {
-				subscribe:'Subscribe',
-				confirmButton:'Confirm',
-				confirmTitle:'Confirm subscription',
-				price:'Price',
+				subscribe: 'Subscribe',
+				confirmButton: 'Confirm',
+				confirmTitle: 'Confirm subscription',
+				price: 'Price',
 				never: {
 					myself: 'You haven\'t confirm your subription yet !',
 					user: 'The user {{user.firstname}} {{user.lastname}} has not confirm its subription yet !'
 				},
 				expired: {
 					myself: 'Your subscription has expired since {{epirationDate}} ({{dayLeft}} days left)',
-					user: 'The subscription of the user {{user.firstname}} {{user.lastname}} has expired since {{epirationDate}} ({{dayLeft}} days left)'
+					user: 'The subscription of the user {{user.firstname}} {{user.lastname}} has expired since {{epirationDate}} ({{dayLeft}} days)'
 				},
 				ok: {
 					myself: 'Your subscription will expire on {{epirationDate}} ({{dayLeft}} days left)',

@@ -52,8 +52,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		id = subscription.getId();
 		date = subscription.getDateSubscription();
 		comment = subscription.getComment();
-		detail = "Subscription type : " + subscription.getPriceCotisation().getMembershipType().getName();
-		amount = -subscription.getPriceCotisation().getPrice();
+		detail = "Subscription type : " + subscription.getMembershipType().getName()+", duration :"+subscription.getDuration()+" days";
+		amount = -subscription.getPrice();
 		user = subscription.getUser();
 	}
 

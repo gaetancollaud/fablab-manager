@@ -17,9 +17,6 @@
 		this.loadMachinePrice = function (successFn) {
 			PriceService.machine(successFn);
 		};
-		this.loadSubscriptionPrice = function (successFn) {
-			PriceService.subscription(successFn);
-		};
 	});
 
 }());

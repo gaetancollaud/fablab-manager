@@ -3,6 +3,7 @@ package net.collaud.fablab.api.service;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.PaymentEO;
+import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
@@ -16,9 +17,9 @@ import net.collaud.fablab.api.exceptions.FablabException;
  */
 public interface PaymentService {
 
-	UserEO addSubscriptionConfirmation(UserEO userSelected);
+	SubscriptionEO addSubscriptionConfirmation(Integer userId);
 
-	UserEO addSubscriptionConfirmationForCurrentUser();
+	SubscriptionEO addSubscriptionConfirmationForCurrentUser();
 
 	PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
 
