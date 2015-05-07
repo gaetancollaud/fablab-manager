@@ -50,6 +50,9 @@
 		}).when('/payments/:id', {
 			templateUrl: './components/payment/by-user-view.html',
 			controller: 'PaymentByUserController'
+		}).when('/accounting', {
+			templateUrl: './components/accounting/accounting-list-view.html',
+			controller: 'AccountingListController'
 		}).otherwise({
 			redirectTo: '/'
 		});

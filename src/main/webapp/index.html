@@ -21,6 +21,7 @@
 		<link href="./components/auth/style.css" rel="stylesheet">
 		<link href="./components/user/style.css" rel="stylesheet">
 		<link href="./components/payment/style.css" rel="stylesheet">
+		<link href="./components/accounting/style.css" rel="stylesheet">
 		<!-- endbuild -->
 
 	</head>
@@ -56,6 +57,9 @@
 					<li fab-nav-item link="users" icon="user" 
 						label="menu.users" 
 						show="hasAnyRole('USER_VIEW')"></li>
+					<li fab-nav-item link="accounting" icon="user" 
+						label="menu.accounting" 
+						show="hasAnyRole('ACCOUNTING_VIEW')"></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
@@ -157,6 +161,8 @@
 	<script src="./components/payment/directive-user-payment-history.js"></script>
 	<script src="./components/payment/directive-add-usage.js"></script>
 	<script src="./components/payment/directive-add-payment.js"></script>
+	
+	<script src="./components/accounting/accounting-list-ctrl.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>

@@ -25,6 +25,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			users: 'Users',
 			reservation: 'Reservation',
 			payment: 'Payment',
+			accounting: 'Accounting',
 			login: 'Login',
 			logout: 'Logout',
 			signup: 'Signup'
@@ -148,6 +149,15 @@ angular.module('Fablab').config(function ($translateProvider) {
 				usageAdded: 'Usage added',
 				paymentAdded: 'Payment added'
 			}
+		},
+		accounting:{
+			title:'Accounting',
+			today:'Today',
+			yesterday:'Yesterday',
+			thisMonth:'This month',
+			lastMonth:'Last month',
+			thisYear:'This year',
+			lastYear:'Last year'
 		}
 	});
 });
