@@ -1,12 +1,10 @@
 
-fablab-api [![Build Status](https://travis-ci.org/gaetancollaud/fablab-api.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-api) [![Join the chat at https://gitter.im/gaetancollaud/fablab-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-api.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-api)
+Fablab-manager [![Build Status](https://travis-ci.org/gaetancollaud/fablab-manager.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-manager) [![Join the chat at https://gitter.im/gaetancollaud/fablab-manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-manager.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-manager)
 ==========
-
-The new version of fablab-manager
 
 #Description
 
-This web application allows you to easily manage a Fablab (or any makerspace). You can manage :
+Fablab-manager is a fully open-source web application that allows you to easily manage a Fablab (or any makerspace). You can manage :
 
  * Users (with membership type)
  * Machines (with machine type)
@@ -23,8 +21,10 @@ This web application allows you to easily manage a Fablab (or any makerspace). Y
 #Demo
 
 Live demo on [collaud2.collaud.me/fablab-api](http://collaud2.collaud.me/fablab-api-1.1-SNAPSHOT)
-User : 1@email.com
-Password : fablab
+
+User : **1@email.com**
+
+Password : **fablab**
 
 ## Technologies
 * Java 8
@@ -38,8 +38,8 @@ Password : fablab
 ## Installation
 
 * Install MySQL and Tomcat
-* Compile from source (I will make release eventually)
+* Compile from source (I will make releases eventually)
 * Put fablab-config.properties in tomcat configuration directory
 * Edit fablab-config.properties
-* Create database schema
+* Create database schema (use Mysql workbench)
 * Deploy the WAR file previously compiled
