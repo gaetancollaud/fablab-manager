@@ -19,7 +19,7 @@ public interface SubscriptionRepository extends JpaRepository<SubscriptionEO, In
 	@Query(" SELECT s "
 			+ " FROM SubscriptionEO s "
 			+ " WHERE s.dateSubscription>=:dateAfter AND s.dateSubscription <=:dateBefore")
-	public List<SubscriptionEO> getAllBetween(@Param("dateBefore") Date dateBefore, @Param("dateAfter") Date dateAfter);
+	public List<SubscriptionEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 
 	@Query(" SELECT s "
 			+ " FROM  SubscriptionEO s "

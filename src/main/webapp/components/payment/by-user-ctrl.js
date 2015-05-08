@@ -5,7 +5,7 @@
 			$location, $routeParams, UserService) {
 		$scope.selected = {user: undefined};
 
-		$scope.minDate = moment().subtract(App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT, 'days').format('YYYY-MM-D');
+		$scope.minDate = moment().subtract(App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT, 'days').format('YYYY-MM-DD');
 
 		$scope.loadUser = function (userId) {
 			UserService.get(userId, function (data) {

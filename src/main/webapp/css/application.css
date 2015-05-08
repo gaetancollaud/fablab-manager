@@ -1,6 +1,16 @@
 body{
 	padding-top: 70px;
 }
+#footer{
+	margin:0 10px;
+	text-align: right;
+	font-size: 0.85em;
+}
+
+#footer .github{
+	width:24px;
+}
+
 
 .right{
 	text-align: right;

@@ -9,6 +9,10 @@ angular.module('Fablab').config(function ($translateProvider) {
 		},
 		general: {
 			days: 'days',
+			date:'Date',
+			user:'User',
+			detail:'Detail',
+			comment:'Comment',
 			form: {
 				duration: 'Duration'
 			}
@@ -157,7 +161,13 @@ angular.module('Fablab').config(function ($translateProvider) {
 			thisMonth:'This month',
 			lastMonth:'Last month',
 			thisYear:'This year',
-			lastYear:'Last year'
+			lastYear:'Last year',
+			summary:'Summary',
+			sell:'Sell',
+			moneyIn:'Money in',
+			delta:'Delta',
+			debit:'Debit',
+			credit:'Credit'
 		}
 	});
 });

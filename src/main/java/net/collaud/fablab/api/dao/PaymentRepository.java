@@ -19,7 +19,7 @@ public interface PaymentRepository extends JpaRepository<PaymentEO, Integer> {
 	@Query(" SELECT p "
 			+ " FROM PaymentEO p "
 			+ " WHERE p.datePayment>=:dateAfter AND p.datePayment <=:dateBefore")
-	public List<PaymentEO> getAllBetween(@Param("dateBefore") Date dateBefore, @Param("dateAfter") Date dateAfter);
+	public List<PaymentEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 
 	@Query(" SELECT p "
 			+ " FROM  PaymentEO p "

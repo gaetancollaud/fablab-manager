@@ -25,7 +25,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final Date date;
 	private final double amount;
 	private final String detail;
-	private final UserEO user;
+	private final HistoryEntryUser user;
 
 	public HistoryEntry(PaymentEO payment) {
 		type = HistoryEntryType.PAYMENT;
@@ -34,7 +34,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		comment = payment.getComment();
 		detail = "cashier=" + payment.getCashier().getFirstLastName();
 		amount = payment.getTotal();
-		user = payment.getUser();
+		user = new HistoryEntryUser(payment.getUser());
 	}
 
 	public HistoryEntry(UsageEO usage) {
@@ -44,7 +44,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		comment = usage.getComment();
 		detail = usage.getMachine().getName() + " | " + usage.getMinutes() + "min" + " | " + usage.getAdditionalCost() + " CHF additional";
 		amount = -((usage.getPricePerHour() * usage.getMinutes()) / 60 + usage.getAdditionalCost());
-		user = usage.getUser();
+		user = new HistoryEntryUser(usage.getUser());
 	}
 
 	public HistoryEntry(SubscriptionEO subscription) {
@@ -54,7 +54,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		comment = subscription.getComment();
 		detail = "Subscription type : " + subscription.getMembershipType().getName()+", duration :"+subscription.getDuration()+" days";
 		amount = -subscription.getPrice();
-		user = subscription.getUser();
+		user = new HistoryEntryUser(subscription.getUser());
 	}
 
 	@Override

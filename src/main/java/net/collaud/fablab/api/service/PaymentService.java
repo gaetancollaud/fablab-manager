@@ -10,6 +10,7 @@ import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
 import net.collaud.fablab.api.exceptions.FablabException;
+import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 
 /**
  *
@@ -27,15 +28,7 @@ public interface PaymentService {
 
 	UserPaymentHistory getLastPaymentEntries(Integer userId);
 
-	/**
-	 * Get the list of entry for accounting.
-	 *
-	 * @param dateBefore entries before this date
-	 * @param dateAfter entries after this date
-	 * @return
-	 * @throws FablabException
-	 */
-	List<HistoryEntry> getPaymentEntries(Date dateBefore, Date dateAfter);
+	List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
 
 	List<HistoryEntry> getPaymentEntriesForCurrentUser();
 

@@ -2,9 +2,7 @@ package net.collaud.fablab.api.service.impl;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -31,6 +29,7 @@ import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
 import net.collaud.fablab.api.exceptions.FablabException;
+import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.PaymentService;
@@ -102,14 +101,14 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
-	public List<HistoryEntry> getPaymentEntries(Date dateBefore, Date dateAfter) {
-		if (dateBefore == null || dateAfter == null) {
+	@Secured({Roles.ACCOUNTING_VIEW})
+	public List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search) {
+		if (search.isOneDateNull()) {
 			throw new FablabException("Dates cannot be null");
 		}
-		List<UsageEO> listUsage = usageRepository.getAllBetween(dateBefore, dateAfter);
-		List<PaymentEO> listPayment = paymentRepository.getAllBetween(dateBefore, dateAfter);
-		List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(dateBefore, dateAfter);
+		List<UsageEO> listUsage = usageRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+		List<PaymentEO> listPayment = paymentRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+		List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
 		return convertToHistoryEntry(listUsage, listPayment, listSubscription);
 	}
 

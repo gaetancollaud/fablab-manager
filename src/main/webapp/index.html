@@ -51,13 +51,13 @@
 					<li fab-nav-item link="reservations" icon="calendar" 
 						label="menu.reservation"
 						show="hasAnyRole('RESERVATION_VIEW')"></li>
-					<li fab-nav-item link="payments" icon="euro" 
+					<li fab-nav-item link="payments" icon="shopping-cart" 
 						label="menu.payment" 
 						show="hasAnyRole('PAYMENT_VIEW')"></li>
 					<li fab-nav-item link="users" icon="user" 
 						label="menu.users" 
 						show="hasAnyRole('USER_VIEW')"></li>
-					<li fab-nav-item link="accounting" icon="user" 
+					<li fab-nav-item link="accounting" icon="euro" 
 						label="menu.accounting" 
 						show="hasAnyRole('ACCOUNTING_VIEW')"></li>
 				</ul>
@@ -82,6 +82,13 @@
 
 	<div class="container-fluid" id="main-container">
 		<div ng-view id="main-view"></div>
+	</div>
+	<div id="footer">
+		<a href="https://github.com/gaetancollaud/fablab-api">
+			<img class="github" src="images/github.png" alt="github logo">
+			Fablab Manager
+		</a>
+		is an open-source application
 	</div>
 
 	<script src="./api/constants.js"></script>
@@ -132,13 +139,14 @@
 	<script src="./i18n/en.js"></script>
 	<script src="./i18n/fr.js"></script>
 
-	<script src="./components/services/static-data-service.js"></script>
+	<script src="./components/services/accounting-service.js"></script>
 	<script src="./components/services/auth-service.js"></script>
-	<script src="./components/services/reservation-service.js"></script>
-	<script src="./components/services/user-service.js"></script>
 	<script src="./components/services/machine-service.js"></script>
 	<script src="./components/services/payment-service.js"></script>
 	<script src="./components/services/price-service.js"></script>
+	<script src="./components/services/reservation-service.js"></script>
+	<script src="./components/services/static-data-service.js"></script>
+	<script src="./components/services/user-service.js"></script>
 
 	<script src="./components/dashboard/home-ctrl.js"></script>
 
@@ -161,7 +169,7 @@
 	<script src="./components/payment/directive-user-payment-history.js"></script>
 	<script src="./components/payment/directive-add-usage.js"></script>
 	<script src="./components/payment/directive-add-payment.js"></script>
-	
+
 	<script src="./components/accounting/accounting-list-ctrl.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>

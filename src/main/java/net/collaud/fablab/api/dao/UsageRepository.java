@@ -18,7 +18,7 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
 	@Query(" SELECT u "
 			+ " FROM UsageEO u "
 			+ " WHERE u.dateStart>=:dateAfter AND u.dateStart <=:dateBefore")
-	public List<UsageEO> getAllBetween(@Param("dateBefore") Date dateBefore, @Param("dateAfter") Date dateAfter);
+	public List<UsageEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 
 	@Query(" SELECT u "
 			+ " FROM  UsageEO u "
