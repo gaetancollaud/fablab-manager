@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.data;
 
 import javax.persistence.MappedSuperclass;
+import lombok.EqualsAndHashCode;
 
 /**
  *
@@ -8,6 +9,7 @@ import javax.persistence.MappedSuperclass;
  * @param <ID>
  */
 @MappedSuperclass
+@EqualsAndHashCode
 abstract public class AbstractDataEO<ID> {
 	abstract public ID getId();
 }

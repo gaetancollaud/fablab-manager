@@ -1,6 +1,6 @@
 (function () {
 	'use strict';
-	angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, NotificationService) {
+	angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, NotificationService, StaticDataService) {
 		return {
 			restrict: 'EA',
 			scope: {
@@ -9,7 +9,7 @@
 				callback: '&'
 			},
 			templateUrl: 'components/payment/directive-add-usage.html',
-			controller: function ($scope, $filter, StaticDataService, PaymentService) {
+			controller: function ($scope, $filter) {
 				var resetValues = function () {
 					$scope.addUsage = {
 						date: new Date(),

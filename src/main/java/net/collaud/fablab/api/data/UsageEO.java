@@ -67,10 +67,6 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
 
-	@JoinColumn(name = "price_revision_id", referencedColumnName = "price_revision_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private PriceRevisionEO priceRevision;
-	
 	public double getTotalPrice(){
 		return pricePerHour*minutes/60+additionalCost;
 	}

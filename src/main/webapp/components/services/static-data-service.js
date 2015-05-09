@@ -14,9 +14,6 @@
 		this.loadMachines = function (successFn) {
 			MachineService.list(successFn);
 		};
-		this.loadMachinePrice = function (successFn) {
-			PriceService.machine(successFn);
-		};
 	});
 
 }());

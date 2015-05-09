@@ -19,7 +19,6 @@ import net.collaud.fablab.api.dao.UsageRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
-import net.collaud.fablab.api.data.PriceRevisionEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
@@ -33,7 +32,6 @@ import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.PaymentService;
-import net.collaud.fablab.api.service.PriceService;
 import net.collaud.fablab.api.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -69,9 +67,6 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	private UsageRepository usageRepository;
 
 	@Autowired
-	private PriceService priceService;
-
-	@Autowired
 	private MachineRepository machineRepository;
 
 	@Override
@@ -88,14 +83,12 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
-		double hourPrice = priceService.getAllCurrentMachinePrices().stream()
-				.filter(mp -> mp.getMachineTypeId() == machine.getMachineType().getId())
-				.filter(mp -> mp.getMembershipTypeId() == user.getMembershipType().getId())
+		double hourPrice = machine.getMachineType().getPriceList().stream()
+				.filter(p -> p.getMembershipTypeId()==user.getMembershipType().getId())
 				.findFirst()
 				.map(pm -> pm.getPrice())
 				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
-		PriceRevisionEO priceRev = priceService.getLastPriceRevision();
-		UsageEO usage = new UsageEO(0, startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType(), priceRev);
+		UsageEO usage = new UsageEO(0, startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
 		usage = usageRepository.save(usage);
 		return usage;
 	}

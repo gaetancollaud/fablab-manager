@@ -1,8 +1,10 @@
 package net.collaud.fablab.api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,8 +43,9 @@ public class MembershipTypeEO extends AbstractDataEO<Integer> implements Seriali
 	@Column(name = "price", nullable = false)
 	private Double price;
 
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
-	private List<PriceMachineEO> priceList;
+	private Set<PriceMachineEO> priceList;
 
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)

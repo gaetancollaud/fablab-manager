@@ -27,13 +27,8 @@ import lombok.ToString;
 @ToString
 public class PriceMachineEOPK implements Serializable {
 
-	@Column(name = "price_revision_id", nullable = false)
-	private int priceRevisionId;
-
-	@Column(name = "machine_type_id", nullable = false)
 	private int machineTypeId;
 
-	@Column(name = "membership_type_id", nullable = false)
 	private int membershipTypeId;
 
 
