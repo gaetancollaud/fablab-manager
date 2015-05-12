@@ -30,7 +30,5 @@ public interface PaymentService {
 
 	List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
 
-	List<HistoryEntry> getPaymentEntriesForCurrentUser();
-
 	HistoryEntryId removeHistoryEntry(HistoryEntryId entry);
 }

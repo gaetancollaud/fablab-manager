@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -108,6 +109,27 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public void logout() {
 		SecurityContextHolder.clearContext();
+	}
+
+	@Override
+	public boolean hasRoles(String roles) {
+		SecurityContext context = SecurityContextHolder.getContext();
+		if(context==null){
+			return false;
+		}
+		for(GrantedAuthority authority :  context.getAuthentication().getAuthorities()){
+			if(authority.getAuthority().equalsIgnoreCase(roles)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void checkRoles(String roles) {
+		if(!hasRoles(roles)){
+			throw new SecurityException("Current user has not roles "+roles);
+		}
 	}
 
 }

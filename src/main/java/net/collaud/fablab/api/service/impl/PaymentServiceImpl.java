@@ -24,6 +24,9 @@ import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import net.collaud.fablab.api.data.type.AuditObject;
+import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
+import static net.collaud.fablab.api.data.type.AuditObject.SUBSCRIPTION;
+import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
@@ -44,7 +47,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
 @Slf4j
 public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentService {
 
@@ -106,8 +108,11 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
 	public UserPaymentHistory getLastPaymentEntries(Integer userId) {
+		if(!securityService.getCurrentUserId().equals(userId)){
+			securityService.checkRoles(Roles.PAYMENT_MANAGE);
+		}
+		
 		List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
 		double balance = userRepository.getUserBalanceFromUserId(userId)
 				.map(ub -> ub.getValue())
@@ -174,16 +179,6 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		subscription.setPrice(user.getMembershipType().getPrice());
 		subscription.setMembershipType(user.getMembershipType());
 		return subscriptionRepository.save(subscription);
-	}
-
-	@Override
-	public List<HistoryEntry> getPaymentEntriesForCurrentUser() {
-		final Optional<UserEO> currentUser = securityService.getCurrentUser();
-		if (currentUser.isPresent()) {
-			return getHistoryEntriesForuser(currentUser.get().getId());
-		} else {
-			return new ArrayList<>();
-		}
 	}
 
 	@Override
