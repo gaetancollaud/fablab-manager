@@ -24,7 +24,14 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 			$scope.dataSourceReservation = {
 				events: $scope.ngModel,
 				color: '#FFEBCC',
-				textColor:'black'
+				textColor: 'black'
+			};
+
+			var eventRender = function (event, element) {
+				element.on('click', function (e) {
+					alert('coucou');
+					e.preventDefault();
+				});
 			};
 
 			/* config object */
@@ -38,7 +45,8 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 						left: 'title',
 						center: 'month,agendaWeek,agendaDay',
 						right: 'today prev,next'
-					}
+					},
+					eventRender: eventRender
 				}
 			};
 

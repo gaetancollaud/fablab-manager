@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
-	private ReservationRepository reservationDao;
+	private ReservationRepository reservationRepository;
 	
 	@Autowired
 	private SecurityService securityService;
@@ -38,31 +38,21 @@ public class ReservationServiceImpl implements ReservationService {
 	public ReservationEO save(ReservationEO reservation) {
 		log.debug("Save "+reservation);
 		reservation.setUser(new UserEO(securityService.getCurrentUserId()));
-		return reservationDao.save(reservation);
+		return reservationRepository.save(reservation);
 	}
 
 	@Override
 	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
 	public void remove(Integer reservationId) {
 		log.debug("Remove with id"+reservationId);
-		reservationDao.delete(reservationId);
+		reservationRepository.delete(reservationId);
 	}
 
 	@Override
 	@Secured({Roles.RESERVATION_VIEW})
-	public List<ReservationEO> findReservations(Date dateFrom, Date dateTo, List<Integer> machineIds){
-		log.debug("find reservation from "+dateFrom+" to "+dateTo+" of machines "+machineIds);
-		Specifications spec = Specifications.where(ReservationSpecifications.joins());
-		if(dateFrom!=null){
-			spec = spec.and(ReservationSpecifications.from(dateFrom));
-		}
-		if(dateTo!=null){
-			spec = spec.and(ReservationSpecifications.to(dateTo));
-		}
-		if(machineIds!=null && !machineIds.isEmpty()){
-			spec = spec.and(ReservationSpecifications.machines(machineIds));
-		}
-		return reservationDao.findAll(spec);
+	public List<ReservationEO> findReservations(Date dateFrom, Date dateTo){
+		log.debug("find reservation from "+dateFrom+" to "+dateTo);
+		return reservationRepository.findReservations(dateFrom, dateTo);
 	}
 
 	@Override
@@ -72,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public Optional<ReservationEO> getById(Integer id) {
-		return Optional.ofNullable(reservationDao.findOne(id));
+		return Optional.ofNullable(reservationRepository.findOne(id));
 	}
 
 }

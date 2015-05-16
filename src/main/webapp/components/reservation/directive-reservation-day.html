@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+	<div class="panel-heading" translate="reservation.reservationForDay" translate-values="{{dateTranslate}}">
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th translate="reservation.machine"></th>
+					<th translate="reservation.type"></th>
+					<th translate="reservation.from"></th>
+					<th translate="reservation.to"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="r in reservations | orderBy:'machine.machineType.name'"
+					ng-class="{'conflict':r.conflict}">
+					<td>{{r.machine.name}}</td>
+					<td>{{r.machine.machineType.name}}</td>
+					<td>{{r.dateStart|formatTimestamp:'HH:mm'}}</td>
+					<td>{{r.dateEnd|formatTimestamp:'HH:mm'}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

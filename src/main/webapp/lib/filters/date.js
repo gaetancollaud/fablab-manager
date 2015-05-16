@@ -5,7 +5,7 @@
 
 	cmp.filter('formatTimestamp', function () {
 		return function (input, format) {
-			if (input == null) {
+			if (input === null) {
 				return "";
 			}
 			if (!format) {

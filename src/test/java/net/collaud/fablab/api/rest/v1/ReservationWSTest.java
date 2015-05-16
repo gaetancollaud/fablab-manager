@@ -4,29 +4,15 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 import net.collaud.fablab.api.rest.AbstractRestTest;
-import net.collaud.fablab.api.dao.ReservationRepository;
-import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
-import net.collaud.fablab.api.rest.v1.data.ReservationSimpleTO;
-import net.collaud.fablab.api.security.Roles;
-import org.junit.After;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.HttpServerErrorException;
 
 /**
  *

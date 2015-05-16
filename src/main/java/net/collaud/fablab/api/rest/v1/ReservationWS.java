@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.ReservationEO;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.rest.v1.criteria.ReservationSearchCriteria;
+import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,12 +33,11 @@ public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, Reserv
 	}
 
 	@RequestMapping(value = "search", method = RequestMethod.POST)
-	public List<ReservationEO> list(@RequestBody ReservationSearchCriteria criteria) {
+	public List<ReservationEO> list(@RequestBody PeriodSearchCriteria criteria) {
 		log.debug("Search reservation " + criteria);
 		List<ReservationEO> list = reservationService.findReservations(
 				criteria.getDateFrom(),
-				criteria.getDateTo(),
-				criteria.getMachineIds());
+				criteria.getDateTo());
 		return list;
 	}
 

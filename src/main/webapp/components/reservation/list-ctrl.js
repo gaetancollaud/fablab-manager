@@ -4,8 +4,8 @@
 	angular.module('Fablab').controller('ReservationListController', function ($scope, $filter,
 		$location, ngTableParams, ReservationService) {
 	$scope.criteria = {
-		dateFrom: moment().add(0, 'day').toDate(),
-		dateTo: moment().add(1, 'month').toDate(),
+		dateFrom: moment().startOf('month').toDate(),
+		dateTo: moment().endOf('month').toDate()
 	};
 
 	$scope.tableParams = new ngTableParams(
@@ -13,7 +13,7 @@
 				page: 1, // show first page
 				count: 25, // count per page
 				sorting: {
-					dateStart: 'asc',
+					dateStart: 'asc'
 				}
 			}, $location.search()), {
 		getData: function ($defer, params) {

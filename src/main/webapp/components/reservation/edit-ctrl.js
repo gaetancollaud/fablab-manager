@@ -1,6 +1,6 @@
 (function () {
 	'use strict';
-	
+
 	var reservation = angular.module('Fablab');
 	reservation.directive('datepickerPopup', function () {
 		return {
@@ -10,44 +10,45 @@
 				//remove the default formatter from the input directive to prevent conflict
 				controller.$formatters.shift();
 			}
-		}
+		};
 	});
 	reservation.controller('GlobalReservationEditController', function ($scope, $rootScope, $location, $filter, $q,
 			ReservationService, MachineService, NotificationService) {
+		$scope.value = {};
 		$scope.dateFormat = 'dd MMMM yyyy';
-		$scope.hstep = 1;
-		$scope.mstep = 15;
 		$scope.dateOptions = {
 			formatYear: 'yy',
-			startingDay: 1,
+			startingDay: 1
 		};
-		$scope.minDate = moment().format($scope.dateFormat);
-		$scope.maxDate = moment().add(14, 'days').format($scope.dateFormat);
+		$scope.limit = {
+			min: moment().format('YYYY-MM-DD'),
+			max: moment().add(14, 'days').format('YYYY-MM-DD')
+		};
 
 		$scope.disabled = function (date, mode) {
 			return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
 		};
 
 		var extractDates = function () {
-			$scope.reservationDate = new Date($scope.reservation.dateStart);
-			$scope.startTime = new Date($scope.reservation.dateStart);
-			$scope.endTime = new Date($scope.reservation.dateEnd);
+			$scope.value.reservationDate = moment($scope.reservation.dateStart).toDate();
+			$scope.value.startTime = moment($scope.reservation.dateStart).startOf('minute').toDate();
+			$scope.value.endTime =  moment($scope.reservation.dateEnd).startOf('minute').toDate();
 
 		};
 
 		$scope.loadReservation = function (id) {
 			ReservationService.get(id, function (data) {
 				$scope.reservation = data;
-				$scope.reservationUser = data.user;
+				$scope.value.reservationUser = data.user;
 				extractDates();
 			});
 		};
 		$scope.createNewReservation = function () {
-			var now = moment().hour(18).minute(0).second(0);
-			$scope.reservationUser = $rootScope.connectedUser.user;
+			var now = moment().hour(18).startOf('hour');
+			$scope.value.reservationUser = $rootScope.connectedUser.user;
 			$scope.reservation = {
 				dateStart: now,
-				dateEnd: now.clone().add(1, 'hour'),
+				dateEnd: now.clone().add(1, 'hour')
 			};
 			extractDates();
 		};
@@ -60,16 +61,16 @@
 		};
 
 		$scope.timeChanged = function () {
-			$scope.timeError = moment($scope.startTime).unix() >= moment($scope.endTime).unix();
+			$scope.timeError = !moment($scope.value.endTime).isAfter(moment($scope.value.startTime));
 		};
 
 		$scope.save = function () {
 			if (!$scope.timeError && $scope.reservation.machine) {
-				var day = moment($scope.reservationDate);
-				var start = moment($scope.startTime);
-				var end = moment($scope.endTime);
-				$scope.reservation.dateStart = day.clone().hour(start.hour()).minute(start.minute());
-				$scope.reservation.dateEnd = day.clone().hour(end.hour()).minute(end.minute());
+				var day = moment($scope.value.reservationDate);
+				var start = moment($scope.value.startTime);
+				var end = moment($scope.value.endTime);
+				$scope.reservation.dateStart = day.clone().hour(start.hour()).minute(start.minute()).startOf('minute');
+				$scope.reservation.dateEnd = day.clone().hour(end.hour()).minute(end.minute()).startOf('minute');
 				ReservationService.save($scope.reservation, function (data) {
 					NotificationService.notify("success", "Reservation enregistrée");
 					$location.path("reservations");

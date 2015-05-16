@@ -17,9 +17,11 @@ public interface ReservationRepository extends JpaRepository<ReservationEO, Inte
 
 	@Query("SELECT DISTINCT r "
 			+ " FROM ReservationEO r "
-			+ " JOIN FETCH r.user "
-			+ " JOIN FETCH r.machine ")
-	List<ReservationEO> findReservations(Specification<ReservationEO> specification);
+			+ " JOIN FETCH r.user u "
+			+ " JOIN FETCH r.machine m "
+			+ " JOIN FETCH m.machineType "
+			+ " WHERE r.dateEnd>=:from AND r.dateStart<=:to")
+	List<ReservationEO> findReservations(@Param("from")Date from, @Param("to")Date to);
 
 	@Query("DELETE FROM ReservationEO")
 	void removeAllReservations();

@@ -121,10 +121,12 @@ angular.module('Fablab').config(function ($translateProvider) {
 			user: 'User',
 			machine: 'Machine',
 			date: 'Date',
-			startTime: 'Heure de début',
-			endTime: 'Heure de fin',
+			from: 'From',
+			to: 'To',
+			hours:'Hours',
+			reservationForDay:'Reservation for {{date}}',
 			edit: {
-				title: "Réservation d'une machine"
+				title: "Book a machine"
 			}
 		},
 		payment: {

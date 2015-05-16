@@ -26,7 +26,7 @@ import lombok.ToString;
 @Table(name = "t_machine_type")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"priceList", "machineList"})
 public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializable{
 
 	@Id

@@ -6,11 +6,13 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label" translate="filter.from"></label>
 				<div class="col-sm-4">
-					<filter-date ng-model="criteria.dateFrom" />
+					<input type="date" class="form-control"
+						   ng-model="criteria.dateFrom"/>
 				</div>
 				<label class="col-sm-2 control-label" translate="filter.to"></label>
 				<div class="col-sm-4">
-					<filter-date ng-model="criteria.dateTo" />
+					<input type="date" class="form-control"
+						   ng-model="criteria.dateTo"/>
 				</div>
 			</div>
 		</form>
@@ -31,14 +33,14 @@
         <td 
 			data-title="'reservation.day' | translate" 
 			sortable="'dateStart'">
-			{{reservation.dateStart| formatTimestamp:'D MMMM YYYY'}}
+			{{reservation.dateStart| formatTimestamp:'DD/MM/YYYY'}}
 		</td>
         <td 
-			data-title="'reservation.startTime' | translate" >
+			data-title="'reservation.from' | translate" >
 			{{reservation.dateStart| formatTimestamp:'HH:mm'}}
 		</td>
         <td 
-			data-title="'reservation.endTime' | translate" >
+			data-title="'reservation.to' | translate" >
 			{{reservation.dateEnd| formatTimestamp:'HH:mm'}}
 		</td>
         <td 
