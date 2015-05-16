@@ -3,8 +3,8 @@
 
 	angular.module('Fablab', [
 		//ext-lib
-		'ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'ngToast', 'ui.bootstrap', 'btford.modal',
-		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha',
+		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
+		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select2', 'vcRecaptcha',
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
 	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
@@ -60,6 +60,7 @@
 		// HTTP Interceptor
 		$httpProvider.interceptors.push('httpInterceptor');
 		$translateProvider.preferredLanguage('en');
+		$translateProvider.useSanitizeValueStrategy('escaped');
 	}).run(function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService) {
 		App.interceptors.errorInterceptor.loaderService = LoaderService;
 		App.interceptors.errorInterceptor.notificationService = NotificationService;

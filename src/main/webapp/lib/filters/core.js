@@ -79,5 +79,11 @@
 			}
 		};
 	});
+	cmp.filter('highlight', function () {
+		return function (value, search) {
+			//TODO
+			return value;
+		};
+	});
 
 }());

@@ -9,12 +9,13 @@
 
 		<!-- build:css css/app-name.min.css -->
 		<!-- Bootstrap -->
-		<link href="./ext-lib/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
-		<link href="./ext-lib/fullcalendar-2.2.6/fullcalendar.min.css" rel="stylesheet">
+		<link href="./ext-lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="./ext-lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+		<link href="./ext-lib/ng-table/dist/ng-table.min.css" rel="stylesheet">
+		<link href="./ext-lib/ng-notify/dist/ng-notify.min.css" rel="stylesheet">
 
-		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
-		<link href="./ext-lib/angular-modules/ng-table-0.3.3/ng-table.min.css" rel="stylesheet">
-		<link href="./ext-lib/angular-modules/ui-select-0.9.6/select.min.css" rel="stylesheet">
+		<!--		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
+				<link href="./ext-lib/angular-modules/ui-select-0.9.6/select.min.css" rel="stylesheet">-->
 
 		<link href="./css/application.css" rel="stylesheet">
 
@@ -95,28 +96,31 @@
 
 	<!-- build:js js/app-name.min.js -->
 
-	<script src="./ext-lib/jquery-2.1.3/jquery-2.1.3.min.js"></script>
+	<script src="./ext-lib/jquery/dist/jquery.min.js"></script>
 
-	<script src="./ext-lib/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+	<script src="./ext-lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<script src="./ext-lib/angular-1.3.8/angular.min.js"></script>
-	<script src="./ext-lib/angular-1.3.8/angular-route.min.js"></script>
-	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
-	<script src="./ext-lib/angular-1.3.8/angular-resource.min.js"></script>
-	<script src="./ext-lib/angular-1.3.8/angular-sanitize.min.js"></script>
-	<script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>
+	<script src="./ext-lib/angular/angular.min.js"></script>
+	<script src="./ext-lib/angular-route/angular-route.min.js"></script>
+	<script src="./ext-lib/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="./ext-lib/angular-resource/angular-resource.min.js"></script>
+	<!--	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
+		<script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>-->
 
-	<script src="./ext-lib/moment-2.8.4/moment.js"></script>
-	<script src="./ext-lib/fullcalendar-2.2.6/fullcalendar.min.js"></script>
-	<script src="./ext-lib/fullcalendar-2.2.6/gcal.js"></script>
+	<script src="./ext-lib/moment/min/moment-with-locales.min.js"></script>
+	<script src="./ext-lib/fullcalendar/dist/fullcalendar.min.js"></script>
+	<script src="./ext-lib/fullcalendar/dist/gcal.js"></script>
 
-	<script src="./ext-lib/angular-modules/ui-bootstrap-tpls-0.12.0.min.js"></script>
-	<script src="./ext-lib/angular-modules/ng-toast/ngToast.min.js"></script>
-	<script src="./ext-lib/angular-modules/angular-translate-2.5.2/angular-translate.min.js"></script>
-	<script src="./ext-lib/angular-modules/ng-table-0.3.3/ng-table.min.js"></script>
-	<script src="./ext-lib/angular-modules/calendar/calendar.js"></script>
-	<script src="./ext-lib/angular-modules/ui-select-0.9.6/select.js"></script>
-	<script src="./ext-lib/angular-modules/angular-recaptcha/angular-recaptcha.min.js"></script>
+	<script src="./ext-lib/angular-recaptcha/release/angular-recaptcha.min.js"></script>
+	<script src="./ext-lib/angular-ui-calendar/calendar.min.js"></script>
+	<script src="./ext-lib/angular-translate/angular-translate.min.js"></script>
+	<script src="./ext-lib/ng-table/dist/ng-table.min.js"></script>
+	<script src="./ext-lib/ui-select/src/select3.js"></script>
+
+	<script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="./ext-lib/ng-notify/dist/ng-notify.min.js"></script>
+	<!--<script src="./ext-lib/angular-modules/ng-toast/ngToast.min.js"></script>-->
 
 	<script src="./app.js"></script>
 
@@ -143,7 +147,6 @@
 	<script src="./components/services/auth-service.js"></script>
 	<script src="./components/services/machine-service.js"></script>
 	<script src="./components/services/payment-service.js"></script>
-	<script src="./components/services/price-service.js"></script>
 	<script src="./components/services/reservation-service.js"></script>
 	<script src="./components/services/static-data-service.js"></script>
 	<script src="./components/services/user-service.js"></script>

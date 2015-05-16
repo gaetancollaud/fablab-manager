@@ -1,12 +1,12 @@
 package net.collaud.fablab.api.service.impl;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.LoginResult;
+import net.collaud.fablab.api.exceptions.FablabSecurityException;
 import net.collaud.fablab.api.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.api.service.SecurityService;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			.getLogger(SecurityServiceImpl.class);
 
 	@Autowired
-	private UserRepository userDao;
+	private UserRepository userRepository;
 
 	@Autowired
 	private AuthenticationProvider authManager;
@@ -47,7 +47,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 		if (id < 0) {
 			return Optional.empty();
 		}
-		return userDao.findOneByIdAndFetchRoles(id);
+		return userRepository.findOneByIdAndFetchRoles(id);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public Integer getCurrentUserId() {
 		SecurityContext context = SecurityContextHolder.getContext();
-		if (context == null) {
+		if (context == null || context.getAuthentication()==null) {
 			return -1;
 		}
 		return Integer.parseInt(context.getAuthentication().getName());
@@ -114,7 +114,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public boolean hasRoles(String roles) {
 		SecurityContext context = SecurityContextHolder.getContext();
-		if(context==null){
+		if(context==null || context.getAuthentication()==null){
 			return false;
 		}
 		for(GrantedAuthority authority :  context.getAuthentication().getAuthorities()){
@@ -128,7 +128,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public void checkRoles(String roles) {
 		if(!hasRoles(roles)){
-			throw new SecurityException("Current user has not roles "+roles);
+			throw new FablabSecurityException("Current user has not roles "+roles);
 		}
 	}
 

@@ -25,10 +25,6 @@
 				StaticDataService.loadMachines(function (data) {
 					$scope.machines = data;
 				});
-				StaticDataService.loadMachinePrice(function (data) {
-					marchinePrice = data;
-					updateTotalPrice();
-				});
 				var getMinutes = function () {
 					var time = moment($scope.addUsage.time);
 					return time.hours() * 60 + time.minutes();

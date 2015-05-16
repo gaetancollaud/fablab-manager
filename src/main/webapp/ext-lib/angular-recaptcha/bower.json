@@ -1,0 +1,16 @@
+{
+    "name": "angular-recaptcha",
+    "version": "2.2.3",
+    "keywords": ["angular", "captcha", "recaptcha", "vividcortex", "human", "form", "validation", "signup", "security", "login"],
+    "main": "release/angular-recaptcha.js",
+    "ignore": [
+        "**/.*",
+        "Gruntfile.js",
+        "src",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "angular": "1.*"
+    }
+}

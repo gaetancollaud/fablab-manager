@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('Fablab').service('StaticDataService', function (PriceService, UserService, GroupService,
+	angular.module('Fablab').service('StaticDataService', function (UserService, GroupService,
 			MachineService, PaymentService) {
 
 		//FIXME implement cache !

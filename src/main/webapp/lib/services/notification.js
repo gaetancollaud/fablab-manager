@@ -10,20 +10,26 @@ if (App.optLockFn == null) {
 	};
 }
 angular.module('Notification', [], function ($provide) {
-	$provide.factory('NotificationService', ['ngToast', '$translate', function (toaster, $translate) {
+	$provide.factory('NotificationService', ['ngNotify', '$translate', function (ngNotify, $translate) {
 			var notify = function (level, title, html) {
-				if (level !== 'success' && level !== 'warning' && level !== 'info') {
-					level = 'danger';
+				if (level !== 'success' && level !== 'warn' && level !== 'info') {
+					level = 'error';
 				}
-				var content = "<b>" + $translate.instant(title) + "</b><br/>";
+//				var content = "<b>" + $translate.instant(title) + "</b><br/>";
+				var content = $translate.instant(title);
 				if (html) {
 					content += html;
 				}
-				toaster.create({
-					class: level.toLowerCase(),
-					content: content,
-					compileContent: true,
+				ngNotify.set(content, {
+					type: level.toLowerCase(),
+					position: 'top'
 				});
+
+//				toaster.create({
+//					class: level.toLowerCase(),
+//					content: content,
+//					compileContent: true,
+//				});
 			};
 			return {
 				/**
@@ -35,13 +41,13 @@ angular.module('Notification', [], function ($provide) {
 				 */
 				notify: notify,
 				showAjaxErrorMessage: function (status) {
-					switch(status){
+					switch (status) {
 						case 403:
 							notify('ERROR', 'error.ajax.unauthorized');
 							break;
 						default:
 							notify('ERROR', 'error.ajax.global', status);
-						
+
 					}
 				},
 				showOptimisticLock: function (message, fn) {
@@ -62,7 +68,8 @@ angular.module('Notification', [], function ($provide) {
 
 				},
 				clear: function () {
-					toaster.clear();
+//					toaster.clear();
+					ngNotify.dismiss();
 				}
 			};
 		}]);
