@@ -43,12 +43,8 @@ public class MembershipTypeEO extends AbstractDataEO<Integer> implements Seriali
 	@Column(name = "price", nullable = false)
 	private Double price;
 
-	@JsonManagedReference
+	@JsonManagedReference("membershipType-pice")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
 	private Set<PriceMachineEO> priceList;
-
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
-	private List<UserEO> userList;
 
 }

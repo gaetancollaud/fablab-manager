@@ -2,7 +2,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 	$translateProvider.translations('en', {
 		auth: {
 			result: {
-				ok: 'Login correct',
+				ok: 'Bienvenue',
 				internal_error: 'Erreur interne'
 			},
 			pleaseSignIn: 'Veuillez vous connecter',

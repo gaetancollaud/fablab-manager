@@ -48,7 +48,7 @@ public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializab
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType", fetch = FetchType.LAZY)
 	private List<MachineEO> machineList;
 
-	@JsonManagedReference
+	@JsonManagedReference("machineType-price")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machineTypeEO", fetch = FetchType.LAZY)
 	private Set<PriceMachineEO> priceList;
 

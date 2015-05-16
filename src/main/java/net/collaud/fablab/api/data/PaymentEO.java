@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.data;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,6 +30,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -82,7 +82,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment) {
+	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
 		double hourPrice = machine.getMachineType().getPriceList().stream()
@@ -90,8 +90,15 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				.findFirst()
 				.map(pm -> pm.getPrice())
 				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
-		UsageEO usage = new UsageEO(0, startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
+		double amount = hourPrice*minutes/60+additionalCost;
+		UsageEO usage = new UsageEO(startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
 		usage = usageRepository.save(usage);
+		
+		if(paidDirectly){
+			//the user paid directly
+			addPayment(userId, startDate, amount, comment);
+		}
+		
 		return usage;
 	}
 

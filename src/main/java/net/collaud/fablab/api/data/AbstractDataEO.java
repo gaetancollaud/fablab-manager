@@ -26,6 +26,6 @@ abstract public class AbstractDataEO<ID> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(getId());
+		return getId().hashCode();
 	}
 }

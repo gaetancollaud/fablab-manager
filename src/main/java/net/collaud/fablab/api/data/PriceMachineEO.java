@@ -40,12 +40,12 @@ public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements 
 	@Column(name = "price", nullable = false)
 	private float price;
 
-	@JsonBackReference
+	@JsonBackReference("machineType-price")
 	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineTypeEO machineTypeEO;
 
-	@JsonBackReference
+	@JsonBackReference("membershipType-pice")
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;

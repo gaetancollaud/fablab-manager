@@ -36,7 +36,7 @@ public class PaymentWS {
 	public BaseModel addUsage(@RequestBody @Validated UsageEO usage) {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),
 				usage.getMachine().getId(), usage.getDateStart(), usage.getMinutes(),
-				usage.getAdditionalCost(), usage.getComment()));
+				usage.getAdditionalCost(), usage.getComment(), usage.isDirectPaid()));
 	}
 
 	@RequestMapping(value = "add_payment", method = RequestMethod.POST)

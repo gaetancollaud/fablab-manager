@@ -12,6 +12,7 @@ if (App.optLockFn == null) {
 angular.module('Notification', [], function ($provide) {
 	$provide.factory('NotificationService', ['ngNotify', '$translate', function (ngNotify, $translate) {
 			var notify = function (level, title, html) {
+				level = level.toLowerCase();
 				if (level !== 'success' && level !== 'warn' && level !== 'info') {
 					level = 'error';
 				}
@@ -21,7 +22,7 @@ angular.module('Notification', [], function ($provide) {
 					content += html;
 				}
 				ngNotify.set(content, {
-					type: level.toLowerCase(),
+					type: level,
 					position: 'top'
 				});
 

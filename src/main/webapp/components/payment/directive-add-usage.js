@@ -21,7 +21,6 @@
 				};
 				$scope.total = 0;
 				$scope.currency = App.CONFIG.CURRENCY;
-				var marchinePrice = [];
 				StaticDataService.loadMachines(function (data) {
 					$scope.machines = data;
 				});
@@ -32,10 +31,9 @@
 				var updateTotalPrice = function () {
 					if ($scope.addUsage.machine) {
 						var membershipTypeId = $scope.user.membershipType.id;
-						var machineTypeId = $scope.addUsage.machine.machineType.id;
 						$scope.addUsage.total = -1;
-						angular.forEach(marchinePrice, function (p) {
-							if (p.machineTypeId === machineTypeId && p.membershipTypeId === membershipTypeId) {
+						angular.forEach($scope.addUsage.machine.machineType.priceList, function (p) {
+							if (p.membershipTypeId === membershipTypeId) {
 								var add = $scope.addUsage.additionalCost;
 								var total = p.price * getMinutes() / 60 + add;
 								$scope.addUsage.total = parseFloat($filter('number')(total, 2));
@@ -58,6 +56,7 @@
 						minutes: getMinutes(),
 						additionalCost: $scope.addUsage.additionalCost,
 						comment: $scope.addUsage.comment,
+						directPaid : $scope.addUsage.directPaid
 					};
 					PaymentService.addUsage(data, function () {
 						NotificationService.notify("success", "payment.notification.usageAdded");

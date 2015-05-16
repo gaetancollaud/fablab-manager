@@ -5,7 +5,7 @@
 
 	cmp.filter('currency', function ($filter) {
 		return function (value) {
-			if (!value) {
+			if (value===undefined || value===null) {
 				return '-';
 			}
 			var round = $filter('number')(value, 2);

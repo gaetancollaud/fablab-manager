@@ -1,5 +1,7 @@
 package net.collaud.fablab.api.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MachineRepository;
@@ -26,7 +28,7 @@ public class MachineServiceImpl extends AbstractServiceImpl implements MachineSe
 	@Override
 	@Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
 	public List<MachineEO> findAll() {
-		return machineDao.findAll();
+		return new ArrayList(new HashSet(machineDao.findAll()));
 	}
 
 	@Override

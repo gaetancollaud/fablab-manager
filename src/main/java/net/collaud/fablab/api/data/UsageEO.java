@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,9 +68,24 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
+	
+	@Transient
+	@JsonProperty
+	private boolean directPaid;
 
 	public double getTotalPrice(){
 		return pricePerHour*minutes/60+additionalCost;
+	}
+
+	public UsageEO(Date dateStart, double pricePerHour, int minutes, double additionalCost, String comment, UserEO user, MachineEO machine, MembershipTypeEO membershipType) {
+		this.dateStart = dateStart;
+		this.pricePerHour = pricePerHour;
+		this.minutes = minutes;
+		this.additionalCost = additionalCost;
+		this.comment = comment;
+		this.user = user;
+		this.machine = machine;
+		this.membershipType = membershipType;
 	}
 	
 

@@ -24,7 +24,8 @@ public interface PaymentService {
 
 	PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
 
-	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment);
+	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes,
+			double additionalCost, String comment, boolean paidDirectly);
 
 	UserPaymentHistory getLastPaymentEntries(Integer userId);
 

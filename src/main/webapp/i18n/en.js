@@ -55,7 +55,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 		},
 		auth: {
 			result: {
-				ok: 'Login Successful',
+				ok: 'Welcome',
 				unknownUserPassword: 'Login and/or password incorrect'
 			},
 			pleaseSignIn: 'Please sign in',

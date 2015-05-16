@@ -12,7 +12,8 @@ public interface MachineRepository extends JpaRepository<MachineEO, Integer>{
 	
 	@Query("SELECT m "
 			+ " FROM MachineEO m"
-			+ " JOIN FETCH m.machineType mt "
-			+ " JOIN FETCH mt.priceList ")
+			+ " LEFT JOIN FETCH m.machineType mt "
+			+ " LEFT JOIN FETCH mt.priceList ")
+	@Override
 	List<MachineEO> findAll();
 }
