@@ -52,9 +52,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "user_id", nullable = false)
 	private Integer id;
 
-	@Column(name = "login", unique = true)
-	private String login;
-
 	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;

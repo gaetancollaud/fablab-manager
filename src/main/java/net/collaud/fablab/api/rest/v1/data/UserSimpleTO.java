@@ -15,7 +15,6 @@ import net.collaud.fablab.api.data.UserEO;
 public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 
 	private Integer id;
-	private String login;
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -30,7 +29,6 @@ public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 	@Override
 	public UserSimpleTO fromEO(UserEO eo) {
 		setId(eo.getId());
-		setLogin(eo.getLogin());
 		setFirstname(eo.getFirstname());
 		setLastname(eo.getLastname());
 		setEmail(eo.getEmail());

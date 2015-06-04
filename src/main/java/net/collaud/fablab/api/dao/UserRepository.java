@@ -34,7 +34,7 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
-			+ " WHERE u.login=:login OR u.email=:login")
+			+ " WHERE u.email=:login")
 	Optional<UserEO> findByLoginOrEmail(@Param("login") String login);
 	
 	@Override

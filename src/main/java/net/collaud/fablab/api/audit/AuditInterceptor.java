@@ -145,7 +145,7 @@ public class AuditInterceptor {
 	private String getReadableMessage(AuditAction action, UserEO user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("User ");
-		sb.append(user.getLogin());
+		sb.append(user.getEmail());
 		switch (action) {
 			case INSERT:
 				sb.append(" inserted : ");
@@ -189,7 +189,7 @@ public class AuditInterceptor {
 	private String getReadableMessageSubscription(AuditAction action, UserEO userEO) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("User ");
-		sb.append(userEO.getLogin());
+		sb.append(userEO.getEmail());
 		sb.append(" confirmed his subscription");
 		return sb.toString();
 	}
