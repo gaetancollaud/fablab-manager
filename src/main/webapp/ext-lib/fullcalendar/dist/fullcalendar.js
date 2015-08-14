@@ -1,5 +1,5 @@
 /*!
- * FullCalendar v2.3.2
+ * FullCalendar v2.3.1
  * Docs & License: http://fullcalendar.io/
  * (c) 2015 Adam Shaw
  */
@@ -18,7 +18,7 @@
 
 ;;
 
-var fc = $.fullCalendar = { version: "2.3.2" };
+var fc = $.fullCalendar = { version: "2.3.1" };
 var fcViews = fc.views = {};
 
 
@@ -45,7 +45,7 @@ $.fn.fullCalendar = function(options) {
 		}
 		// a new calendar initialization
 		else if (!calendar) { // don't initialize twice
-			calendar = new Calendar(element, options);
+			calendar = new fc.CalendarBase(element, options);
 			element.data('fullCalendar', calendar);
 			calendar.render();
 		}
@@ -63,9 +63,41 @@ var complexOptions = [ // names of options that are objects whose properties sho
 ];
 
 
-// Merges an array of option objects into a single object
-function mergeOptions(optionObjs) {
-	return mergeProps(optionObjs, complexOptions);
+// Recursively combines all passed-in option-hash arguments into a new single option-hash.
+// Given option-hashes are ordered from lowest to highest priority.
+function mergeOptions() {
+	var chain = Array.prototype.slice.call(arguments); // convert to a real array
+	var complexVals = {}; // hash for each complex option's combined values
+	var i, name;
+	var combinedVal;
+	var j;
+	var val;
+
+	// for each complex option, loop through each option-hash and accumulate the combined values
+	for (i = 0; i < complexOptions.length; i++) {
+		name = complexOptions[i];
+		combinedVal = null; // an object holding the merge of all the values
+
+		for (j = 0; j < chain.length; j++) {
+			val = chain[j][name];
+
+			if ($.isPlainObject(val)) {
+				combinedVal = $.extend(combinedVal || {}, val); // merge new properties
+			}
+			else if (val != null) { // a non-null non-undefined atomic option
+				combinedVal = null; // signal to use the atomic value
+			}
+		}
+
+		// if not null, the final value was a combination of other objects. record it
+		if (combinedVal !== null) {
+			complexVals[name] = combinedVal;
+		}
+	}
+
+	chain.unshift({}); // $.extend will mutate this with the result
+	chain.push(complexVals); // computed complex values are applied last
+	return $.extend.apply($, chain); // combine
 }
 
 
@@ -128,7 +160,6 @@ fc.isInt = isInt;
 fc.htmlEscape = htmlEscape;
 fc.cssToStr = cssToStr;
 fc.proxy = proxy;
-fc.capitaliseFirstLetter = capitaliseFirstLetter;
 
 
 /* FullCalendar-specific DOM Utilities
@@ -604,55 +635,6 @@ function isTimeString(str) {
 ----------------------------------------------------------------------------------------------------------------------*/
 
 var hasOwnPropMethod = {}.hasOwnProperty;
-
-
-// Merges an array of objects into a single object.
-// The second argument allows for an array of property names who's object values will be merged together.
-function mergeProps(propObjs, complexProps) {
-	var dest = {};
-	var i, name;
-	var complexObjs;
-	var j, val;
-	var props;
-
-	if (complexProps) {
-		for (i = 0; i < complexProps.length; i++) {
-			name = complexProps[i];
-			complexObjs = [];
-
-			// collect the trailing object values, stopping when a non-object is discovered
-			for (j = propObjs.length - 1; j >= 0; j--) {
-				val = propObjs[j][name];
-
-				if (typeof val === 'object') {
-					complexObjs.unshift(val);
-				}
-				else if (val !== undefined) {
-					dest[name] = val; // if there were no objects, this value will be used
-					break;
-				}
-			}
-
-			// if the trailing values were objects, use the merged value
-			if (complexObjs.length) {
-				dest[name] = mergeProps(complexObjs);
-			}
-		}
-	}
-
-	// copy values into the destination, going from last to first
-	for (i = propObjs.length - 1; i >= 0; i--) {
-		props = propObjs[i];
-
-		for (name in props) {
-			if (!(name in dest)) { // if already assigned by previous props or complex props, don't reassign
-				dest[name] = props[name];
-			}
-		}
-	}
-
-	return dest;
-}
 
 
 // Create an object that has the given prototype. Just like Object.create
@@ -1588,7 +1570,7 @@ Class.extend = function(members) {
 // adds new member variables/methods to the class's prototype.
 // can be called with another class, or a plain object hash containing new members.
 Class.mixin = function(members) {
-	copyOwnProps(members.prototype || members, this.prototype); // TODO: copyNativeMethods?
+	copyOwnProps(members.prototype || members, this.prototype);
 };
 ;;
 
@@ -1680,7 +1662,7 @@ var Popover = Class.extend({
 
 
 	// Hides and unregisters any handlers
-	removeElement: function() {
+	destroy: function() {
 		this.hide();
 
 		if (this.el) {
@@ -1792,7 +1774,6 @@ var GridCoordMap = Class.extend({
 
 	// Queries the grid for the coordinates of all the cells
 	build: function() {
-		this.grid.build();
 		this.rowCoords = this.grid.computeRowCoords();
 		this.colCoords = this.grid.computeColCoords();
 		this.computeBounds();
@@ -1801,7 +1782,6 @@ var GridCoordMap = Class.extend({
 
 	// Clears the coordinates data to free up memory
 	clear: function() {
-		this.grid.clear();
 		this.rowCoords = null;
 		this.colCoords = null;
 	},
@@ -2569,7 +2549,7 @@ var MouseFollower = Class.extend({
 
 		function complete() {
 			this.isAnimating = false;
-			_this.removeElement();
+			_this.destroyEl();
 
 			this.top0 = this.left0 = null; // reset state for future updatePosition calls
 
@@ -2627,7 +2607,7 @@ var MouseFollower = Class.extend({
 
 
 	// Removes the tracking element if it has already been created
-	removeElement: function() {
+	destroyEl: function() {
 		if (this.el) {
 			this.el.remove();
 			this.el = null;
@@ -2807,6 +2787,8 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 	rowCnt: 0, // number of rows
 	colCnt: 0, // number of cols
+	rowData: null, // array of objects, holding misc data for each row
+	colData: null, // array of objects, holding misc data for each column
 
 	el: null, // the containing element
 	coordMap: null, // a GridCoordMap that converts pixel values to datetimes
@@ -2872,27 +2854,18 @@ var Grid = fc.Grid = RowRenderer.extend({
 	------------------------------------------------------------------------------------------------------------------*/
 
 
-	// Tells the grid about what period of time to display.
-	// Any date-related cell system internal data should be generated.
+	// Tells the grid about what period of time to display. Grid will subsequently compute dates for cell system.
 	setRange: function(range) {
-		this.start = range.start.clone();
-		this.end = range.end.clone();
-
-		this.rangeUpdated();
-		this.processRangeOptions();
-	},
-
-
-	// Called when internal variables that rely on the range should be updated
-	rangeUpdated: function() {
-	},
-
-
-	// Updates values that rely on options and also relate to range
-	processRangeOptions: function() {
 		var view = this.view;
 		var displayEventTime;
 		var displayEventEnd;
+
+		this.start = range.start.clone();
+		this.end = range.end.clone();
+
+		this.rowData = [];
+		this.colData = [];
+		this.updateCells();
 
 		// Populate option-derived settings. Look for override first, then compute if necessary.
 		this.colHeadFormat = view.opt('columnFormat') || this.computeColHeadFormat();
@@ -2917,15 +2890,9 @@ var Grid = fc.Grid = RowRenderer.extend({
 	},
 
 
-	// Called before the grid's coordinates will need to be queried for cells.
-	// Any non-date-related cell system internal data should be built.
-	build: function() {
-	},
-
-
-	// Called after the grid's coordinates are done being relied upon.
-	// Any non-date-related cell system internal data should be cleared.
-	clear: function() {
+	// Responsible for setting rowCnt/colCnt and any other row/col data
+	updateCells: function() {
+		// subclasses must implement
 	},
 
 
@@ -2997,13 +2964,13 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 	// Retrieves misc data about the given row
 	getRowData: function(row) {
-		return {};
+		return this.rowData[row] || {};
 	},
 
 
 	// Retrieves misc data baout the given column
 	getColData: function(col) {
-		return {};
+		return this.colData[col] || {};
 	},
 
 
@@ -3100,7 +3067,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 
 	// Removes the grid's container element from the DOM. Undoes any other DOM-related attachments.
-	// DOES NOT remove any content beforehand (doesn't clear events or call unrenderDates), unlike View
+	// DOES NOT remove any content before hand (doens't clear events or call destroyDates), unlike View
 	removeElement: function() {
 		this.unbindGlobalHandlers();
 
@@ -3124,7 +3091,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 
 	// Unrenders the grid's date-related content
-	unrenderDates: function() {
+	destroyDates: function() {
 		// subclasses should implement
 	},
 
@@ -3179,12 +3146,12 @@ var Grid = fc.Grid = RowRenderer.extend({
 			cellOut: function(cell) {
 				dayClickCell = null;
 				selectionRange = null;
-				_this.unrenderSelection();
+				_this.destroySelection();
 				enableCursor();
 			},
 			listenStop: function(ev) {
 				if (dayClickCell) {
-					view.triggerDayClick(dayClickCell, _this.getCellDayEl(dayClickCell), ev);
+					view.trigger('dayClick', _this.getCellDayEl(dayClickCell), dayClickCell.start, ev);
 				}
 				if (selectionRange) {
 					// the selection will already have been rendered. just report it
@@ -3241,7 +3208,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 
 	// Unrenders a mock event
-	unrenderHelper: function() {
+	destroyHelper: function() {
 		// subclasses must implement
 	},
 
@@ -3252,13 +3219,13 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 	// Renders a visual indication of a selection. Will highlight by default but can be overridden by subclasses.
 	renderSelection: function(range) {
-		this.renderHighlight(this.selectionRangeToSegs(range));
+		this.renderHighlight(range);
 	},
 
 
 	// Unrenders any visual indications of a selection. Will unrender a highlight by default.
-	unrenderSelection: function() {
-		this.unrenderHighlight();
+	destroySelection: function() {
+		this.destroyHighlight();
 	},
 
 
@@ -3289,24 +3256,19 @@ var Grid = fc.Grid = RowRenderer.extend({
 	},
 
 
-	selectionRangeToSegs: function(range) {
-		return this.rangeToSegs(range);
-	},
-
-
 	/* Highlight
 	------------------------------------------------------------------------------------------------------------------*/
 
 
-	// Renders an emphasis on the given date range. Given an array of segments.
-	renderHighlight: function(segs) {
-		this.renderFill('highlight', segs);
+	// Renders an emphasis on the given date range. `start` is inclusive. `end` is exclusive.
+	renderHighlight: function(range) {
+		this.renderFill('highlight', this.rangeToSegs(range));
 	},
 
 
 	// Unrenders the emphasis on a date range
-	unrenderHighlight: function() {
-		this.unrenderFill('highlight');
+	destroyHighlight: function() {
+		this.destroyFill('highlight');
 	},
 
 
@@ -3321,7 +3283,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 
 	// Renders a set of rectangles over the given segments of time.
-	// MUST RETURN a subset of segs, the segs that were actually rendered.
+	// Returns a subset of segs, the segs that were actually rendered.
 	// Responsible for populating this.elsByFill. TODO: better API for expressing this requirement
 	renderFill: function(type, segs) {
 		// subclasses must implement
@@ -3329,7 +3291,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 
 	// Unrenders a specific type of fill that is currently rendered on the grid
-	unrenderFill: function(type) {
+	destroyFill: function(type) {
 		var el = this.elsByFill[type];
 
 		if (el) {
@@ -3522,11 +3484,11 @@ Grid.mixin({
 
 
 	// Unrenders all events currently rendered on the grid
-	unrenderEvents: function() {
+	destroyEvents: function() {
 		this.triggerSegMouseout(); // trigger an eventMouseout if user's mouse is over an event
 
-		this.unrenderFgSegs();
-		this.unrenderBgSegs();
+		this.destroyFgSegs();
+		this.destroyBgSegs();
 
 		this.segs = null;
 	},
@@ -3549,7 +3511,7 @@ Grid.mixin({
 
 
 	// Unrenders all currently rendered foreground segments
-	unrenderFgSegs: function() {
+	destroyFgSegs: function() {
 		// subclasses must implement
 	},
 
@@ -3606,8 +3568,8 @@ Grid.mixin({
 
 
 	// Unrenders all the currently rendered background event segments
-	unrenderBgSegs: function() {
-		this.unrenderFill('bgEvent');
+	destroyBgSegs: function() {
+		this.destroyFill('bgEvent');
 	},
 
 
@@ -3787,7 +3749,7 @@ Grid.mixin({
 				}
 			},
 			cellOut: function() { // called before mouse moves to a different cell OR moved out of all cells
-				view.unrenderDrag(); // unrender whatever was done in renderDrag
+				view.destroyDrag(); // unrender whatever was done in renderDrag
 				mouseFollower.show(); // show in case we are moving out of all cells
 				dropLocation = null;
 			},
@@ -3797,7 +3759,7 @@ Grid.mixin({
 			dragStop: function(ev) {
 				// do revert animation if hasn't changed. calls a callback when finished (whether animation or not)
 				mouseFollower.stop(!dropLocation, function() {
-					view.unrenderDrag();
+					view.destroyDrag();
 					view.showEvent(event);
 					_this.segDragStop(seg, ev);
 
@@ -3941,11 +3903,11 @@ Grid.mixin({
 			},
 			cellOut: function() {
 				dropLocation = null; // signal unsuccessful
-				_this.unrenderDrag();
+				_this.destroyDrag();
 				enableCursor();
 			},
 			dragStop: function() {
-				_this.unrenderDrag();
+				_this.destroyDrag();
 				enableCursor();
 
 				if (dropLocation) { // element was dropped on a valid date/time cell
@@ -4002,7 +3964,7 @@ Grid.mixin({
 
 
 	// Unrenders a visual indication of an event or external element being dragged
-	unrenderDrag: function() {
+	destroyDrag: function() {
 		// subclasses must implement
 	},
 
@@ -4057,7 +4019,7 @@ Grid.mixin({
 				resizeLocation = null;
 			},
 			cellDone: function() { // resets the rendering to show the original event
-				_this.unrenderEventResize();
+				_this.destroyEventResize();
 				view.showEvent(event);
 				enableCursor();
 			},
@@ -4156,7 +4118,7 @@ Grid.mixin({
 
 
 	// Unrenders a visual indication of an event being resized.
-	unrenderEventResize: function() {
+	destroyEventResize: function() {
 		// subclasses must implement
 	},
 
@@ -4372,8 +4334,6 @@ Grid.mixin({
 		var segs;
 		var i, seg;
 
-		eventRange = this.view.calendar.ensureVisibleEventRange(eventRange);
-
 		if (rangeToSegsFunc) {
 			segs = rangeToSegsFunc(eventRange);
 		}
@@ -4553,8 +4513,8 @@ var DayGrid = Grid.extend({
 	},
 
 
-	unrenderDates: function() {
-		this.removeSegPopover();
+	destroyDates: function() {
+		this.destroySegPopover();
 	},
 
 
@@ -4638,7 +4598,8 @@ var DayGrid = Grid.extend({
 	------------------------------------------------------------------------------------------------------------------*/
 
 
-	rangeUpdated: function() {
+	// Initializes row/col information
+	updateCells: function() {
 		var cellDates;
 		var firstDay;
 		var rowCnt;
@@ -4821,7 +4782,9 @@ var DayGrid = Grid.extend({
 	renderDrag: function(dropLocation, seg) {
 
 		// always render a highlight underneath
-		this.renderHighlight(this.eventRangeToSegs(dropLocation));
+		this.renderHighlight(
+			this.view.calendar.ensureVisibleEventRange(dropLocation) // needs to be a proper range
+		);
 
 		// if a segment from the same calendar but another component is being dragged, render a helper event
 		if (seg && !seg.el.closest(this.el).length) {
@@ -4835,9 +4798,9 @@ var DayGrid = Grid.extend({
 
 
 	// Unrenders any visual indication of a hovering event
-	unrenderDrag: function() {
-		this.unrenderHighlight();
-		this.unrenderHelper();
+	destroyDrag: function() {
+		this.destroyHighlight();
+		this.destroyHelper();
 	},
 
 
@@ -4847,15 +4810,15 @@ var DayGrid = Grid.extend({
 
 	// Renders a visual indication of an event being resized
 	renderEventResize: function(range, seg) {
-		this.renderHighlight(this.eventRangeToSegs(range));
+		this.renderHighlight(range);
 		this.renderRangeHelper(range, seg);
 	},
 
 
 	// Unrenders a visual indication of an event being resized
-	unrenderEventResize: function() {
-		this.unrenderHighlight();
-		this.unrenderHelper();
+	destroyEventResize: function() {
+		this.destroyHighlight();
+		this.destroyHelper();
 	},
 
 
@@ -4899,7 +4862,7 @@ var DayGrid = Grid.extend({
 
 
 	// Unrenders any visual indication of a mock helper event
-	unrenderHelper: function() {
+	destroyHelper: function() {
 		if (this.helperEls) {
 			this.helperEls.remove();
 			this.helperEls = null;
@@ -4983,9 +4946,9 @@ DayGrid.mixin({
 
 
 	// Unrenders all events currently rendered on the grid
-	unrenderEvents: function() {
-		this.removeSegPopover(); // removes the "more.." events popover
-		Grid.prototype.unrenderEvents.apply(this, arguments); // calls the super-method
+	destroyEvents: function() {
+		this.destroySegPopover(); // removes the "more.." events popover
+		Grid.prototype.destroyEvents.apply(this, arguments); // calls the super-method
 	},
 
 
@@ -5030,7 +4993,7 @@ DayGrid.mixin({
 
 
 	// Unrenders all currently rendered foreground event segments
-	unrenderFgSegs: function() {
+	destroyFgSegs: function() {
 		var rowStructs = this.rowStructs || [];
 		var rowStruct;
 
@@ -5302,9 +5265,9 @@ DayGrid.mixin({
 	popoverSegs: null, // an array of segment objects that the segPopover holds. null when not visible
 
 
-	removeSegPopover: function() {
+	destroySegPopover: function() {
 		if (this.segPopover) {
-			this.segPopover.hide(); // in handler, will call segPopover's removeElement
+			this.segPopover.hide(); // will trigger destruction of `segPopover` and `popoverSegs`
 		}
 	},
 
@@ -5539,8 +5502,8 @@ DayGrid.mixin({
 			autoHide: true, // when the user clicks elsewhere, hide the popover
 			viewportConstrain: view.opt('popoverViewportConstrain'),
 			hide: function() {
-				// kill everything when the popover is hidden
-				_this.segPopover.removeElement();
+				// destroy everything when the popover is hidden
+				_this.segPopover.destroy();
 				_this.segPopover = null;
 				_this.popoverSegs = null;
 			}
@@ -5670,9 +5633,10 @@ var TimeGrid = Grid.extend({
 
 	slotDuration: null, // duration of a "slot", a distinct time segment on given day, visualized by lines
 	snapDuration: null, // granularity of time for dragging and selecting
+
 	minTime: null, // Duration object that denotes the first visible time of any given day
 	maxTime: null, // Duration object that denotes the exclusive visible end time of any given day
-	colDates: null, // whole-day dates for each column. left to right
+
 	axisFormat: null, // formatting string for times running along vertical axis
 
 	dayEls: null, // cells elements in the day-row background
@@ -5820,37 +5784,36 @@ var TimeGrid = Grid.extend({
 	------------------------------------------------------------------------------------------------------------------*/
 
 
-	rangeUpdated: function() {
+	// Initializes row/col information
+	updateCells: function() {
 		var view = this.view;
-		var colDates = [];
+		var colData = [];
 		var date;
 
 		date = this.start.clone();
 		while (date.isBefore(this.end)) {
-			colDates.push(date.clone());
+			colData.push({
+				day: date.clone()
+			});
 			date.add(1, 'day');
 			date = view.skipHiddenDays(date);
 		}
 
 		if (this.isRTL) {
-			colDates.reverse();
+			colData.reverse();
 		}
 
-		this.colDates = colDates;
-		this.colCnt = colDates.length;
+		this.colData = colData;
+		this.colCnt = colData.length;
 		this.rowCnt = Math.ceil((this.maxTime - this.minTime) / this.snapDuration); // # of vertical snaps
 	},
 
 
 	// Given a cell object, generates its start date. Returns a reference-free copy.
 	computeCellDate: function(cell) {
-		var date = this.colDates[cell.col];
 		var time = this.computeSnapTime(cell.row);
 
-		date = this.view.calendar.rezoneDate(date); // give it a 00:00 time
-		date.time(time);
-
-		return date;
+		return this.view.calendar.rezoneDate(cell.day).time(time);
 	},
 
 
@@ -5886,7 +5849,7 @@ var TimeGrid = Grid.extend({
 		};
 
 		for (col = 0; col < colCnt; col++) {
-			colDate = this.colDates[col]; // will be ambig time/timezone
+			colDate = this.colData[col].day; // will be ambig time/timezone
 			colRange = {
 				start: colDate.clone().time(this.minTime),
 				end: colDate.clone().time(this.maxTime)
@@ -6008,15 +5971,17 @@ var TimeGrid = Grid.extend({
 		}
 		else {
 			// otherwise, just render a highlight
-			this.renderHighlight(this.eventRangeToSegs(dropLocation));
+			this.renderHighlight(
+				this.view.calendar.ensureVisibleEventRange(dropLocation) // needs to be a proper range
+			);
 		}
 	},
 
 
 	// Unrenders any visual indication of an event being dragged
-	unrenderDrag: function() {
-		this.unrenderHelper();
-		this.unrenderHighlight();
+	destroyDrag: function() {
+		this.destroyHelper();
+		this.destroyHighlight();
 	},
 
 
@@ -6031,8 +5996,8 @@ var TimeGrid = Grid.extend({
 
 
 	// Unrenders any visual indication of an event being resized
-	unrenderEventResize: function() {
-		this.unrenderHelper();
+	destroyEventResize: function() {
+		this.destroyHelper();
 	},
 
 
@@ -6071,7 +6036,7 @@ var TimeGrid = Grid.extend({
 
 
 	// Unrenders any mock helper event
-	unrenderHelper: function() {
+	destroyHelper: function() {
 		if (this.helperEl) {
 			this.helperEl.remove();
 			this.helperEl = null;
@@ -6089,15 +6054,15 @@ var TimeGrid = Grid.extend({
 			this.renderRangeHelper(range);
 		}
 		else {
-			this.renderHighlight(this.selectionRangeToSegs(range));
+			this.renderHighlight(range);
 		}
 	},
 
 
 	// Unrenders any visual indication of a selection
-	unrenderSelection: function() {
-		this.unrenderHelper();
-		this.unrenderHighlight();
+	destroySelection: function() {
+		this.destroyHelper();
+		this.destroyHighlight();
 	},
 
 
@@ -6136,7 +6101,7 @@ var TimeGrid = Grid.extend({
 
 				if (colSegs.length) {
 					containerEl = $('<div class="fc-' + className + '-container"/>').appendTo(tdEl);
-					dayDate = this.colDates[col];
+					dayDate = this.colData[col].day;
 
 					for (i = 0; i < colSegs.length; i++) {
 						seg = colSegs[i];
@@ -6185,7 +6150,7 @@ TimeGrid.mixin({
 
 
 	// Unrenders all currently rendered foreground event segments
-	unrenderFgSegs: function(segs) {
+	destroyFgSegs: function(segs) {
 		if (this.eventSkeletonEl) {
 			this.eventSkeletonEl.remove();
 			this.eventSkeletonEl = null;
@@ -6592,7 +6557,7 @@ var View = fc.View = Class.extend({
 	coordMap: null, // a CoordMap object for converting pixel regions to dates
 	el: null, // the view's containing element. set by Calendar
 
-	displaying: null, // a promise representing the state of rendering. null if no render requested
+	isDisplayed: false,
 	isSkeletonRendered: false,
 	isEventsRendered: false,
 
@@ -6607,7 +6572,6 @@ var View = fc.View = Class.extend({
 	intervalDuration: null,
 	intervalUnit: null, // name of largest unit being displayed, like "month" or "week"
 
-	isRTL: false,
 	isSelected: false, // boolean whether a range of time is user-selected or not
 
 	// subclasses can optionally use a scroll container
@@ -6637,7 +6601,6 @@ var View = fc.View = Class.extend({
 		this.nextDayThreshold = moment.duration(this.opt('nextDayThreshold'));
 		this.initThemingProps();
 		this.initHiddenDays();
-		this.isRTL = this.opt('isRTL');
 
 		this.documentMousedownProxy = proxy(this, 'documentMousedown');
 
@@ -6827,7 +6790,7 @@ var View = fc.View = Class.extend({
 
 		// clean up the skeleton
 		if (this.isSkeletonRendered) {
-			this.unrenderSkeleton();
+			this.destroySkeleton();
 			this.isSkeletonRendered = false;
 		}
 
@@ -6836,83 +6799,62 @@ var View = fc.View = Class.extend({
 		this.el.remove();
 
 		// NOTE: don't null-out this.el in case the View was destroyed within an API callback.
-		// We don't null-out the View's other jQuery element references upon destroy,
-		//  so we shouldn't kill this.el either.
+		// We don't null-out the View's other jQuery element references upon destroy, so why should we kill this.el?
 	},
 
 
 	// Does everything necessary to display the view centered around the given date.
 	// Does every type of rendering EXCEPT rendering events.
-	// Is asychronous and returns a promise.
 	display: function(date) {
-		var _this = this;
 		var scrollState = null;
 
-		if (this.displaying) {
+		if (this.isDisplayed) {
 			scrollState = this.queryScroll();
 		}
 
-		return this.clear().then(function() { // clear the content first (async)
-			return (
-				_this.displaying =
-					$.when(_this.displayView(date)) // displayView might return a promise
-						.then(function() {
-							_this.forceScroll(_this.computeInitialScroll(scrollState));
-							_this.triggerRender();
-						})
-			);
-		});
+		this.clear(); // clear the old content
+		this.setDate(date);
+		this.render();
+		this.updateSize();
+		this.renderBusinessHours(); // might need coordinates, so should go after updateSize()
+		this.isDisplayed = true;
+
+		scrollState = this.computeInitialScroll(scrollState);
+		this.forceScroll(scrollState);
+
+		this.triggerRender();
 	},
 
 
 	// Does everything necessary to clear the content of the view.
 	// Clears dates and events. Does not clear the skeleton.
-	// Is asychronous and returns a promise.
-	clear: function() {
-		var _this = this;
-		var displaying = this.displaying;
-
-		if (displaying) { // previously displayed, or in the process of being displayed?
-			return displaying.then(function() { // wait for the display to finish
-				_this.displaying = null;
-				_this.clearEvents();
-				return _this.clearView(); // might return a promise. chain it
-			});
-		}
-		else {
-			return $.when(); // an immediately-resolved promise
+	clear: function() { // clears the view of *content* but not the skeleton
+		if (this.isDisplayed) {
+			this.unselect();
+			this.clearEvents();
+			this.triggerDestroy();
+			this.destroyBusinessHours();
+			this.destroy();
+			this.isDisplayed = false;
 		}
 	},
 
 
-	// Displays the view's non-event content, such as date-related content or anything required by events.
-	// Renders the view's non-content skeleton if necessary.
-	// Can be asynchronous and return a promise.
-	displayView: function(date) {
+	// Renders the view's date-related content, rendering the view's non-content skeleton if necessary
+	render: function() {
 		if (!this.isSkeletonRendered) {
 			this.renderSkeleton();
 			this.isSkeletonRendered = true;
 		}
-		this.setDate(date);
-		if (this.render) {
-			this.render(); // TODO: deprecate
-		}
 		this.renderDates();
-		this.updateSize();
-		this.renderBusinessHours(); // might need coordinates, so should go after updateSize()
 	},
 
 
-	// Unrenders the view content that was rendered in displayView.
-	// Can be asynchronous and return a promise.
-	clearView: function() {
-		this.unselect();
-		this.triggerUnrender();
-		this.unrenderBusinessHours();
-		this.unrenderDates();
-		if (this.destroy) {
-			this.destroy(); // TODO: deprecate
-		}
+	// Unrenders the view's date-related content.
+	// Call this instead of destroyDates directly in case the View subclass wants to use a render/destroy pattern
+	// where both the skeleton and the content always get rendered/unrendered together.
+	destroy: function() {
+		this.destroyDates();
 	},
 
 
@@ -6923,7 +6865,7 @@ var View = fc.View = Class.extend({
 
 
 	// Unrenders the basic structure of the view
-	unrenderSkeleton: function() {
+	destroySkeleton: function() {
 		// subclasses should implement
 	},
 
@@ -6936,7 +6878,7 @@ var View = fc.View = Class.extend({
 
 
 	// Unrenders the view's date-related content
-	unrenderDates: function() {
+	destroyDates: function() {
 		// subclasses should override
 	},
 
@@ -6948,7 +6890,7 @@ var View = fc.View = Class.extend({
 
 
 	// Unrenders previously-rendered business-hours
-	unrenderBusinessHours: function() {
+	destroyBusinessHours: function() {
 		// subclasses should implement
 	},
 
@@ -6960,7 +6902,7 @@ var View = fc.View = Class.extend({
 
 
 	// Signals that the view's content is about to be unrendered
-	triggerUnrender: function() {
+	triggerDestroy: function() {
 		this.trigger('viewDestroy', this, this, this.el);
 	},
 
@@ -6999,8 +6941,8 @@ var View = fc.View = Class.extend({
 			scrollState = this.queryScroll();
 		}
 
-		this.updateHeight(isResize);
-		this.updateWidth(isResize);
+		this.updateHeight();
+		this.updateWidth();
 
 		if (isResize) {
 			this.setScroll(scrollState);
@@ -7009,13 +6951,13 @@ var View = fc.View = Class.extend({
 
 
 	// Refreshes the horizontal dimensions of the calendar
-	updateWidth: function(isResize) {
+	updateWidth: function() {
 		// subclasses should implement
 	},
 
 
 	// Refreshes the vertical dimensions of the calendar
-	updateHeight: function(isResize) {
+	updateHeight: function() {
 		var calendar = this.calendar; // we poll the calendar for height information
 
 		this.setHeight(
@@ -7110,11 +7052,8 @@ var View = fc.View = Class.extend({
 	// Does everything necessary to clear the view's currently-rendered events
 	clearEvents: function() {
 		if (this.isEventsRendered) {
-			this.triggerEventUnrender();
-			if (this.destroyEvents) {
-				this.destroyEvents(); // TODO: deprecate
-			}
-			this.unrenderEvents();
+			this.triggerEventDestroy();
+			this.destroyEvents();
 			this.isEventsRendered = false;
 		}
 	},
@@ -7127,7 +7066,7 @@ var View = fc.View = Class.extend({
 
 
 	// Removes event elements from the view.
-	unrenderEvents: function() {
+	destroyEvents: function() {
 		// subclasses should implement
 	},
 
@@ -7142,7 +7081,7 @@ var View = fc.View = Class.extend({
 
 
 	// Signals that all event elements are about to be removed
-	triggerEventUnrender: function() {
+	triggerEventDestroy: function() {
 		this.renderedEventSegEach(function(seg) {
 			this.trigger('eventDestroy', seg.event, seg.event, seg.el);
 		});
@@ -7291,7 +7230,7 @@ var View = fc.View = Class.extend({
 
 
 	// Unrenders a visual indication of an event or external-element being dragged.
-	unrenderDrag: function() {
+	destroyDrag: function() {
 		// subclasses must implement
 	},
 
@@ -7369,12 +7308,6 @@ var View = fc.View = Class.extend({
 	// Called when a new selection is made. Updates internal state and triggers handlers.
 	reportSelection: function(range, ev) {
 		this.isSelected = true;
-		this.triggerSelect(range, ev);
-	},
-
-
-	// Triggers handlers to 'select'
-	triggerSelect: function(range, ev) {
 		this.trigger('select', null, range.start, range.end, ev);
 	},
 
@@ -7384,17 +7317,14 @@ var View = fc.View = Class.extend({
 	unselect: function(ev) {
 		if (this.isSelected) {
 			this.isSelected = false;
-			if (this.destroySelection) {
-				this.destroySelection(); // TODO: deprecate
-			}
-			this.unrenderSelection();
+			this.destroySelection();
 			this.trigger('unselect', null, ev);
 		}
 	},
 
 
 	// Unrenders a visual indication of selection
-	unrenderSelection: function() {
+	destroySelection: function() {
 		// subclasses should implement
 	},
 
@@ -7412,16 +7342,6 @@ var View = fc.View = Class.extend({
 				this.unselect(ev);
 			}
 		}
-	},
-
-
-	/* Day Click
-	------------------------------------------------------------------------------------------------------------------*/
-
-
-	// Triggers handlers to 'dayClick'
-	triggerDayClick: function(cell, dayEl, ev) {
-		this.trigger('dayClick', dayEl, cell.start, ev);
 	},
 
 
@@ -7523,7 +7443,7 @@ var View = fc.View = Class.extend({
 
 ;;
 
-var Calendar = fc.Calendar = Class.extend({
+var Calendar = fc.Calendar = fc.CalendarBase = Class.extend({
 
 	dirDefaults: null, // option defaults related to LTR or RTL
 	langDefaults: null, // option defaults related to current locale
@@ -7532,17 +7452,11 @@ var Calendar = fc.Calendar = Class.extend({
 	viewSpecCache: null, // cache of view definitions
 	view: null, // current View object
 	header: null,
-	loadingLevel: 0, // number of simultaneous loading tasks
 
 
 	// a lot of this class' OOP logic is scoped within this constructor function,
 	// but in the future, write individual methods on the prototype.
 	constructor: Calendar_constructor,
-
-
-	// Subclasses can override this for initialization logic after the constructor has been called
-	initialize: function() {
-	},
 
 
 	// Initializes `this.options` and other important options-related objects
@@ -7571,12 +7485,12 @@ var Calendar = fc.Calendar = Class.extend({
 		this.dirDefaults = dirDefaults;
 		this.langDefaults = langDefaults;
 		this.overrides = overrides;
-		this.options = mergeOptions([ // merge defaults and overrides. lowest to highest precedence
+		this.options = mergeOptions( // merge defaults and overrides. lowest to highest precedence
 			Calendar.defaults, // global defaults
 			dirDefaults,
 			langDefaults,
 			overrides
-		]);
+		);
 		populateInstanceComputableOptions(this.options);
 
 		this.viewSpecCache = {}; // somewhat unrelated
@@ -7621,48 +7535,43 @@ var Calendar = fc.Calendar = Class.extend({
 	// Builds an object with information on how to create a given view
 	buildViewSpec: function(requestedViewType) {
 		var viewOverrides = this.overrides.views || {};
-		var specChain = []; // for the view. lowest to highest priority
 		var defaultsChain = []; // for the view. lowest to highest priority
 		var overridesChain = []; // for the view. lowest to highest priority
 		var viewType = requestedViewType;
-		var spec; // for the view
+		var viewClass;
+		var defaults; // for the view
 		var overrides; // for the view
 		var duration;
 		var unit;
+		var spec;
 
 		// iterate from the specific view definition to a more general one until we hit an actual View class
-		while (viewType) {
-			spec = fcViews[viewType];
-			overrides = viewOverrides[viewType];
-			viewType = null; // clear. might repopulate for another iteration
+		while (viewType && !viewClass) {
+			defaults = fcViews[viewType] || {};
+			overrides = viewOverrides[viewType] || {};
+			duration = duration || overrides.duration || defaults.duration;
+			viewType = overrides.type || defaults.type; // for next iteration
 
-			if (typeof spec === 'function') { // TODO: deprecate
-				spec = { 'class': spec };
+			if (typeof defaults === 'function') { // a class
+				viewClass = defaults;
+				defaultsChain.unshift(viewClass.defaults || {});
 			}
-
-			if (spec) {
-				specChain.unshift(spec);
-				defaultsChain.unshift(spec.defaults || {});
-				duration = duration || spec.duration;
-				viewType = viewType || spec.type;
+			else { // an options object
+				defaultsChain.unshift(defaults);
 			}
-
-			if (overrides) {
-				overridesChain.unshift(overrides); // view-specific option hashes have options at zero-level
-				duration = duration || overrides.duration;
-				viewType = viewType || overrides.type;
-			}
+			overridesChain.unshift(overrides);
 		}
 
-		spec = mergeProps(specChain);
-		spec.type = requestedViewType;
-		if (!spec['class']) {
-			return false;
-		}
+		if (viewClass) {
+			spec = { 'class': viewClass, type: requestedViewType };
 
-		if (duration) {
-			duration = moment.duration(duration);
-			if (duration.valueOf()) { // valid?
+			if (duration) {
+				duration = moment.duration(duration);
+				if (!duration.valueOf()) { // invalid?
+					duration = null;
+				}
+			}
+			if (duration) {
 				spec.duration = duration;
 				unit = computeIntervalUnit(duration);
 
@@ -7673,28 +7582,29 @@ var Calendar = fc.Calendar = Class.extend({
 					overridesChain.unshift(viewOverrides[unit] || {});
 				}
 			}
+
+			// collapse into single objects
+			spec.defaults = mergeOptions.apply(null, defaultsChain);
+			spec.overrides = mergeOptions.apply(null, overridesChain);
+
+			this.buildViewSpecOptions(spec);
+			this.buildViewSpecButtonText(spec, requestedViewType);
+
+			return spec;
 		}
-
-		spec.defaults = mergeOptions(defaultsChain);
-		spec.overrides = mergeOptions(overridesChain);
-
-		this.buildViewSpecOptions(spec);
-		this.buildViewSpecButtonText(spec, requestedViewType);
-
-		return spec;
 	},
 
 
 	// Builds and assigns a view spec's options object from its already-assigned defaults and overrides
 	buildViewSpecOptions: function(spec) {
-		spec.options = mergeOptions([ // lowest to highest priority
+		spec.options = mergeOptions( // lowest to highest priority
 			Calendar.defaults, // global defaults
 			spec.defaults, // view's defaults (from ViewSubclass.defaults)
 			this.dirDefaults,
 			this.langDefaults, // locale and dir take precedence over view's defaults!
 			this.overrides, // calendar's overrides (options given to constructor)
 			spec.overrides // view's overrides (view-specific options)
-		]);
+		);
 		populateInstanceComputableOptions(spec.options);
 	},
 
@@ -7737,40 +7647,6 @@ var Calendar = fc.Calendar = Class.extend({
 	// Returns a boolean about whether the view is okay to instantiate at some point
 	isValidViewType: function(viewType) {
 		return Boolean(this.getViewSpec(viewType));
-	},
-
-
-	// Should be called when any type of async data fetching begins
-	pushLoading: function() {
-		if (!(this.loadingLevel++)) {
-			this.trigger('loading', null, true, this.view);
-		}
-	},
-
-
-	// Should be called when any type of async data fetching completes
-	popLoading: function() {
-		if (!(--this.loadingLevel)) {
-			this.trigger('loading', null, false, this.view);
-		}
-	},
-
-
-	// Given arguments to the select method in the API, returns a range
-	buildSelectRange: function(start, end) {
-
-		start = this.moment(start);
-		if (end) {
-			end = this.moment(end);
-		}
-		else if (start.hasTime()) {
-			end = start.clone().add(this.defaultTimedEventDuration);
-		}
-		else {
-			end = start.clone().add(this.defaultAllDayEventDuration);
-		}
-
-		return { start: start, end: end };
 	}
 
 });
@@ -8054,7 +7930,7 @@ function Calendar_constructor(element, overrides) {
 			// It is still the "current" view, just not rendered.
 		}
 
-		header.removeElement();
+		header.destroy();
 		content.remove();
 		element.removeClass('fc fc-ltr fc-rtl fc-unthemed ui-widget');
 
@@ -8079,7 +7955,7 @@ function Calendar_constructor(element, overrides) {
 	function renderView(viewType) {
 		ignoreWindowResize++;
 
-		// if viewType is changing, remove the old view's rendering
+		// if viewType is changing, destroy the old view
 		if (currentView && viewType && currentView.type !== viewType) {
 			header.deactivateButton(currentView.type);
 			freezeContentHeight(); // prevent a scroll jump when view element is removed
@@ -8106,14 +7982,14 @@ function Calendar_constructor(element, overrides) {
 
 			// render or rerender the view
 			if (
-				!currentView.displaying ||
+				!currentView.isDisplayed ||
 				!date.isWithin(currentView.intervalStart, currentView.intervalEnd) // implicit date window change
 			) {
 				if (elementVisible()) {
 
 					freezeContentHeight();
 					currentView.display(date);
-					unfreezeContentHeight(); // immediately unfreeze regardless of whether display is async
+					unfreezeContentHeight();
 
 					// need to do this after View::render, so dates are calculated
 					updateHeaderTitle();
@@ -8281,9 +8157,19 @@ function Calendar_constructor(element, overrides) {
 	
 
 	function select(start, end) {
-		currentView.select(
-			t.buildSelectRange.apply(t, arguments)
-		);
+
+		start = t.moment(start);
+		if (end) {
+			end = t.moment(end);
+		}
+		else if (start.hasTime()) {
+			end = start.clone().add(t.defaultTimedEventDuration);
+		}
+		else {
+			end = start.clone().add(t.defaultAllDayEventDuration);
+		}
+
+		currentView.select({ start: start, end: end }); // accepts a range
 	}
 	
 
@@ -8418,7 +8304,6 @@ function Calendar_constructor(element, overrides) {
 		}
 	}
 
-	t.initialize();
 }
 
 ;;
@@ -8448,8 +8333,6 @@ Calendar.defaults = {
 	weekNumberCalculation: 'local',
 	
 	//editable: false,
-
-	scrollTime: '06:00:00',
 	
 	// event ajax
 	lazyFetching: true,
@@ -8592,7 +8475,7 @@ fc.lang = function(langCode, newFcOptions) {
 
 	// provided new options for this language? merge them in
 	if (newFcOptions) {
-		fcOptions = langOptionHash[langCode] = mergeOptions([ fcOptions, newFcOptions ]);
+		fcOptions = langOptionHash[langCode] = mergeOptions(fcOptions, newFcOptions);
 	}
 
 	// compute language options that weren't defined.
@@ -8748,7 +8631,7 @@ function Header(calendar, options) {
 	
 	// exports
 	t.render = render;
-	t.removeElement = removeElement;
+	t.destroy = destroy;
 	t.updateTitle = updateTitle;
 	t.activateButton = activateButton;
 	t.deactivateButton = deactivateButton;
@@ -8779,9 +8662,8 @@ function Header(calendar, options) {
 	}
 	
 	
-	function removeElement() {
+	function destroy() {
 		el.remove();
-		el = $();
 	}
 	
 	
@@ -9002,6 +8884,8 @@ function EventManager(options) { // assumed to be a calendar
 	
 	
 	// imports
+	var trigger = t.trigger;
+	var getView = t.getView;
 	var reportEvents = t.reportEvents;
 	
 	
@@ -9011,6 +8895,7 @@ function EventManager(options) { // assumed to be a calendar
 	var rangeStart, rangeEnd;
 	var currentFetchID = 0;
 	var pendingSourceCnt = 0;
+	var loadingLevel = 0;
 	var cache = []; // holds events that have already been expanded
 
 
@@ -9117,7 +9002,7 @@ function EventManager(options) { // assumed to be a calendar
 		var events = source.events;
 		if (events) {
 			if ($.isFunction(events)) {
-				t.pushLoading();
+				pushLoading();
 				events.call(
 					t, // this, the Calendar object
 					rangeStart.clone(),
@@ -9125,7 +9010,7 @@ function EventManager(options) { // assumed to be a calendar
 					options.timezone,
 					function(events) {
 						callback(events);
-						t.popLoading();
+						popLoading();
 					}
 				);
 			}
@@ -9171,7 +9056,7 @@ function EventManager(options) { // assumed to be a calendar
 					data[timezoneParam] = options.timezone;
 				}
 
-				t.pushLoading();
+				pushLoading();
 				$.ajax($.extend({}, ajaxDefaults, source, {
 					data: data,
 					success: function(events) {
@@ -9188,7 +9073,7 @@ function EventManager(options) { // assumed to be a calendar
 					},
 					complete: function() {
 						applyAll(complete, this, arguments);
-						t.popLoading();
+						popLoading();
 					}
 				}));
 			}else{
@@ -9399,6 +9284,25 @@ function EventManager(options) { // assumed to be a calendar
 			});
 		}
 		return cache; // else, return all
+	}
+	
+	
+	
+	/* Loading State
+	-----------------------------------------------------------------------------*/
+	
+	
+	function pushLoading() {
+		if (!(loadingLevel++)) {
+			trigger('loading', null, true, getView());
+		}
+	}
+	
+	
+	function popLoading() {
+		if (!(--loadingLevel)) {
+			trigger('loading', null, false, getView());
+		}
 	}
 	
 	
@@ -10087,7 +9991,7 @@ function backupEventDates(event) {
 // It is a manager for a DayGrid subcomponent, which does most of the heavy lifting.
 // It is responsible for managing width/height.
 
-var BasicView = View.extend({
+var BasicView = fcViews.basic = View.extend({
 
 	dayGrid: null, // the main subcomponent that does most of the heavy lifting
 
@@ -10135,7 +10039,7 @@ var BasicView = View.extend({
 
 
 	// Renders the view into `this.el`, which should already be assigned
-	renderDates: function() {
+	render: function() {
 
 		this.dayNumbersVisible = this.dayGrid.rowCnt > 1; // TODO: make grid responsible
 		this.weekNumbersVisible = this.opt('weekNumbers');
@@ -10155,8 +10059,8 @@ var BasicView = View.extend({
 
 	// Unrenders the content of the view. Since we haven't separated skeleton rendering from date rendering,
 	// always completely kill the dayGrid's rendering.
-	unrenderDates: function() {
-		this.dayGrid.unrenderDates();
+	destroy: function() {
+		this.dayGrid.destroyDates();
 		this.dayGrid.removeElement();
 	},
 
@@ -10299,7 +10203,7 @@ var BasicView = View.extend({
 		unsetScroller(this.scrollerEl);
 		uncompensateScroll(this.headRowEl);
 
-		this.dayGrid.removeSegPopover(); // kill the "more" popover if displayed
+		this.dayGrid.destroySegPopover(); // kill the "more" popover if displayed
 
 		// is the event limit a constant level number?
 		if (eventLimit && typeof eventLimit === 'number') {
@@ -10355,8 +10259,8 @@ var BasicView = View.extend({
 
 
 	// Unrenders all event elements and clears internal segment data
-	unrenderEvents: function() {
-		this.dayGrid.unrenderEvents();
+	destroyEvents: function() {
+		this.dayGrid.destroyEvents();
 
 		// we DON'T need to call updateHeight() because:
 		// A) a renderEvents() call always happens after this, which will eventually call updateHeight()
@@ -10374,8 +10278,8 @@ var BasicView = View.extend({
 	},
 
 
-	unrenderDrag: function() {
-		this.dayGrid.unrenderDrag();
+	destroyDrag: function() {
+		this.dayGrid.destroyDrag();
 	},
 
 
@@ -10390,8 +10294,8 @@ var BasicView = View.extend({
 
 
 	// Unrenders a visual indications of a selection
-	unrenderSelection: function() {
-		this.dayGrid.unrenderSelection();
+	destroySelection: function() {
+		this.dayGrid.destroySelection();
 	}
 
 });
@@ -10401,7 +10305,7 @@ var BasicView = View.extend({
 /* A month view with day cells running in rows (one-per-week) and columns
 ----------------------------------------------------------------------------------------------------------------------*/
 
-var MonthView = BasicView.extend({
+var MonthView = fcViews.month = BasicView.extend({
 
 	// Produces information about what range to display
 	computeRange: function(date) {
@@ -10443,28 +10347,28 @@ var MonthView = BasicView.extend({
 
 });
 
+MonthView.duration = { months: 1 }; // important for prev/next
+
+MonthView.defaults = {
+	fixedWeekCount: true
+};
 ;;
 
-fcViews.basic = {
-	'class': BasicView
-};
-
-fcViews.basicDay = {
-	type: 'basic',
-	duration: { days: 1 }
-};
+/* A week view with simple day cells running horizontally
+----------------------------------------------------------------------------------------------------------------------*/
 
 fcViews.basicWeek = {
 	type: 'basic',
 	duration: { weeks: 1 }
 };
+;;
 
-fcViews.month = {
-	'class': MonthView,
-	duration: { months: 1 }, // important for prev/next
-	defaults: {
-		fixedWeekCount: true
-	}
+/* A view with a single simple day cell
+----------------------------------------------------------------------------------------------------------------------*/
+
+fcViews.basicDay = {
+	type: 'basic',
+	duration: { days: 1 }
 };
 ;;
 
@@ -10473,7 +10377,19 @@ fcViews.month = {
 // Is a manager for the TimeGrid subcomponent and possibly the DayGrid subcomponent (if allDaySlot is on).
 // Responsible for managing width/height.
 
-var AgendaView = View.extend({
+var AGENDA_DEFAULTS = {
+	allDaySlot: true,
+	allDayText: 'all-day',
+	scrollTime: '06:00:00',
+	slotDuration: '00:30:00',
+	minTime: '00:00:00',
+	maxTime: '24:00:00',
+	slotEventOverlap: true // a bad name. confused with overlap/constraint system
+};
+
+var AGENDA_ALL_DAY_EVENT_LIMIT = 5;
+
+var AgendaView = fcViews.agenda = View.extend({
 
 	timeGrid: null, // the main time-grid subcomponent of this view
 	dayGrid: null, // the "all-day" subcomponent. if all-day is turned off, this will be null
@@ -10521,7 +10437,7 @@ var AgendaView = View.extend({
 
 
 	// Renders the view into `this.el`, which has already been assigned
-	renderDates: function() {
+	render: function() {
 
 		this.el.addClass('fc-agenda-view').html(this.renderHtml());
 
@@ -10550,12 +10466,12 @@ var AgendaView = View.extend({
 
 	// Unrenders the content of the view. Since we haven't separated skeleton rendering from date rendering,
 	// always completely kill each grid's rendering.
-	unrenderDates: function() {
-		this.timeGrid.unrenderDates();
+	destroy: function() {
+		this.timeGrid.destroyDates();
 		this.timeGrid.removeElement();
 
 		if (this.dayGrid) {
-			this.dayGrid.unrenderDates();
+			this.dayGrid.destroyDates();
 			this.dayGrid.removeElement();
 		}
 	},
@@ -10694,7 +10610,7 @@ var AgendaView = View.extend({
 
 		// limit number of events in the all-day area
 		if (this.dayGrid) {
-			this.dayGrid.removeSegPopover(); // kill the "more" popover if displayed
+			this.dayGrid.destroySegPopover(); // kill the "more" popover if displayed
 
 			eventLimit = this.opt('eventLimit');
 			if (eventLimit && typeof eventLimit !== 'number') {
@@ -10785,12 +10701,12 @@ var AgendaView = View.extend({
 
 
 	// Unrenders all event elements and clears internal segment data
-	unrenderEvents: function() {
+	destroyEvents: function() {
 
-		// unrender the events in the subcomponents
-		this.timeGrid.unrenderEvents();
+		// destroy the events in the subcomponents
+		this.timeGrid.destroyEvents();
 		if (this.dayGrid) {
-			this.dayGrid.unrenderEvents();
+			this.dayGrid.destroyEvents();
 		}
 
 		// we DON'T need to call updateHeight() because:
@@ -10814,10 +10730,10 @@ var AgendaView = View.extend({
 	},
 
 
-	unrenderDrag: function() {
-		this.timeGrid.unrenderDrag();
+	destroyDrag: function() {
+		this.timeGrid.destroyDrag();
 		if (this.dayGrid) {
-			this.dayGrid.unrenderDrag();
+			this.dayGrid.destroyDrag();
 		}
 	},
 
@@ -10838,39 +10754,34 @@ var AgendaView = View.extend({
 
 
 	// Unrenders a visual indications of a selection
-	unrenderSelection: function() {
-		this.timeGrid.unrenderSelection();
+	destroySelection: function() {
+		this.timeGrid.destroySelection();
 		if (this.dayGrid) {
-			this.dayGrid.unrenderSelection();
+			this.dayGrid.destroySelection();
 		}
 	}
 
 });
 
+AgendaView.defaults = AGENDA_DEFAULTS;
+
 ;;
 
-var AGENDA_ALL_DAY_EVENT_LIMIT = 5;
-
-fcViews.agenda = {
-	'class': AgendaView,
-	defaults: {
-		allDaySlot: true,
-		allDayText: 'all-day',
-		slotDuration: '00:30:00',
-		minTime: '00:00:00',
-		maxTime: '24:00:00',
-		slotEventOverlap: true // a bad name. confused with overlap/constraint system
-	}
-};
-
-fcViews.agendaDay = {
-	type: 'agenda',
-	duration: { days: 1 }
-};
+/* A week view with an all-day cell area at the top, and a time grid below
+----------------------------------------------------------------------------------------------------------------------*/
 
 fcViews.agendaWeek = {
 	type: 'agenda',
 	duration: { weeks: 1 }
+};
+;;
+
+/* A day view with an all-day cell area at the top, and a time grid below
+----------------------------------------------------------------------------------------------------------------------*/
+
+fcViews.agendaDay = {
+	type: 'agenda',
+	duration: { days: 1 }
 };
 ;;
 
