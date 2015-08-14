@@ -7,53 +7,6 @@ Code licensed under New BSD License.
 This directive allow to liven your tables. It support sorting, filtering and pagination.
 Header row with titles and filters automatic generated on compilation step.
 
-## Compatibility
-
-For work in IE < 9 need jQuery, just add:
-```html
-<!--[if lt IE 9]>
-  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<![endif]-->
-```
-
-## Plugins
-
-* [Export to CSV](https://github.com/esvit/ng-table-export)
-
-## Updates
-
-### v0.3.2 (master)
-- add pagination directive ngTablePagination [(see usage)](https://github.com/esvit/ng-table/blob/master/examples/demo28.html)
-- rename filter.name to filter.$$name according to issue #196
-- add debugMode setting
-- add defaultSort setting
-- add filterDelay setting
-- add multisorting (click on header with Ctrl-key)
-- add css classes (ng-table-pager, ng-table-pagination, ng-table-counts)
-
-### v0.3.1
-- add support of `header-class` attribute
-- add fixes for compatibility with early versions of AngularJS
-- add `data` field to ngTableParams
-- Allow expressions in the sortable & filter attribute (Issue #93)
-
-### v0.3.0
-- I abandoned from CoffeeScript in favor of a javascript, fully agree with http://blog.ponyfoo.com/2013/09/28/we-dont-want-your-coffee & (rus) http://habrahabr.ru/post/195944/
-- added examples of table with grouping
-- fully rewrited interface of ngTableParams
-
-### v0.2.2
-In functions that return data for the filters were removed `.promise`
-```javascript
-$scope.names = function(column) {
-    ...
-    def.resolve(names);
-    // return def.promise; - old code
-    return def;
-};
-```
-
-
 ## Installing via Bower
 ```
 bower install ng-table
@@ -69,6 +22,32 @@ grunt
 ```
 
 The karma task will try to open Firefox and Chrome as browser in which to run the tests. Make sure this is available or change the configuration in `karma.conf.js`
+
+
+## Configuring ng-table
+For a list of configuration options available, see [Configuring your table with NgTableParams](https://github.com/esvit/ng-table/wiki/Configuring-your-table-with-ngTableParams)
+
+
+## Updates
+
+See CHANGELOG.md
+
+## Submitting an issue
+
+Please be responsible, the open source community is not there to guess your problem or to do your job. When submitting an issue try as much as possible to:
+
+1. search in the already existing issues or on [stackoverflow](http://stackoverflow.com/questions/tagged/ngtable?sort=newest&pageSize=30) if your issue has not been raised before.
+
+2. give a precise description mentionning angular version, ng-table version.
+
+3. give a way to reproduce your issue, the best would be with a <strong>running example</strong>, you can use [plunkr](http://plnkr.co/). Note if you want to mimic ajax loading behaviour you can use [$timeout](https://docs.angularjs.org/api/ng/service/$timeout) angular service or [$httpBackend](https://docs.angularjs.org/api/ng/service/$httpBackend).
+
+4. isolate your code sample on the probable issue to avoid pollution and noise.
+
+5. Close your issue when a solution has been found (and share it with the community)
+
+Note that 80% of the open issues are actually not issues but "problem" due to developpers laziness or lack of investigation. These "issues" are a waste of time for us and especially if we have to setup a sample to reproduce the issue which those developpers could have done. Any open issue which does not fulfill this contract will be closed without investigation.
+
 
 ## Examples (from simple to complex)
 
@@ -88,8 +67,18 @@ The karma task will try to open Firefox and Chrome as browser in which to run th
 * [Table with external control of data](http://bazalt-cms.com/ng-table/example/14)
 * [Export to CSV](http://bazalt-cms.com/ng-table/example/15)
 
-## Configuring ng-table
-For a list of configuration options available, see [Configuring your table with NgTableParams](https://github.com/esvit/ng-table/wiki/Configuring-your-table-with-ngTableParams)
+## Compatibility
+
+For work in IE < 9 need jQuery, just add:
+```html
+<!--[if lt IE 9]>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<![endif]-->
+```
+
+## Plugins
+
+* [Export to CSV](https://github.com/esvit/ng-table-export)
 
 #### PS
 Let me know if you are using **ng-table**. It will motivate me to work harder.
