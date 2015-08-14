@@ -23,7 +23,7 @@ angular.module('Notification', [], function ($provide) {
 				}
 				ngNotify.set(content, {
 					type: level,
-					position: 'top'
+					position: 'bottom'
 				});
 
 //				toaster.create({
