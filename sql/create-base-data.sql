@@ -1,8 +1,3 @@
-USE fablab;
-
-BEGIN;
-
-
 -- -----------------------------------------------------
 -- Data for table `fablab`.`t_membership_type`
 -- -----------------------------------------------------
@@ -21,10 +16,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fablab`;
-INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (1, 3, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'Gaétan', 'Collaud', 'gaetancollaud@gmail.com', '2014-01-09', 0, '120050C9ED66', 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (2, 2, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'sdf', 'ator', 'animator1@gmail.com', '2014-01-11', 0, '6F005CC09467', 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (3, 2, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'mem', 'ber', 'member1@gmail.com', '2014-01-11', 0, '02', 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (4, 1, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'extern', '1', 'exter1@gmail.com', '2014-01-11', 0, '654', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (1, 3, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'Admin', 'test', 'admin@gmail.com', '2014-01-09', 0, '120050C9ED66', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (2, 2, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'animator', 'test', 'animator@gmail.com', '2014-01-11', 0, '6F005CC09467', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (3, 2, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'member', 'test', 'member@gmail.com', '2014-01-11', 0, '02', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`) VALUES (4, 1, 'a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 'hCSlWI8fFOTaEYPe2xUQ8BC4dBH1ntkTtvK4wRoN', 'extern', 'test', 'extern@gmail.com', '2014-01-11', 0, '654', 1, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -193,3 +188,4 @@ INSERT INTO `fablab`.`t_configuration` (`id`, `conf_key`, `conf_value`) VALUES (
 INSERT INTO `fablab`.`t_configuration` (`id`, `conf_key`, `conf_value`) VALUES (7, 'RECAPTCHA_SECRET', NULL);
 
 COMMIT;
+

@@ -54,3 +54,11 @@ git clone https://github.com/gaetancollaud/fablab-manager.git
 cd fablab-manager
 sudo scripts/install-from-scratch.sh
 ```
+
+### Default users
+Login  | Password | groups
+------------- | ------------- | -----------
+admin@gmail.com  | fablab | comite
+animator@gmail.com  | fablab | animator
+member@gmail.com  | fablab | member 
+extern@gmail.com  | fablab | _none_
