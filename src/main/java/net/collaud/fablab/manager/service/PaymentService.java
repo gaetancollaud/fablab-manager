@@ -5,11 +5,9 @@ import java.util.List;
 import net.collaud.fablab.manager.data.PaymentEO;
 import net.collaud.fablab.manager.data.SubscriptionEO;
 import net.collaud.fablab.manager.data.UsageEO;
-import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.virtual.HistoryEntry;
 import net.collaud.fablab.manager.data.virtual.HistoryEntryId;
 import net.collaud.fablab.manager.data.virtual.UserPaymentHistory;
-import net.collaud.fablab.manager.exceptions.FablabException;
 import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
 
 /**
@@ -17,10 +15,8 @@ import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface PaymentService {
-
-	SubscriptionEO addSubscriptionConfirmation(Integer userId);
-
-	SubscriptionEO addSubscriptionConfirmationForCurrentUser();
+	
+	SubscriptionEO addSubscription(Integer userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly);
 
 	PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
 

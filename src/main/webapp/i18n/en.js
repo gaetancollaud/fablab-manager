@@ -133,6 +133,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			userTitle: 'User',
 			usageTitle: 'Add an usage',
 			paymentTitle: 'Add a payment',
+			subscriptionTitle:'Subscription',
 			enterName: 'Enter a name',
 			machine: 'Machine',
 			date: 'Date',
@@ -142,8 +143,11 @@ angular.module('Fablab').config(function ($translateProvider) {
 			directPaid: 'User paid directly',
 			amount: 'Amount',
 			total: 'Total',
+			startDate:'Start date',
+			paymentDate:'Payment date',
 			addPayment: 'Add payment',
 			addUsage: 'Add usage',
+			addSubscription: 'Add subscription',
 			details: 'Details',
 			history: 'History',
 			balanceText: 'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>',
@@ -153,7 +157,8 @@ angular.module('Fablab').config(function ($translateProvider) {
 			notification: {
 				historyRemoved: 'Historique supprimé',
 				usageAdded: 'Usage added',
-				paymentAdded: 'Payment added'
+				paymentAdded: 'Payment added',
+				subscriptionAdded: 'Subscription added'
 			}
 		},
 		accounting:{

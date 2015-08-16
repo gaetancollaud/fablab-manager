@@ -2,16 +2,16 @@
 	<div  class="alert" ng-show="visible"
 		  ng-class="{'alert-danger' : status === 'never' || status === 'expired',
 		  'alert-success':status === 'ok'}" >
-		<button type="button" class="close"
+<!--		<button type="button" class="close"
 				ng-show="status === 'never' || status === 'expired'"
 				ng-click="openModal()">
 			<span translate="user.subscription.confirmButton"></span>
 			<span class="glyphicon glyphicon-flash"></span>
-		</button>
+		</button>-->
 		<span translate="user.subscription.{{status}}.{{who}}" translate-values="{{data}}"></span>
 	</div>
 
-	<form class="form-horizontal" name="subscribe">
+<!--	<form class="form-horizontal" name="subscribe">
 		<div class="modal fade " id="subscribeModal" ng-class="{'in' : modalOpen}">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -55,5 +55,5 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	</form>-->
 </div>

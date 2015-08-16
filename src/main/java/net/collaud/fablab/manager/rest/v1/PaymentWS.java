@@ -4,6 +4,7 @@ import net.collaud.fablab.manager.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.manager.data.PaymentEO;
 import net.collaud.fablab.manager.data.UsageEO;
 import net.collaud.fablab.manager.data.virtual.HistoryEntryId;
+import net.collaud.fablab.manager.rest.v1.data.AddSubscriptionTO;
 import net.collaud.fablab.manager.rest.v1.model.BaseModel;
 import net.collaud.fablab.manager.rest.v1.model.DataModel;
 import net.collaud.fablab.manager.service.PaymentService;
@@ -44,20 +45,30 @@ public class PaymentWS {
 		return new DataModel(paymentService.addPayment(payment.getUser().getId()
 				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
 	}
+	
+	@RequestMapping(value = "add_subscription", method = RequestMethod.POST)
+	public BaseModel addSubscription(@RequestBody @Validated AddSubscriptionTO payment) {
+		return new DataModel(paymentService.addSubscription(
+				payment.getUserId(),
+				payment.getStartDate(),
+				payment.getPaymentDate(),
+				payment.getComment(),
+				payment.isPaidDirecly()));
+	}
 
 	@RequestMapping(value = "delete_history", method = RequestMethod.POST)
 	public BaseModel removeHistory(@RequestBody @Validated HistoryEntryId id) {
 		return new DataModel(paymentService.removeHistoryEntry(id));
 	}
 
-	@RequestMapping(value = "subscription/confirm/{id}", method = RequestMethod.GET)
-	public BaseModel confirmSubscription(@PathVariable Integer id) {
-		return new DataModel(paymentService.addSubscriptionConfirmation(id));
-	}
+//	@RequestMapping(value = "subscription/confirm/{id}", method = RequestMethod.GET)
+//	public BaseModel confirmSubscription(@PathVariable Integer id) {
+//		return new DataModel(paymentService.addSubscriptionConfirmation(id));
+//	}
 
-	@RequestMapping(value = "subscription/confirm", method = RequestMethod.GET)
-	public BaseModel confirmSubscriptionForCurrentUser() {
-		return new DataModel(paymentService.addSubscriptionConfirmationForCurrentUser());
-	}
+//	@RequestMapping(value = "subscription/confirm", method = RequestMethod.GET)
+//	public BaseModel confirmSubscriptionForCurrentUser() {
+//		return new DataModel(paymentService.addSubscriptionConfirmationForCurrentUser());
+//	}
 
 }

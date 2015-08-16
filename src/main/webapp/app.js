@@ -3,7 +3,7 @@
 
 	angular.module('Fablab', [
 		//ext-lib
-		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
+		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
 		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'

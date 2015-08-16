@@ -3,7 +3,6 @@ package net.collaud.fablab.manager.service.impl;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +23,6 @@ import net.collaud.fablab.manager.data.UsageEO;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
-import static net.collaud.fablab.manager.data.type.AuditObject.PAYMENT;
-import static net.collaud.fablab.manager.data.type.AuditObject.SUBSCRIPTION;
-import static net.collaud.fablab.manager.data.type.AuditObject.USAGE;
 import net.collaud.fablab.manager.data.virtual.HistoryEntry;
 import net.collaud.fablab.manager.data.virtual.HistoryEntryId;
 import net.collaud.fablab.manager.data.virtual.UserPaymentHistory;
@@ -149,20 +145,10 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		return listHistory;
 	}
 
-	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public SubscriptionEO addSubscriptionConfirmation(Integer userId) {
-		return addSubscriptionConfirmationIntern(userId);
-	}
-
 	@Override
-	public SubscriptionEO addSubscriptionConfirmationForCurrentUser() {
-		return addSubscriptionConfirmationIntern(securityService.getCurrentUserId());
-	}
-
-	private SubscriptionEO addSubscriptionConfirmationIntern(Integer userId) {
-		Date now = new Date();
-
+	public SubscriptionEO addSubscription(Integer userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly) {
+	
 		//save user last subscription date
 		UserEO user = userRepository.findOneDetails(userId)
 				.orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
@@ -173,7 +159,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				.findFirst()
 				.ifPresent(s -> {
 					Instant end = s.getDateSubscription().toInstant().plus(s.getDuration(), ChronoUnit.DAYS);
-					if (end.isAfter(Instant.now())) {
+					if (end.isAfter(dateSubscriptionStart.toInstant())) {
 						throw new RuntimeException("Last subscription has not ended yet !");
 					}
 				});
@@ -181,10 +167,17 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		//insert subscription
 		SubscriptionEO subscription = new SubscriptionEO();
 		subscription.setUser(user);
-		subscription.setDateSubscription(now);
+		subscription.setDateSubscription(dateSubscriptionStart);
 		subscription.setDuration(user.getMembershipType().getDuration());
 		subscription.setPrice(user.getMembershipType().getPrice());
 		subscription.setMembershipType(user.getMembershipType());
+		subscription.setComment(comment);
+		
+		if(paidDirectly){
+			//the user paid directly
+			addPayment(userId, datePayment, user.getMembershipType().getPrice(), comment);
+		}
+		
 		return subscriptionRepository.save(subscription);
 	}
 

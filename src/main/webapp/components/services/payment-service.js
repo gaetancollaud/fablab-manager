@@ -30,6 +30,13 @@
 					url: App.API.PAYMENT_API + '/add_payment'
 				}).success(successFn);
 			},
+			addSubscription: function (subscription, successFn) {
+				$http({
+					method: 'POST',
+					data: subscription,
+					url: App.API.PAYMENT_API + '/add_subscription'
+				}).success(successFn);
+			},
 			removeHistory: function (history, successFn) {
 				$http({
 					method: 'POST',
@@ -37,18 +44,18 @@
 					url: App.API.PAYMENT_API + '/delete_history'
 				}).success(successFn);
 			},
-			subscriptionConfirmUser: function (userId, successFn) {
-				$http({
-					method: 'GET',
-					url: App.API.PAYMENT_API + '/subscription/confirm/'+userId
-				}).success(successFn);
-			},
-			subscriptionConfirmCurrentUser: function (successFn) {
-				$http({
-					method: 'GET',
-					url: App.API.PAYMENT_API + '/subscription/confirm'
-				}).success(successFn);
-			}
+//			subscriptionConfirmUser: function (userId, successFn) {
+//				$http({
+//					method: 'GET',
+//					url: App.API.PAYMENT_API + '/subscription/confirm/'+userId
+//				}).success(successFn);
+//			},
+//			subscriptionConfirmCurrentUser: function (successFn) {
+//				$http({
+//					method: 'GET',
+//					url: App.API.PAYMENT_API + '/subscription/confirm'
+//				}).success(successFn);
+//			}
 		};
 	});
 

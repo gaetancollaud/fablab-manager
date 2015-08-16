@@ -1,14 +1,34 @@
 {
 	"elements": {
 		"toast": {},
+		"user-payment-add-payment": {
+			"attributes": {
+				"min-date": {},
+				"callback": {},
+				"user": {}
+			}
+		},
 		"fab-user-subscription": {
 			"attributes": {
+				"user": {}
+			}
+		},
+		"user-payment-add-subscription": {
+			"attributes": {
+				"callback": {},
 				"user": {}
 			}
 		},
 		"user-payment-history": {
 			"attributes": {
 				"confirm-callback": {},
+				"user": {}
+			}
+		},
+		"user-payment-add-usage": {
+			"attributes": {
+				"min-date": {},
+				"callback": {},
 				"user": {}
 			}
 		},

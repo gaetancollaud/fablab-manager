@@ -10,70 +10,70 @@ if (App.optLockFn == null) {
 	};
 }
 angular.module('Notification', [], function ($provide) {
-	$provide.factory('NotificationService', ['ngNotify', '$translate', function (ngNotify, $translate) {
-			var notify = function (level, title, html) {
-				level = level.toLowerCase();
-				if (level !== 'success' && level !== 'warn' && level !== 'info') {
-					level = 'error';
+	$provide.factory('NotificationService', function ($translate) {
+		var notify = function (level, title, html) {
+			level = level.toLowerCase();
+			if (level !== 'success' && level !== 'warn' && level !== 'info') {
+				level = 'error';
+			}
+
+			var toastrContent = $translate.instant(title);
+			var toastrTitle;
+			if (html) {
+				toastrTitle = toastrContent;
+				toastrContent = html;
+			}
+
+			switch (level) {
+				case 'success':
+					toastr.success(toastrContent, toastrTitle);
+					break;
+				case 'warn':
+					toastr.warning(toastrContent, toastrTitle);
+					break;
+				case 'error':
+					toastr.error(toastrContent, toastrTitle);
+					break;
+				case 'info':
+				default:
+					toastr.info(toastrContent, toastrTitle);
+			}
+		};
+		return {
+			notify: notify,
+			showAjaxErrorMessage: function (status) {
+				switch (status) {
+					case 403:
+						notify('ERROR', 'error.ajax.unauthorized');
+						break;
+					default:
+						notify('ERROR', 'error.ajax.global', status);
+
 				}
-//				var content = "<b>" + $translate.instant(title) + "</b><br/>";
-				var content = $translate.instant(title);
-				if (html) {
-					content += html;
+			},
+			showOptimisticLock: function (message, fn) {
+				var optLockFn = function () {
+					location.reload();
+				};
+				if (fn != null) {
+					optLockFn = fn;
 				}
-				ngNotify.set(content, {
-					type: level,
-					position: 'bottom'
-				});
 
-//				toaster.create({
-//					class: level.toLowerCase(),
-//					content: content,
-//					compileContent: true,
-//				});
-			};
-			return {
-				/**
-				 * Examples: 
-				 * notificationService.notify("SUCCESS", "SUCCESS", "SUCCESS Level");
-				 * notificationService.notify("ERROR", "ERROR", "ERROR Level");
-				 * notificationService.notify("WARN", "WARNING", "WARNING Level");
-				 * notificationService.notify("INFO", "INFO", "INFO Level");
-				 */
-				notify: notify,
-				showAjaxErrorMessage: function (status) {
-					switch (status) {
-						case 403:
-							notify('ERROR', 'error.ajax.unauthorized');
-							break;
-						default:
-							notify('ERROR', 'error.ajax.global', status);
+				App.optLockFn = optLockFn;
 
-					}
-				},
-				showOptimisticLock: function (message, fn) {
-					var optLockFn = function () {
-						location.reload();
-					};
-					if (fn != null) {
-						optLockFn = fn;
-					}
+				var msg = message +
+						"<br /><br />" +
+						"<a type=\"button\" class=\"btn btn-default btn-glyph\" onclick=\"App.optLockFn()\" style=\"color: black;\">" +
+						"Reload <span class=\"glyphicon glyphicon-refresh\"></span></a>";
+				notify('WARN', null, msg);
 
-					App.optLockFn = optLockFn;
-
-					var msg = message +
-							"<br /><br />" +
-							"<a type=\"button\" class=\"btn btn-default btn-glyph\" onclick=\"App.optLockFn()\" style=\"color: black;\">" +
-							"Reload <span class=\"glyphicon glyphicon-refresh\"></span></a>";
-					notify('WARN', null, msg);
-
-				},
-				clear: function () {
+			},
+			clear: function () {
 //					toaster.clear();
-					ngNotify.dismiss();
-				}
-			};
-		}]);
+				ngNotify.dismiss();
+			}
+		};
+	});
 }).filter("formatObject", function () {
 	return function (object) {
 		var ret = "";
