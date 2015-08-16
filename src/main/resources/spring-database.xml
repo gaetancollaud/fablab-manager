@@ -23,7 +23,7 @@
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="fablabDataSource" />
-		<property name="packagesToScan" value="net.collaud.fablab.api.data" />
+		<property name="packagesToScan" value="net.collaud.fablab.manager.data" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -38,13 +38,13 @@
           class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 	
-	<data:repositories base-package="net.collaud.fablab.api.dao"
+	<data:repositories base-package="net.collaud.fablab.manager.dao"
 					   entity-manager-factory-ref="entityManagerFactory"
 					   transaction-manager-ref="txManager"/>
 	
 	<bean id="entityManagerFactory"
 		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="net.collaud.fablab.api.data" />
+		<property name="packagesToScan" value="net.collaud.fablab.manager.data" />
 		<property name="dataSource" ref="fablabDataSource" />
 
 		<property name="jpaProperties">
@@ -80,7 +80,7 @@
 	
 	<!--<bean id="entityManagerFactory"
 		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="net.collaud.fablab.api.data" />
+		<property name="packagesToScan" value="net.collaud.fablab.manager.data" />
 		<property name="dataSource" ref="fablabDataSource" />
 
 		<property name="jpaProperties">

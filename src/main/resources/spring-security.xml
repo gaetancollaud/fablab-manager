@@ -7,8 +7,8 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
  
 
-	<beans:bean name="fablabAuthProvider" class="net.collaud.fablab.api.security.FablabAuthentificationProvider" />
-	<beans:bean id="restAuthEntryPoint" class="net.collaud.fablab.api.security.RestAuthEntryPoint" />
+	<beans:bean name="fablabAuthProvider" class="net.collaud.fablab.manager.security.FablabAuthentificationProvider" />
+	<beans:bean id="restAuthEntryPoint" class="net.collaud.fablab.manager.security.RestAuthEntryPoint" />
 
 	<global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 	

@@ -11,19 +11,19 @@
 				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
 	
-	<context:component-scan base-package="net.collaud.fablab.api" />
+	<context:component-scan base-package="net.collaud.fablab.manager" />
 		
 	<mvc:annotation-driven>
 		<mvc:message-converters> 
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper">
-					<bean class="net.collaud.fablab.api.rest.HibernateAwareObjectMapper" />
+					<bean class="net.collaud.fablab.manager.rest.HibernateAwareObjectMapper" />
 				</property>
 			</bean> 
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
-	<bean name="propertyUtils" class="net.collaud.fablab.api.web.SpringPropertiesUtils">
+	<bean name="propertyUtils" class="net.collaud.fablab.manager.web.SpringPropertiesUtils">
 		<property name="location" value="file:${catalina.home}/conf/fablab-config.properties"/>
 	</bean>
 	

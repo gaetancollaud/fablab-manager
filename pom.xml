@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.collaud.fablab</groupId>
-	<artifactId>fablab-api</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<artifactId>fablab-manager</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
+	<name>fablab-manager</name>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<start-class>net.collaud.fablab.api.Application</start-class>
 		<java.version>1.8</java.version>
 		<spring.version>4.1.4.RELEASE</spring.version>
 	</properties>
@@ -246,9 +246,14 @@
 			<url>http://repo.spring.io/libs-release</url>
 		</pluginRepository>
 	</pluginRepositories>
-	<name>fablab-api</name>
 	<ciManagement>
 		<system>hudson</system>
-		<url>http://collaud2.collaud.me:8080/job/fablab-api/</url>
+		<url>http://collaud2.collaud.me:8080/job/fablab-manager/</url>
 	</ciManagement>
+	
+	<scm>
+		<url>https://github.com/gaetancollaud/fablab-manager</url>
+		<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
+		<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
+	</scm>
 </project>
