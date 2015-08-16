@@ -43,3 +43,14 @@ Password : **fablab**
 * Edit fablab-config.properties
 * Create database schema (use Mysql workbench)
 * Deploy the WAR file previously compiled
+
+### Install from scratch
+
+If you are lazy just run the script to install everything for your 
+
+```sh
+apt-get install git
+git clone https://github.com/gaetancollaud/fablab-manager.git
+cd fablab-manager
+sudo scripts/install-from-scratch.sh
+```
