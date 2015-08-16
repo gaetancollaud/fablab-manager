@@ -3,8 +3,7 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter, Pay
 	return {
 		restrict: 'EA',
 		scope: {
-			user: '=?',
-			confirmCallback: '&'
+			user: '=?'
 		},
 		templateUrl: 'components/user/directive-subscription.html',
 		controller: function ($rootScope, $scope) {
@@ -44,26 +43,6 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter, Pay
 				}
 			});
 
-//			$scope.openModal = function () {
-//				$('#subscribeModal').modal();
-//			};
-//			$scope.cancel = function () {
-//				$('#subscribeModal').modal('hide');
-//			};
-//			$scope.confirmSubscription = function () {
-//				var success = function () {
-//					alert('confirmed');
-//					$('#subscribeModal').modal('hide');
-//					if ($scope.confirmCallback) {
-//						$scope.confirmCallback({user:$scope.user});
-//					}
-//				};
-//				if (myself) {
-//					PaymentService.subscriptionConfirmCurrentUser(success);
-//				} else {
-//					PaymentService.subscriptionConfirmUser($scope.user.id, success);
-//				}
-//			};
-		},
+		}
 	};
 });

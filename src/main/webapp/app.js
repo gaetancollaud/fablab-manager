@@ -65,11 +65,15 @@
 		App.interceptors.errorInterceptor.loaderService = LoaderService;
 		App.interceptors.errorInterceptor.notificationService = NotificationService;
 
-		$rootScope.updateCurrentUser = function () {
+		$rootScope.updateCurrentUser = function (redirectCallback) {
 			AuthService.getCurrentUser(function (data) {
 				$rootScope.connectedUser = data;
 				$rootScope.$broadcast('connectedUserChanged', data);
-				authRedirect();
+				if(redirectCallback){
+					redirectCallback();
+				}else{
+					authRedirect();
+				}
 			});
 		};
 

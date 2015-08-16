@@ -2,58 +2,6 @@
 	<div  class="alert" ng-show="visible"
 		  ng-class="{'alert-danger' : status === 'never' || status === 'expired',
 		  'alert-success':status === 'ok'}" >
-<!--		<button type="button" class="close"
-				ng-show="status === 'never' || status === 'expired'"
-				ng-click="openModal()">
-			<span translate="user.subscription.confirmButton"></span>
-			<span class="glyphicon glyphicon-flash"></span>
-		</button>-->
 		<span translate="user.subscription.{{status}}.{{who}}" translate-values="{{data}}"></span>
 	</div>
-
-<!--	<form class="form-horizontal" name="subscribe">
-		<div class="modal fade " id="subscribeModal" ng-class="{'in' : modalOpen}">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" translate="user.subscription.confirmTitle"></h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label class="col-sm-5 control-label" translate="user.name"></label>
-							<div class="col-sm-7">
-								<input type="text" disabled class="form-control" value="{{user|prettyUser}}" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-5 control-label" translate="user.membership"></label>
-							<div class="col-sm-7">
-								<input type="text" disabled class="form-control" value="{{user.membershipType.name}}" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-5 control-label" translate="user.subscription.price"></label>
-							<div class="col-sm-7">
-								<input type="text" disabled class="form-control" value="{{user.membershipType.price}}" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-5 control-label" translate="general.form.duration"></label>
-							<div class="col-sm-7">
-								<input type="text" disabled class="form-control" value="{{user.membershipType.duration +' '+ ('general.days'|translate)}}" />
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-								ng-click="confirmSubscription()"
-								translate="user.subscription.subscribe"></button>
-						<button type="button" class="btn btn-default" 
-								ng-click="cancel()" 
-								translate="button.cancel"></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>-->
 </div>
