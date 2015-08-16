@@ -1,6 +1,6 @@
 
 #URLs
-url.root=/fablab-manager-2.0.1-SNAPSHOT
+url.root=/fablab-api-1.1-SNAPSHOT
 
 #Database information
 jdbc.username=fablab
