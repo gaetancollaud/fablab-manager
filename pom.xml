@@ -192,11 +192,11 @@
 		</dependency>
 		
 		<!-- ReCaptcha -->
-        <dependency>
-                <groupId>net.tanesha.recaptcha4j</groupId>
-                <artifactId>recaptcha4j</artifactId>
-                <version>0.0.7</version>
-        </dependency>
+		<dependency>
+			<groupId>net.tanesha.recaptcha4j</groupId>
+			<artifactId>recaptcha4j</artifactId>
+			<version>0.0.7</version>
+		</dependency>
 	
 		<!-- FIxme remove ? -->
 		<dependency>
@@ -208,6 +208,19 @@
 	</dependencies>
 	
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.2</version>
+					<configuration>
+						<remoteTagging>true</remoteTagging>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -255,6 +268,6 @@
 		<url>https://github.com/gaetancollaud/fablab-manager</url>
 		<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
 		<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 </project>

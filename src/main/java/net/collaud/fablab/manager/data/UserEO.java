@@ -31,6 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.collaud.fablab.manager.data.type.Gender;
+import net.collaud.fablab.manager.export.CsvExport;
+import net.collaud.fablab.manager.export.CsvField;
 
 /**
  *
@@ -43,6 +45,7 @@ import net.collaud.fablab.manager.data.type.Gender;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@CsvExport(fileName = "users")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -64,26 +67,33 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JsonProperty
 	private String passwordNew;
 
+	@CsvField(headerName="Firstname")
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
 
+	@CsvField(headerName="Lastname")
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
+	@CsvField(headerName="Email")
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
+	@CsvField(headerName="Inscription date")
 	@Column(name = "date_inscr", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateInscr;
 
+	@CsvField(headerName="Rfid")
 	@Column(name = "rfid", nullable = true)
 	private String rfid;
 
+	@CsvField(headerName="birthdate")
 	@Column(name = "birthdate", nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date birthdate;
 
+	@CsvField(headerName="Gender")
 	@Column(name = "gender", nullable = true)
 	@Enumerated(EnumType.ORDINAL)
 	private Gender gender;
@@ -92,12 +102,15 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
+	@CsvField(headerName="Phone")
 	@Column(name = "phone", nullable = true)
 	private String phone;
 
+	@CsvField(headerName="Address")
 	@Column(name = "address", nullable = true)
 	private String address;
 
+	@CsvField(headerName="Comment")
 	@Column(name = "comment", nullable = true)
 	private String comment;
 

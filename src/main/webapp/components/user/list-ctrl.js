@@ -43,6 +43,10 @@ angular.module('Fablab').controller('UserListController', function ($scope, $fil
 			NotificationService.notify("success", "TODO Mailing list mise à jour");
 		});
 	};
+	
+	$scope.export = function(){
+		window.location=App.API.USER_API+"/export";
+	}
 
 	updateUserList();
 

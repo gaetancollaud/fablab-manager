@@ -21,4 +21,9 @@ public class HistoryEntryUser  {
 		this.firstname = user.getFirstname();
 	}
 
+	@Override
+	public String toString() {
+		return firstname+" "+lastname;
+	}
+
 }
