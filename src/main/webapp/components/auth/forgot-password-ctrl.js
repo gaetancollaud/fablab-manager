@@ -5,7 +5,7 @@
 	ctrl.controller('AuthForgotPasswordController', function ($rootScope, $location, $filter, $scope,
 			NotificationService, AuthService, StaticDataService) {
 
-		$scope.siteKey = App.Constants.RECAPTCHA_SITE_KEY;
+		$scope.siteKey = App.CONFIG.RECAPTCHA_SITE_KEY;
 		$scope.email = "";
 		$scope.recaptchaReponse = false;
 		$scope.captchaResponse = function (response) {

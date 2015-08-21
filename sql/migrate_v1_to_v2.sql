@@ -42,13 +42,13 @@ INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 11, group_id FROM fa
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 12, group_id FROM fablab_old.t_group WHERE technicalname='comite');
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 13, group_id FROM fablab_old.t_group WHERE technicalname='comite');
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 14, group_id FROM fablab_old.t_group WHERE technicalname='comite');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 2, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 3, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 4, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 6, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 7, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 11, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
-INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 12, group_id FROM fablab_old.t_group WHERE technicalname='animateur');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 2, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 3, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 4, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 6, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 7, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 11, group_id FROM fablab_old.t_group WHERE technicalname='animator');
+INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 12, group_id FROM fablab_old.t_group WHERE technicalname='animator');
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 4, group_id FROM fablab_old.t_group WHERE technicalname='member');
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 11, group_id FROM fablab_old.t_group WHERE technicalname='member');
 INSERT INTO fablab.r_group_role (role_id, group_id) (SELECT 12, group_id FROM fablab_old.t_group WHERE technicalname='member');
@@ -107,7 +107,7 @@ INSERT INTO fablab.t_subscription (subscription_id, user_id, membership_type_id,
 SELECT s.subscription_id, s.user_id, s.membership_type_id, s.date_subscription, pc.price, 365, s.comment
 FROM fablab_old.t_subscription s
 INNER JOIN fablab_old.r_price_cotisation pc ON s.membership_type_id=pc.membership_type_id AND 
-pc.price_revision_id = (SELECT price_revision_id FROM fablab_old.t_price_revision ORDER BY price_revision_id DESC LIMIT 1);
+pc.price_revision_id = (SELECT price_revision_id FROM fablab_old.t_price_revision WHERE pr.price_revision_id=s.price_revision_id);
 
 
 -- insert in t_usage
@@ -116,7 +116,7 @@ SELECT DISTINCT u.usage_id, u.date_start, pm.price, u.minutes, u.additional_cost
 FROM fablab_old.t_usage u
 INNER JOIN fablab_old.t_machine m ON u.machine_id = m.machine_id
 INNER JOIN fablab_old.r_price_machine pm ON m.machine_type_id = pm.machine_type_id AND pm.membership_type_id=u.membership_type_id AND 
-pm.price_revision_id = (SELECT price_revision_id FROM fablab_old.t_price_revision ORDER BY price_revision_id DESC LIMIT 1)
+pm.price_revision_id = (SELECT price_revision_id FROM fablab_old.t_price_revision pr WHERE pr.price_revision_id=u.price_revision_id)
 ORDER BY u.usage_id;
 
 UPDATE fablab.t_user SET password='a76c7b4a9ebc536c465ed7b4c64dcf0550862212f716fe1844c99b68623e1a28', 

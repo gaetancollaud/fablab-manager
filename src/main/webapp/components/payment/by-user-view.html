@@ -14,7 +14,7 @@
 					{{$select.selected.firstname}} {{$select.selected.lastname}} 
 				</ui-select-match>
 				<ui-select-choices repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
-					<div ng-bind-html="u.firstname | highlight: $select.search"></div>
+					<div ng-bind-html="(u.firstname+' '+u.lastname) | highlight: $select.search"></div>
 					<small>
 						{{u.address}}
 					</small>
