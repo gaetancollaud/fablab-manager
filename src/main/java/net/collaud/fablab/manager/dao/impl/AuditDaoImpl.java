@@ -2,10 +2,16 @@ package net.collaud.fablab.manager.dao.impl;
 
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import net.collaud.fablab.manager.dao.AuditRepository;
+import net.collaud.fablab.manager.dao.AuditRepositoryCustom;
 import net.collaud.fablab.manager.data.AuditEO;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryAccessor;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,17 +20,13 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class AuditDaoImpl extends AbstractDAO<AuditEO> implements AuditRepository {
+public class AuditDaoImpl extends AbstractDAO<AuditEO> implements AuditRepositoryCustom {
+	
 	
 	public AuditDaoImpl() {
 		super(AuditEO.class);
 	}
 	
-	@Override
-	public AuditEO addEntry(AuditEO lua) {
-		return null;
-		//return create(lua);
-	}
 	
 	@Override
 	public List<AuditEO> search(UserEO user, List<AuditObject> type, Date after, Date before, String content, int limit) {

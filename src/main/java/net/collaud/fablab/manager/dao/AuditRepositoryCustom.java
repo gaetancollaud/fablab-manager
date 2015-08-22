@@ -13,8 +13,6 @@ import net.collaud.fablab.manager.exceptions.FablabException;
  */
 public interface AuditRepositoryCustom{
 
-	public AuditEO addEntry(AuditEO entry) throws FablabException;
-
 	public List<AuditEO> search(UserEO user, List<AuditObject> type, Date after, Date before, String content, int limit) throws FablabException;
 
 }

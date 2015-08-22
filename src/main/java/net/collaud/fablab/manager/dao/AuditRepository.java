@@ -1,20 +1,14 @@
 package net.collaud.fablab.manager.dao;
 
-import java.util.Date;
-import java.util.List;
 import net.collaud.fablab.manager.data.AuditEO;
-import net.collaud.fablab.manager.data.UserEO;
-import net.collaud.fablab.manager.data.type.AuditObject;
-import net.collaud.fablab.manager.exceptions.FablabException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface AuditRepository {
+public interface AuditRepository extends JpaRepository<AuditEO, Integer>, QueryDslPredicateExecutor<AuditEO>{
 
-	public AuditEO addEntry(AuditEO entry) throws FablabException;
-
-	public List<AuditEO> search(UserEO user, List<AuditObject> type, Date after, Date before, String content, int limit) throws FablabException;
 
 }
