@@ -53,6 +53,9 @@
 		}).when('/accounting', {
 			templateUrl: './components/accounting/accounting-list-view.html',
 			controller: 'AccountingListController'
+		}).when('/audit', {
+			templateUrl: './components/audit/audit-list-view.html',
+			controller: 'AuditListController'
 		}).otherwise({
 			redirectTo: '/'
 		});

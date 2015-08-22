@@ -1,0 +1,20 @@
+.accounting .pressets{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.accounting .pressets button{
+	margin: 5px;
+}
+.accounting .form-group{
+	margin-bottom: 0;
+}
+
+.accounting .results{
+	font-weight: bold;
+}
+.accounting .results .sell{
+	color: chocolate;
+}
+.accounting .results .money-in{
+	color: #3e8f3e;
+}

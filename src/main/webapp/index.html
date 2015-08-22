@@ -69,6 +69,9 @@
 					<li fab-nav-item link="accounting" icon="euro" 
 						label="menu.accounting" 
 						show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+					<li fab-nav-item link="audit" icon="menu-hamburger" 
+						label="menu.audit" 
+						show="hasAnyRole('AUDIT_VIEW')"></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
@@ -155,6 +158,7 @@
 	<script src="./i18n/fr.js"></script>
 
 	<script src="./components/services/accounting-service.js"></script>
+	<script src="./components/services/audit-service.js"></script>
 	<script src="./components/services/auth-service.js"></script>
 	<script src="./components/services/machine-service.js"></script>
 	<script src="./components/services/payment-service.js"></script>
@@ -187,6 +191,8 @@
 	<script src="./components/payment/directive-add-subscription.js"></script>
 
 	<script src="./components/accounting/accounting-list-ctrl.js"></script>
+	
+	<script src="./components/audit/audit-list-ctrl.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
