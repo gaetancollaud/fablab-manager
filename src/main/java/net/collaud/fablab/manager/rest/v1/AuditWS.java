@@ -1,13 +1,7 @@
 package net.collaud.fablab.manager.rest.v1;
 
-import java.util.Date;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 import net.collaud.fablab.manager.annotation.JavascriptAPIConstant;
-import net.collaud.fablab.manager.data.virtual.HistoryEntry;
-import net.collaud.fablab.manager.export.CsvExporter;
 import net.collaud.fablab.manager.rest.v1.criteria.AuditSearchCriteria;
-import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.manager.rest.v1.model.BaseModel;
 import net.collaud.fablab.manager.rest.v1.model.DataModel;
 import net.collaud.fablab.manager.service.AuditService;
@@ -16,8 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

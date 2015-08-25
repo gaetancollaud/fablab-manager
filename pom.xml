@@ -210,7 +210,8 @@
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>3.6.6</version>
+			<version>3.6.3</version>
+			<type>jar</type>
 		</dependency>  
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
@@ -226,8 +227,13 @@
     
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-jdo</artifactId>
+			<artifactId>querydsl-sql</artifactId>
 			<version>3.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jdbc-core</artifactId>
+			<version>1.1.0.RELEASE</version>
 		</dependency>
 	</dependencies>
 	

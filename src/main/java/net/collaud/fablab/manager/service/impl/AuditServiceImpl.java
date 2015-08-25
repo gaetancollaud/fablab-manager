@@ -1,9 +1,11 @@
 package net.collaud.fablab.manager.service.impl;
 
+import com.mysema.query.types.Predicate;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.manager.dao.AuditRepository;
 import net.collaud.fablab.manager.data.AuditEO;
+import net.collaud.fablab.manager.data.QAuditEO;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.exceptions.FablabException;
@@ -34,8 +36,6 @@ public class AuditServiceImpl extends AbstractServiceImpl implements AuditServic
 	@Override
 	@Secured({Roles.AUDIT_VIEW})
 	public List<AuditEO> search(Integer userId, List<AuditObject> type, Date after, Date before, String content, int limit) throws FablabException {
-//		auditDAO.
-		return null;
-//		return auditDAO.search(userId, type, after, before, content, limit);
+		return auditDAO.search(userId, type, after, before, content, limit);
 	}
 }
