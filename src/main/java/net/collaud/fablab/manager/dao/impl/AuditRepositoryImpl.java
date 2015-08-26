@@ -73,6 +73,7 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 
 		return query
 				.innerJoin(audit.who, user)
+				.orderBy(audit.when.desc())
 				.limit(limit)
 				.list(QAuditEO.create(
 								audit.id,

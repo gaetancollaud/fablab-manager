@@ -56,11 +56,11 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	private Integer id;
 
 	@JsonIgnore
-	@Column(name = "password", nullable = false)
+	@Column(name = "password")
 	private String password;
 
 	@JsonIgnore
-	@Column(name = "password_salt", nullable = false)
+	@Column(name = "password_salt")
 	private String passwordSalt;
 
 	@Transient

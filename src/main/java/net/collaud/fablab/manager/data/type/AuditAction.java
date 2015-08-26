@@ -7,6 +7,10 @@ package net.collaud.fablab.manager.data.type;
 public enum AuditAction {
 	INSERT,
 	UPDATE,
+	SAVE,
 	DELETE,
-	CONFIRM
+	CONFIRM,
+	LOGIN,
+	LOGOUT,
+	OTHER
 }

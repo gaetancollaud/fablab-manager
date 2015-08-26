@@ -8,11 +8,15 @@ import java.util.Map;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.manager.audit.Audit;
+import net.collaud.fablab.manager.audit.AuditDetail;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.GroupEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.AuditAction;
+import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.security.PasswordUtils;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.MailService;
@@ -76,6 +80,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
+	@Audit
+	@AuditDetail(object = AuditObject.USER, action = AuditAction.SAVE)
 	public UserEO save(UserEO user) {
 		if (user.getId() == null) {
 			user.setId(0);
@@ -118,6 +124,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
+	@Audit
+	@AuditDetail(object = AuditObject.USER, action = AuditAction.DELETE)
 	public void remove(Integer id) {
 		UserEO user = userDao.findOne(id);
 		user.setEnabled(false);
@@ -125,6 +133,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
+	@Audit
+	@AuditDetail(object = AuditObject.USER, action = AuditAction.INSERT)
 	public void signup(UserEO user, String recaptchaResponse) {
 		checkRecaptcha(recaptchaResponse);
 		save(user);
@@ -159,6 +169,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
+	@Audit
+	@AuditDetail(object = AuditObject.USER, action = AuditAction.OTHER)
 	public void updateMailingList() {
 		//FIXME fit the mailing list API
 		StringBuilder sb = new StringBuilder();

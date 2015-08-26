@@ -13,6 +13,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
 		<spring.version>4.1.4.RELEASE</spring.version>
+		<querydsl.version>3.6.6</querydsl.version>
 	</properties>
 	
 	<dependencies>
@@ -84,7 +85,26 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.3.7.Final</version>
+			<version>4.3.6.Final</version>
+		</dependency>
+		
+		
+		<!-- QueryDSL -->
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>  
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-core</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>  
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>${querydsl.version}</version>
+			<scope>provided</scope>
 		</dependency>
  
 		<!-- connect to mysql -->
@@ -164,11 +184,6 @@
 		
 		
 		<!-- Utils -->
-		<!--		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.6</version>
-		</dependency>-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
@@ -205,36 +220,12 @@
 			<version>3.1.0</version>
 			<type>jar</type>
 		</dependency>
-		
-		<!-- TODO -->
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<version>3.6.3</version>
-			<type>jar</type>
-		</dependency>  
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-core</artifactId>
-			<version>3.6.6</version>
-		</dependency>  
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-			<version>3.6.6</version>
-			<scope>provided</scope>
-		</dependency>        
-    
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-sql</artifactId>
-			<version>3.6.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jdbc-core</artifactId>
-			<version>1.1.0.RELEASE</version>
-		</dependency>
+	 <dependency>
+	  <groupId>javax</groupId>
+	  <artifactId>javaee-api</artifactId>
+	  <version>7.0</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 	
 	<build>
