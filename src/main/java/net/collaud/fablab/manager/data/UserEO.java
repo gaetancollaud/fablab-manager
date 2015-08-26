@@ -138,7 +138,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MembershipTypeEO membershipType;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private UserBalanceEO balance;
 

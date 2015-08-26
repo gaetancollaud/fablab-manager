@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -13,7 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.collaud.fablab.manager.data.type.AuditAction;
@@ -28,6 +31,10 @@ import net.collaud.fablab.manager.data.type.AuditObject;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+//@AllArgsConstructor(onConstructor = @_({
+//	@QueryProjection
+//}))
 public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -59,12 +66,9 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 
 	@Column(name = "content", nullable = true)
 	private String content;
-	
+
 	@Column(name = "detail", nullable = true)
 	private String detail;
-
-	public AuditEO() {
-	}
 
 	public AuditEO(Integer auditId) {
 		this.id = auditId;
@@ -77,6 +81,19 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 		this.objectId = objectId;
 		this.when = when;
 		this.success = success;
+		this.content = content;
+		this.detail = detail;
+	}
+
+	@QueryProjection
+	public AuditEO(Integer id, AuditAction action, AuditObject object, Integer objectId, Date when, boolean success, UserEO who, String content, String detail) {
+		this.id = id;
+		this.action = action;
+		this.object = object;
+		this.objectId = objectId;
+		this.when = when;
+		this.success = success;
+		this.who = who;
 		this.content = content;
 		this.detail = detail;
 	}
