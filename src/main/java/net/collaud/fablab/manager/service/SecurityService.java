@@ -1,10 +1,12 @@
 package net.collaud.fablab.manager.service;
 
 import java.util.Optional;
+import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.AuditAction;
+import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.type.LoginResult;
 import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
-import net.collaud.fablab.manager.security.Roles;
 
 /**
  *
@@ -20,6 +22,7 @@ public interface SecurityService {
 	
 	Boolean isAuthenticated();
 	
+	@Audit(object = AuditObject.USER, action = AuditAction.LOGIN)
 	LoginResult login(String login, String password);
 	
 	void logout();
