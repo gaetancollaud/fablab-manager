@@ -55,7 +55,7 @@
 		<tbody>
 			<tr ng-repeat="h in history"
 				ng-class="h.object|lowercase">
-				<td>{{h.date|formatTimestamp:'DD.MM.YYYY HH:mm'}}</td>
+				<td>{{h.when|formatTimestamp:'DD.MM.YYYY HH:mm'}}</td>
 				<td>{{h.object}}</td>
 				<td>{{h.who|prettyUser}}</td>
 				<td>{{h.content}}</td>
