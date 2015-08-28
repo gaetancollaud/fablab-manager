@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuditRepositoryImpl implements AuditRepositoryCustom {
 
 	public static final int MAX_LIMIT = 1000;
+	public static final int DEFAULT_LIMIT = 100;
 
 	private QAuditEO audit = QAuditEO.auditEO;
 	private QUserEO user = QUserEO.userEO;
@@ -36,7 +37,9 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 	@Override
 	public List<AuditEO> search(Integer userId, List<AuditObject> type, Date after, Date before, String content, int limit) {
 
-		if (limit > MAX_LIMIT) {
+		if(limit<=0){
+			limit = DEFAULT_LIMIT;
+		}else if(limit > MAX_LIMIT ) {
 			log.warn("Requested limit of {} which is more than the max allowed : {}", limit, MAX_LIMIT);
 			limit = MAX_LIMIT;
 		}

@@ -9,14 +9,11 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import javax.interceptor.Interceptors;
 import lombok.extern.slf4j.Slf4j;
-import net.collaud.fablab.manager.audit.AuditInterceptor;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.GroupEO;
 import net.collaud.fablab.manager.data.UserEO;
-import net.collaud.fablab.manager.data.type.AuditAction;
-import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.security.PasswordUtils;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.MailService;
@@ -38,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-@Interceptors(AuditInterceptor.class)
 public class UserServiceImpl extends AbstractServiceImpl implements UserService {
 
 	public static final String PROP_RECAPTCHA_SITE = "google.recaptcha.site";

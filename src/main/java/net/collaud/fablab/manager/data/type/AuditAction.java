@@ -8,6 +8,7 @@ public enum AuditAction {
 	INSERT,
 	UPDATE,
 	SAVE,
+	SIGNUP,
 	DELETE,
 	CONFIRM,
 	LOGIN,

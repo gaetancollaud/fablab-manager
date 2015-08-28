@@ -49,39 +49,21 @@
 			$scope.criteria.dateFrom = start.toDate();
 			$scope.criteria.dateTo = end.toDate();
 			$scope.selectedInterval = interval;
-			$scope.updateAccounting();
+			$scope.reloadAudit();
 		};
 
-		var computeInAndOut = function () {
-			var moneyIn = 0;
-			var sell = 0;
-			angular.forEach($scope.history, function (h) {
-				if (h.amount > 0) {
-					moneyIn += h.amount;
-				} else {
-					sell -= h.amount;
-				}
-			});
-			$scope.results = {
-				moneyIn: moneyIn,
-				sell: sell,
-				delta: moneyIn - sell
-			};
-		};
-
-		$scope.updateAccounting = function () {
-			AuditService.search($scope.criteria.dateFrom, $scope.criteria.dateTo, function (data) {
+		
+		$scope.reloadAudit = function () {
+			AuditService.search($scope.criteria, function (data) {
 				$scope.history = data;
-				computeInAndOut();
 			});
 		};
 
-		$scope.export = function () {
-			var format = 'DD-MM-YYYY hh:mm:ss'
-			var from = moment($scope.criteria.dateFrom).format('X');
-			var to = moment($scope.criteria.dateTo).format('X');
-			window.location = App.API.AUDIT_API + "/export?dateFrom=" + from + "&dateTo=" + to;
-		};
+//		$scope.export = function () {
+//			var from = moment($scope.criteria.dateFrom).format('X');
+//			var to = moment($scope.criteria.dateTo).format('X');
+//			window.location = App.API.AUDIT_API + "/export?dateFrom=" + from + "&dateTo=" + to;
+//		};
 
 		$scope.periodPreset($scope.intervals[2]);//this month
 	});

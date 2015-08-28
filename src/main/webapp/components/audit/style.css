@@ -1,20 +1,29 @@
-.accounting .pressets{
+.audit .pressets{
 	text-align: center;
 	margin-bottom: 20px;
 }
-.accounting .pressets button{
+.audit .pressets button{
 	margin: 5px;
 }
-.accounting .form-group{
+.audit .form-group{
 	margin-bottom: 0;
 }
 
-.accounting .results{
-	font-weight: bold;
+.audit .table .security{
+	background: #ffb74d;
 }
-.accounting .results .sell{
-	color: chocolate;
+.audit .table .usage{
+	background: #99ffff;
 }
-.accounting .results .money-in{
-	color: #3e8f3e;
+.audit .table .payment{
+	background: #99ff99;
+}
+.audit .table .access_door{
+	background: #dddddd;
+}
+.audit .table .user{
+	background: #ffff66;
+}
+.audit .table .subscription{
+	background: #ffff66;
 }

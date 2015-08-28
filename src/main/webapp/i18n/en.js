@@ -30,6 +30,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			reservation: 'Reservation',
 			payment: 'Payment',
 			accounting: 'Accounting',
+			audit: 'Audit',
 			login: 'Login',
 			logout: 'Logout',
 			signup: 'Signup'
@@ -175,6 +176,11 @@ angular.module('Fablab').config(function ($translateProvider) {
 			delta:'Delta',
 			debit:'Debit',
 			credit:'Credit'
+		},
+		audit:{
+			content:'Content',
+			object:'Object',
+			title:'Audit'
 		}
 	});
 });

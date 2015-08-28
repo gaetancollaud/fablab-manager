@@ -13,6 +13,7 @@ public enum AuditObject {
 	USAGE("Usage"),
 	RESERVATION("Reservation"),
 	USER("User"),
+	SECURITY("Security"),
 	SYSTEM_STATUS("SystemStatus");
 	private final String name;
 

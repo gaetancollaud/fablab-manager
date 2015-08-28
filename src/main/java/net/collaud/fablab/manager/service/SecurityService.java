@@ -22,9 +22,10 @@ public interface SecurityService {
 	
 	Boolean isAuthenticated();
 	
-	@Audit(object = AuditObject.USER, action = AuditAction.LOGIN)
+	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGIN)
 	LoginResult login(String login, String password);
 	
+	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGOUT)
 	void logout();
 	
 	boolean hasRoles(String roles);

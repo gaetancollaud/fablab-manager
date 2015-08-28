@@ -1,7 +1,7 @@
-<h1 translate="accounting.title"></h1>
+<h1 translate="audit.title"></h1>
 
-<div class="accounting">
-	<form name="accountingFilter" class="form-horizontal">
+<div class="audit">
+	<form name="auditFitler" class="form-horizontal">
 		<div class="panel panel-default">
 			<div class="panel-heading" translate="panel.search"></div>
 			<div class="panel-body">
@@ -29,12 +29,12 @@
 				</div>
 			</div>
 			<div class="panel-footer text-right">
-				<button type="button" class="btn btn-danger"ng-click="export()">
+<!--				<button type="button" class="btn btn-danger"ng-click="export()">
 					{{'button.export'| translate}}
 					<span class="glyphicon glyphicon-export"></span>
-				</button>
+				</button>-->
 				<button type="submit" class="btn btn-primary" 
-						ng-disabled="accountingFilter.$invalid"
+						ng-disabled="auditFitler.$invalid"
 						ng-click="updateAccounting()">
 					{{'button.search'| translate}} 
 					<span class="glyphicon glyphicon-search"> </span>
@@ -42,39 +42,23 @@
 			</div>
 		</div>
 	</form>
-	<div class="panel panel-default">
-		<div class="panel-heading" translate="accounting.summary"></div>
-		<div class="panel-body results">
-			<div class="col-sm-3 sell"><span translate="accounting.sell"></span> : {{results.sell|currency}}</div>
-			<div class="col-sm-3 money-in" ><span translate="accounting.moneyIn"></span> : {{results.moneyIn|currency}}</div>
-			<div class="col-sm-3 delta"><span translate="accounting.delta"></span> : {{results.delta|currency}}</div>
-		</div>
-	</div>
 
 	<table class="table">
 		<thead>
 			<tr>
-				<th style="width:80px" translate="general.date"></th>
-				<th style="width:100px" translate="accounting.credit"></th>
-				<th style="width:100px" translate="accounting.debit"></th>
+				<th style="width:130px" translate="general.date"></th>
+				<th style="width:100px" translate="audit.object"></th>
 				<th style="min-width:150px"translate="general.user"></th>
-				<th translate="general.detail"></th>
-				<th translate="general.comment"></th>
+				<th translate="audit.content"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="h in history"
-				ng-class="{
-					'bg-warning':h.type==='USAGE',
-					'bg-success':h.type==='PAYMENT',
-					'bg-info':h.type==='SUBSCRIPTION'
-				}">
-				<td>{{h.date|formatTimestamp:'DD.MM.YYYY'}}</td>
-				<td><span ng-if="h.type === 'PAYMENT'">{{h.amount|currency}}</span></td>
-				<td><span ng-if="h.type !== 'PAYMENT'">{{-h.amount|currency}}</span></td>
-				<td>{{h.user|prettyUser}}</td>
-				<td>{{h.detail}}</td>
-				<td>{{h.comment}}</td>
+				ng-class="h.object|lowercase">
+				<td>{{h.date|formatTimestamp:'DD.MM.YYYY HH:mm'}}</td>
+				<td>{{h.object}}</td>
+				<td>{{h.who|prettyUser}}</td>
+				<td>{{h.content}}</td>
 			</tr>
 		</tbody>
 	</table>
