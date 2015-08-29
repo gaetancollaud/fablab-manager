@@ -1,0 +1,19 @@
+mysql:
+  image: mysql
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=fablab
+    - MYSQL_DATABASE=fablab
+    - MYSQL_USER=fablab
+    - MYSQL_PASSWORD=fablab
+fablab-manager:
+  build: .
+  environment:
+    - MYSQL_DATABASE=fablab
+    - MYSQL_USER=fablab
+    - MYSQL_PASSWORD=fablab  
+  ports:
+    - "8080:8080"
+  links:
+    - mysql:mysql
