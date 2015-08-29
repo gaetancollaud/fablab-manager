@@ -1,0 +1,44 @@
+<div class="priceMachineEdit">
+    <form class="form-horizontal" name="editPriceMachine" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newPriceMachine" translate="priceMachine.create"></span>
+                <span ng-show="!newPriceMachine" translate="priceMachine.edit"></span>
+                <span ng-show="!newPriceMachine"> {{priceMachine.price}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="priceMachine.price"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="priceMachine.price" required/>
+                    </div>
+                </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="priceMachine.machineType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                        required
+                        ng-model="priceMachine.machineType"
+                    ng-options="mt.name for mt in machineTypeList track by mt.id"
+                    disabled></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="priceMachine.membershipType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                        required
+                        ng-model="priceMachine.membershipType"
+                    ng-options="mst.name for mst in membershipTypeList track by mst.id"
+                    disabled></select>
+                </div>
+            </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/priceMachines"></btn-cancel>
+                <btn-submit form="editPriceMachine"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+

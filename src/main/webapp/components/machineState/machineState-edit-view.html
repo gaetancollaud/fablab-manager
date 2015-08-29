@@ -1,0 +1,33 @@
+<form class="form-horizontal" name="editMachineState" ng-submit="save(false)">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span ng-show="newMachineState" translate="machineState.create"></span>
+            <span ng-show="!newMachineState" translate="machineState.edit"></span>
+            <span ng-show="!newMachineState"> {{machineState.label}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="machineState.label"></label>
+                <div class="col-sm-8">
+                    <input type="text" 
+                           class="form-control" 
+                           ng-model="machineState.label" 
+                           name="label"
+                           duplicate="existingValues" 
+                           uppercase 
+                           required/>
+                </div>
+                <div class="col-sm-2 error-text">
+                    <span ng-show="editMachineState.label.$error.duplicate" 
+                          translate="machineState.alreadyExist"></span>
+                    <span ng-show="editMachineState.label.$error.required" ></span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer right">
+            <btn-cancel link="#/machineStates"></btn-cancel>
+            <btn-submit form="ediMachineState"></btn-submit>
+        </div>
+    </div>
+</form>
+

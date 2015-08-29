@@ -14,16 +14,16 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 
 			/* event source that pulls from google.com */
 			$scope.dataSourceGoogleAgenda = {
-				url: "https://www.google.com/calendar/feeds/nulu08ntleed9c5peukoeaifl8%40group.calendar.google.com/public/basic",
+				url: App.CONFIG.GOOGLE_CALENDAR_URL,
 				className: 'gcal-event',
-				currentTimezone: 'Europe/Zurich',
-				color: '#B2E0FF',
+				currentTimezone: App.CONFI.CALENDAR_TIME_ZONE,
+				color: App.CONFI.CALENDAR_AGENDA_COLOR,
 				textColor: 'black'
 			};
 
 			$scope.dataSourceReservation = {
 				events: $scope.ngModel,
-				color: '#FFEBCC',
+				color: App.CONFIG.CALENDAR_RESERVATION_COLOR,
 				textColor: 'black'
 			};
 

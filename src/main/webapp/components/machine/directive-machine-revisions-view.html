@@ -1,0 +1,22 @@
+<h3>Revisions</h3>
+<table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="revision in $data">
+            <td 
+                data-title="'revision.revisionDate' | translate">
+                {{revision.revisionDate | date:'dd.MM.yyyy'}}
+            </td>
+            <td 
+                data-title="'revision.revisionTime' | translate">
+                {{revision.revisionTime | date:'HH:mm'}} 
+            </td>
+            <td 
+                data-title="'revision.note' | translate">
+                {{revision.note}}
+            </td>
+            <td 
+                data-title="'revision.cost' | translate">
+                <span>{{revision.cost}}</span>
+                <span> {{currency}}</span>
+            </td>
+        </tr>
+    </table> 

@@ -1,0 +1,29 @@
+<h1 translate="menu.trainingLevels"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/trainingLevels/trainingLevel-edit"></btn-create>
+    </div>
+</div>
+<div class="trainingLevelList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="trainingLevel in $data">
+            <td 
+                data-title="'trainingLevel.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{trainingLevel.label | lowercase}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/trainingLevels/trainingLevel-edit/{{trainingLevel.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(trainingLevel)"
+                        ng-really-message="{{'trainingLevel.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

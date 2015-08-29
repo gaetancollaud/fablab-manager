@@ -1,0 +1,92 @@
+<h1 translate="menu.reservation"></h1>
+<div class="panel panel-default">
+    <div class="panel-heading" translate="panel.search"></div>
+    <div class="panel-body">
+        <form name="form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="filter.from"></label>
+                <div class="col-sm-4">
+                    <p class="input-group">
+                        <input class="form-control" 
+                               datepicker-popup="{{format}}" 
+                               ng-model="criteria.dateFrom" 
+                               is-open="opened" 
+                               datepicker-options="dateOptions" 
+                               date-disabled="disabled(date, mode)"  
+                               close-text="Close" 
+                               ng-change="updateReservationList()"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <label class="col-sm-2 control-label" translate="filter.to"></label>
+                <div class="col-sm-4">
+                    <p class="input-group">
+                        <input class="form-control" 
+                               datepicker-popup="{{format}}" 
+                               ng-model="criteria.dateTo" 
+                               is-open="opened" 
+                               datepicker-options="dateOptions" 
+                               date-disabled="disabled(date, mode)"
+                               close-text="Close" 
+                               ng-change="updateReservationList()"
+                               />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer text-right">
+        <a class="btn btn-primary" ng-click="updateReservationList()">
+            {{'button.search'| translate}} 
+            <span class="glyphicon glyphicon-search"> </span>
+        </a>
+        <a class="btn btn-success" href="#/reservations/reservation-edit">
+            {{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> 
+            </span></a>
+    </div>
+</div>
+
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="reservation in $data">
+        <td 
+            data-title="'reservation.day' | translate" 
+            sortable="'dateStart'">
+            {{reservation.dateStart| formatTimestamp:'DD.MM.YYYY'}}
+        </td>
+        <td 
+            data-title="'reservation.from' | translate" >
+            {{reservation.dateStart| formatTimestamp:'HH:mm'}}
+        </td>
+        <td 
+            data-title="'reservation.to' | translate" >
+            {{reservation.dateEnd| formatTimestamp:'HH:mm'}}
+        </td>
+        <td 
+            data-title="'reservation.user' | translate" 
+            sortable="'userName'">
+            {{reservation.user| prettyUser}}
+        </td>
+        <td 
+            data-title="'reservation.machine' | translate"
+            sortable="'machineName'">
+            {{reservation.machine.name}}
+        </td>
+        <td  class="listBtn2">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default" href="#/reservations/reservation-edit/{{reservation.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <button class="btn btn-sm btn-danger" href=""
+                        ng-really-click="softRemove(reservation)"
+                        ng-really-message="Really remove this reservation ?">
+                    <span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+        </td>
+    </tr>
+</table> 
+<hr />
+
+<div ui-calendar="uiConfig.calendar" class="calendar" ng-model="eventSources"></div> 

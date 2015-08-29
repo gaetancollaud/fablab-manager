@@ -1,0 +1,81 @@
+<h1 translate="menu.events"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create ng-show="showRole" link="#/events/event-edit"></btn-create>
+    </div>
+</div>
+<div class="eventList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="event in $data">
+            <td 
+                data-title="'event.dateStart' | translate" 
+                sortable="'dateStart'"
+                filter="{'dateStart':'text'}">
+                {{event.dateStart|prettyDate}}
+            </td>
+            <td 
+                data-title="'event.dateEnd' | translate" 
+                sortable="'dateEnd'"
+                filter="{'dateEnd':'text'}">
+                {{event.dateEnd|prettyDate}}
+            </td>
+            <td 
+                data-title="'event.timeStart' | translate" 
+                sortable="'timeStart'"
+                filter="{'timeStart':'text'}">
+                {{event.timeStart|prettyTime}}
+            </td>
+            <td 
+                data-title="'event.timeEnd' | translate" 
+                sortable="'timeEnd'"
+                filter="{'timeEnd':'text'}">
+                {{event.timeEnd|prettyTime}}
+            </td>
+            <td 
+                data-title="'event.titleEvent' | translate" 
+                sortable="'title'"
+                filter="{'title':'text'}">
+                {{event.title}}
+            </td>
+            <td 
+                data-title="'event.theme' | translate" 
+                sortable="'theme'"
+                filter="{'theme':'text'}">
+                {{event.theme}}
+            </td>
+            <td 
+                data-title="'event.place' | translate" 
+                sortable="'place'"
+                filter="{'place':'text'}">
+                {{event.place}}
+            </td>
+            <td 
+                data-title="'event.price' | translate" 
+                sortable="'price'"
+                filter="{'price':'text'}">
+                {{event.price}} {{currency}}
+            </td>
+            <td 
+                data-title="'event.eventType' | translate" 
+                sortable="'eventTypeLabel'"
+                filter="{'eventTypeLabel':'text'}">
+                {{event.eventType.label|lowercase}}
+            </td>
+            <td class="listBtn3">
+                <div class="btn-group">
+                    <a ng-show="showRole" class="btn btn-sm btn-default" href="#/events/event-edit/{{event.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(event)"
+                        ng-really-message="{{'event.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <btn-show ng-show="!showRole" link="#/events/event-edit/{{event.id}}"></btn-show>
+                    <a title="{{btnClone}}"ng-show="showRole" class="btn btn-sm btn-alternate" ng-click="clone(event.id)">
+                        <span class="fa fa-fw fa-plus-square"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

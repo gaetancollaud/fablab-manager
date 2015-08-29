@@ -1,0 +1,14 @@
+<h1 translate="menu.ticketStatus"></h1>
+<div class="ticketStatusList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="ticketStatus in $data">
+            <td 
+                data-title="'ticketStatus.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{ticketStatus.label | lowercase}}
+            </td>
+        </tr>
+    </table> 
+</div>
+

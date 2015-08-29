@@ -11,22 +11,29 @@ import net.collaud.fablab.manager.service.global.ReadWriteService;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface UserService extends ReadWriteService<UserEO>{
+public interface UserService extends ReadWriteService<UserEO> {
 
-	Optional<UserEO> findByLogin(String login);
-	
+    Optional<UserEO> findByLogin(String login);
+
 	@Audit(object = AuditObject.USER, action = AuditAction.SIGNUP)
-	void signup(UserEO user, String recaptcha);
+    void signup(UserEO user, String recaptcha);
+
+    void forgotPassword(String email, String recaptchaResponse);
+
+    void updateMailingList();
+
+    boolean canUse(Integer machineTypeId, Integer userId);
+
+    boolean hasRole(Integer userId, String role);
+
+    Double balance(Integer userId);
 	
-	void forgotPassword(String email, String recaptchaResponse);
-
-	public void updateMailingList();
-
+	@Override
+	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
+	public UserEO save(UserEO entity);
+	
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
 	public void remove(Integer id);
 
-	@Override
-	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
-	public UserEO save(UserEO entity);
 }

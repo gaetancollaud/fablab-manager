@@ -1,0 +1,36 @@
+<h1 translate="menu.machineStatus"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/machineStatus/machineStatus-edit"></btn-create>          
+    </div>
+</div>
+<div class="machineStatus" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="machineStatus in $data">
+            <td 
+                data-title="'machineStatus.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{machineStatus.label| lowercase}}
+            </td>
+            <td 
+                data-title="'machineStatus.color' | translate" 
+                sortable="'color'"
+                filter="{'color':'text'}">
+                {{machineStatus.color}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group" >
+                    <a class="btn btn-sm btn-default" href="#/machineStatus/machineStatus-edit/{{machineStatus.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" ng-show="machineStatus.label.toUpperCase() !== 'INDISPONIBLE' &&
+                                        machineStatus.label.toUpperCase() !== 'DISPONIBLE'"
+                            ng-really-click="softRemove(machineStatus)"
+                            ng-really-message="{{'machineStatus.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

@@ -1,0 +1,56 @@
+<h1 translate="menu.revision"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/revisions/revision-edit"></btn-create>                
+    </div>
+</div>
+<div class="revisionList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="revision in $data">
+            <td 
+                data-title="'revision.revisionDate' | translate" 
+                sortable="'revisionDate'"
+                filter="{'revisionDate':'text'}">
+                {{revision.revisionDate| date:'dd.MM.yyyy'}}
+            </td>
+            <td 
+                data-title="'revision.revisionTime' | translate" 
+                sortable="'revisionTime'"
+                filter="{'revisionTime':'text'}">
+                {{revision.revisionTime| date:'HH:mm'}} 
+            </td>
+            <td 
+                data-title="'revision.note' | translate" 
+                sortable="'note'"
+                filter="{'note':'text'}">
+                {{revision.note}}
+            </td>
+            <td 
+                data-title="'revision.cost' | translate" 
+                sortable="'cost'"
+                filter="{'cost':'text'}">
+                <span>{{revision.cost}}</span>
+                <span> {{currency}}</span>
+            </td>
+            <td 
+                data-title="'revision.machineName' | translate" 
+                sortable="'machineName'"
+                filter="{'machineName':'text'}">
+                <span>{{revision.machine.code}}</span>
+                <span> - </span>
+                <span>{{revision.machine.name}}</span>
+            </td>
+            <td  class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/revisions/revision-edit/{{revision.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(revision)"
+                            ng-really-message="{{'revision.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

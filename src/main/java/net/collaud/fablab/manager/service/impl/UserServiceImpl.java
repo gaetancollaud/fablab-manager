@@ -5,17 +5,22 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
-import javax.interceptor.Interceptors;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.manager.dao.CertificationRepository;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
+import net.collaud.fablab.manager.data.CertificationEO;
 import net.collaud.fablab.manager.data.GroupEO;
+import net.collaud.fablab.manager.data.RoleEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.virtual.UserAccountEntry;
 import net.collaud.fablab.manager.security.PasswordUtils;
 import net.collaud.fablab.manager.security.Roles;
+import net.collaud.fablab.manager.service.AccountingService;
 import net.collaud.fablab.manager.service.MailService;
 import net.collaud.fablab.manager.service.UserService;
 import net.collaud.fablab.manager.service.util.recaptcha.ReCaptchaChecker;
@@ -35,137 +40,178 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class UserServiceImpl extends AbstractServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
-	public static final String PROP_RECAPTCHA_SITE = "google.recaptcha.site";
-	public static final String PROP_RECAPTCHA_SECRET = "google.recaptcha.secret";
+    public static final String PROP_RECAPTCHA_SITE = "google.recaptcha.site";
+    public static final String PROP_RECAPTCHA_SECRET = "google.recaptcha.secret";
 
-	@Autowired
-	private MailService mailService;
+    @Autowired
+    private MailService mailService;
 
-	@Autowired
-	private UserRepository userDao;
+    @Autowired
+    private CertificationRepository certificationDAO;
 
-	@Autowired
-	private MembershipTypeRepository membershipTypeDao;
+    @Autowired
+    private UserRepository userDao;
 
-	@Autowired
-	private GroupRepository groupDao;
+    @Autowired
+    private AccountingService accountingService;
 
-	@Autowired
-	private SpringPropertiesUtils propertyUtils;
+    @Autowired
+    private MembershipTypeRepository membershipTypeDao;
 
-	@Override
-	public Optional<UserEO> findByLogin(String login) {
-		if (login == null || login.isEmpty()) {
-			return Optional.empty();
-		}
-		return userDao.findByLoginOrEmail(login);
-	}
+    @Autowired
+    private GroupRepository groupDao;
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public List<UserEO> findAll() {
-		return userDao.findAll();
-	}
+    @Autowired
+    private SpringPropertiesUtils propertyUtils;
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public Optional<UserEO> getById(Integer id) {
-		return userDao.findOneDetails(id);
-	}
+    @Override
+    public Optional<UserEO> findByLogin(String login) {
+        if (login == null || login.isEmpty()) {
+            return Optional.empty();
+        }
+        return userDao.findByLoginOrEmail(login);
+    }
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public UserEO save(UserEO user) {
-		if (user.getId() == null) {
-			user.setId(0);
-		}
-		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
-		if (changePassword) {
-			user = PasswordUtils.setUseEONewPassword(user, user.getPasswordNew());
-		} else if (user.getId() == 0) {
-			//set random password for new user
-			user = PasswordUtils.setUseEONewPassword(user, RandomStringUtils.random(20, true, true));
-		}
-		user.setMembershipType(membershipTypeDao.findOne(user.getMembershipType().getId()));
-		if (user.getGroups() != null) {
-			user.setGroups(new HashSet<>(groupDao.findAll(user.getGroups().stream().map(GroupEO::getId).collect(toList()))));
-		}
-		if (user.getId() > 0) {
-			UserEO old = userDao.findOne(user.getId());
-			old.setFirstname(user.getFirstname());
-			old.setLastname(user.getLastname());
-			old.setEmail(user.getEmail());
-			old.setPhone(user.getPhone());
-			old.setAddress(user.getAddress());
-			old.setRfid(user.getRfid());
-			old.setBirthdate(user.getBirthdate());
-			old.setGender(user.getGender());
-			old.setComment(user.getComment());
-			old.setMembershipType(user.getMembershipType());
-			old.setGroups(user.getGroups());
-			if (changePassword) {
-				old.setPassword(user.getPassword());
-				old.setPasswordSalt(user.getPasswordSalt());
-			}
-			return userDao.saveAndFlush(old);
-		} else {
-			user.setEnabled(true);
-			user.setDateInscr(new Date());
-			return userDao.saveAndFlush(user);
-		}
-	}
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public List<UserEO> findAll() {
+        return userDao.findAll();
+    }
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public void remove(Integer id) {
-		UserEO user = userDao.findOne(id);
-		user.setEnabled(false);
-		userDao.saveAndFlush(user);
-	}
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public Optional<UserEO> getById(Integer id) {
+        return userDao.findOneDetails(id);
+    }
 
-	@Override
-	public void signup(UserEO user, String recaptchaResponse) {
-		checkRecaptcha(recaptchaResponse);
-		save(user);
-		Map<String, Object> scope = new HashMap<>();
-		scope.put("email", user.getEmail());
-		mailService.sendHTMLMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
-	}
+    @Override
+    @Secured(Roles.USER_MANAGE)
+    public UserEO save(UserEO user) {
+        if (user.getId() == null) {
+            user.setId(0);
+        }
+        boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
+        if (changePassword) {
+            user = PasswordUtils.setUserEONewPassword(user, user.getPasswordNew());
+        } else if (user.getId() == 0) {
+            //set random password for new user
+            user = PasswordUtils.setUserEONewPassword(user, RandomStringUtils.random(20, true, true));
+        }
+        user.setMembershipType(membershipTypeDao.findOne(user.getMembershipType().getId()));
+        if (user.getGroups() != null) {
+            user.setGroups(new HashSet<>(groupDao.findAll(user.getGroups().stream().map(GroupEO::getId).collect(toList()))));
+        }
+        if (user.getId() > 0) {
+            UserEO old = userDao.findOne(user.getId());
+            old.setFirstname(user.getFirstname());
+            old.setLastname(user.getLastname());
+            old.setEmail(user.getEmail());
+            old.setPhone(user.getPhone());
+            old.setAddress(user.getAddress());
+            old.setRfid(user.getRfid());
+            old.setBirthdate(user.getBirthdate());
+            old.setGender(user.getGender());
+            old.setComment(user.getComment());
+            old.setMembershipType(user.getMembershipType());
+            old.setGroups(user.getGroups());
+            if (changePassword) {
+                old.setPassword(user.getPassword());
+                old.setPasswordSalt(user.getPasswordSalt());
+            }
+            return userDao.saveAndFlush(old);
+        } else {
+            user.setActive(true);
+            user.setDateInscr(new Date());
+            return userDao.saveAndFlush(user);
+        }
+    }
 
-	@Override
-	public void forgotPassword(String email, String recaptchaResponse) {
-		checkRecaptcha(recaptchaResponse);
-		final Optional<UserEO> user = userDao.findByLoginOrEmail(email);
-		if (user.isPresent()) {
-			final String newPassword = PasswordUtils.setUserEONewRandomPassword(user.get());
-			Map<String, Object> scope = new HashMap<>();
-			scope.put("password", newPassword);
-			mailService.sendHTMLMail("Mot de passe oublié", MailServiceImpl.Template.FORGOT_PASSWORD, scope, email);
-			userDao.save(user.get());
-		} else {
-			throw new RuntimeException("No user found for email " + email);
-		}
-	}
+    @Override
+    @Secured(Roles.USER_MANAGE)
+    public void remove(Integer id) {
+        UserEO current = userDao.findOne(id);
+        current.setActive(false);
+        userDao.saveAndFlush(current);
+    }
 
-	private void checkRecaptcha(String recaptchaResponse) {
-		String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
-		ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);
-		if (!rep.getSuccess()) {
-			log.error("Recaptcha check failed because of " + rep.getErrorCodes());
-			throw new RuntimeException("Captcha fail");
-		}
-	}
+    @Override
+    public void signup(UserEO user, String recaptchaResponse) {
+        checkRecaptcha(recaptchaResponse);
+        save(user);
+        Map<String, Object> scope = new HashMap<>();
+        scope.put("email", user.getEmail());
+        mailService.sendHTMLMail("Inscription", MailServiceImpl.Template.SIGNUP, scope, user.getEmail());
+    }
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public void updateMailingList() {
-		//FIXME fit the mailing list API
-		StringBuilder sb = new StringBuilder();
-		userDao.findAll().stream()
-				.forEach(u -> sb.append("mail:").append(u.getEmail()).append("\n"));
-		mailService.sendPlainTextMail("Update mailing list", sb.toString(), "mailingListUpdater@gmail.com");
-	}
+    @Override
+    public void forgotPassword(String email, String recaptchaResponse) {
+        checkRecaptcha(recaptchaResponse);
+        final Optional<UserEO> user = userDao.findByLoginOrEmail(email);
+        if (user.isPresent()) {
+            final String newPassword = PasswordUtils.setUserEONewRandomPassword(user.get());
+            Map<String, Object> scope = new HashMap<>();
+            scope.put("password", newPassword);
+            mailService.sendHTMLMail("Mot de passe oublié", MailServiceImpl.Template.FORGOT_PASSWORD, scope, email);
+            userDao.save(user.get());
+        } else {
+            throw new RuntimeException("No user found for email " + email);
+        }
+    }
 
+    private void checkRecaptcha(String recaptchaResponse) {
+        String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
+        ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);
+        if (!rep.getSuccess()) {
+            log.error("Recaptcha check failed because of " + rep.getErrorCodes());
+            throw new RuntimeException("Captcha fail");
+        }
+    }
+
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public void updateMailingList() {
+        //FIXME fit the mailing list API
+        StringBuilder sb = new StringBuilder();
+        userDao.findAll().stream()
+                .forEach(u -> sb.append("mail:").append(u.getEmail()).append("\n"));
+        mailService.sendPlainTextMail("Update mailing list", sb.toString(), "mailingListUpdater@gmail.com");
+    }
+
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public boolean canUse(Integer machineTypeId, Integer userId) {
+        List<CertificationEO> userCertifications = certificationDAO.getCertificationsByUserId(userId);
+        boolean res = false;
+        for (CertificationEO c : userCertifications) {
+            //maintient de l'état vrai
+            res = res || Objects.equals(c.getTraining().getMachineType().getId(), machineTypeId);
+        }
+        return res;
+    }
+
+    @Override
+    public boolean hasRole(Integer userId, String role) {
+        boolean res = false;
+        UserEO u = userDao.findOneByIdAndFetchRoles(userId).get();
+        for (GroupEO g : u.getGroups()) {
+            for (RoleEO r : g.getRoles()) {
+                //maintient de l'état vrai
+                res = res || (role.equals(r.getTechnicalname()));
+            }
+        }
+        return res;
+    }
+
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public Double balance(Integer userId) {
+        Double balance = 0.0;
+        for (UserAccountEntry uae : accountingService.getAccountingEntries(userId)) {
+            balance += uae.getAMOUNT();
+        }
+        balance = Math.round(balance * 20) / 20.0;
+        return balance;
+    }
 }

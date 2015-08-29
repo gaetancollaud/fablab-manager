@@ -2,11 +2,10 @@
 	'use strict';
 
 	var ctrl = angular.module('Fablab');
-	ctrl.controller('AuthLogoutController', function ($rootScope, $scope, $location, AuthService) {
+	ctrl.controller('AuthLogoutController', function ($rootScope, $scope, $location, NotificationService, AuthService) {
 		AuthService.logout(function () {
-			$rootScope.updateCurrentUser(function () {
-				$location.path('/');
-			});
+			$rootScope.updateCurrentUser();
+			$location.path('/');
 		});
 	});
 

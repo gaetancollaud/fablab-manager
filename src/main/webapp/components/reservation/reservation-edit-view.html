@@ -1,0 +1,88 @@
+<div class="reservations">
+    <div class="col-md-6">
+        <form class="form-horizontal" name="editReservation" ng-submit="save()">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="reservation.edit.title">
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="reservation.user"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{value.reservationUser|prettyUser}}" disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label class="col-sm-3 control-label" translate="reservation.machine"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" 
+                                    name="machine"
+                                    ng-model="reservation.machine"
+                                    required
+                                    ng-options="m.name group by m.machineType.name for m in machines track by m.id"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="reservation.date"></label>
+                        <div class="col-sm-9">
+                            <p class="input-group">
+                                <input class="form-control" 
+                                       datepicker-popup="{{format}}" 
+                                       ng-model="value.reservationDate" 
+                                       is-open="opened" 
+                                       min-date="{{minDate}}"
+                                       max-date="{{maxDate}}"
+                                       datepicker-options="dateOptions" 
+                                       ng-required="true" 
+                                       close-text="Close"
+                                       required/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error':timeError}">
+                        <label class="timeLabel col-sm-3 control-label" translate="reservation.from"></label>
+                        <div class="col-sm-3">
+                            <timepicker ng-model="value.startTime" 
+                                        ng-change="timeChanged()" 
+                                        hour-step="1" 
+                                        minute-step="15" 
+                                        readonly-input="true"
+                                        show-meridian="false"></timepicker>
+                        </div>
+                        <label class="timeLabel col-sm-3 control-label" translate="reservation.to"></label>
+                        <div class="col-sm-3">
+                            <timepicker ng-model="value.endTime" 
+                                        ng-change="timeChanged()" 
+                                        hour-step="1" 
+                                        minute-step="15" 
+                                        readonly-input="true"
+                                        show-meridian="false"></timepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer right">
+                    <a href="#/reservations" class="btn btn-default" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
+                    <button type="submit" class="btn btn-success"
+                            ng-disabled="editReservation.$invalid || value.oneConflict || timeError">
+                        {{'button.save'| translate}} 
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <reservation-day 
+            machine="reservation.machine"
+            date="value.reservationDate" 
+            hour-from="value.startTime"
+            hour-to="value.endTime"
+            one-conflict="value.oneConflict"></reservation-day>
+    </div>
+</div>

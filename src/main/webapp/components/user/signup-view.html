@@ -70,7 +70,9 @@
 			<div class="form-group" ng-class="{'has-error':!recaptchaReponse}">
 				<label class="col-sm-2 control-label">{{'auth.captcha'|translate}}*</label>
 				<div class="col-sm-8">
-					<recaptcha on-success="captchaResponse(response)"></recaptcha>
+					<div vc-recaptcha
+						 on-success="captchaResponse(response)"
+						 key="siteKey"></div>
 				</div>
 			</div>
 		</div>

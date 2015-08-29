@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @param <SERVICE> repository
  */
 abstract public class ReadRestWebservice<ENTITY extends AbstractDataEO, SERVICE extends ReadService<ENTITY>> {
-
+	
 	@Setter
 	@Getter
 	private SERVICE service;
-
+	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public BaseModel list() {

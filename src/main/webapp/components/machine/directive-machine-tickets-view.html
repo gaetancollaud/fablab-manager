@@ -1,0 +1,25 @@
+<h3>Tickets</h3>
+<table class="table" ng-table="tableParams" show-filter="true">
+    <tr ng-repeat="ticket in $data">
+        <td 
+            data-title="'ticket.title' | translate">
+            {{ticket.title}}
+        </td>
+        <td 
+            data-title="'ticket.creationDateList' | translate">
+            {{ticket.creationDate}}
+        </td>
+        <td 
+            data-title="'ticket.previsionCloseDate' | translate">
+            {{ticket.previsionCloseDate}}
+        </td>
+        <td 
+            data-title="'ticket.closeDateList' | translate">
+            {{ticket.closeDate}}
+        </td>
+        <td 
+            data-title="'ticket.status' | translate">
+            {{ticket.status.label|lowercase}}
+        </td>
+    </tr>
+</table>

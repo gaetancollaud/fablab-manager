@@ -1,0 +1,44 @@
+<h1 translate="priceMachine.titleList"></h1>
+<div class="priceMachineTable" >
+    <form class="form-horizontal" name="editPriceMachineTable" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span translate="priceMachine.editAlter"></span>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span translate="priceMachine.machineType"></span>
+                            </th>
+                            <th ng-repeat="membershipType in membershipTypes">
+                                {{membershipType.name}}
+                            </th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="machineType in prices.machineTypes">
+                            <td>
+                                <span>{{machineType.machineType.name}}</span>
+                            </td>
+                            <td ng-repeat="membershipType in machineType.membershipTypes">
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" min="0" step="0.05" ng-model="membershipType.price.price"/>
+                                        <div class="input-group-addon">{{currency}}</div>
+                                    </div> 
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer right">
+                <btn-submit form="editPriceMachineTable"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+
+

@@ -1,0 +1,74 @@
+<h1 translate="menu.machines"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/machines/machine-edit"></btn-create>          
+    </div>
+</div>
+<div class="machineList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="machine in $data"
+            ng-style="{'background-color' : machine.machineStatus.color }">
+            <td  style="width:90px" 
+                 data-title="'machine.code' | translate" 
+                 sortable="'code'"
+                 filter="{'code':'text'}">
+                {{machine.code}}
+            </td>
+            <td 
+                data-title="'machine.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{machine.name}}
+            </td>
+            <td style="width:120px" 
+                data-title="'machine.buyPrice' | translate" 
+                sortable="'buyPrice'"
+                filter="{'buyPrice':'text'}">
+                {{machine.buyPrice}} {{machine.buyPrice ? currency: ""}}
+            </td>
+            <td  style="width:145px"
+                 data-title="'machine.acquisitionDate' | translate" 
+                 sortable="'acquisitionDate'"
+                 filter="{'acquisitionDate':'text'}">
+                {{machine.acquisitionDate}}
+            </td>
+            <td  
+                data-title="'machine.machineType' | translate" 
+                sortable="'machineTypeName'"
+                filter="{'machineTypeName':'text'}">
+                {{machine.machineType.name}}
+            </td>
+            <td
+                data-title="'machine.machineStatus' | translate" 
+                sortable="'machineStatusLabel'"
+                filter="{'machineStatusLabel':'text'}">
+                {{machine.machineStatus.label}}
+            </td>
+            <td style="width:100px" 
+                data-title="'machine.machineState' | translate" 
+                sortable="'machineStateLabel'"
+                filter="{'machineStateLabel':'text'}">
+                {{machine.machineState.label}}
+            </td>
+            <td class="listBtn4">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/machines/machine-edit/{{machine.id}}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(machine)"
+                            ng-really-message="{{'machine.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <a title="{{btnTitleRevision}}" class="btn btn-sm btn-alternate" href="#/revisions/revision-edit-machine/{{machine.id}}">
+                        <span class="fa fa-fw fa-check-square-o"> </span>
+                    </a>
+                    <a title="{{btnTitleTicket}}" class="btn btn-sm btn-warning" href="#/tickets/ticket-edit-machine/{{machine.id}}">
+                        <span class="fa fa-fw fa-bolt"> </span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

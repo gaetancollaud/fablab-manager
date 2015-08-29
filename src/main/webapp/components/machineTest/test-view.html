@@ -1,0 +1,50 @@
+<h1 translate="menu.machineType"></h1>
+<div class="header-control">
+    <div class="btn-group">
+        <a class="btn btn-success" href="#/machineTypes/machineType-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div>
+    <table datatable="ng" dt-options="dtOptions" class="row-border hover table">
+        <thead>
+            <tr>
+                <th><span translate="machineType.name"></span></th>
+                <th><span translate="machineType.technicalname"></span></th>
+                <th><span translate="machineType.restricted"></span></th>
+                <th><span translate="general.table.action"></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="machineType in machineTypes"
+                ng-class="{'bg-warning':machineType.name.toUpperCase() === 'CNC',
+                        'bg-danger':machineType.name.toUpperCase() === 'OTHER',
+                        'bg-success':machineType.name.toUpperCase() === 'IMPRIMANTE 3D'}">
+                <td>{{machineType.name}}</td>
+                <td>{{machineType.technicalname}}</td>
+                <td><input type="checkbox" ng-checked="machineType.restricted" disabled /></td>
+                <td  class="listBtn2">
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-default" href="#/machineTypes/machineType-edit/{{machineType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <button class="btn btn-sm btn-danger" 
+                                ng-really-click="softRemove(machineType.id)"
+                                ng-really-message="{{'machineType.confirmation.remove'|translate}}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--
+<td  class="listBtn2">
+    <div class="btn-group">
+        <a class="btn btn-sm btn-default" href="#/machineTypes/machineType-edit/{{machineType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <button class="btn btn-sm btn-danger" 
+                ng-really-click="softRemove(machineType)"
+                ng-really-message="{{'machineType.confirmation.remove'|translate}}">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
+    </div>
+</td>-->

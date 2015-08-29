@@ -1,0 +1,52 @@
+<h1 translate="menu.purchases"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/purchases/purchase-edit"></btn-create>                
+    </div>
+</div>
+<div class="purchaseList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="purchase in $data">
+            <td 
+                data-title="'purchase.purchaseDate' | translate" 
+                sortable="'purchaseDate'"
+                filter="{'purchaseDate':'text'}">
+                {{purchase.purchaseDate}}
+            </td>
+            <td 
+                data-title="'purchase.supply' | translate" 
+                sortable="'supplyLabel'"
+                filter="{'supplyLabel':'text'}">
+                {{purchase.supply.label}}
+            </td>
+            <td 
+                data-title="'purchase.user' | translate" 
+                sortable="'userName'"
+                filter="{'userName':'text'}">
+                {{purchase.user|prettyUser}}
+            </td>
+            <td style="width:80px" 
+                data-title="'purchase.quantity' | translate" 
+                sortable="'quantity'"
+                filter="{'quantity':'text'}">
+                {{purchase.quantity}}
+            </td>
+            <td style="width:80px" 
+                data-title="'purchase.discount' | translate">
+                {{purchase.discount}} {{purchase.discountPercent ? "%" : currency}}
+            </td>
+            <td style="width:140px"
+                data-title="'purchase.purchasePrice' | translate" 
+                sortable="'purchasePrice'"
+                filter="{'purchasePrice':'text'}">
+                {{purchase.purchasePrice}} {{currency}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <btn-show link="#/purchases/purchase-edit/{{purchase.id}}"></btn-show>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

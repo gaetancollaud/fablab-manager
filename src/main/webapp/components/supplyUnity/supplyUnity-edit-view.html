@@ -1,0 +1,41 @@
+<div class="supplyUnityEdit">
+    <form class="form-horizontal" name="editSupplyUnity" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newSupplyUnity" translate="supplyUnity.create"></span>
+                <span ng-show="!newSupplyUnity" translate="supplyUnity.edit"></span>
+                <span ng-show="!newSupplyUnity"> {{supplyUnity.label}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supplyUnity.label"></label>
+                    <div class="col-sm-8">
+                        <input type="text" 
+                               class="form-control" 
+                               ng-model="supplyUnity.label"
+                               name="label"
+                               duplicate="existingValues" 
+                               uppercase 
+                               required/>
+                    </div>
+                    <div class="col-sm-2 error-text">
+                        <span ng-show="editSupplyUnity.label.$error.duplicate" 
+                              translate="supplyUnity.alreadyExist"></span>
+                        <span ng-show="editSupplyUnity.label.$error.required" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supplyUnity.floating"></label>
+                    <div class="col-sm-1">
+                        <input type="checkbox" class="checkboxUnity" ng-model="supplyUnity.floating"/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/supplyUnities"></btn-cancel>
+                <btn-submit form="editSupplyUnity"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+

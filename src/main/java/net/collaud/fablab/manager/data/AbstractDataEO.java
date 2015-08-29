@@ -19,7 +19,7 @@ abstract public class AbstractDataEO<ID> {
 			return false;
 		}
 		if (obj instanceof AbstractDataEO) {
-			return Objects.equals(this, ((AbstractDataEO)obj).getId());
+			return Objects.equals(this.getId(), ((AbstractDataEO)obj).getId());
 		}
 		return false;
 	}

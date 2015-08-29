@@ -3,11 +3,8 @@ package net.collaud.fablab.manager.service.impl;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.UserEO;
-import net.collaud.fablab.manager.data.type.AuditAction;
-import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.type.LoginResult;
 import net.collaud.fablab.manager.exceptions.FablabSecurityException;
 import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
@@ -33,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
+public class SecurityServiceImpl implements SecurityService {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(SecurityServiceImpl.class);
@@ -134,5 +131,4 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			throw new FablabSecurityException("Current user has not roles "+roles);
 		}
 	}
-
 }

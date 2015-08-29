@@ -1,0 +1,45 @@
+<h1 translate="menu.eventPersons"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/eventPersons/eventPerson-edit"></btn-create>
+    </div>
+</div>
+<div class="eventPersonList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="eventPerson in $data">
+            <td 
+                data-title="'eventPerson.lastname' | translate" 
+                sortable="'lastname'"
+                filter="{'lastname':'text'}">
+                {{eventPerson.lastname}}
+            </td>
+            <td 
+                data-title="'eventPerson.firstname' | translate" 
+                sortable="'firstname'"
+                filter="{'firstname':'text'}">
+                {{eventPerson.firstname}}
+            </td>
+            <td 
+                data-title="'eventPerson.email' | translate" 
+                sortable="'email'"
+                filter="{'email':'text'}">
+                {{eventPerson.email}}
+            </td>
+             <td  class="center"
+                 data-title="'eventPerson.haveAquired' | translate ">
+                <input type="checkbox" ng-checked="eventPerson.acquiredModules.length !== 0" disabled />
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/eventPersons/eventPerson-edit/{{eventPerson.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(eventPerson)"
+                        ng-really-message="{{'eventPerson.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

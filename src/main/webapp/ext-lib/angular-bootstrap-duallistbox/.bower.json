@@ -1,0 +1,40 @@
+{
+  "name": "angular-bootstrap-duallistbox",
+  "version": "0.1.0",
+  "author": {
+    "name": "Francesco Pontillo",
+    "email": "francescopontillo@gmail.com",
+    "url": "https://github.com/frapontillo"
+  },
+  "homepage": "https://github.com/frapontillo/angular-bootstrap-duallistbox",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:frapontillo/angular-bootstrap-duallistbox.git"
+  },
+  "licenses": [
+    {
+      "type": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
+  "main": "./dist/angular-bootstrap-duallistbox.js",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "jquery": "~2.0.3",
+    "bootstrap": ">=2.3.2",
+    "bootstrap-duallistbox": "3.0.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.0",
+    "angular-scenario": "~1.4.0"
+  },
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "66fa3708c87520e7aaec63c3b641e08c81511005"
+  },
+  "_source": "git://github.com/frapontillo/angular-bootstrap-duallistbox.git",
+  "_target": "~0.1.0",
+  "_originalSource": "angular-bootstrap-duallistbox"
+}

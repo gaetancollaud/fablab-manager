@@ -1,0 +1,93 @@
+<div class="supplyEdit">
+    <form class="form-horizontal" name="editSupply" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newSupply" translate="supply.create"></span>
+                <span ng-show="!newSupply" translate="supply.edit"></span>
+                <span ng-show="!newSupply"> {{supply.code}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supply.code"></label>
+                    <div class="col-sm-8">
+                        <input maxlength="5" 
+                               type="text" 
+                               name="code"
+                               class="form-control" 
+                               ng-model="supply.code"  
+                               uppercase
+                               duplicate="existingValues"
+                               required/>
+                    </div>
+                    <div class="col-sm-2 error-text">
+                        <span ng-show="editSupply.code.$error.duplicate" translate="supply.alreadyExist"></span>
+                        <span ng-show="editSupply.code.$error.required" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supply.label"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="supply.label" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supply.sellingPrice"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.sellingPrice" required/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label ng-show="!supply.supplyUnity" class="col-sm-2 control-label" translate="supply.supplyUnity"></label>
+                    <label ng-show="supply.supplyUnity" class="col-sm-2 control-label" translate="supply.unityBuyingPrice"></label>
+                    <div ng-if="supply.supplyUnity" class="col-sm-5">
+                        <div class="input-group">
+                            <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                    <label ng-if="supply.supplyUnity" class="col-sm-1 control-label">/</label>
+                    <div ng-if="supply.supplyUnity" class="col-sm-2">
+                        <select class="form-control" 
+                                ng-model="supply.supplyUnity"
+                                ng-options="u.label for u in unityList track by u.id" required></select>
+                    </div>
+                    <div ng-if="!supply.supplyUnity" class="col-sm-8">
+                        <select class="form-control" 
+                                ng-model="supply.supplyUnity"
+                                ng-options="u.label for u in unityList track by u.id" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supply.orderAddress"></label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" ng-model="supply.orderAddress"></textarea>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="newSupply">
+                    <label ng-if="supply.supplyUnity" class="col-sm-2 control-label" translate="supply.initialQuantity"></label>
+                    <div class="col-sm-8" ng-if="supply.supplyUnity">
+                        <input ng-if="supply.supplyUnity.floating" type="number" min="0" step="0.01" class="form-control" ng-model="supply.quantityStock"/>
+                        <input ng-if="!supply.supplyUnity.floating" type="number" min="0" step="1" class="form-control" ng-model="supply.quantityStock"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="supply.supplyType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="supply.supplyType"
+                                ng-options="st.label for st in supplyTypeList track by st.id"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/supplies"></btn-cancel>
+                <btn-submit form="editSupply"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+

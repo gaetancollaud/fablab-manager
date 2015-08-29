@@ -1,20 +1,46 @@
 .accounting .pressets{
-	text-align: center;
-	margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 .accounting .pressets button{
-	margin: 5px;
+    margin: 5px;
 }
 .accounting .form-group{
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .accounting .results{
-	font-weight: bold;
+    font-weight: bold;
 }
 .accounting .results .sell{
-	color: chocolate;
+    color: chocolate;
 }
 .accounting .results .money-in{
-	color: #3e8f3e;
+    color: #3e8f3e;
+}
+
+.color-usage{
+    background-color: #000099;
+    color:#FFFFFF;
+}
+.color-payment{
+    background-color: #6666ff;
+}
+
+.color-subscription{
+    background-color: #cc00cc;
+}
+.color-supply{
+    background-color: #cc0000;
+    color:#FFFFFF;
+}
+.color-purchase{
+    background-color: #ffff33;
+}
+.color-event{
+    background-color: #00ffcc;
+}
+.color-revision{
+    background-color: #006666;
+    color:#FFFFFF;
 }

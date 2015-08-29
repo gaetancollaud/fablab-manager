@@ -1,0 +1,59 @@
+<h1 translate="menu.tickets"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/tickets/ticket-edit"></btn-create>
+    </div>
+</div>
+<div class="ticketList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="ticket in $data">
+            <td 
+                data-title="'ticket.title' | translate" 
+                sortable="'title'"
+                filter="{'title':'text'}">
+                {{ticket.title}}
+            </td>
+            <td 
+                data-title="'ticket.creationDateList' | translate" 
+                sortable="'creationDate'"
+                filter="{'creationDate':'text'}">
+                {{ticket.creationDate}}
+            </td>
+            <td 
+                data-title="'ticket.previsionCloseDate' | translate" 
+                sortable="'previsionCloseDate'"
+                filter="{'previsionCloseDate':'text'}">
+                {{ticket.previsionCloseDate}}
+            </td>
+            <td 
+                data-title="'ticket.closeDateList' | translate" 
+                sortable="'closeDate'"
+                filter="{'closeDate':'text'}">
+                {{ticket.closeDate}}
+            </td>
+            <td 
+                data-title="'ticket.machine' | translate" 
+                sortable="'machineName'"
+                filter="{'machineName':'text'}">
+                {{ticket.machine.name}}
+            </td>
+            <td 
+                data-title="'ticket.status' | translate" 
+                sortable="'statusLabel'"
+                filter="{'statusLabel':'text'}">
+                {{ticket.status.label|lowercase}}
+            </td>
+            <td  class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/tickets/ticket-edit/{{ticket.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(ticket)"
+                            ng-really-message="{{'ticket.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

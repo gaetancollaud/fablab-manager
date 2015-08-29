@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.service.UserService;
 import org.slf4j.Logger;

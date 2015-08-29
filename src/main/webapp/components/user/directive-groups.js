@@ -3,7 +3,7 @@ angular.module('Fablab').directive('fabUserGroups', function () {
 		restrict: 'EA',
 		scope: {
 			ngModel: '=',
-			groups: '=',
+			groups: '='
 		},
 		templateUrl: 'components/user/directive-groups.html',
 		controller: function ($scope) {
@@ -35,7 +35,7 @@ angular.module('Fablab').directive('fabUserGroups', function () {
 					//add
 					$scope.ngModel[$scope.ngModel.length] = {
 						id:group.id,
-						name:group.name,
+						name:group.name
 					};
 			};
 

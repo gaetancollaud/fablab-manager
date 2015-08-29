@@ -1,0 +1,33 @@
+<h1 translate="menu.supplyUnities"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/supplyUnities/supplyUnity-edit"></btn-create>
+    </div>
+</div>
+<div class="supplyUnityList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="supplyUnity in $data">
+            <td 
+                data-title="'supplyUnity.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{supplyUnity.label| lowercase}}
+            </td>
+            <td class="center"
+                data-title="'supplyUnity.floating' | translate" >
+                <input type="checkbox" ng-checked="supplyUnity.floating" disabled />
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/supplyUnities/supplyUnity-edit/{{supplyUnity.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(supplyUnity)"
+                            ng-really-message="{{'supplyUnity.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

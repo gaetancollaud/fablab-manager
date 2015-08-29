@@ -21,6 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
+import org.hibernate.annotations.Where;
 
 /**
  *
@@ -31,6 +32,7 @@ import net.collaud.fablab.manager.data.type.AuditObject;
 @Getter
 @Setter
 @ToString
+@Where(clause = "active=1")
 @NoArgsConstructor
 //@AllArgsConstructor(onConstructor = @_({
 //	@QueryProjection
@@ -70,11 +72,11 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "detail", nullable = true)
 	private String detail;
 
-	public AuditEO(Integer auditId) {
-		this.id = auditId;
-	}
+	@Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+	private boolean active;
 
 	public AuditEO(UserEO who, AuditAction action, AuditObject object, Integer objectId, Date when, boolean success, String content, String detail) {
+		this.active = true;
 		this.who = who;
 		this.action = action;
 		this.object = object;

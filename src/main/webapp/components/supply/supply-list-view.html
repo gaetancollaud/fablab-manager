@@ -1,0 +1,103 @@
+<h1 translate="menu.supplies"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/supplies/supply-edit"></btn-create>                
+    </div>
+</div>
+<div class="supplyList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="supply in $data">
+            <td 
+                data-title="'supply.code' | translate" 
+                sortable="'code'"
+                filter="{'code':'text'}">
+                {{supply.code}}
+            </td>
+            <td 
+                data-title="'supply.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{supply.label}}
+            </td>
+            <td 
+                data-title="'supply.sellingPrice' | translate" 
+                sortable="'sellingPrice'"
+                filter="{'sellingPrice':'text'}">
+                {{supply.sellingPrice}} {{currency}} / {{supply.supplyUnity.label}}
+            </td>
+            <td 
+                data-title="'supply.unityBuyingPrice' | translate" 
+                sortable="'unityBuyingPrice'"
+                filter="{'unityBuyingPrice':'text'}">
+                {{supply.unityBuyingPrice}} {{currency}} / {{supply.supplyUnity.label}}
+            </td>
+            <td 
+                data-title="'supply.orderAddress' | translate" 
+                sortable="'orderAddress'"
+                filter="{'orderAddress':'text'}">
+                {{supply.orderAddress}}
+            </td>
+            <td 
+                data-title="'supply.supplyType' | translate" 
+                sortable="'supplyTypeLabel'"
+                filter="{'supplyTypeLabel':'text'}">
+                {{supply.supplyType.label}}
+            </td>
+            <td 
+                data-title="'supply.quantityStock' | translate" 
+                sortable="'quantityStock'"
+                filter="{'quantityStock':'text'}">
+                {{supply.quantityStock}} {{supply.supplyUnity.label}}
+            </td>
+            <td style="width:140px">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/supplies/supply-edit/{{supply.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(supply)"
+                            ng-really-message="{{'supply.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>                    
+                    <script type="text/ng-template" id="modalContent.html">
+                        <div class="modal-header">
+                        <h4 class="modal-title"
+                        <span translate="supply.modalTitle"></span>
+                        <span>{{supply.code}}</span>
+                        </h4>
+                        </div>
+                        <div class="modal-body">
+                        <div class="row">
+                        <div class="form-group">
+                        <div style="margin-top:9px" class="col-sm-offset-2 col-sm-3 ">
+                        <label class="control-label" translate="supply.quantityStockModal"></label>
+                        </div>
+                        <div class="col-sm-3">
+                        <input type="number" min="0" step="{{supply.supplyUnity.floating ? 0.1 : 1}}" class="form-control" ng-model="newQuantity" required/>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-glyph"
+                        ng-click="cancel()">
+                        <span translate="button.cancel"></span>
+                        <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button ng-click="ok()" 
+                        class="btn btn-success btn-glyph" 
+                        ng-disabled="newQuantity === 0">
+                        <span translate="button.save"></span>
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </button>
+                        </div>
+                    </script>
+                    <button title="{{addQuantity}}" type="button" 
+                            class="btn btn-primary btn-sm" ng-click="open(supply)">
+                        <span class="fa fa-fw fa-plus"> </span>
+                        <span class="fa fa-fw fa-database"> </span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

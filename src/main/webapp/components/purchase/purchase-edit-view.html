@@ -1,0 +1,119 @@
+<div class="purchaseEdit">
+    <form class="form-horizontal" name="editPurchase" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newPurchase" translate="purchase.create"></span>
+                <span ng-show="!newPurchase" translate="purchase.edit"></span>
+                <span ng-show="!newPurchase"> {{purchase.purchaseDate}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.purchaseDate"></label>
+                    <div class="col-sm-7">
+                        <p class="input-group">
+                            <input class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="purchase.purchaseDate" 
+                                   is-open="opened" 
+                                   datepicker-options="dateOptions" 
+                                   ng-required="true" 
+                                   close-text="Close"
+                                   required
+                                   ng-readonly="!newPurchase"/>
+                            <span class="input-group-btn">
+                                <button ng-disabled="!newPurchase" type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.supply"></label>
+                    <div class="col-sm-7">
+                        <select class="form-control" 
+                                required 
+                                ng-disabled="!newPurchase" 
+                                ng-model="purchase.supply" 
+                                ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock track by s.id'></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.quantity"></label>
+                    <div ng-if="purchase.supply" class="col-sm-7">
+                        <input ng-if="purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" max="{{purchase.supply.quantityStock}}" step="0.01" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                        <input ng-if="!purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" max="{{purchase.supply.quantityStock}}"  step="1" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                    </div>
+                    <div class="col-sm-1 unity" ng-if="purchase.supply">
+                        <span> {{purchase.supply.supplyUnity.label}}</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="purchase.quantity">
+                    <label class="col-sm-3 control-label" translate="purchase.discount"></label>
+                    <div class="col-sm-7">
+                        <input ng-if="purchase.discountPercent" ng-readonly="!newPurchase" type="number" max="100" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
+                        <div class="input-group" ng-if="!purchase.discountPercent">
+                            <input ng-readonly="!newPurchase" type="number" max="{{maxMoney()}}" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <select  class="form-control" 
+                                 ng-model="purchase.discountPercent"
+                                 ng-change="updatePrice()"
+                                 ng-init="purchase.discountPercent = firstPercent"
+                                 ng-options="op.value as op.name for op in optionsPercent"
+                                 ng-disabled="!newPurchase">
+                        </select> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.purchasePrice"></label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="purchase.purchasePrice" disabled/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.note"></label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" ng-model="purchase.note" ng-readonly="!newPurchase"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="purchase.paidDirectly"></label>
+                    <div class="col-sm-7">
+                        <toggle-switch 
+                            class="toggle"
+                            ng-model="paidDirectly"
+                            ng-disabled="!newPurchase"
+                            on-label="Oui"
+                            off-label="Non"></toggle-switch>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="paidDirectly || purchase.cashier">
+                    <label class="col-sm-3 control-label" translate="purchase.cashier"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                ng-model="purchase.cashier"
+                                ng-disabled="!newPurchase"
+                                ng-options="(u.lastname + ' ' + u.firstname) for u in cashierList track by u.id"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/purchases" ng-if="newPurchase"></btn-cancel>
+                <a ng-if="!newPurchase" class="btn btn-default" href="#/purchases">
+                    <i class="fa fa-fw fa-arrow-left"></i>
+                    <span translate="purchase.back"></span>
+                </a>
+                <button ng-if="newPurchase" type="submit" class="btn btn-success btn-glyph" 
+                        ng-disabled="editPurchase.$invalid || purchase.quantity === 0">
+                    <span translate="button.save"></span>
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+

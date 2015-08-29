@@ -1,8 +1,14 @@
-
-<fab-user-subscription user="connectedUser.user"></fab-user-subscription>
-
-<div class="row" ng-show="connectedUser.connected">
-	<div class="col-md-12">
-		<user-payment-history user="connectedUser.user" />
-	</div>
+<fab-user-subscription user="connectedUser.user" confirm-callback="callbacks.updateUser(user)"></fab-user-subscription>
+<div class="dashboard">
+    <div class="row notLogged" 
+         ng-if="!connectedUser.connected">
+        <div class="col-md-12">
+            <img style="border : 3px solid black;" src="./images/logoFabLabManager.png" class="img-responsive img-circle center-block" alt="logo accueil" width="400" height="400"/> 
+        </div>
+    </div>
+    <div class="row" ng-if="connectedUser.connected">
+        <div class="col-md-12">
+            <user-payment-history user="connectedUser.user" />
+        </div>
+    </div>
 </div>

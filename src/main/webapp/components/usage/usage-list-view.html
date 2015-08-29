@@ -1,0 +1,76 @@
+<h1 translate="menu.usages"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/usages/usage-edit/"></btn-create>
+    </div>
+</div>
+<div class="usageList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="usage in $data">
+            <td 
+                data-title="'usage.dateStart' | translate" 
+                sortable="'dateStart'"
+                filter="{'dateStart':'text'}">
+                {{usage.dateStart|prettyDate}}
+            </td>
+            <td 
+                data-title="'usage.pricePerHour' | translate" 
+                sortable="'pricePerHour'"
+                filter="{'pricePerHour':'text'}">
+                {{usage.pricePerHour}} {{currency}}
+            </td>
+            <td 
+                data-title="'usage.discount' | translate" 
+                sortable="'discount'"
+                filter="{'discount':'text'}">
+                {{usage.discount}} {{(usage.discount !== 0? (usage.discountPercent ? '%' : currency) : '')}}
+            </td>
+            <td 
+                data-title="'usage.minutes' | translate" 
+                sortable="'minutes'"
+                filter="{'minutes':'text'}">
+                {{usage.minutes}} min
+            </td>
+            <td 
+                data-title="'usage.additionalCost' | translate" 
+                sortable="'additionalCost'"
+                filter="{'additionalCost':'text'}">
+                {{usage.additionalCost}} {{usage.additionalCost ? currency : ''}}
+            </td>
+            <td 
+                data-title="'usage.total' | translate" 
+                sortable="'total'"
+                filter="{'total':'text'}">
+                {{usage.total}} {{currency}}
+            </td>
+            <td 
+                data-title="'usage.user' | translate" 
+                sortable="'userName'"
+                filter="{'userName':'text'}">
+                {{usage.user|prettyUser}}
+            </td>
+            <td 
+                data-title="'usage.machine' | translate" 
+                sortable="'machineName'"
+                filter="{'machineName':'text'}">
+                {{usage.machine.name}}
+            </td>
+            <td 
+                data-title="'usage.directPaid' | translate">
+                <input type="checkbox" ng-checked="usage.cashier" disabled />
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/usages/usage-edit/{{usage.id}}"><span class="glyphicon glyphicon-search"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(usage)"
+                            ng-show="showRole" 
+                            ng-really-message="{{'usage.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

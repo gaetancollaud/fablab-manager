@@ -1,0 +1,65 @@
+body{
+	padding-top: 70px;
+}
+#footer{
+	margin:0 10px;
+	text-align: right;
+	font-size: 0.85em;
+}
+
+#footer .github{
+	width:24px;
+}
+
+
+.right{
+	text-align: right;
+}
+.center{
+	text-align: center;
+}
+.clear{
+	clear: both;
+}
+.header-control{
+	text-align: center;
+	margin-bottom: 10px;
+}
+.ui-select-container small{
+	color:#A0A0A0;
+}
+
+/*input.ng-invalid, select.ng-invalid{
+	border: 1px solid #DD0000;
+	background: red;
+}*/
+
+.bg-danger, bg-info, bg-warning, bg-success{
+	padding:15px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.text-bold{
+	font-weight: bold;
+}
+
+.nav > li > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.navbar-nav > li > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+}
+
+.navbar-default .navbar-nav > li > li > a {
+    color: #777;
+}
+.navbar-nav > li > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

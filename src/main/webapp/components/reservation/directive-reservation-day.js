@@ -46,7 +46,7 @@
 				$scope.$watch('date', function (newValue) {
 					$scope.reservation = [];
 					if (newValue) {
-						$scope.dateTranslate = {date:moment(newValue).format('DD/MM/YYYY')}
+						$scope.dateTranslate = {date:moment(newValue).format('DD/MM/YYYY')};
 						var criteria = {
 							dateFrom: moment(newValue).startOf('day'),
 							dateTo: moment(newValue).endOf('day')

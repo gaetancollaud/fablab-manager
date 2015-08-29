@@ -1,0 +1,96 @@
+<div class="eventModuleEdit">
+    <form class="form-horizontal" name="editEventModule" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newEventModule" translate="eventModule.create"></span>
+                <span ng-show="!newEventModule" translate="eventModule.edit"></span>
+                <span ng-show="!newEventModule"> {{eventModule.name}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="eventModule.name"></label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                               class="form-control" 
+                               ng-model="eventModule.name"                            
+                               duplicate="existingValues"  
+                               name="name" 
+                               ng-disabled="!showRole" 
+                               required/>
+                        <div class="col-sm-2 error-text">
+                            <span ng-show="editEventModule.name.$error.duplicate" 
+                                  translate="eventModule.alreadyExist"></span>
+                            <span ng-show="editEventModule.name.$error.required" ></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="eventModule.description"></label>
+                    <div class="col-sm-8">
+                        <textarea type="text"
+                                  ng-disabled="!showRole" 
+                                  class="form-control" 
+                                  ng-model="eventModule.description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.machineType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                ng-model="eventModule.machineType"
+                                ng-disabled="!showRole"
+                                ng-options="mt.name for mt in machineTypeList track by mt.id"></select>
+                    </div>
+                    <div class="col-sm-2" ng-show="eventModule.machineType && showRole">
+                        <a class="btn btn-sm btn-primary" ng-click="ereaseType()">
+                            <span translate="general.erase"></span>
+                            <span class="fa fa-fw fa-close"></span>
+                        </a>
+                    </div>
+                </div>
+                <div ng-show="eventModule.id" class="shuttle">
+                    <select  multiple="multiple" 
+                             name="selectedPrerequisites" 
+                             bs-duallistbox 
+                             style="min-height:250px;" 
+                             ng-model="assignedPrerequisites"                          
+                             ng-options="t.name for t in availablePrerequisites track by t.id"
+                             bootstrap2="{{ settings.bootstrap2}}"
+                             move-on-select="{{ settings.moveOnSelect}}"
+                             postfix="{{ settings.postfix}}"
+                             select-min-height="{{ settings.selectMinHeight}}"
+                             filter="{{ settings.filter}}"
+                             filter-values="{{ settings.filterValues}}"
+
+                             non-selected-list-label="{{ 'eventModule.nonSelectedListLabel'|translate}}"
+                             selected-list-label="{{ 'eventModule.selectedListLabel'|translate}}"
+
+                             preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                             move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                             move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                             remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                             remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                             filter-non-selected="settings.filterNonSelected"
+                             filter-selected="settings.filterSelected"
+                             filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                             filter-clear="{{ 'duallist.filterClear'|translate}}"
+                             info-all="{{ 'duallist.infoAll'|translate}}"
+                             info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                             info-empty="{{ 'duallist.infoEmpty'|translate}}">
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-show="showRole" link="#/eventModules"></btn-cancel>
+                <btn-submit ng-show="showRole" form="editEventModule"></btn-submit>
+                <btn-return ng-show="!showRole" link="#/eventModules"></btn-return>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script ng-if="!showRole">
+            $(".bootstrap-duallistbox-container").find("*").prop("disabled", true);
+</script>

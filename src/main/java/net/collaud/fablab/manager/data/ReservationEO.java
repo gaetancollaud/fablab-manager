@@ -1,6 +1,5 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -17,6 +16,7 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 /**
  *
@@ -27,42 +27,51 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Where(clause = "active=1")
 public class ReservationEO extends AbstractDataEO<Integer> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static final String SELECT_BY_TIME = " SELECT r "
-			+ " FROM ReservationEO r "
-			+ " JOIN FETCH r.user "
-			+ " JOIN FETCH r.machine "
-			+ " WHERE r.dateStart >= :" + ReservationEO.PARAM_DATE_START + " "
-			+ " AND r.dateEnd <= :" + ReservationEO.PARAM_DATE_END;
-	public static final String PARAM_DATE_START = "dateStart";
-	public static final String PARAM_DATE_END = "dateEnd";
+    public static final String SELECT_BY_TIME = " SELECT r "
+            + " FROM ReservationEO r "
+            + " JOIN FETCH r.user "
+            + " JOIN FETCH r.machine "
+            + " WHERE r.dateStart >= :" + ReservationEO.PARAM_DATE_START + " "
+            + " AND r.dateEnd <= :" + ReservationEO.PARAM_DATE_END;
+    public static final String PARAM_DATE_START = "dateStart";
+    public static final String PARAM_DATE_END = "dateEnd";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reservation_id", nullable = false)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reservation_id", nullable = false)
+    private Integer id;
 
-	@Column(name = "date_start", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateStart;
+    @Column(name = "date_start", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateStart;
 
-	@Column(name = "date_end", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateEnd;
+    @Column(name = "date_end", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateEnd;
 
-	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	private UserEO user;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private UserEO user;
 
-	@JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	private MachineEO machine;
+    @JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private MachineEO machine;
 
-	public ReservationEO() {
-	}
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private boolean active;
 
-	
+    public ReservationEO() {
+        this(null);
+    }
+
+    public ReservationEO(Integer id) {
+        this.active = true;
+        this.id = id;
+    }
+
 }

@@ -1,0 +1,127 @@
+<div class="machineEdit">
+    <form class="form-horizontal" name="editMachine" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newMachine" translate="machine.create"></span>
+                <span ng-show="!newMachine"  translate="machine.edit"></span>
+                <span ng-show="!newMachine">{{machine.name}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.code"></label>
+                    <div class="col-sm-8">
+                        <input type="text" 
+                               name="code"
+                               class="form-control" 
+                               ng-model="machine.code" 
+                               uppercase 
+                               maxlength="5"
+                               duplicate="existingValues"
+                               required/>
+                    </div>
+                    <div class="col-sm-2 error-text">
+                        <span ng-show="editMachine.code.$error.duplicate" translate="machine.alreadyExist"></span>
+                        <span ng-show="editMachine.code.$error.required" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.name"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="machine.name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.buyPrice"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" step="0.05" class="form-control" ng-model="machine.buyPrice">
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.acquisitionDate"></label>
+                    <div class="col-sm-8">
+                        <p class="input-group">
+                            <input class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="machine.acquisitionDate" 
+                                   is-open="opened" 
+                                   datepicker-options="dateOptions" 
+                                   date-disabled="disabled(date, mode)" 
+                                   ng-required="true" 
+                                   close-text="Close"
+                                   required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.machineType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="machine.machineType"
+                                ng-options="mt.name for mt in machineTypeList track by mt.id"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.machineStatus"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="machine.machineStatus"
+                                ng-options="msl.label for msl in machineStatusList track by msl.id"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.machineState"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="machine.machineState"
+                                ng-options="mstl.label for mstl in machineStateList track by mstl.id"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="machine.toDoRevision"></label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" 
+                                  ng-model="machine.toDoRevision"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer right">
+                <btn-cancel link="#/machines"></btn-cancel>
+                <btn-submit form="ediMachine"></btn-submit>
+            </div>
+        </div>
+    </form>
+
+    <div ng-show="!newMachine" class="panel panel-default">
+        <div class="panel-heading">
+            <span translate="machine.lists"></span>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#developReservations" aria-expanded="false" aria-controls="developReservations">
+                <span translate="machine.revisions"></span>
+            </button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#developTickets" aria-expanded="false" aria-controls="developTickets">
+                <span translate="machine.tickets"></span>
+            </button>
+            <div class="collapse" id="developReservations">
+                <div class="well">
+                    <machine-revisions  machine="{{machineId}}"></machine-revisions>
+                </div>
+            </div>
+            <div class="collapse" id="developTickets">
+                <div class="well">
+                    <machine-tickets machine="{{machineId}}"></machine-tickets>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

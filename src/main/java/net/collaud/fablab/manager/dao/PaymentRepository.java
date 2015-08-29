@@ -2,8 +2,7 @@ package net.collaud.fablab.manager.dao;
 
 import java.util.Date;
 import java.util.List;
-import net.collaud.fablab.manager.data.PaymentEO;
-import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.UserPaymentEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,16 +13,16 @@ import org.springframework.stereotype.Repository;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Repository
-public interface PaymentRepository extends JpaRepository<PaymentEO, Integer> {
+public interface PaymentRepository extends JpaRepository<UserPaymentEO, Integer> {
 
-	@Query(" SELECT p "
-			+ " FROM PaymentEO p "
-			+ " WHERE p.datePayment>=:dateAfter AND p.datePayment <=:dateBefore")
-	public List<PaymentEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
+    @Query(" SELECT p "
+            + " FROM UserPaymentEO p "
+            + " WHERE p.datePayment>=:dateAfter AND p.datePayment <=:dateBefore")
+    public List<UserPaymentEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 
-	@Query(" SELECT p "
-			+ " FROM  PaymentEO p "
-			+ " WHERE p.user.id=:userId")
-	public List<PaymentEO> getByUser(@Param("userId") Integer userId);
+    @Query(" SELECT p "
+            + " FROM  UserPaymentEO p "
+            + " WHERE p.user.id=:userId")
+    public List<UserPaymentEO> getByUser(@Param("userId") Integer userId);
 
 }

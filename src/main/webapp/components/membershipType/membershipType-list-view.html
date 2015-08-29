@@ -1,0 +1,41 @@
+<h1 translate="menu.membershipTypes"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/membershipTypes/membershipType-edit"></btn-create>          
+    </div>
+</div>
+<div class="membershipTypeList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="membershipType in $data">
+            <td 
+                data-title="'membershipType.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{membershipType.name| lowercase}}
+            </td>
+            <td 
+                data-title="'membershipType.duration' | translate" 
+                sortable="'duration'"
+                filter="{'duration':'text'}">
+                {{membershipType.duration}}
+            </td>
+            <td 
+                data-title="'membershipType.price' | translate" 
+                sortable="'price'"
+                filter="{'price':'text'}">
+                {{membershipType.price}}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/membershipTypes/membershipType-edit/{{membershipType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(membershipType)"
+                            ng-really-message="{{'membershipType.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

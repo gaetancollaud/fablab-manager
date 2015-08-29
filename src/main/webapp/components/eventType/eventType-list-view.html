@@ -1,0 +1,29 @@
+<h1 translate="menu.eventTypes"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/eventTypes/eventType-edit"></btn-create>
+    </div>
+</div>
+<div class="eventTypeList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="eventType in $data">
+            <td 
+                data-title="'eventType.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{eventType.label|lowercase}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/eventTypes/eventType-edit/{{eventType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(eventType)"
+                        ng-really-message="{{'eventType.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

@@ -1,0 +1,58 @@
+<h1 translate="menu.roles"></h1>
+<div class="role">
+    <form class="form-horizontal" name="roles" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span translate="role.title"></span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" translate="role.group"></label>
+                    <div class="col-sm-4">
+                        <select class="form-control" 
+                                ng-model="group"
+                                ng-options="gr.name for gr in groupList track by gr.id" 
+                                ng-change="setLists()"></select>
+                    </div>
+                </div>
+                <div ng-show="group" class="shuttle">
+                    <select  multiple="multiple" 
+                             name="selectedRoles" 
+                             bs-duallistbox 
+                             style="min-height:250px;" 
+                             ng-model="assignedRoles"                          
+                             ng-options="r.name for r in availableRoles track by r.id"
+                             bootstrap2="{{ settings.bootstrap2}}"
+                             move-on-select="{{ settings.moveOnSelect}}"
+                             postfix="{{ settings.postfix}}"
+                             select-min-height="{{ settings.selectMinHeight}}"
+                             filter="{{ settings.filter}}"
+                             filter-values="{{ settings.filterValues}}"
+
+                             non-selected-list-label="{{ 'role.nonSelectedListLabel'|translate}}"
+                             selected-list-label="{{ 'role.selectedListLabel'|translate}}"
+
+                             preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                             move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                             move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                             remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                             remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                             filter-non-selected="settings.filterNonSelected"
+                             filter-selected="settings.filterSelected"
+                             filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                             filter-clear="{{ 'duallist.filterClear'|translate}}"
+                             info-all="{{ 'duallist.infoAll'|translate}}"
+                             info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                             info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                             >
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link=""></btn-cancel>
+                <btn-submit form="roles"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>

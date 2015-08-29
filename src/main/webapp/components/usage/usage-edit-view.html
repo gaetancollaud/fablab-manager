@@ -1,0 +1,164 @@
+<div class="usageEdit">
+    <form class="form-horizontal" name="editUsage" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newUsage" translate="usage.create"></span>
+                <span ng-show="!newUsage" translate="usage.edit"></span>
+                <span ng-show="!newUsage"> {{usage.dateStart|prettyDate}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-12">
+                            <h2 ng-show="!canUse" class="canUse" translate="usage.userNotAllowed"></h2>
+                        </div>
+                        <div class="col-sm-offset-2">
+                            <span ng-show="!canUse" class="canUse" translate="usage.userNotAllowed2"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.dateStart"></label>
+                    <div class="col-sm-6">
+                        <p class="input-group">
+                            <input class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="usage.dateStart" 
+                                   is-open="opened" 
+                                   min-date="{{miniDate}}"
+                                   datepicker-options="dateOptions"
+                                   close-text="Close"
+                                   ng-disabled="!editable" 
+                                   required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.machine"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                required
+                                ng-model="usage.machine" 
+                                ng-disabled="!editable" 
+                                ng-options="m as m.name group by m.machineType.name for m in machines track by m.id"
+                                ng-change="init()"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.minutes"></label>
+                    <div class="col-sm-6">
+                        <fieldset ng-disabled="!editable" >
+                            <timepicker
+                                ng-change="updatePrice()" 
+                                ng-model="usage.minutes"
+                                hour-step="hstep" 
+                                minute-step="mstep" 
+                                show-meridian="false"></timepicker>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="usage.machine && usage.minutes">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.additionalCost"></label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="number" step="0.05" 
+                                   min="0"
+                                   class="form-control" 
+                                   ng-change="updatePrice()" 
+                                   ng-disabled="!editable" 
+                                   ng-model="usage.additionalCost"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="usage.machine && usage.minutes">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.discount"></label>
+                    <div class="col-sm-5">
+                        <input ng-if="usage.discountPercent" 
+                               type="number" 
+                               max="100" 
+                               min="0"
+                               step="0.05" 
+                               class="form-control" 
+                               ng-model="usage.discount" 
+                               ng-disabled="!editable" 
+                               ng-change="updatePrice()"/>
+                        <div class="input-group"  ng-if="!usage.discountPercent" >
+                            <input type="number" 
+                                   min="0"
+                                   max="{{maxMoney()}}" 
+                                   step="0.05" 
+                                   class="form-control" 
+                                   ng-model="usage.discount" 
+                                   ng-disabled="!editable" 
+                                   ng-change="updatePrice()"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <select  class="form-control" 
+                                 ng-model="usage.discountPercent"
+                                 ng-init="usage.discountPercent = firstPercent" 
+                                 ng-disabled="!editable" 
+                                 ng-options="op.value as op.name for op in optionsPercent">
+                        </select> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.note"></label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" ng-disabled="!editable"  ng-model="usage.note"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="usage.user"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                required
+                                ng-model="usage.user"
+                                ng-change="updatePrice()" 
+                                ng-options="(u.lastname + ' ' + u.firstname) for u in userList track by u.id" 
+                                ng-disabled="!showRole || !editable || !usage.machine"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="usage.paidDirectly"></label>
+                    <div class="col-sm-6">
+                        <toggle-switch 
+                            class="toggle"
+                            ng-model="paidDirectly"
+                            ng-disabled="!editable" 
+                            on-label="Oui"
+                            off-label="Non"></toggle-switch>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="paidDirectly">
+                    <label class="col-sm-3 control-label" translate="usage.cashier"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                ng-model="usage.cashier"
+                                ng-disabled="!editable" 
+                                ng-options="(u.lastname + ' ' + u.firstname) for u in cashierList track by u.id"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-offset-1 col-sm-2 control-label" translate="usage.total"></label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="number" step="0.05" class="form-control" ng-model="usage.total" disabled/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-show="editable" link="#/usages"></btn-cancel>
+                <btn-submit ng-show="editable" form="editUsage"></btn-submit>
+                <btn-return ng-show="!editable" link="#/usages"></btn-return>
+            </div>
+        </div>
+    </form>
+</div>

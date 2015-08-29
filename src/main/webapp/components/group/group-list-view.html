@@ -1,0 +1,35 @@
+<h1 translate="menu.groups"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/groups/group-edit"></btn-create>          
+    </div>
+</div>
+<div class="groupList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="group in $data">
+            <td 
+                data-title="'group.technicalname' | translate" 
+                sortable="'technicalname'"
+                filter="{'technicalname':'text'}">
+                {{group.technicalname | lowercase}}
+            </td>
+            <td 
+                data-title="'group.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{group.name}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/groups/group-edit/{{group.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(group)"
+                        ng-really-message="{{'group.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

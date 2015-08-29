@@ -1,0 +1,43 @@
+.ticketEdit .title{
+    margin-top: 50px;
+}
+
+.ticketEdit .creation{
+    margin-top : 20px;
+    font-weight: bold;
+}
+
+.ticketEdit .description{
+    margin-top: 30px;
+}
+
+.ticketEdit .status{
+    margin-top: 30px;
+}
+.ticketEdit .status .block-status-open{
+    background-color: #00cc00;
+    border-radius: 5px;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight:normal;
+    color: #FFFFFF
+}
+.ticketEdit .status .block-status-close{
+    background-color: #ff0000;
+    border-radius: 5px;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight:normal;
+    color: #FFFFFF
+}
+
+.ticketEdit .status span{
+    font-size: 14pt;
+    font-weight: bold;
+}
+.ticketEdit .close-ticket{
+    margin-top: 30px;
+    font-weight: bold;
+}

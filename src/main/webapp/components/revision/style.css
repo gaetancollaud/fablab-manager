@@ -1,0 +1,14 @@
+.revisionEdit .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+ .revisionEdit  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+  
+  .revisionEdit #timeLabel{
+      padding-top : 40px;
+  }

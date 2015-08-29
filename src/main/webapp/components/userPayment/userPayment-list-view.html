@@ -1,0 +1,70 @@
+<h1 translate="userPayment.titleList"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a href="#/userPayments/userPayment-edit" class="btn btn-success btn-glyph">
+            <span translate="button.create"> </span>
+            <span class="fa fa-fw fa-plus"></span>
+        </a>
+        <a href="#/userPayments/userPayment-refund" class="btn btn-alternate btn-glyph">
+            <span translate="userPayment.refund"> </span>
+            <span class="fa fa-fw fa-check"></span>
+        </a>
+    </div>
+</div>
+<div class="userPaymentList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="userPayment in $data">
+            <td 
+                data-title="'userPayment.datePayment' | translate" 
+                sortable="'datePayment'"
+                filter="{'datePayment':'text'}">
+                {{userPayment.datePayment|prettyDate}}
+            </td>
+            <td 
+                data-title="'userPayment.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{userPayment.label}}
+            </td>
+            <td 
+                data-title="'userPayment.amount' | translate" 
+                sortable="'amount'"
+                filter="{'amount':'text'}">
+                {{userPayment.amount}} {{userPayment.amount ? currency : ''}}
+            </td>
+            <td 
+                data-title="'userPayment.discount' | translate" 
+                sortable="'discount'"
+                filter="{'discount':'text'}">
+                {{userPayment.discount}} {{(userPayment.discount ? (userPayment.discountPercent ? '%' : currency) : '')}}
+            </td>
+            <td 
+                data-title="'userPayment.total' | translate" 
+                sortable="'total'"
+                filter="{'total':'text'}">
+                {{userPayment.total}} {{currency}}
+            </td>
+            <td 
+                data-title="'userPayment.user' | translate" 
+                sortable="'userFirstname'"
+                filter="{'userFirstname':'text'}">
+                {{userPayment.user|prettyUser}}
+            </td>
+            <td class="center"
+                data-title="'userPayment.paidFablab' | translate">
+                <input type="checkbox" ng-checked="userPayment.payedForFabLab" disabled />
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/userPayments/userPayment-edit/{{userPayment.id}}"><span class="glyphicon glyphicon-search"></span></a>
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(userPayment)"
+                            ng-really-message="{{'userPayment.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

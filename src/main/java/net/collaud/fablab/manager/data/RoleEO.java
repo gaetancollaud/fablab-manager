@@ -15,52 +15,49 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
+import org.hibernate.annotations.Where;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * This is the business class for a <tt>Role</tt>
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Fabien Vuilleumier
  */
 @Entity
 @Table(name = "t_role")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "groups")
+@Where(clause = "active=1")
 public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_id", nullable = false)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id", nullable = false)
+    private Integer id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
+    @Column(name = "technicalname", nullable = false)
+    private String technicalname;
 
-	@Column(name = "technicalname", nullable = false)
-	private String technicalname;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-	@JsonIgnore
-	@JoinTable(name = "r_group_role",
-			joinColumns = {
-				@JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, updatable = false)},
-			inverseJoinColumns = {
-				@JoinColumn(name = "group_id", referencedColumnName = "group_id", nullable = false, updatable = false)})
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<GroupEO> groups;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private Set<GroupEO> groups;
 
-	public RoleEO() {
-	}
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private boolean active;
 
-	public RoleEO(Integer id) {
-		this.id = id;
-	}
+    public RoleEO() {
+        this(null);
+    }
 
-	public RoleEO(Integer roleId, String name) {
-		this.id = roleId;
-		this.name = name;
-	}
-
+    public RoleEO(Integer id) {
+        this.active = true;
+        this.id = id;
+    }
 }

@@ -5,10 +5,10 @@ import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.data.AbstractDataEO;
 import net.collaud.fablab.manager.data.AuditEO;
-import net.collaud.fablab.manager.data.PaymentEO;
 import net.collaud.fablab.manager.data.SubscriptionEO;
 import net.collaud.fablab.manager.data.UsageEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.UserPaymentEO;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.type.LoginResult;
@@ -103,7 +103,7 @@ public class AuditAspect {
 			case USAGE:
 				return getReadableMessage(action, (UsageEO) res);
 			case PAYMENT:
-				return getReadableMessage(action, (PaymentEO) res);
+				return getReadableMessage(action, (UserPaymentEO) res);
 			case USER:
 				return getReadableMessage(action, (UserEO) res);
 			case SECURITY:
@@ -135,7 +135,7 @@ public class AuditAspect {
 	}
 
 	//FIXME take care of action
-	private String getReadableMessage(AuditAction action, PaymentEO payment) {
+	private String getReadableMessage(AuditAction action, UserPaymentEO payment) {
 		StringBuilder sb = new StringBuilder();
 		if (action == AuditAction.INSERT) {
 			sb.append(payment.getUser().getFirstLastName());

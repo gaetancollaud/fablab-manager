@@ -1,0 +1,29 @@
+<h1 translate="menu.machineState"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/machineStates/machineState-edit"></btn-create>          
+    </div>
+</div>
+<div class="machineState" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="machineState in $data">
+            <td 
+                data-title="'machineState.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{machineState.label| lowercase}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/machineStates/machineState-edit/{{machineState.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(machineState)"
+                            ng-really-message="{{'machineState.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

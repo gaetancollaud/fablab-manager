@@ -1,0 +1,71 @@
+<div class="revisionEdit">
+    <form class="form-horizontal" name="editRevision" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newRevision" translate="revision.create"></span>
+                <span ng-show="!newRevision" translate="revision.edit"></span>
+                <span ng-show="!newRevision"> {{revision.revisionDate| date:'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="revision.revisionDate"></label>
+                    <div class="col-sm-8">
+                        <p class="input-group">
+                            <input class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="revision.revisionDate" 
+                                   is-open="opened" 
+                                   datepicker-options="dateOptions" 
+                                   date-disabled="disabled(date, mode)" 
+                                   ng-required="true" 
+                                   close-text="Close"
+                                   required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="revision.revisionTime" id="timeLabel"></label>
+                    <div class="col-sm-8">
+                        <timepicker ng-model="revision.revisionTime" 
+                                    hour-step="hstep" 
+                                    minute-step="mstep" 
+                                    show-meridian="false"></timepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="revision.note"></label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" ng-model="revision.note"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="revision.cost"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" step="0.05" class="form-control" ng-model="revision.cost"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="revision.machine"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="revision.machine"
+                                ng-options=" m as m.name group by m.machineType.name for m in machineList track by m.id"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-if="!fromMachine" link="#/revisions"></btn-cancel>
+                <btn-cancel ng-if="fromMachine" link="#/machines"></btn-cancel>
+                <btn-submit form="editRevision"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+

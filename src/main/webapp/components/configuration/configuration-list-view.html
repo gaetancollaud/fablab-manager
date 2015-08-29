@@ -1,0 +1,31 @@
+<h1 translate="menu.configurations"></h1>
+<div class="configurationList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="configuration in $data">
+            <td 
+                data-title="'configuration.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{configuration.name}}
+            </td>
+            <td 
+                data-title="'configuration.key' | translate" 
+                sortable="'key'"
+                filter="{'key':'text'}">
+                {{configuration.key}}
+            </td>
+            <td 
+                data-title="'configuration.value' | translate" 
+                sortable="'value'"
+                filter="{'value':'text'}">
+                {{configuration.value}}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/configurations/configuration-edit/{{configuration.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

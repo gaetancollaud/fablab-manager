@@ -1,0 +1,313 @@
+<div class="eventEdit">
+    <form class="form-horizontal" name="editEvent" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newEvent" translate="event.create"></span>
+                <span ng-show="!newEvent" translate="event.edit"></span>
+                <span ng-show="!newEvent"> {{event.title}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.dateStart"></label>
+                    <div class="col-sm-3">
+                        <p class="input-group">
+                            <input ng-disabled="!showRole"  class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="event.dateStart" 
+                                   is-open="opened" 
+                                   datepicker-options="dateOptions" 
+                                   close-text="Close"
+                                   required/>
+                            <span class="input-group-btn">
+                                <button ng-disabled="!showRole"  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <label class="col-sm-2 control-label" translate="event.dateEnd"></label>
+                    <div class="col-sm-3">
+                        <p class="input-group">
+                            <input ng-disabled="!showRole"  class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="event.dateEnd" 
+                                   is-open="opened" 
+                                   datepicker-options="dateOptions" 
+                                   close-text="Close"
+                                   required/>
+                            <span class="input-group-btn">
+                                <button ng-disabled="!showRole"  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.timeStart" ></label>
+                    <div class="col-sm-3">
+                        <fieldset ng-disabled="!showRole" >
+                            <timepicker ng-model="event.timeStart" 
+                                        hour-step="hstep" 
+                                        minute-step="mstep" 
+                                        show-meridian="false"
+                                        ></timepicker>
+                        </fieldset>
+                    </div>
+                    <label class="col-sm-2 control-label" translate="event.timeEnd" ></label>
+                    <div class="col-sm-3">
+                        <fieldset ng-disabled="!showRole" >
+                            <timepicker ng-model="event.timeEnd" 
+                                        hour-step="hstep" 
+                                        minute-step="mstep" 
+                                        show-meridian="false" 
+                                        ></timepicker>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.titleEvent"></label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                               class="form-control" 
+                               ng-model="event.title"
+                               duplicate="existingValues"  
+                               name="title" 
+                               ng-disabled="!showRole" 
+                               required/>
+                        <div class="col-sm-2 error-text">
+                            <span ng-show="editEvent.title.$error.duplicate" 
+                                  translate="event.alreadyExist"></span>
+                            <span ng-show="editEvent.title.$error.required" ></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.eventType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                required
+                                ng-model="event.eventType" 
+                                ng-disabled="!showRole" 
+                                ng-options="e.label for e in eventTypeList track by e.id"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.theme"></label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                               class="form-control" 
+                               ng-model="event.theme" 
+                               ng-disabled="!showRole" 
+                               />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.place"></label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                               class="form-control" 
+                               ng-model="event.place" 
+                               ng-disabled="!showRole" 
+                               />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.price"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" min="0" step="0.05"
+                                   class="form-control" 
+                                   ng-model="event.price"
+                                   ng-disabled="!showRole" />
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.description"></label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" ng-model="event.description"
+                                  ng-disabled="!showRole" ></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="event.supervisor"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                ng-model="event.supervisor"
+                                required 
+                                ng-disabled="!showRole" 
+                                ng-options="(common.lastname.toUpperCase() + ' ' + common.firstname) for common in supervisorList track by common.id"></select>
+                    </div>
+                </div>
+                <div ng-show="event.id">
+                    <div class="accordeonButton">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                                data-target="#developmodules" aria-expanded="false" aria-controls="developmodules">
+                            <span translate="event.modules"></span>
+                        </button>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                                data-target="#developAddUser" aria-expanded="false" aria-controls="developAddUser">
+                            <span translate="event.addPeople"></span>
+                        </button>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                                data-target="#developOrganizer" aria-expanded="false" aria-controls="developOrganizer">
+                            <span translate="event.organizer"></span>
+                        </button>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                                data-target="#developParticipants" aria-expanded="false" aria-controls="developParticipants">
+                            <span translate="event.participants"></span>
+                        </button>
+                    </div>
+                    <div class="panel panel-default collapse" id="developmodules">
+                        <div class="panel-heading">
+                            <h3 translate="event.modules"></h3>
+                        </div>
+                        <div class="panel-body">
+                            <select  multiple="multiple" 
+                                     name="selectedRoles" 
+                                     bs-duallistbox 
+                                     style="min-height:250px;" 
+                                     ng-model="assignedModules"                          
+                                     ng-options="u.name for u in availableModules track by u.id"
+                                     bootstrap2="{{ settings.bootstrap2}}"
+                                     move-on-select="{{ settings.moveOnSelect}}"
+                                     postfix="{{ settings.postfix}}"
+                                     select-min-height="{{ settings.selectMinHeight}}"
+                                     filter="{{ settings.filter}}"
+                                     filter-values="{{ settings.filterValues}}"
+
+                                     non-selected-list-label="{{ 'event.nonSelectedListLabelMod'|translate}}"
+                                     selected-list-label="{{ 'event.selectedListLabelMod'|translate}}"
+
+                                     preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                                     move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                                     move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                                     remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                                     remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                                     filter-non-selected="settings.filterNonSelected"
+                                     filter-selected="settings.filterSelected"
+                                     filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                                     filter-clear="{{ 'duallist.filterClear'|translate}}"
+                                     info-all="{{ 'duallist.infoAll'|translate}}"
+                                     info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                                     info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                                     ></select>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="panel panel-default collapse" id="developAddUser">
+                        <div class="panel-heading">
+                            <h3 translate="event.addPeople"></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row" ng-show="showRole">
+                                <div class="col-sm-3 center bold"><span translate="eventPerson.lastname"></span></div>
+                                <div class="col-sm-3 center bold"><span translate="eventPerson.firstname"></span></div>
+                                <div class="col-sm-3 center bold"><span translate="eventPerson.email"></span></div>
+                            </div>
+                            <div class="row" ng-show="showRole">
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" ng-model="newPerson.lastname"/>
+                                </div>
+                                <div class="col-sm-3"><input type="text" class="form-control" ng-model="newPerson.firstname"/></div>
+                                <div class="col-sm-3"><input type="email" class="form-control" ng-model="newPerson.email"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a ng-click="saveEventPerson()" class="btn btn-alternate btn-glyph">
+                                        <span translate="event.addPerson"></span>
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default collapse" id="developOrganizer">
+                        <div class="panel-heading">
+                            <h3 translate="event.addPeople"></h3>
+                        </div>
+                        <div class="panel-body">
+                            <select  multiple="multiple" 
+                                     name="selectedRoles" 
+                                     bs-duallistbox 
+                                     style="min-height:250px;" 
+                                     ng-model="assignedOrganizers"                          
+                                     ng-options="(u.lastname.toUpperCase() + ' ' + u.firstname + ' - ' + u.email) for u in availableOrganizers track by u.id"
+                                     bootstrap2="{{ settings.bootstrap2}}"
+                                     move-on-select="{{ settings.moveOnSelect}}"
+                                     postfix="{{ settings.postfix}}"
+                                     select-min-height="{{ settings.selectMinHeight}}"
+                                     filter="{{ settings.filter}}"
+                                     filter-values="{{ settings.filterValues}}"
+
+                                     non-selected-list-label="{{ 'event.nonSelectedListLabelOrg'|translate}}"
+                                     selected-list-label="{{ 'event.selectedListLabelOrg'|translate}}"
+
+                                     preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                                     move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                                     move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                                     remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                                     remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                                     filter-non-selected="settings.filterNonSelected"
+                                     filter-selected="settings.filterSelected"
+                                     filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                                     filter-clear="{{ 'duallist.filterClear'|translate}}"
+                                     info-all="{{ 'duallist.infoAll'|translate}}"
+                                     info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                                     info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                                     >
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="panel panel-default collapse" id="developParticipants">
+                        <div class="panel-heading">
+                            <h3 translate="event.participants"></h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3 translate="event.participants"></h3>
+                            <select  multiple="multiple" 
+                                     name="selectedRoles" 
+                                     bs-duallistbox 
+                                     style="min-height:250px;" 
+                                     ng-model="assignedParticipants"                          
+                                     ng-options="(u.lastname.toUpperCase() + ' ' + u.firstname + ' ' + u.email) for u in availableParticipants track by u.id"
+                                     bootstrap2="{{ settings.bootstrap2}}"
+                                     move-on-select="{{ settings.moveOnSelect}}"
+                                     postfix="{{ settings.postfix}}"
+                                     select-min-height="{{ settings.selectMinHeight}}"
+                                     filter="{{ settings.filter}}"
+                                     filter-values="{{ settings.filterValues}}"
+
+                                     non-selected-list-label="{{ 'event.nonSelectedListLabelPart'|translate}}"
+                                     selected-list-label="{{ 'event.selectedListLabelPart'|translate}}"
+
+                                     preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                                     move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                                     move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                                     remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                                     remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                                     filter-non-selected="settings.filterNonSelected"
+                                     filter-selected="settings.filterSelected"
+                                     filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                                     filter-clear="{{ 'duallist.filterClear'|translate}}"
+                                     info-all="{{ 'duallist.infoAll'|translate}}"
+                                     info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                                     info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                                     >
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-show="showRole" link="#/events"></btn-cancel>
+                <btn-submit ng-show="showRole" form="editEvent"></btn-submit>
+                <btn-return ng-show="!showRole" link="#/events"></btn-return>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script ng-if="!showRole">
+            $(".bootstrap-duallistbox-container").find("*").prop("disabled", true);
+</script>

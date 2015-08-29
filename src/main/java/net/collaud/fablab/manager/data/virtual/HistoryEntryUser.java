@@ -10,20 +10,22 @@ import net.collaud.fablab.manager.data.UserEO;
  */
 @Getter
 @EqualsAndHashCode(of = {"id"})
-public class HistoryEntryUser  {
+public class HistoryEntryUser {
 
-	private final int id;
-	private final String lastname;
-	private final String firstname;
-	public HistoryEntryUser(UserEO user){
-		this.id = user.getId();
-		this.lastname = user.getLastname();
-		this.firstname = user.getFirstname();
-	}
+    private final int id;
+    private final String lastname;
+    private final String firstname;
 
-	@Override
-	public String toString() {
-		return firstname+" "+lastname;
-	}
+    public HistoryEntryUser(UserEO user) {
+        if (user != null) {
+            this.id = user.getId();
+            this.lastname = user.getLastname();
+            this.firstname = user.getFirstname();
+        } else {
+            this.id = 0;
+            this.lastname = "inconnu";
+            this.firstname = "inconnu";
+        }
+    }
 
 }

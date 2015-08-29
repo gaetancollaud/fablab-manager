@@ -39,7 +39,8 @@ public class AuthWS {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public LoginResult login(@RequestBody AuthCredential credential) {
 		log.debug("Login for " + credential);
-		return securityService.login(credential.getLogin(), credential.getPassword());
+                //PasswordUtils.setUserEONewPassword(userService.findByLogin("admin").get(), "pwd");
+                return securityService.login(credential.getLogin(), credential.getPassword());
 	}
 
 	@RequestMapping(value = "logout")

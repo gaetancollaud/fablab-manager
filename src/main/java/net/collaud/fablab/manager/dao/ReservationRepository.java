@@ -3,7 +3,6 @@ package net.collaud.fablab.manager.dao;
 import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.manager.data.ReservationEO;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +13,7 @@ import org.springframework.data.repository.query.Param;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public interface ReservationRepository extends JpaRepository<ReservationEO, Integer>, JpaSpecificationExecutor<ReservationEO> {
+
 
 	@Query("SELECT DISTINCT r "
 			+ " FROM ReservationEO r "

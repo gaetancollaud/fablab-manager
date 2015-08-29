@@ -1,0 +1,29 @@
+<h1 translate="menu.supplyTypes"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/supplyTypes/supplyType-edit"></btn-create>                
+    </div>
+</div>
+<div class="supplyTypeList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="supplyType in $data">
+            <td 
+                data-title="'supplyType.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{supplyType.label | lowercase}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/supplyTypes/supplyType-edit/{{supplyType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(supplyType)"
+                        ng-really-message="{{'supplyType.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

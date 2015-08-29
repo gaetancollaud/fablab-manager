@@ -1,0 +1,55 @@
+<h1 translate="menu.trainings"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create ng-show="showRole" link="#/trainings/training-edit"></btn-create>      
+    </div>
+</div>
+<div class="trainingList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="training in $data">
+            <td 
+                data-title="'training.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{training.name| lowercase}}
+            </td>
+            <td 
+                data-title="'training.price' | translate" 
+                sortable="'price'"
+                filter="{'price':'text'}">
+                {{training.price}} {{training.price ? currency: ""}}
+            </td>
+            <td 
+                data-title="'training.trainingLevel' | translate" 
+                sortable="'trainingLevelLabel'"
+                filter="{'trainingLevelLabel':'text'}">
+                {{training.trainingLevel.label}}
+            </td>
+            <td 
+                data-title="'training.machineType' | translate" 
+                sortable="'machineTypeName'"
+                filter="{'machineTypeName':'text'}">
+                {{training.machineType.name}}
+            </td>
+            <td  class="center"
+                 data-title="'training.havePrerequisites' | translate ">
+                <input type="checkbox" ng-checked="training.prerequisites.length !== 0" disabled />
+            </td>
+            <td class="listBtn4">
+                <div class="btn-group">
+                    <a ng-show="showRole" class="btn btn-sm btn-default" href="#/trainings/training-edit/{{training.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <btn-show ng-show="!showRole" link="#/trainings/training-edit/{{training.id}}"></btn-show>
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(training)"
+                            ng-really-message="{{'training.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <a title="{{btnTitle}}" ng-show="showRole" class="btn btn-sm btn-alternate" href="#/certifications/certification-edit-training/{{training.id}}">
+                        <span class="fa fa-fw fa-check-square-o"> </span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

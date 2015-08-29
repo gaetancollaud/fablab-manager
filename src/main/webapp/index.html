@@ -1,203 +1,607 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Fablab-Fribourg</title>
-		<link rel="icon" type="image/ico" href="./favicon.ico">
+    <head>
+        <meta charset="utf-8">
+        <title>Fablab-Manager</title>
+        <link rel="icon" type="image/ico" href="./favicon.ico"/>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-		<!-- build:css css/app-name.min.css -->
-		<!-- Bootstrap -->
-		<link href="./ext-lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="./ext-lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-		<link href="./ext-lib/ng-table/dist/ng-table.min.css" rel="stylesheet">
-		<link href="./ext-lib/angular-ui-select/dist/select.min.css" rel="stylesheet">
+        <!-- build:css css/app-name.min.css -->
+        <!-- Bootstrap -->
+        <link href="./ext-lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/ng-table/dist/ng-table.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-ui-select/dist/select.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/template/sb-admin.css" rel="stylesheet"/>
+        <link href="./ext-lib/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-toggle-switch/angular-toggle-switch-bootstrap.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet"/>
+        <link href="./css/main.css" rel="stylesheet"/>
 		<link href="./ext-lib/toastr/toastr.min.css" rel="stylesheet">
 
 
-		<!--		<link href="./ext-lib/bootstrap-material-design/dist/css/roboto.min.css" rel="stylesheet">
-				<link href="./ext-lib/bootstrap-material-design/dist/css/material-fullpalette.min.css" rel="stylesheet">
-				<link href="./ext-lib/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">-->
 
-		<!--		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
-				<link href="./ext-lib/angular-modules/ui-select-0.9.6/select.min.css" rel="stylesheet">-->
-
-		<link href="./css/application.css" rel="stylesheet">
-
-		<link href="./components/audit/style.css" rel="stylesheet">
-		<link href="./components/accounting/style.css" rel="stylesheet">
-		<link href="./components/auth/style.css" rel="stylesheet">
-		<link href="./components/payment/style.css" rel="stylesheet">
-		<link href="./components/reservation/style.css" rel="stylesheet">
-		<link href="./components/user/style.css" rel="stylesheet">
-		<!-- endbuild -->
+        <!--		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
+                        <link href="./ext-lib/angular-modules/ui-select-0.9.6/select.min.css" rel="stylesheet">-->
 
 
-	</head>
-	<body ng-app="Fablab">
+        <link href="./components/accounting/style.css" rel="stylesheet"/>
+        <link href="./components/machine/style.css" rel="stylesheet"/>
+        <link href="./components/machineType/style.css" rel="stylesheet"/>
+        <link href="./components/machineState/style.css" rel="stylesheet"/>
+        <link href="./components/machineStatus/style.css" rel="stylesheet"/>
+        <link href="./components/auth/style.css" rel="stylesheet"/>
+        <link href="./components/payment/style.css" rel="stylesheet"/>
+        <link href="./components/reservation/style.css" rel="stylesheet"/>
+        <link href="./components/user/style.css" rel="stylesheet"/>
+        <link href="./components/membershipType/style.css" rel="stylesheet"/>
+        <link href="./components/revision/style.css" rel="stylesheet">
+        <link href="./components/ticketStatus/style.css" rel="stylesheet">
+        <link href="./components/ticket/style.css" rel="stylesheet">
+        <link href="./components/configuration/style.css" rel="stylesheet">
+        <link href="./components/supply/style.css" rel="stylesheet">
+        <link href="./components/supplyType/style.css" rel="stylesheet">
+        <link href="./components/purchase/style.css" rel="stylesheet">
+        <link href="./components/supplyUnity/style.css" rel="stylesheet">
+        <link href="./components/motionStock/style.css" rel="stylesheet">
+        <link href="./components/priceMachine/style.css" rel="stylesheet">
+        <link href="./components/trainingLevel/style.css" rel="stylesheet">
+        <link href="./components/training/style.css" rel="stylesheet">
+        <link href="./components/certification/style.css" rel="stylesheet">
+        <link href="./components/role/style.css" rel="stylesheet">
+        <link href="./components/usage/style.css" rel="stylesheet">
+        <link href="./components/userPayment/style.css" rel="stylesheet">
+        <link href="./components/eventType/style.css" rel="stylesheet">
+        <link href="./components/eventPerson/style.css" rel="stylesheet">
+        <link href="./components/eventModule/style.css" rel="stylesheet">
+        <link href="./components/event/style.css" rel="stylesheet">
+        <link href="./components/audit/style.css" rel="stylesheet">
 
-	<toast></toast>
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" 
-						class="navbar-toggle collapsed" 
-						data-toggle="collapse" 
-						data-target="#navbar" 
-						aria-expanded="false" 
-						aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand">Fablab-Fribourg</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li fab-nav-item link="" icon="home" 
-						label="menu.home"></li>
-					<li fab-nav-item link="reservations" icon="calendar" 
-						label="menu.reservation"
-						show="hasAnyRole('RESERVATION_VIEW')"></li>
-					<li fab-nav-item link="payments" icon="shopping-cart" 
-						label="menu.payment" 
-						show="hasAnyRole('PAYMENT_VIEW')"></li>
-					<li fab-nav-item link="users" icon="user" 
-						label="menu.users" 
-						show="hasAnyRole('USER_VIEW')"></li>
-					<li fab-nav-item link="accounting" icon="euro" 
-						label="menu.accounting" 
-						show="hasAnyRole('ACCOUNTING_VIEW')"></li>
-					<li fab-nav-item link="audit" icon="menu-hamburger" 
-						label="menu.audit" 
-						show="hasAnyRole('AUDIT_VIEW')"></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
+        <!-- endbuild -->
 
-					<li fab-nav-item link="signup" icon="heart" 
-						label="menu.signup"
-						show="!connectedUser.connected"></li>
-					<li fab-nav-item link="login" icon="log-in" 
-						label="menu.login"
-						show="!connectedUser.connected"></li>
-					<li fab-nav-item link="profil" icon="cog"
-						label="{{connectedUser.user| prettyUser}}"
-						show="connectedUser.connected"></li>
-					<li fab-nav-item link="logout" icon="log-out"
-						label="menu.logout"
-						show="connectedUser.connected"></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    </head>
+    <body ng-app="Fablab">
 
-	<div class="container-fluid" id="main-container">
-		<div ng-view id="main-view"></div>
-	</div>
-	<div id="footer">
-		<a href="https://github.com/gaetancollaud/fablab-api">
-			<img class="github" src="images/github.png" alt="github logo">
-			Fablab Manager
-		</a>
-		is an open-source application
-	</div>
+    <toast></toast>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" 
+                            class="navbar-toggle collapsed" 
+                            data-toggle="collapse" 
+                            data-target="#navbar" 
+                            aria-expanded="false" 
+                            aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-	<script src="./api/constants.js"></script>
+                    <a class="navbar-brand">
+                        <div>
+                            <img src="./images/logo.png" alt="logo" width="22" height="22" class="img-circle"/>
+                            <span>Fablab-Manager</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li fab-nav-item link="" icon="home" 
+                            label="menu.home"
+                            show="connectedUser.connected"></li>
+                        <!--ADMINISTRATION DROPDOWN-->
+                        <li>
+                            <a data-toggle="dropdown" class="dropdown-toggle" ng-show="hasAnyRole('ADMIN')" href="javascript:;">
+                                <i class="fa fa-fw fa-cogs"></i> 
+                                <span translate="menu.admin"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header" show="hasAnyRole('ADMIN')">
+                                    <span translate="menu.users"></span>
+                                </li> 
+                                <li fab-nav-item-af link="users" icon="user" 
+                                    label="menu.users" 
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="membershipTypes" 
+                                    label="menu.membershipTypes" icon="user-secret"
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="groups" icon="users"
+                                    label="menu.groups"
+                                    show="hasAnyRole('GROUP_MANAGE')"></li>
+                                <li class="divider" show="hasAnyRole('ADMIN')"></li>
+                                <li class="dropdown-header" show="hasAnyRole('ADMIN')">
+                                    <span translate="menu.configurations"></span>
+                                </li> 
+                                <li fab-nav-item-af link="configurations" icon="key"
+                                    label="menu.key"
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="roles" icon="bookmark"
+                                    label="menu.roles"
+                                    show="hasAnyRole('ADMIN')"></li>
+                            </ul>
+                        <li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--<li fab-nav-item link="signup" icon="heart" 
+                            label="menu.signup"
+                            show="!connectedUser.connected"></li>
+                        Not implemented yet-->
 
-	<!-- build:js js/app-name.min.js -->
+                        <!-- FOR DATATABLES TESTS
+                        <li> <a href="#/tests">Test Datatable</a></li>-->
 
-	<script src="./ext-lib/jquery/dist/jquery.min.js"></script>
+                        <li fab-nav-item link="users/user-edit/{{connectedUser.user.id}}" icon="cog"
+                            label="{{connectedUser.user| prettyUser}}"
+                            show="hasAnyRole('ADMIN')"></li>
+                        <li class="user-name" ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">
+                            <span>{{connectedUser.user|prettyUser}}</span>
+                        </li>
+<!--                        <li class="lang-menu">
+                            <span ng-show="curentLanguage === 'fr'">
+                                <span>
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <span translate="general.toFr"></span>
+                                </span>
+                                <span>|</span>
+                                <a href="" ng-click="translate('en')">
+                                    <span translate="general.toEn"></span>
+                                    <img src="./images/en.png" alt="toEn" height="15" width="22"/>
+                                </a>
+                            </span>
+                            <span ng-show="curentLanguage === 'en'">
+                                <a href="" ng-click="translate('fr')">
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <span translate="general.toFr"></span>
+                                </a>
+                                <span>|</span>
+                                <span href="">
+                                    <span translate="general.toEn"></span>
+                                    <img src="./images/en.png" alt="toEn" height="15" width="22"/>
+                                </span>
+                            </span>
+                        </li>-->
+                        <li fab-nav-item link="login" icon="log-in" 
+                            label="menu.login"
+                            show="!connectedUser.connected"></li>
+                        <li fab-nav-item link="logout" icon="log-out"
+                            label="menu.logout"
+                            show="connectedUser.connected"></li>
+                    </ul>
+                    <ul ng-show="connectedUser.connected" class="nav navbar-nav side-nav">
+                        <!--MACHINERIES DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#machineListDD" ng-show="hasAnyRole('MACHINE_VIEW')" href="javascript:;">
+                                <i class="fa fa-fw fa-connectdevelop"></i> 
+                                <span translate="menu.machines"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="machineListDD" class="collapse">
+                                <li fab-nav-item-af link="machines" icon="sliders" 
+                                    label="menu.machines" 
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineTypes" icon="print" 
+                                    label="menu.machineTypes" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"  
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineStates" icon="file-text-o" 
+                                    label="menu.machineState" 
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineStatus" icon="exclamation-triangle" 
+                                    label="menu.machineStatus" 
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li ng-show="hasAnyRole('MACHINE_MANAGE')">
+                                    <a ng-show="hasAnyRole('MACHINE_MANAGE')" href="#/priceMachines/table">
+                                        <span class="fa fa-fw fa-euro"></span>
+                                        <span translate="menu.priceMachinesTable"></span>
+                                    </a>
+                                </li>
+                                <hr ng-show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                <li fab-nav-item-af link="revisions" icon="check-square-o" 
+                                    label="menu.revision" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <hr ng-show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                <li fab-nav-item-af link="tickets" icon="ticket" 
+                                    label="menu.tickets" 
+                                    show="hasAnyRole('TICKET_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="ticketStatus" icon="terminal" 
+                                    label="menu.ticketStatus" 
+                                    show="hasAnyRole('TICKET_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="tickets/ticket-edit" icon="bolt" 
+                                    label="menu.addFailure" 
+                                    show="hasAnyRole('TICKET_VIEW')"
+                                    ng-show="hasAnyRole('TICKET_VIEW')"></li>
+                            </ul>
+                        </li>
+                        <!--TRAINING DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#trainingListDD" ng-show="'TRAINING_VIEW'" href="javascript:;">
+                                <i class="fa fa-fw fa-briefcase"></i> 
+                                <span translate="menu.trainings"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="trainingListDD" class="collapse">
+                                <li fab-nav-item-af link="trainings" icon="book" 
+                                    label="menu.trainings" 
+                                    show="hasAnyRole('TRAINING_VIEW')" 
+                                    ng-show="hasAnyRole('TRAINING_VIEW')"></li>
+                                <li fab-nav-item-af link="trainingLevels" icon="list" 
+                                    label="menu.trainingLevels" 
+                                    show="hasAnyRole('TRAINING_MANAGE')" 
+                                    ng-show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                <li fab-nav-item-af link="certifications" icon="mortar-board" 
+                                    label="menu.certification" 
+                                    show="hasAnyRole('TRAINING_VIEW')" 
+                                    ng-show="hasAnyRole('TRAINING_VIEW')"></li>
+                            </ul>
+                        </li>
+                        <!--SUPPLIES DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#supplyListDD" 
+                               ng-show="hasAnyRole('SUPPLY_VIEW')"  href="javascript:;">
+                                <i class="fa fa-fw fa-barcode"></i>
+                                <span translate="menu.supplies"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="supplyListDD" class="collapse">
+                                <li fab-nav-item-af link="supplies" icon="wrench" 
+                                    label="menu.supplies" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li fab-nav-item-af link="supplyTypes" icon="newspaper-o" 
+                                    label="menu.supplyTypes" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li ng-show="hasAnyRole('SUPPLY_MANAGE')">
+                                    <a href="#/supplyUnities">
+                                        <span class="iconify">m<sup>2</sup></span>
+                                        <span translate = "menu.supplyUnities"></span>
+                                    </a>
+                                </li>
+                                <hr ng-show="hasAnyRole('SUPPLY_MANAGE')"></hr>
+                                <li fab-nav-item-af link="purchases" icon="barcode" 
+                                    label="menu.purchases" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li fab-nav-item-af link="purchases/purchase-edit" icon = "plus-circle" 
+                                    label="menu.addPurchase" 
+                                    show="hasAnyRole('SUPPLY_VIEW')" 
+                                    ng-show="hasAnyRole('SUPPLY_VIEW')"></li>
+                                <li fab-nav-item-af link="motionStocks" icon="database"
+                                    label="menu.motionStocks"
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                            </ul>
+                        </li>
+                        <!--EVENTS DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#eventListDD" 
+                               ng-show="hasAnyRole('EVENT_VIEW')"  href="javascript:;">
+                                <i class="fa fa-fw fa-cubes"></i>
+                                <span translate="menu.event"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="eventListDD" class="collapse">
+                                <li fab-nav-item-af link="events" icon="exclamation" 
+                                    label="menu.events" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
 
-	<script src="./ext-lib/bootstrap/dist/js/bootstrap.min.js"></script>
+                                <li fab-nav-item-af link="eventTypes" icon="list" 
+                                    label="menu.eventTypes" 
+                                    show="hasAnyRole('EVENT_MANAGE')" 
+                                    ng-show="hasAnyRole('EVENT_MANAGE')"></li>
+                                <li fab-nav-item-af link="eventPersons" icon="users" 
+                                    label="menu.eventPersons" 
+                                    show="hasAnyRole('EVENT_MANAGE')" 
+                                    ng-show="hasAnyRole('EVENT_MANAGE')"></li>
+                                <li fab-nav-item-af link="eventModules" icon="cube" 
+                                    label="menu.eventModules" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
+                            </ul>
+                        </li>
+                        <!--ACCOUNTING DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#accountingListDD" 
+                               ng-show="hasAnyRole('ACCOUNTING_MANAGE')"  href="javascript:;">
+                                <i class="fa fa-fw fa-euro"></i>
+                                <span translate="menu.accounting"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="accountingListDD" class="collapse">
+                                <li fab-nav-item-af link="accounting"
+                                    label="menu.inOut" icon="exchange"
+                                    show="hasAnyRole('ACCOUNTING_VIEW')"
+                                    ng-show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+                                <li fab-nav-item-af link="accounting/user-account"
+                                    label="menu.userAccount" icon="calculator"
+                                    show="hasAnyRole('ACCOUNTING_MANAGE')"
+                                    ng-show="hasAnyRole('ACCOUNTING_MANAGE')"></li>
+                            </ul>
+                        </li>
+                        <!--PAYMENT DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#paymentListDD" 
+                               ng-show="hasAnyRole('PAYMENT_VIEW')"  href="javascript:;">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                <span translate="menu.paymentsUse"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="paymentListDD" class="collapse">
+                                <li fab-nav-item-af link="usages" icon="sliders" 
+                                    label="menu.usages" 
+                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
+                                <li>
+                                    <a ng-show="hasAnyRole('PAYMENT_VIEW')" href="#/userPayments">
+                                        <span class="fa fa-fw fa-money"></span>
+                                        <span translate="menu.userPayments"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-show="hasAnyRole('PAYMENT_VIEW')" href="#/events/event-payment">
+                                        <span class="fa fa-fw fa-exclamation"></span>
+                                        <span translate="menu.eventPayment"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li fab-nav-item link="reservations" icon="calendar"
+                            label="menu.reservation"
+                            show="hasAnyRole('RESERVATION_VIEW')"></li>
+                        <li fab-nav-item link="audit" icon="menu-hamburger"
+                            label="menu.audit"
+                            show="hasAnyRole('AUDIT_VIEW')"></li>
+<!--                        <li>
+                            <img src="./images/logoFabLabManager.png" alt="logo" height="220" width="220" id="faviconLeft" class="img-circle"/>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid" id="main-container">
+        <div id="content">
+            <div ng-view id="main-view">
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+		<a href="https://github.com/gaetancollaud/fablab-manager">
+            <img class="github" src="images/github.png" alt="github logo">
+            Fablab Manager
+        </a>
+        is an open-source application
+    </div>
 
-	<script src="./ext-lib/angular/angular.min.js"></script>
-	<script src="./ext-lib/angular-route/angular-route.min.js"></script>
-	<script src="./ext-lib/angular-sanitize/angular-sanitize.min.js"></script>
-	<script src="./ext-lib/angular-resource/angular-resource.min.js"></script>
-	<!--	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
-		<script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>-->
+    <script src="./api/constants.js"></script>
 
-	<script src="./ext-lib/moment/min/moment-with-locales.min.js"></script>
-	<script src="./ext-lib/moment-range/lib/moment-range.min.js"></script>
-	<script src="./ext-lib/fullcalendar/dist/fullcalendar.min.js"></script>
-	<script src="./ext-lib/fullcalendar/dist/gcal.js"></script>
-	
-	<script src="./ext-lib/angular-ui-calendar/src/calendar.js"></script>
-	<script src="./ext-lib/angular-translate/angular-translate.min.js"></script>
-	<script src="./ext-lib/ng-table/dist/ng-table.min.js"></script>
-	<script src="./ext-lib/angular-ui-select/dist/select.min.js"></script>
+    <!-- build:js js/app-name.min.js -->
 
-	<script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
-	<script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="./ext-lib/jquery/dist/jquery.min.js"></script>
+    <script src="./ext-lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./ext-lib/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="./lib/datatablesPlugins/columnFilter.js"></script>
+
+    <script src="./ext-lib/angular/angular.min.js"></script>
+    <script src="./ext-lib/angular-route/angular-route.min.js"></script>
+    <script src="./ext-lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="./ext-lib/ng-csv/build/ng-csv.min.js"></script>
+    <script src="./ext-lib/angular-resource/angular-resource.min.js"></script>
+    <!--	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
+            <script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>-->
+
+    <script src="./ext-lib/moment/min/moment-with-locales.min.js"></script>
+    <script src="./ext-lib/moment-range/lib/moment-range.min.js"></script>
+    <script src="./ext-lib/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="./ext-lib/fullcalendar/dist/gcal.js"></script>
+
+    <script src="./ext-lib/angular-ui-calendar/src/calendar.js"></script>
+    <script src="./ext-lib/angular-translate/angular-translate.min.js"></script>
+    <script src="./ext-lib/ng-table/dist/ng-table.min.js"></script>
+    <script src="./ext-lib/angular-ui-select/dist/select.min.js"></script>
+    <script src="./ext-lib/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
+    <script src="./ext-lib/angular-bootstrap-duallistbox/dist/angular-bootstrap-duallistbox.min.js"></script>
+    <script src="./ext-lib/angular-toggle-switch/angular-toggle-switch.min.js"></script>
+
+    <script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="./ext-lib/toastr/toastr.min.js"></script>
 
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="./ext-lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
 
 
-	<script src="./app.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/angular-datatables.min.js"></script>
 
-	<script src="./lib/services/httpInterceptor.js"></script>
-	<script src="./lib/services/loader.js"></script>
-	<script src="./lib/services/notification.js"></script>
-	<script src="./lib/services/modal.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
 
-	<script src="./lib/filters/core.js"></script>
-	<script src="./lib/filters/date.js"></script>
-	<script src="./lib/filters/select.js"></script>
-	<script src="./lib/filters/currency.js"></script>
 
-	<script src="./lib/directives/naviguation/naviguation-item.js"></script>
-	<script src="./lib/directives/confirm/reallyClick.js"></script>
-	<script src="./lib/directives/form/form.js"></script>
-	<script src="./lib/directives/form/date.js"></script>
-	<script src="./lib/directives/form/recaptcha.js"></script>
-	<script src="./lib/directives/calendar/calendar.js"></script>
 
-	<script src="./i18n/en.js"></script>
-	<script src="./i18n/fr.js"></script>
 
-	<script src="./components/services/accounting-service.js"></script>
-	<script src="./components/services/audit-service.js"></script>
-	<script src="./components/services/auth-service.js"></script>
-	<script src="./components/services/machine-service.js"></script>
-	<script src="./components/services/payment-service.js"></script>
-	<script src="./components/services/reservation-service.js"></script>
-	<script src="./components/services/static-data-service.js"></script>
-	<script src="./components/services/user-service.js"></script>
+    <script src="./app.js"></script>
 
-	<script src="./components/dashboard/home-ctrl.js"></script>
+    <script src="./lib/services/httpInterceptor.js"></script>
+    <script src="./lib/services/loader.js"></script>
+    <script src="./lib/services/notification.js"></script>
+    <script src="./lib/services/modal.js"></script>
+    <script src="./lib/filters/core.js"></script>
+    <script src="./lib/filters/date.js"></script>
+    <script src="./lib/filters/date-filter-ch.js"></script>
+    <script src="./lib/filters/uppercase-renderer.js"></script>
+    <script src="./lib/filters/select.js"></script>
+    <script src="./lib/filters/currency.js"></script>
+    <script src="./lib/directives/naviguation/navigation-item-af.js"></script>
+    <script src="./lib/directives/naviguation/navigation-item.js"></script>
+    <script src="./lib/directives/confirm/reallyClick.js"></script>
+    <script src="./lib/directives/form/form.js"></script>
+    <script src="./lib/directives/form/date.js"></script>
+    <script src="./lib/directives/form/autocapitalize.js"></script>
+    <script src="./lib/directives/form/unique.js"></script>
+    <script src="./lib/directives/form/latin.js"></script>
+    <script src="./lib/directives/calendar/calendar.js"></script>
+    <script src="./lib/directives/shuttle/duallistbox.js"></script>
 
-	<script src="./components/auth/login-ctrl.js"></script>
-	<script src="./components/auth/logout-ctrl.js"></script>
-	<script src="./components/user/signup-ctrl.js"></script>
-	<script src="./components/auth/forgot-password-ctrl.js"></script>
+    <script src="./i18n/en.js"></script>
+    <script src="./i18n/fr.js"></script>
 
-	<script src="./components/user/user-filters.js"></script>
-	<script src="./components/user/directive-groups.js"></script>
-	<script src="./components/user/directive-subscription.js"></script>
-	<script src="./components/user/list-ctrl.js"></script>
-	<script src="./components/user/edit-ctrl.js"></script>
-	<script src="./components/user/profil-ctrl.js"></script>
+    <script src="./components/services/accounting-service.js"></script>
+    <script src="./components/services/audit-service.js"></script>
+    <script src="./components/services/auth-service.js"></script>
+    <script src="./components/services/group-service.js"></script>
+    <script src="./components/services/role-service.js"></script>
+    <script src="./components/services/configuration-service.js"></script>
+    <script src="./components/services/machine-service.js"></script>
+    <script src="./components/services/machineType-service.js"></script>
+    <script src="./components/services/machineState-service.js"></script>
+    <script src="./components/services/machineStatus-service.js"></script>
+    <script src="./components/services/payment-service.js"></script>
+    <script src="./components/services/purchase-service.js"></script>
+    <script src="./components/services/reservation-service.js"></script>
+    <script src="./components/services/static-data-service.js"></script>
+    <script src="./components/services/user-service.js"></script>
+    <script src="./components/services/membershipType-service.js"></script>
+    <script src="./components/services/motionStock-service.js"></script>
+    <script src="./components/services/priceMachine-service.js"></script>
+    <script src="./components/services/revision-service.js"></script>
+    <script src="./components/services/supply-service.js"></script>
+    <script src="./components/services/supplyType-service.js"></script>
+    <script src="./components/services/supplyUnity-service.js"></script>
+    <script src="./components/services/ticketStatus-service.js"></script>
+    <script src="./components/services/ticket-service.js"></script>
+    <script src="./components/services/training-service.js"></script>
+    <script src="./components/services/usage-service.js"></script>
+    <script src="./components/services/userPayment-service.js"></script>
+    <script src="./components/services/certification-service.js"></script>
+    <script src="./components/services/trainingLevel-service.js"></script>
+    <script src="./components/services/eventType-service.js"></script>
+    <script src="./components/services/eventPerson-service.js"></script>
+    <script src="./components/services/eventModule-service.js"></script>
+    <script src="./components/services/event-service.js"></script>
 
-	<script src="./components/reservation/list-ctrl.js"></script>
-	<script src="./components/reservation/edit-ctrl.js"></script>
-	<script src="./components/reservation/directive-reservation-day.js"></script>
+    <script src="./components/dashboard/home-ctrl.js"></script>
 
-	<script src="./components/payment/by-user-ctrl.js"></script>
-	<script src="./components/payment/directive-user-payment-history.js"></script>
-	<script src="./components/payment/directive-add-usage.js"></script>
-	<script src="./components/payment/directive-add-payment.js"></script>
-	<script src="./components/payment/directive-add-subscription.js"></script>
 
-	<script src="./components/accounting/accounting-list-ctrl.js"></script>
+    <script src="./components/auth/login-ctrl.js"></script>
+    <script src="./components/auth/logout-ctrl.js"></script>
+    <script src="./components/user/signup-ctrl.js"></script>
+    <script src="./components/auth/forgot-password-ctrl.js"></script>
+
+    <script src="./components/configuration/configuration-list-ctrl.js"></script>
+    <script src="./components/configuration/configuration-edit-ctrl.js"></script>
+
+    <script src="./components/user/user-filters.js"></script>
+    <script src="./components/user/directive-groups.js"></script>
+    <script src="./components/user/directive-subscription.js"></script>
+    <script src="./components/user/user-list-ctrl.js"></script>
+    <script src="./components/user/user-edit-ctrl.js"></script>
+    <script src="./components/user/profil-ctrl.js"></script>
+
+    <script src="./components/membershipType/membershipType-list-ctrl.js"></script>
+    <script src="./components/membershipType/membershipType-edit-ctrl.js"></script>
+
+    <script src="./components/reservation/reservation-list-ctrl.js"></script>
+    <script src="./components/reservation/reservation-edit-ctrl.js"></script>
+    <script src="./components/reservation/directive-reservation-day.js"></script>
+
+    <script src="./components/payment/by-user-ctrl.js"></script>
+    <script src="./components/payment/directive-user-payment-history.js"></script>
+    <script src="./components/payment/directive-add-usage.js"></script>
+    <script src="./components/payment/directive-add-payment.js"></script>
+
+    <script src="./components/accounting/accounting-list-ctrl.js"></script>
+    <script src="./components/accounting/user-account-ctrl.js"></script>
+
+    <script src="./components/machine/machine-list-ctrl.js"></script>
+    <script src="./components/machine/machine-edit-ctrl.js"></script>
+    <script src="./components/machine/directive-machine-tickets-ctrl.js"></script>
+    <script src="./components/machine/directive-machine-revisions-ctrl.js"></script>
+
+    <script src="./components/machineType/machineType-list-ctrl.js"></script>
+    <script src="./components/machineType/machineType-edit-ctrl.js"></script>
+
+    <script src="./components/machineState/machineState-list-ctrl.js"></script>
+    <script src="./components/machineState/machineState-edit-ctrl.js"></script>
+
+    <script src="./components/machineStatus/machineStatus-list-ctrl.js"></script>
+    <script src="./components/machineStatus/machineStatus-edit-ctrl.js"></script>
+
+    <script src="./components/priceMachine/priceMachine-list-ctrl.js"></script>
+    <script src="./components/priceMachine/priceMachine-edit-ctrl.js"></script>
+    <script src="./components/priceMachine/priceMachine-table-ctrl.js"></script>
+
+    <script src="./components/revision/revision-list-ctrl.js"></script>
+    <script src="./components/revision/revision-edit-ctrl.js"></script>
+
+    <script src="./components/ticketStatus/ticketStatus-list-ctrl.js"></script>
+    <script src="./components/ticketStatus/ticketStatus-edit-ctrl.js"></script>
+
+    <script src="./components/ticket/ticket-list-ctrl.js"></script>
+    <script src="./components/ticket/ticket-edit-ctrl.js"></script>
+
+    <script src="./components/supply/supply-list-ctrl.js"></script>
+    <script src="./components/supply/supply-edit-ctrl.js"></script>
+    <script src="./components/supplyType/supplyType-list-ctrl.js"></script>
+    <script src="./components/supplyType/supplyType-edit-ctrl.js"></script>
+    <script src="./components/purchase/purchase-list-ctrl.js"></script>
+    <script src="./components/purchase/purchase-edit-ctrl.js"></script>
+    <script src="./components/supplyUnity/supplyUnity-list-ctrl.js"></script>
+    <script src="./components/supplyUnity/supplyUnity-edit-ctrl.js"></script>
+
+
+    <script src="./components/motionStock/motionStock-list-ctrl.js"></script>
+
+    <script src="./components/trainingLevel/trainingLevel-list-ctrl.js"></script>
+    <script src="./components/trainingLevel/trainingLevel-edit-ctrl.js"></script>
+
+    <script src="./components/training/training-list-ctrl.js"></script>
+    <script src="./components/training/training-edit-ctrl.js"></script>
+
+    <script src="./components/certification/certification-list-ctrl.js"></script>
+    <script src="./components/certification/certification-edit-ctrl.js"></script>
+
+    <script src="./components/role/role-ctrl.js"></script>
+    <script src="./components/group/group-list-ctrl.js"></script>
+    <script src="./components/group/group-edit-ctrl.js"></script>
+
+    <script src="./components/usage/usage-list-ctrl.js"></script>
+    <script src="./components/usage/usage-edit-ctrl.js"></script>
+    <script src="./components/userPayment/userPayment-list-ctrl.js"></script>
+    <script src="./components/userPayment/userPayment-edit-ctrl.js"></script>
+
+    <script src="./components/eventType/eventType-list-ctrl.js"></script>
+    <script src="./components/eventType/eventType-edit-ctrl.js"></script>
+
+    <script src="./components/eventPerson/eventPerson-list-ctrl.js"></script>
+    <script src="./components/eventPerson/eventPerson-edit-ctrl.js"></script>
+
+    <script src="./components/eventModule/eventModule-list-ctrl.js"></script>
+    <script src="./components/eventModule/eventModule-edit-ctrl.js"></script>
+
+    <script src="./components/event/event-list-ctrl.js"></script>
+    <script src="./components/event/event-edit-ctrl.js"></script>
+    <script src="./components/event/event-payment-ctrl.js"></script>
+
+    <script src="./components/machineTest/test-ctrl.js"></script>
 	
-	<script src="./components/audit/audit-list-ctrl.js"></script>
+    <script src="./components/audit/audit-list-ctrl.js"></script>
 
-	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
 
-	<!-- endbuild -->
+    <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <!-- endbuild -->
 </body>
 </html>

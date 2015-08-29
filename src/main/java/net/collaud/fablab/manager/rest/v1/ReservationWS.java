@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud
+ * <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/v1/reservation")
@@ -24,21 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, ReservationService>{
 
-	@Autowired
-	private ReservationService reservationService;
-	
-	@PostConstruct
-	private void postConstruct(){
-		super.setService(reservationService);
-	}
+    @Autowired
+    private ReservationService reservationService;
 
-	@RequestMapping(value = "search", method = RequestMethod.POST)
-	public List<ReservationEO> list(@RequestBody PeriodSearchCriteria criteria) {
-		log.debug("Search reservation " + criteria);
-		List<ReservationEO> list = reservationService.findReservations(
-				criteria.getDateFrom(),
-				criteria.getDateTo());
-		return list;
-	}
+    @PostConstruct
+    private void postConstruct() {
+        super.setService(reservationService);
+    }
 
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public List<ReservationEO> list(@RequestBody PeriodSearchCriteria criteria) {
+        List<ReservationEO> list = reservationService.findReservations(
+                criteria.getDateFrom(),
+                criteria.getDateTo());
+        return list;
+    }
 }

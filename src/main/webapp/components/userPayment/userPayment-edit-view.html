@@ -1,0 +1,172 @@
+<div class="userPaymentEdit">
+    <form class="form-horizontal" name="editUserPayment" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newUserPayment" translate="userPayment.create"></span>
+                <span ng-show="!newUserPayment" translate="userPayment.edit"></span>
+                <span ng-show="!newUserPayment"> {{userPayment.datePayment|prettyDate}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.datePayment"></label>
+                    <div class="col-sm-6">
+                        <p class="input-group">
+                            <input class="form-control" 
+                                   datepicker-popup="{{format}}" 
+                                   ng-model="userPayment.datePayment" 
+                                   is-open="opened" 
+                                   min-date="{{miniDate}}"
+                                   datepicker-options="dateOptions" 
+                                   ng-required="true" 
+                                   ng-disabled="!editable"
+                                   close-text="Close"
+                                   required/>
+                            <span class="input-group-btn">
+                                <button ng-disabled="!editable" type="button" class="btn btn-default" ng-click="open($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.amount"></label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="number" 
+                                   step="0.05" 
+                                   class="form-control" 
+                                   min="0" 
+                                   ng-model="userPayment.amount"
+                                   ng-change="updatePrice()" 
+                                   ng-disabled="!editable"
+                                   required/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" ng-model="userPayment.label" ng-disabled="!editable" required/>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="userPayment.amount">
+                    <label class="col-sm-3 control-label" translate="userPayment.discount"></label>
+                    <div class="col-sm-5">
+                        <input ng-if="userPayment.discountPercent" 
+                               type="number" 
+                               max="100" 
+                               min="0" 
+                               step="0.05" 
+                               class="form-control" 
+                               ng-model="userPayment.discount" 
+                               ng-change="updatePrice()"
+                               ng-disabled="!editable"/>
+                        <div class="input-group"  ng-if="!userPayment.discountPercent" >
+                            <input type="number"
+                                   min="0" 
+                                   max="{{userPayment.amount}}"
+                                   step="0.05" 
+                                   class="form-control" 
+                                   ng-model="userPayment.discount" 
+                                   ng-change="updatePrice()"
+                                   ng-disabled="!editable"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <select  class="form-control" 
+                                 ng-model="userPayment.discountPercent"
+                                 ng-disabled="!editable"
+                                 ng-init="userPayment.discountPercent = firstPercent"
+                                 ng-options="op.value as op.name for op in optionsPercent">
+                        </select> 
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.note"></label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" ng-model="userPayment.note" ng-disabled="!editable"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.user"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                required
+                                ng-model="userPayment.user"
+                                ng-options="(u.lastname + ' ' + u.firstname) for u in userList track by u.id" 
+                                ng-disabled="!showRole || !editable"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.paidDirectly"></label>
+                    <div class="col-sm-6">
+                        <toggle-switch 
+                            class="toggle"
+                            ng-model="paidDirectly"
+                            ng-disabled="!editable || userPayment.payedForFabLab"
+                            on-label="Oui"
+                            off-label="Non"></toggle-switch>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="(paidDirectly || userPayment.cashier)">
+                    <label class="col-sm-3 control-label" translate="userPayment.cashier"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                ng-model="userPayment.cashier"
+                                ng-disabled="!editable"
+                                ng-options="(u.lastname + ' ' + u.firstname) for u in cashierList track by u.id"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" translate="userPayment.total"></label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="number" step="0.05" class="form-control" ng-model="userPayment.total" disabled/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="showRole">
+                    <label title="{{btnTitle}}"class="col-sm-3 control-label question" translate="userPayment.paidFablab"></label>
+                    <div class="col-sm-6">
+                        <toggle-switch 
+                            class="toggle"
+                            ng-model="userPayment.payedForFabLab"
+                            on-label="Oui"
+                            ng-disabled="!editable"
+                            off-label="Non"></toggle-switch>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="userPayment.payedForFabLab">
+                    <label class="col-sm-3 control-label" translate="userPayment.accountCredit"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                ng-model="userPayment.accountCredit"
+                                ng-disabled="!editable"
+                                ng-options="a.value as a.name for a in accounts"></select>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="userPayment.payedForFabLab">
+                    <label class="col-sm-3 control-label" translate="userPayment.accountDebit"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" 
+                                ng-model="userPayment.accountDebit"
+                                ng-disabled="!editable"
+                                ng-options="a.value as a.name for a in accounts"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-show="editable" link="#/userPayments"></btn-cancel>
+                <btn-submit ng-show="editable" form="editUserPayment"></btn-submit>
+                <btn-return ng-show="!editable" link="#/userPayments"></btn-return>
+            </div>
+        </div>
+    </form>
+</div>
+

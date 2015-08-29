@@ -1,0 +1,36 @@
+<h1 translate="menu.priceMachine"></h1>
+<div class="priceMachineList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="priceMachine in $data">
+            <td 
+                data-title="'priceMachine.price' | translate" 
+                sortable="'price'"
+                filter="{'price':'text'}">
+                {{priceMachine.price}}
+            </td>
+            <td 
+                data-title="'priceMachine.machineType' | translate" 
+                sortable="'machineTypeName'"
+                filter="{'machineTypeName':'text'}">
+                {{priceMachine.machineType.name}}
+            </td>
+            <td 
+                data-title="'priceMachine.membershipType' | translate" 
+                sortable="'membershipTypeName'"
+                filter="{'membershipTypeName':'text'}">
+                {{priceMachine.membershipType.name}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/priceMachines/priceMachine-edit/{{priceMachine.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(priceMachine)"
+                        ng-really-message="{{'priceMachine.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

@@ -1,0 +1,9 @@
+.priceMachineTable .table>thead>tr>th{
+    padding-left : 100px;
+}
+.priceMachineTable .table>thead>tr>th:first-child{
+    padding-left : 0px;
+}
+.priceMachineTable .table>tbody>tr:nth-child(2n){
+    background-color: #e2e2e2;
+}

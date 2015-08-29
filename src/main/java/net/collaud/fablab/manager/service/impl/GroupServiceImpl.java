@@ -12,26 +12,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This is the service implementation class for a <tt>Group</tt>.
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com>
+ * @author Fabien Vuilleumier
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
-public class GroupServiceImpl extends AbstractServiceImpl implements GroupService {
+@Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+public class GroupServiceImpl implements GroupService {
 
-	@Autowired
-	private GroupRepository groupDao;
+    @Autowired
+    private GroupRepository groupDAO;
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public List<GroupEO> findAll() {
-		return groupDao.findAllWithRoles();
-	}
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public List<GroupEO> findAll() {
+        return groupDAO.findAll();
+    }
 
-	@Override
-	@Secured({Roles.USER_MANAGE})
-	public Optional<GroupEO> getById(Integer id) {
-		return Optional.ofNullable(groupDao.findOne(id));
-	}
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public Optional<GroupEO> getById(Integer id) {
+        Optional<GroupEO> g = groupDAO.findOneDetails(id);
+        return g;
+    }
+
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public GroupEO save(GroupEO group) {
+        if (group.getId() == null) {
+            group.setId(0);
+        }
+        if (group.getId() > 0) {
+            GroupEO old = groupDAO.findOneDetails(group.getId()).get();
+            System.out.println("GROUP " + group);
+            System.out.println("OLD (SAVE)" + old);
+            old.setActive(group.isActive());
+            old.setName(group.getName());
+            old.setTechnicalname(group.getTechnicalname());
+            old.setRoles(group.getRoles());
+            System.out.println("OLD (SAVE bis)" + old.getRoles());
+            return groupDAO.saveAndFlush(old);
+        } else {
+            return groupDAO.saveAndFlush(group);
+        }
+    }
+
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public void remove(Integer id) {
+        GroupEO current = groupDAO.findOne(id);
+        current.setActive(false);
+        groupDAO.saveAndFlush(current);
+    }
+
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public GroupEO getId(String technicalname) {
+       return groupDAO.getId(technicalname);
+    }
 }

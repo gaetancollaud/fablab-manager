@@ -1,0 +1,34 @@
+<div class="eventTypeEdit">
+    <form class="form-horizontal" name="editEventType" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newEventType" translate="eventType.create"></span>
+                <span ng-show="!newEventType" translate="eventType.edit"></span>
+                <span ng-show="!newEventType"> {{eventType.label}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="eventType.label"></label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                            class="form-control" 
+                            ng-model="eventType.label"                            duplicate="existingValues" 
+                            uppercase 
+                            name="label" 
+required/>
+                        <div class="col-sm-2 error-text">
+                            <span ng-show="editEventType.label.$error.duplicate" 
+                                translate="eventType.alreadyExist"></span>
+                            <span ng-show="editEventType.label.$error.required" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/eventTypes"></btn-cancel>
+                <btn-submit form="editEventType"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+
