@@ -49,5 +49,10 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 			+ " FROM UserBalanceEO ub "
 			+ " WHERE ub.userId=:userId ")
 	Optional<UserBalanceEO> getUserBalanceFromUserId(@Param("userId")Integer userId);
+
+	@Query("SELECT u "
+			+ " FROM UserEO u "
+			+ " WHERE u.rfid=:rfid")
+	Optional<UserEO> findByRFID(@Param("rfid") String rfid);
 	
 }

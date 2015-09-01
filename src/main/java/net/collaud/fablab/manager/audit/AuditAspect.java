@@ -21,6 +21,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -29,11 +31,12 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 @Component
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class AuditAspect {
-
+	
 	@Autowired
 	private AuditService auditService;
-
+	
 	@Autowired
 	private SecurityService securityService;
 
@@ -48,15 +51,19 @@ public class AuditAspect {
 		}
 		return pjp.proceed();
 	}
-
+	
 	protected Object aroudAudit(ProceedingJoinPoint pjp, Method method) throws Throwable {
 		log.info("Intercepted method " + method.getName());
 		Audit ann = method.getAnnotation(Audit.class);
 		try {
 			Object result = pjp.proceed();
-			Object object = getObjectOutOfResultAndParameters(ann, result, pjp.getArgs());
-			Integer id = getIdOfObject(object);
-			addEntry(ann.action(), ann.object(), id, true, getReadableMessage(ann.object(), ann.action(), object, pjp.getArgs()), null);
+			try {
+				Object object = getObjectOutOfResultAndParameters(ann, result, pjp.getArgs());
+				Integer id = getIdOfObject(object);
+				addEntry(ann.action(), ann.object(), id, true, getReadableMessage(ann.object(), ann.action(), object, pjp.getArgs()), null);
+			} catch (Exception ex) {
+				log.error("Cannot add login for themod " + method.getName(), ex);
+			}
 			return result;
 		} catch (Exception ex) {
 			Object entity = getObjectOutOfResultAndParameters(ann, null, pjp.getArgs());
@@ -65,14 +72,14 @@ public class AuditAspect {
 			throw ex;
 		}
 	}
-
+	
 	private void addEntry(AuditAction action, AuditObject object, Integer objectId, boolean success, String content, String detail) throws FablabException {
 		if (detail != null && detail.isEmpty()) {
 			detail = null;
 		}
 		auditService.addEntry(new AuditEO(securityService.getCurrentUser().orElse(null), action, object, objectId, new Date(), success, content, detail));
 	}
-
+	
 	private Object getObjectOutOfResultAndParameters(Audit ann, Object result, Object[] parameters) {
 		if (ann.action().equals(AuditAction.INSERT)
 				|| ann.action().equals(AuditAction.UPDATE)) {
@@ -90,14 +97,14 @@ public class AuditAspect {
 		}
 		return null;
 	}
-
+	
 	private Integer getIdOfObject(Object entity) {
 		if (entity instanceof AbstractDataEO) {
 			return (Integer) ((AbstractDataEO) entity).getId();
 		}
 		return null;
 	}
-
+	
 	private String getReadableMessage(AuditObject obj, AuditAction action, Object res, Object[] args) {
 		switch (obj) {
 			case USAGE:
@@ -151,7 +158,7 @@ public class AuditAspect {
 		}
 		return sb.toString();
 	}
-
+	
 	private String getReadableMessage(AuditAction action, UserEO user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("User ");
@@ -178,7 +185,7 @@ public class AuditAspect {
 		sb.append("]");
 		return sb.toString();
 	}
-
+	
 	private String getReadableMessageForSecurity(AuditAction action, Object result, Object[] args) {
 		StringBuilder sb = new StringBuilder();
 		if (action == AuditAction.LOGIN) {
@@ -216,5 +223,5 @@ public class AuditAspect {
 		sb.append(" confirmed his subscription");
 		return sb.toString();
 	}
-
+	
 }

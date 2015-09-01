@@ -6,6 +6,7 @@ package net.collaud.fablab.manager.security;
  */
 public interface Roles {
 
+	public static final String SYSTEM = "ROLE_SYSTEM";
 	public static final String ADMIN = "ROLE_USER_VIEW";
 	public static final String USER_VIEW = "ROLE_USER_VIEW";
 	public static final String USER_MANAGE = "ROLE_USER_MANAGE";

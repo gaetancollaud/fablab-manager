@@ -168,4 +168,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		mailService.sendPlainTextMail("Update mailing list", sb.toString(), "mailingListUpdater@gmail.com");
 	}
 
+	@Override
+	public Optional<UserEO> findByRFID(String rfid) {
+		return userDao.findByRFID(rfid);
+	}
+
 }

@@ -29,4 +29,6 @@ public interface UserService extends ReadWriteService<UserEO>{
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
 	public UserEO save(UserEO entity);
+
+	Optional<UserEO> findByRFID(String rfid);
 }
