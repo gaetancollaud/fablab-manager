@@ -7,7 +7,6 @@ import lombok.Setter;
 import net.collaud.fablab.manager.data.PaymentEO;
 import net.collaud.fablab.manager.data.SubscriptionEO;
 import net.collaud.fablab.manager.data.UsageEO;
-import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.HistoryEntryType;
 import net.collaud.fablab.manager.export.CsvExport;
 import net.collaud.fablab.manager.export.CsvField;
@@ -37,7 +36,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final HistoryEntryUser user;
 
 	public HistoryEntry(PaymentEO payment) {
-		type = HistoryEntryType.PAYMENT;
+		type = payment.getTotal()>0 ? HistoryEntryType.PAYMENT : HistoryEntryType.REFUND;
 		id = payment.getId();
 		date = payment.getDatePayment();
 		comment = payment.getComment();

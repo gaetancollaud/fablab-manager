@@ -8,5 +8,6 @@ public enum HistoryEntryType {
 
 	PAYMENT,
 	USAGE,
-	SUBSCRIPTION
+	SUBSCRIPTION,
+	REFUND
 }

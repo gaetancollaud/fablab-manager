@@ -18,8 +18,8 @@
 			<tbody>
 				<tr ng-repeat="h in history"
 					ng-class="{'info' : h.type === 'SUBSCRIPTION',
-							'success' : h.type === 'PAYMENT',
-						'warning':h.type === 'USAGE'}">
+							'success' : (h.type === 'PAYMENT'||h.type === 'REFUND'),
+							'warning': h.type === 'USAGE'}">
 					<td>{{h.date|formatTimestamp}}</td>
 					<td>{{h.amount|currency}}</td>
 					<td>{{h.detail}}</td>
