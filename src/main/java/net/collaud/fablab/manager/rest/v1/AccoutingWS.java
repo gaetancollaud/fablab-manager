@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.collaud.fablab.manager.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.manager.data.virtual.HistoryEntry;
 import net.collaud.fablab.manager.export.CsvExporter;
+import net.collaud.fablab.manager.export.custom.CsvExporterAccounting;
 import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.manager.rest.v1.model.BaseModel;
 import net.collaud.fablab.manager.rest.v1.model.DataModel;
@@ -46,7 +47,7 @@ public class AccoutingWS {
 		if (list.isEmpty()) {
 			return "";
 		}
-		CsvExporter exporter = new CsvExporter<>(list.get(0).getClass());
+		CsvExporter exporter = new CsvExporterAccounting();
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.csv\"",exporter.getFileName()));
 		exporter.writeHeader();
 		list.forEach(l -> exporter.writeRow(l));
