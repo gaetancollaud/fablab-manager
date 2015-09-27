@@ -28,12 +28,12 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final Date date;
 	@CsvField(headerName = "amount")
 	private final double amount;
+	@CsvField(headerName = "user")
+	private final HistoryEntryUser user;
 	@CsvField(headerName = "detail")
 	private final String detail;
 	@CsvField(headerName = "comment")
 	private final String comment;
-	@CsvField(headerName = "user")
-	private final HistoryEntryUser user;
 
 	public HistoryEntry(PaymentEO payment) {
 		type = payment.getTotal()>0 ? HistoryEntryType.PAYMENT : HistoryEntryType.REFUND;

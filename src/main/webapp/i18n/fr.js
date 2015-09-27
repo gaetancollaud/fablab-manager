@@ -24,5 +24,20 @@ angular.module('Fablab').config(function ($translateProvider) {
 			rfid: 'RFID',
 			groups: 'Groupes'
 		},
+		accounting:{
+			title:'Comptabilité',
+			today:'Aujourd\'hui',
+			yesterday:'Hier',
+			thisMonth:'Ce mois',
+			lastMonth:'Le mois dernier',
+			thisYear:'Cette année',
+			lastYear:'L\'année dernière',
+			summary:'Résumé',
+			sell:'Ventes',
+			moneyIn:'Caisse',
+			delta:'Différence',
+			debit:'Débit',
+			credit:'Crédit'
+		}
 	});
 });

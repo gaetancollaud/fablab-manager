@@ -3,6 +3,7 @@ package net.collaud.fablab.manager.export.custom;
 import net.collaud.fablab.manager.export.*;
 import java.lang.reflect.Field;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.manager.data.type.HistoryEntryType;
 import net.collaud.fablab.manager.data.virtual.HistoryEntry;
 
 /**
@@ -29,7 +30,7 @@ public class CsvExporterAccounting extends CsvExporter<HistoryEntry>{
 		String parsed = super.getFieldValue(obj, f);
 		if(f.getAnnotation(CsvField.class).headerName().equals(FIELD_TO_OVERRIDE)){
 			Double v = obj.getAmount();
-			if(v<0){
+			if(obj.getType()==HistoryEntryType.USAGE || obj.getType()==HistoryEntryType.SUBSCRIPTION){
 				return FIELD_SEPARATOR+Double.toString(-v);
 			}else{
 				return parsed+FIELD_SEPARATOR;

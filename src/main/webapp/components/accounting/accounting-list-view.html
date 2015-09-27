@@ -68,10 +68,11 @@
 					'bg-warning':h.type==='USAGE',
 					'bg-success':(h.type==='PAYMENT'||h.type=='REFUND'),
 					'bg-info':h.type==='SUBSCRIPTION'
-				}">
+				}"
+				ng-init="leftColumn = (h.type === 'PAYMENT' || h.type==='REFUND')">
 				<td>{{h.date|formatTimestamp:'DD.MM.YYYY'}}</td>
-				<td><span ng-if="h.type === 'PAYMENT'">{{h.amount|currency}}</span></td>
-				<td><span ng-if="h.type !== 'PAYMENT'">{{-h.amount|currency}}</span></td>
+				<td><span ng-if="leftColumn">{{h.amount|currency}}</span></td>
+				<td><span ng-if="!leftColumn">{{-h.amount|currency}}</span></td>
 				<td>{{h.user|prettyUser}}</td>
 				<td>{{h.detail}}</td>
 				<td>{{h.comment}}</td>

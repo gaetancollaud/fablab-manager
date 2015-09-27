@@ -1,11 +1,15 @@
 (function () {
 	'use strict';
 
-	angular.module('Fablab').controller('PaymentByUserController', function ($scope, $log, $filter,
+	angular.module('Fablab').controller('PaymentByUserController', function ($scope, $rootScope, $log, $filter,
 			$location, $routeParams, UserService) {
 		$scope.selected = {user: undefined};
 
-		$scope.minDate = moment().subtract(App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT, 'days').format('YYYY-MM-DD');
+		if ($rootScope.hasRole('ACCOUNTING_MANAGE')) {
+			$scope.minDate = moment().subtract(1, 'year').format('YYYY-MM-DD');
+		} else {
+			$scope.minDate = moment().subtract(App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT, 'days').format('YYYY-MM-DD');
+		}
 
 		$scope.loadUser = function (userId) {
 			UserService.get(userId, function (data) {
@@ -36,7 +40,7 @@
 				$scope.loadUser($routeParams.id);
 			}
 		};
-		
+
 		$scope.updateUser();
 
 	});
