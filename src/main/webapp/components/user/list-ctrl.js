@@ -90,7 +90,7 @@ angular.module('Fablab').controller('UserListController', function ($scope, $fil
 			computeDetails(data);
 			$scope.users = data;
 			$scope.users.forEach(function (u) {
-				u.balance.value = $filter('number')(u.balance.value, 2);
+				u.balanceValue = parseFloat($filter('number')(u.balance.value, 2));
 				u.subsriptionExpireDay = $filter('lastSubscriptionDays')(u.subscriptions);
 				u.subsriptionExpireDayText = $filter('lastSubscriptionDaysText')(u.subscriptions);
 			});
