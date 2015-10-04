@@ -45,6 +45,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			create: 'Create',
 			export: 'Export',
 			search: 'Search',
+			detail: 'Detail',
 			updateMailingList: 'Update mailing list'
 		},
 		panel: {
@@ -90,6 +91,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 				female: 'Female'
 			},
 			subscription: {
+				text:'Subscription',
 				subscribe: 'Subscribe',
 				confirmButton: 'Confirm',
 				confirmTitle: 'Confirm subscription',

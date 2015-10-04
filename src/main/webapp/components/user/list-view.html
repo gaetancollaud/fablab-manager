@@ -1,11 +1,48 @@
 
 <div class="header-control">
 	<div class="btn-group">
+		<a class="btn btn-primary" href="" ng-click="details.open=!details.open">
+			{{'button.detail'| translate}} 
+		</a>
 		<a class="btn btn-success" href="#/users/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
 		<a class="btn btn-danger" ng-click="export()">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
 		<a class="btn btn-warning" href=""
 		   ng-if="hasAnyRole('MAILINGLIST_MANAGE')"
 		   ng-click="updateMailingList()">{{'button.updateMailingList'| translate}} <span class="glyphicon glyphicon-envelope"> </span></a>
+	</div>
+</div>
+
+
+<div ng-show="details.open">
+	<div class="well">
+		<div class="row">
+			<div class="col-md-3">Total users</div>
+			<div class="col-md-2 text-bold">{{details.nb}} </div>
+		</div>
+		<div class="row text-success">
+			<div class="col-md-3">Users with positiv balance</div>
+			<div class="col-md-2 text-bold">{{details.balance.positiv.nb}} ({{details.balance.positiv.total|currency}})</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">Memer with valid subscription</div>
+			<div class="col-md-2 text-bold">{{details.subscription.positiv}}</div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">Users with neutral balance</div>
+			<div class="col-md-2 text-bold">{{details.balance.neutral.nb}}</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">Never confirmed subscription</div>
+			<div class="col-md-2 text-bold">{{details.subscription.unconfirmed}}</div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row text-danger">
+			<div class="col-md-3">Users with negativ balance</div>
+			<div class="col-md-2 text-bold">{{details.balance.negativ.nb}}  ({{details.balance.negativ.total|currency}})</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">Memer with valid subscription</div>
+			<div class="col-md-2 text-bold">{{details.subscription.negativ}}</div>
+			<div class="col-md-1"></div>
+		</div>
 	</div>
 </div>
 
@@ -39,6 +76,12 @@
 			data-title="'user.membership' | translate"
 			sortable="'membershipType.name'">
 			{{user.membershipType.name}}
+		</td>
+        <td 
+			data-title="'user.subscription.text' | translate"
+			sortable="'subsriptionExpireDay'"
+			ng-class="{'negativBalance' : user.subsriptionExpireDay < 0}">
+			<span ng-bind-html="user.subsriptionExpireDayText"></span>
 		</td>
         <td>
 			<div class="btn-group">

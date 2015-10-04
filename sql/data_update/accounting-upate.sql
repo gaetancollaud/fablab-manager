@@ -2,7 +2,7 @@ DELETE FROM r_group_role WHERE group_id=(
 	SELECT group_id FROM t_group WHERE technicalname = 'comite'
 ) AND role_id=(
 	SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ACCOUNTING_MANAGE'
-)
+);
 
 INSERT INTO t_group (technicalname,name)VALUES('accounting','Accounting');
 
