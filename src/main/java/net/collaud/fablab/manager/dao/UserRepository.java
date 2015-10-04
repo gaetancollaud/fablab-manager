@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 	Optional<UserEO> findByLoginOrEmail(@Param("login") String login);
 	
 	@Override
-	@Query("SELECT u "
+	@Query("SELECT DISTINCT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.balance b "
 			+ " LEFT JOIN FETCH u.membershipType mt "
