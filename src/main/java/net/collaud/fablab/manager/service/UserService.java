@@ -36,4 +36,6 @@ public interface UserService extends ReadWriteService<UserEO> {
 	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
 	public void remove(Integer id);
 
+
+	Optional<UserEO> findByRFID(String rfid);
 }

@@ -3,9 +3,11 @@
 
 	var app = angular.module('Fablab');
 	app.controller('AuditListController', function ($scope, AuditService) {
+
 		$scope.criteria = {
 			dateFrom: null,
-			dateTo: null
+			dateTo: null,
+			limit: 200
 		};
 		$scope.intervals = [{
 				label: 'today',
@@ -52,7 +54,7 @@
 			$scope.reloadAudit();
 		};
 
-		
+
 		$scope.reloadAudit = function () {
 			AuditService.search($scope.criteria, function (data) {
 				$scope.history = data;

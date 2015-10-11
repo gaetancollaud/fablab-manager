@@ -81,20 +81,32 @@
         </div>
     </div>
 
-    <table ng-table="tableParams" class="table" show-filter="true">
-        <tr ng-repeat="h in history"
-            ng-class="{'bg-success':h.amount > 0,
-                           'bg-danger':h.amount <= 0}"
-            >
-            <td data-title="'general.date' | translate">{{h.date|prettyDate}}</td>
-            <td data-title="'general.type' | translate">{{h.type|lowercase}}</td>
-            <td data-title="'accounting.accountCredit' | translate">{{h.account_CREDIT}}</td>
-            <td data-title="'accounting.accountDebit' | translate">{{h.account_DEBIT}}</td>
-            <td data-title="'accounting.credit' | translate"><span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
-            <td data-title="'accounting.debit' | translate"><span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
-            <td data-title="'accounting.user' | translate">{{h.user|prettyUser}}</td>
-            <td data-title="'general.detail' | translate">{{h.detail}}</td>
-            <td data-title="'general.comment' | translate">{{h.comment}}</td>
-        </tr>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th style="width:80px" translate="general.date"></th>
+				<th style="width:100px" translate="accounting.credit"></th>
+				<th style="width:100px" translate="accounting.debit"></th>
+				<th style="min-width:150px"translate="general.user"></th>
+				<th translate="general.detail"></th>
+				<th translate="general.comment"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="h in history"
+				ng-class="{
+					'bg-warning':h.type==='USAGE',
+					'bg-success':(h.type==='PAYMENT'||h.type=='REFUND'),
+					'bg-info':h.type==='SUBSCRIPTION'
+				}"
+				ng-init="leftColumn = (h.type === 'PAYMENT' || h.type==='REFUND')">
+				<td>{{h.date|formatTimestamp:'DD.MM.YYYY'}}</td>
+				<td><span ng-if="leftColumn">{{h.amount|currency}}</span></td>
+				<td><span ng-if="!leftColumn">{{-h.amount|currency}}</span></td>
+				<td>{{h.user|prettyUser}}</td>
+				<td>{{h.detail}}</td>
+				<td>{{h.comment}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

@@ -1,31 +1,39 @@
 <div class="user-accounting panel panel-default">
-    <div class="panel-heading" translate="payment.history">
-    </div>
-    <div class="panel-body">
-        <div class="alert" ng-class="{'alert-danger':balance < 0, 
-                            'alert-success':balance >= 0}">
-            <span translate="payment.balanceText" ></span>
-            <span class="bold">{{balance}}</span>
-            <span class="bold"> {{currency}}</span>
-        </div>
-        <table ng-table="tableParams" class="table" show-filter="true">
-            <tr ng-repeat="h in history"
-                ng-class="{'bg-danger' : h.amount < 0, 'bg-success' : h.amount > 0}">
-                <td
-                    data-title="'payment.date' | translate">
-                    {{h.date|prettyDate}}</td>
-                <td data-title="'payment.type' | translate">
-                    {{h.type|lowercase}}</td>
-                <td data-title="'payment.credit' | translate">
-                    <span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
-                <td data-title="'payment.debit' | translate">
-                    <span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
-                <td data-title="'payment.details' | translate">
-                    {{h.detail}}</td>
-                <td data-title="'payment.comment' | translate">
-                    {{h.comment}}</td>
-            </tr>
-        </table>
-    </div>
+	<div class="panel-heading" translate="payment.history">
+	</div>
+	<div class="panel-body">
+		<div class="alert" ng-class="{'alert-danger':userBalance.balanceRaw<0, 'alert-success':userBalance.balanceRaw>=0}">
+			<span translate="payment.balanceText" translate-values="{{userBalance}}"></span>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th translate="payment.date"></th>
+					<th translate="payment.amount"></th>
+					<th translate="payment.details"></th>
+					<th translate="payment.comment"></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="h in history"
+					ng-class="{'info' : h.type === 'SUBSCRIPTION',
+							'success' : (h.type === 'PAYMENT'||h.type === 'REFUND'),
+							'warning': h.type === 'USAGE'}">
+					<td>{{h.date|formatTimestamp}}</td>
+					<td>{{h.amount|currency}}</td>
+					<td>{{h.detail}}</td>
+					<td>{{h.comment}}</td>
+					<td>
+						<a ng-show="editable && canRemove(h)" href class="btn btn-xs btn-default" 
+						   ng-really-click="remove(h)"
+						   ng-really-message="{{'payment.confirmation.historyRemove'|translate}}">
+							<span class="glyphicon glyphicon-remove"></span>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 

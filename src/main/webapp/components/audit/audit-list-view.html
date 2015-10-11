@@ -35,13 +35,18 @@
 				</button>-->
 				<button type="submit" class="btn btn-primary" 
 						ng-disabled="auditFitler.$invalid"
-						ng-click="updateAccounting()">
+						ng-click="reloadAudit()">
 					{{'button.search'| translate}} 
 					<span class="glyphicon glyphicon-search"> </span>
 				</button>
 			</div>
 		</div>
 	</form>
+	
+	<div class="alert alert-warning"
+		 ng-show="history.length>=criteria.limit"
+		 translate="audit.alertLimit" translate-values="criteria">
+	</div>
 
 	<table class="table">
 		<thead>

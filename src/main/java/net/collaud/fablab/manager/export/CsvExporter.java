@@ -15,7 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvExporter<T> {
 
-	public static final String FIELD_SEPARATOR = ";";
+	public static final String FIELD_SEPARATOR = ",";
+	public static final String FIELD_SEPARATOR_REPLACE = ";";
 	public static final String LINE_SEPARATOR = "\n";
 	public static final String ESCAPE_CHAR = "\"";
 
@@ -32,12 +33,16 @@ public class CsvExporter<T> {
 				.filter(f -> f.getAnnotation(CsvField.class) != null)
 				.forEach(f -> fields.put(f, f.getAnnotation(CsvField.class)));
 	}
+	
+	protected String postHeader(String header){
+		return header;
+	}
 
 	public CsvExporter writeHeader() {
-		return writeLine(fields.values().stream()
+		return writeLine(postHeader(fields.values().stream()
 				.map(f -> f.headerName())
 				.reduce(reduce())
-				.orElse(""));
+				.orElse("")));
 	}
 
 	public CsvExporter writeRow(T obj) {
@@ -47,7 +52,7 @@ public class CsvExporter<T> {
 				.orElse(""));
 	}
 
-	private BinaryOperator<String> reduce() {
+	protected BinaryOperator<String> reduce() {
 		return (l, r) ->l + FIELD_SEPARATOR + r ;
 	}
 
@@ -60,11 +65,15 @@ public class CsvExporter<T> {
 		return classAnnotation.fileName();
 	}
 
-	private String getFieldValue(T obj, Field f) {
+	protected String getFieldValue(T obj, Field f) {
 		try {
 			f.setAccessible(true);
 			return Optional.ofNullable(f.get(obj))
 					.map(v -> v.toString())
+					.map(v-> v.replace(FIELD_SEPARATOR, FIELD_SEPARATOR_REPLACE))
+					.map(v -> v.replace("\r\n", "\t"))
+					.map(v -> v.replace("\n", "\t"))
+					.map(v -> v.replace("\r", "\t"))
 					.orElse("");
 		} catch (IllegalAccessException ex) {
 			log.error("Cannot access field " + f.getName(), ex);
@@ -72,7 +81,7 @@ public class CsvExporter<T> {
 		}
 	}
 
-	private CsvExporter writeLine(String l) {
+	protected CsvExporter writeLine(String l) {
 		builder.append(l);
 		builder.append(LINE_SEPARATOR);
 		return this;

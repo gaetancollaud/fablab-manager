@@ -3,6 +3,7 @@ package net.collaud.fablab.manager.rest.v1;
 import java.util.List;
 import net.collaud.fablab.manager.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts;
+import net.collaud.fablab.manager.export.custom.CsvExporterAccounting;
 import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.manager.rest.v1.model.BaseModel;
 import net.collaud.fablab.manager.rest.v1.model.DataModel;
@@ -37,6 +38,22 @@ public class AccoutingWS {
     public BaseModel byUser(@RequestParam("userId") Integer userId) {
         return new DataModel(accountingService.getAccountingEntries(userId));
     }
+	@RequestMapping(value = "export", method = RequestMethod.GET, produces = "text/csv")
+	@ResponseBody
+	public String export(@RequestParam("dateFrom") Long dateFrom,@RequestParam("dateTo") Long dateTo, HttpServletResponse response) {
+        response.setContentType("text/csv");
+		Date from = new Date(dateFrom*1000);
+		Date to = new Date(dateTo*1000);
+		final List<HistoryEntry> list = paymentService.getPaymentEntries(new PeriodSearchCriteria(from, to));
+		if (list.isEmpty()) {
+			return "";
+		}
+		CsvExporter exporter = new CsvExporterAccounting();
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.csv\"",exporter.getFileName()));
+		exporter.writeHeader();
+		list.forEach(l -> exporter.writeRow(l));
+		return exporter.toString();
+	}
 
     @RequestMapping(value = "getAccounts", method = RequestMethod.GET)
     public List<String> getAccounts() {

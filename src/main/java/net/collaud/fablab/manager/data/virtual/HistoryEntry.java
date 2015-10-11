@@ -33,15 +33,19 @@ import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.VENTE
 @EqualsAndHashCode(of = {"ID", "TYPE"})
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
-    private final int ID;
-    private final HistoryEntryType TYPE;
-    private final String COMMENT;
-    private final Date DATE;
-    private final double AMOUNT;
-    private final String DETAIL;
-    private final HistoryEntryUser USER;
-    private final HistoryEntryAccounts ACCOUNT_CREDIT;
-    private final HistoryEntryAccounts ACCOUNT_DEBIT;
+	private final int id;
+	@CsvField(headerName = "type")
+	private final HistoryEntryType type;
+	@CsvField(headerName = "date")
+	private final Date date;
+	@CsvField(headerName = "amount")
+	private final double amount;
+	@CsvField(headerName = "user")
+	private final HistoryEntryUser user;
+	@CsvField(headerName = "detail")
+	private final String detail;
+	@CsvField(headerName = "comment")
+	private final String comment;
 
     public HistoryEntry(UserPaymentEO payment) {
         boolean cancel = !payment.isActive();
@@ -235,8 +239,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         commentSb.append(motionStock.getIo() == null ? "Erreur" : motionStock.getIo());
         COMMENT = commentSb.toString();
         switch (motionStock.getIo()) {
-            case "EntrÃ©e":
-            case "EntrÃ©e [ajout]":
+            case "Entrée":
+            case "Entrée [ajout]":
                 TYPE = HistoryEntryType.SUPPLY;
                 StringBuilder detailSb = new StringBuilder();
                 detailSb.append(motionStock.getSupply().getCode());

@@ -160,6 +160,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+	@Override
+	public Optional<UserEO> findByRFID(String rfid) {
+		return userDao.findByRFID(rfid);
+	}
+
     private void checkRecaptcha(String recaptchaResponse) {
         String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
         ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);

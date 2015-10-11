@@ -1,29 +1,24 @@
-<div class="notLogged">
-    <form class="form-signin">
-        <h2 class="form-signin-heading" translate="auth.pleaseSignIn"></h2>
-        <label for="inputEmail" class="sr-only" translate="auth.email"></label>
-        <input ng-model="email"
-               type="input" 
-               id="inputEmail" 
-               class="form-control" 
-               placeholder="Email address" 
-               required autofocus>
-        <label for="inputPassword" class="sr-only" translate="auth.password"></label>
-        <input ng-model="password"
-               type="password" 
-               id="inputPassword" 
-               class="form-control"
-               placeholder="Password" 
-               required>
-        <button 
-            class="btn btn-lg btn-primary btn-block" 
-            type="submit" 
-            ng-click="login()"
-            translate="auth.signIn"></button>
-        <!--
-        <div class="forgot-password">
-            <a href="#/forgotPassword" translate="auth.forgotPasswordQuestion"></a>
-        </div>
+<form class="form-signin">
+	<h2 class="form-signin-heading" translate="auth.pleaseSignIn"></h2>
+	<label for="inputEmail" class="sr-only" translate="auth.email"></label>
+	<input ng-model="email"
+		   type="input" 
+		   id="inputEmail" 
+		   class="form-control" 
+		   placeholder="Email address"
+		   required autofocus>
+	<label for="inputPassword" class="sr-only" translate="auth.password"></label>
+	<input ng-model="password"
+		   type="password" 
+		   id="inputPassword" 
+		   class="form-control"
+		   placeholder="Password" 
+		   required>
+	<button 
+		class="btn btn-lg btn-primary btn-block" 
+		type="button" 
+		ng-click="login()"
+		translate="auth.signIn"></button>
 
         <a 
             class="btn btn-lg btn-default btn-block btn-signup" 
