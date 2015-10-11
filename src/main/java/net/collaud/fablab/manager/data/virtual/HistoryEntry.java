@@ -23,6 +23,7 @@ import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.PRODU
 import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.COTISATIONS;
 import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.STOCK_DIVERS;
 import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.VENTES_MARCHANDISES;
+import net.collaud.fablab.manager.export.CsvField;
 
 /**
  *
@@ -30,7 +31,7 @@ import static net.collaud.fablab.manager.data.virtual.HistoryEntryAccounts.VENTE
  */
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"ID", "TYPE"})
+@EqualsAndHashCode(of = {"id", "type"})
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
 	private final int id;
@@ -46,6 +47,9 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final String detail;
 	@CsvField(headerName = "comment")
 	private final String comment;
+	
+	private HistoryEntryAccounts ACCOUNT_CREDIT;
+	private HistoryEntryAccounts ACCOUNT_DEBIT;
 
     public HistoryEntry(UserPaymentEO payment) {
         boolean cancel = !payment.isActive();
@@ -54,28 +58,28 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         boolean refund = payment.getRefund() == REFUND || payment.getRefund() == CREDIT;
         boolean event = payment.isEvent();
         if (event) {
-            TYPE = HistoryEntryType.EVENT;
+            type = HistoryEntryType.EVENT;
         } else if (payment.getRefund().equals(RefundAction.REFUND)) {
-            TYPE = HistoryEntryType.REFUND;
+            type = HistoryEntryType.REFUND;
         } else {
-            TYPE = HistoryEntryType.PAYMENT;
+            type = HistoryEntryType.PAYMENT;
         }
-        ID = payment.getId();
-        DATE = payment.getDatePayment();
+        id = payment.getId();
+        date = payment.getDatePayment();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(payment.isActive() ? "" : "Canceled | ");
         commentSb.append(payment.getNote() == null ? "" : " | ");
         commentSb.append(payment.getNote() == null ? "" : payment.getNote());
-        COMMENT = commentSb.toString();
+        comment = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
         detailSb.append(payment.getLabel());
         detailSb.append(payment.isPayedForFabLab() ? "" : cash ? " | cashier=" + payment.getCashier().getFirstLastName() : " | Use it's credit");
         detailSb.append(payment.isPayedForFabLab() ? " | Payed for the lab" : " | Payed for the user ");
-        DETAIL = detailSb.toString();
+        detail = detailSb.toString();
         double interAmount = forTheLab ? -payment.getTotal() : payment.getTotal();
         double inter2Amount = event ? -interAmount : interAmount;
-        AMOUNT = !cancel ? inter2Amount : -inter2Amount;
-        USER = new HistoryEntryUser(payment.getUser());
+        amount = !cancel ? inter2Amount : -inter2Amount;
+        user = new HistoryEntryUser(payment.getUser());
         if (!cancel) {
             if (forTheLab) {
                 ACCOUNT_CREDIT = payment.getAccountCredit();
@@ -130,14 +134,14 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
     public HistoryEntry(UsageEO usage) {
         boolean cancel = !usage.isActive();
         boolean cash = usage.getCashier() != null;
-        TYPE = HistoryEntryType.USAGE;
-        ID = usage.getId();
-        DATE = usage.getDateStart();
+        type = HistoryEntryType.USAGE;
+        id = usage.getId();
+        date = usage.getDateStart();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(usage.isActive() ? "" : "Canceled");
         commentSb.append(usage.isActive() ? "" : " | ");
         commentSb.append(usage.getNote() == null ? "" : usage.getNote());
-        COMMENT = commentSb.toString();
+        comment = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
         detailSb.append(usage.getMachine().getName());
         detailSb.append(" | ");
@@ -151,10 +155,10 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : " ");
         detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : usage.isDiscountPercent() ? "% | " : "CHF | ");
         detailSb.append(cash ? "cashier=" + usage.getCashier().getFirstLastName() : "Use it's credit");
-        DETAIL = detailSb.toString();
+        detail = detailSb.toString();
         double interAmount = usage.getTotal();
-        AMOUNT = !cancel ? interAmount : -interAmount;
-        USER = new HistoryEntryUser(usage.getUser());
+        amount = !cancel ? interAmount : -interAmount;
+        user = new HistoryEntryUser(usage.getUser());
         if (!cancel) {
             if (cash) {
                 ACCOUNT_CREDIT = CAISSE_POSTE_BANQUE;
@@ -177,18 +181,18 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
     public HistoryEntry(RevisionEO revision) {
         boolean cancel = !revision.isActive();
-        TYPE = HistoryEntryType.REVISION;
-        ID = revision.getId();
-        DATE = revision.getRevisionDate();
+        type = HistoryEntryType.REVISION;
+        id = revision.getId();
+        date = revision.getRevisionDate();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(revision.isActive() ? "" : "Canceled");
         commentSb.append(revision.isActive() ? "" : " | ");
         commentSb.append(revision.getNote() == null ? "" : revision.getNote());
-        COMMENT = commentSb.toString();
-        DETAIL = revision.getMachine().getName();
+        comment = commentSb.toString();
+        detail = revision.getMachine().getName();
         double interAmount = -revision.getCost();
-        AMOUNT = !cancel ? interAmount : -interAmount;
-        USER = new HistoryEntryUser(revision.getUser());
+        amount = !cancel ? interAmount : -interAmount;
+        user = new HistoryEntryUser(revision.getUser());
         if (!cancel) {
             ACCOUNT_CREDIT = ENTRETIEN_MACHINE;
             ACCOUNT_DEBIT = DETTES_FOURNISSEUR;
@@ -201,24 +205,24 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
     public HistoryEntry(SubscriptionEO subscription) {
         boolean cancel = !subscription.isActive();
-        TYPE = HistoryEntryType.SUBSCRIPTION;
-        ID = subscription.getId();
-        DATE = subscription.getDateSubscription();
+        type = HistoryEntryType.SUBSCRIPTION;
+        id = subscription.getId();
+        date = subscription.getDateSubscription();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(subscription.isActive() ? "" : "Canceled");
         commentSb.append(subscription.isActive() ? "" : " | ");
         commentSb.append(subscription.getComment() == null ? "" : subscription.getComment());
-        COMMENT = commentSb.toString();
+        comment = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
         detailSb.append("Subscription type : ");
         detailSb.append(subscription.getMembershipType().getName());
         detailSb.append(", duration :");
         detailSb.append(subscription.getDuration());
         detailSb.append(" days");
-        DETAIL = detailSb.toString();
+        detail = detailSb.toString();
         double interAmount = -subscription.getPrice();
-        AMOUNT = !cancel ? interAmount : -interAmount;
-        USER = new HistoryEntryUser(subscription.getUser());
+        amount = !cancel ? interAmount : -interAmount;
+        user = new HistoryEntryUser(subscription.getUser());
         if (!cancel) {
             ACCOUNT_CREDIT = CREANCES_CLIENT;
             ACCOUNT_DEBIT = COTISATIONS;
@@ -231,27 +235,27 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
     public HistoryEntry(MotionStockEO motionStock) {
         boolean cancel = !motionStock.isActive();
-        ID = motionStock.getId() == null ? 0 : motionStock.getId();
-        DATE = motionStock.getMotionDate() == null ? new Date() : motionStock.getMotionDate();
+        id = motionStock.getId() == null ? 0 : motionStock.getId();
+        date = motionStock.getMotionDate() == null ? new Date() : motionStock.getMotionDate();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(motionStock.isActive() ? "" : "Canceled");
         commentSb.append(motionStock.isActive() ? "" : " | ");
         commentSb.append(motionStock.getIo() == null ? "Erreur" : motionStock.getIo());
-        COMMENT = commentSb.toString();
+        comment = commentSb.toString();
         switch (motionStock.getIo()) {
-            case "Entrée":
-            case "Entrée [ajout]":
-                TYPE = HistoryEntryType.SUPPLY;
+            case "Entrï¿½e":
+            case "Entrï¿½e [ajout]":
+                type = HistoryEntryType.SUPPLY;
                 StringBuilder detailSb = new StringBuilder();
                 detailSb.append(motionStock.getSupply().getCode());
                 detailSb.append(" | ");
                 detailSb.append(motionStock.getQuantity());
                 detailSb.append(" ");
                 detailSb.append(motionStock.getSupply().getSupplyUnity().getLabel());
-                DETAIL = detailSb.toString();
+                detail = detailSb.toString();
                 double interAmount = -(motionStock.getQuantity() * motionStock.getSupply().getUnityBuyingPrice());
-                AMOUNT = !cancel ? interAmount : -interAmount;
-                USER = new HistoryEntryUser(motionStock.getUser());
+                amount = !cancel ? interAmount : -interAmount;
+                user = new HistoryEntryUser(motionStock.getUser());
                 if (!cancel) {
                     ACCOUNT_CREDIT = STOCK_DIVERS;
                     ACCOUNT_DEBIT = DETTES_FOURNISSEUR;
@@ -262,25 +266,25 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
                 break;
             case "Correction":
-                TYPE = HistoryEntryType.PURCHASE;
+                type = HistoryEntryType.PURCHASE;
                 StringBuilder detailSbCor = new StringBuilder();
                 detailSbCor.append(motionStock.getSupply().getCode());
                 detailSbCor.append(" | ");
                 detailSbCor.append(motionStock.getQuantity());
                 detailSbCor.append(" ");
                 detailSbCor.append(motionStock.getSupply().getSupplyUnity().getLabel());
-                DETAIL = detailSbCor.toString();
+                detail = detailSbCor.toString();
                 double interAmountCor = -(motionStock.getQuantity() * motionStock.getSupply().getSellingPrice());
-                AMOUNT = motionStock.isActive() ? interAmountCor : -interAmountCor;
-                USER = new HistoryEntryUser(motionStock.getUser());
+                amount = motionStock.isActive() ? interAmountCor : -interAmountCor;
+                user = new HistoryEntryUser(motionStock.getUser());
                 ACCOUNT_CREDIT = DETTES_FOURNISSEUR;
                 ACCOUNT_DEBIT = STOCK_DIVERS;
                 break;
             default:
-                TYPE = HistoryEntryType.SUPPLY;
-                DETAIL = "Erreur";
-                AMOUNT = 0;
-                USER = new HistoryEntryUser(null);
+                type = HistoryEntryType.SUPPLY;
+                detail = "Erreur";
+                amount = 0;
+                user = new HistoryEntryUser(null);
                 ACCOUNT_CREDIT = STOCK_DIVERS;
                 ACCOUNT_DEBIT = DETTES_FOURNISSEUR;
                 break;
@@ -290,14 +294,14 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
     public HistoryEntry(PurchaseEO purchase) {
         boolean cancel = !purchase.isActive();
         boolean cash = purchase.getCashier() != null;
-        TYPE = HistoryEntryType.PURCHASE;
-        ID = purchase.getId();
-        DATE = purchase.getPurchaseDate();
+        type = HistoryEntryType.PURCHASE;
+        id = purchase.getId();
+        date = purchase.getPurchaseDate();
         StringBuilder commentSb = new StringBuilder();
         commentSb.append(purchase.isActive() ? "" : "Canceled");
         commentSb.append(purchase.isActive() ? "" : " | ");
         commentSb.append(purchase.getNote() == null ? "" : purchase.getNote());
-        COMMENT = commentSb.toString();
+        comment = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
         detailSb.append(purchase.getSupply().getCode());
         detailSb.append(" | ");
@@ -310,10 +314,10 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : purchase.isDiscountPercent() ? "%" : "CHF");
         detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : " | ");
         detailSb.append(cash ? "cashier=" + purchase.getCashier().getFirstLastName() : "Use it's credit");
-        DETAIL = detailSb.toString();
+        detail = detailSb.toString();
         double interAmount = purchase.getQuantity() > 0 ? purchase.getPurchasePrice() : -purchase.getPurchasePrice();
-        AMOUNT = !cancel ? interAmount : -interAmount;
-        USER = new HistoryEntryUser(purchase.getUser());
+        amount = !cancel ? interAmount : -interAmount;
+        user = new HistoryEntryUser(purchase.getUser());
         if (!cancel) {
             if (cash) {
                 ACCOUNT_CREDIT = CAISSE_POSTE_BANQUE;
@@ -335,8 +339,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
     @Override
     public int compareTo(HistoryEntry o) {
-        int res = -this.DATE.compareTo(o.getDATE());
-        return res == 0 ? Integer.compare(this.ID, o.getID()) : res;
+        int res = -this.date.compareTo(o.getDate());
+        return res == 0 ? Integer.compare(this.id, o.getId()) : res;
     }
 
 }
