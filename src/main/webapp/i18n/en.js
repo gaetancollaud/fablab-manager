@@ -53,7 +53,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 		},
 		filter: {
 			from: 'From',
-			to: 'To',
+			to: 'To'
 		},
 		auth: {
 			result: {
@@ -184,7 +184,8 @@ angular.module('Fablab').config(function ($translateProvider) {
 		audit:{
 			content:'Content',
 			object:'Object',
-			title:'Audit'
+			title:'Audit',
+			alertLimit:'The request reach the limit of {{limit}} entries !'
 		}
 	});
 });
