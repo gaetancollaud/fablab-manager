@@ -7,7 +7,6 @@ fablab-manager-mysql:
     - MYSQL_PASSWORD=fablab
 fablab-manager:
   image: gaetancollaud/fablab-manager
-  environment:
   ports:
     - "8080:8080"
   links:
