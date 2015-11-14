@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.ToString;
+import net.collaud.fablab.manager.export.CsvToString;
 
 /**
  *
@@ -19,7 +20,7 @@ import lombok.ToString;
 @Table(name = "v_user_balance_grouped")
 @Getter
 @ToString
-public class UserBalanceEO implements Serializable {
+public class UserBalanceEO implements Serializable, CsvToString {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,4 +32,9 @@ public class UserBalanceEO implements Serializable {
 
 	@Column(name = "balance", nullable = false)
 	private double value;
+
+	@Override
+	public String CsvToString() {
+		return String.valueOf(value);
+	}
 }
