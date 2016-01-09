@@ -27,7 +27,7 @@
 	</mvc:annotation-driven>
 	
 	<bean name="propertyUtils" class="net.collaud.fablab.manager.web.SpringPropertiesUtils">
-		<property name="location" value="file:${catalina.home}/conf/fablab-config.properties"/>
+		<property name="location" value="file:config/fablab-config.properties"/>
 	</bean>
 	
 	<aop:aspectj-autoproxy />

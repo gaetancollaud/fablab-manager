@@ -76,7 +76,7 @@ public class CsvExporter<T> {
 					.map(v -> v.replace("\r", "\t"))
 					.orElse("");
 		} catch (IllegalAccessException ex) {
-			log.error("Cannot access field " + f.getName(), ex);
+			LOG.error("Cannot access field " + f.getName(), ex);
 			return "";
 		}
 	}

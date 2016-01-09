@@ -53,7 +53,7 @@ public class AuditAspect {
 	}
 	
 	protected Object aroudAudit(ProceedingJoinPoint pjp, Method method) throws Throwable {
-		log.info("Intercepted method " + method.getName());
+		LOG.info("Intercepted method " + method.getName());
 		Audit ann = method.getAnnotation(Audit.class);
 		try {
 			Object result = pjp.proceed();
@@ -62,7 +62,7 @@ public class AuditAspect {
 				Integer id = getIdOfObject(object);
 				addEntry(ann.action(), ann.object(), id, true, getReadableMessage(ann.object(), ann.action(), object, pjp.getArgs()), null);
 			} catch (Exception ex) {
-				log.error("Cannot add login for themod " + method.getName(), ex);
+				LOG.error("Cannot add login for themod " + method.getName(), ex);
 			}
 			return result;
 		} catch (Exception ex) {

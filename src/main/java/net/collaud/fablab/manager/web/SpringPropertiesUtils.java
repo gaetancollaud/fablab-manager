@@ -7,11 +7,13 @@ import java.util.Properties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
+@Component
 public class SpringPropertiesUtils extends PropertyPlaceholderConfigurer {
 	
 	private Map<String, String> propertiesMap;

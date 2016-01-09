@@ -34,7 +34,7 @@ public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, Reserv
 
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	public List<ReservationEO> list(@RequestBody PeriodSearchCriteria criteria) {
-		log.debug("Search reservation " + criteria);
+		LOG.debug("Search reservation " + criteria);
 		List<ReservationEO> list = reservationService.findReservations(
 				criteria.getDateFrom(),
 				criteria.getDateTo());

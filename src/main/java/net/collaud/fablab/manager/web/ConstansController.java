@@ -105,7 +105,7 @@ public class ConstansController {
 			try {
 				return new HibernateAwareObjectMapper().writeValueAsString(o);
 			} catch (JsonProcessingException ex) {
-				log.error("Cannot parse object " + o, ex);
+				LOG.error("Cannot parse object " + o, ex);
 			}
 		}
 		return "";
