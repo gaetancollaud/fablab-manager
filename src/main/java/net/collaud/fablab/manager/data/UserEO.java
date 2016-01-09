@@ -134,6 +134,10 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creationUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCreationList;
+	@CsvField(headerName="Balance")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private UserBalanceEO balance;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "closeUser", fetch = FetchType.LAZY)

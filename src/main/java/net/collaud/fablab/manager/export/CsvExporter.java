@@ -69,7 +69,7 @@ public class CsvExporter<T> {
 		try {
 			f.setAccessible(true);
 			return Optional.ofNullable(f.get(obj))
-					.map(v -> v.toString())
+					.map(v -> (v instanceof CsvToString) ? ((CsvToString)v).CsvToString() : v.toString())
 					.map(v-> v.replace(FIELD_SEPARATOR, FIELD_SEPARATOR_REPLACE))
 					.map(v -> v.replace("\r\n", "\t"))
 					.map(v -> v.replace("\n", "\t"))
