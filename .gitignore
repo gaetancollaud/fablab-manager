@@ -7,3 +7,4 @@ release.properties
 nbactions.xml
 nb-configuration.xml
 *.mwb.bak
+nb_jr_remoting.cfg
