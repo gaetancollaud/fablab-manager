@@ -21,6 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +31,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.collaud.fablab.manager.data.type.Gender;
+import net.collaud.fablab.manager.export.CsvField;
 import org.hibernate.annotations.Where;
 
 /**
@@ -134,6 +136,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creationUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCreationList;
+	
 	@CsvField(headerName="Balance")
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")

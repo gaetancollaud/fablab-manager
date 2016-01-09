@@ -43,8 +43,7 @@ public interface UserRepository extends JpaRepository<UserEO, Integer> {
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.balance b "
 			+ " LEFT JOIN FETCH u.membershipType mt "
-			+ " LEFT JOIN FETCH u.subscriptions s "
-			+ " WHERE u.enabled=1 ")
+			+ " LEFT JOIN FETCH u.subscriptions s ")
 	List<UserEO> findAll();
 	
 	@Query("SELECT ub "
