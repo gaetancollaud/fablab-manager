@@ -27,6 +27,10 @@
 	<logger name="net.collaud.fabab.manager" level="DEBUG" />
 	<!--<logger name="org.springframework" level="DEBUG" />-->
 	<logger name="org.springframework.http.converter" level="DEBUG" />
+	<logger name="org.springframework.http.converter" level="DEBUG" />
+	
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
 
 	<root level="INFO">
 		<appender-ref ref="FILE" />

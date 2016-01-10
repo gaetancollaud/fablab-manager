@@ -1,12 +1,14 @@
 package net.collaud.fablab.manager.boot;
 
+import java.util.Properties;
 import javax.sql.DataSource;
+import net.collaud.fablab.manager.data.UserEO;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
 /**
  *
@@ -14,13 +16,30 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
  */
 @Configuration
 public class Database {
-	
+
+	private static DataSource datasource;
+
 	@Bean
 	@ConfigurationProperties("spring.datasource")
-	public DataSource dataSource(){
-		return new DriverManagerDataSource();
+	public DataSource dataSource() {
+		if (datasource == null) {
+			datasource = new DriverManagerDataSource();
+		}
+		return datasource;
 	}
-	
+
+//	@Bean
+//	public LocalSessionFactoryBean sessionFactory() {
+//		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//		sessionFactory.setDataSource(dataSource());
+//		sessionFactory.setPackagesToScan(UserEO.class.getPackage().getName());
+//		final Properties hibernateProperties = sessionFactory.getHibernateProperties();
+//		hibernateProperties.setProperty("hibernate.format_sql", "true");
+//		hibernateProperties.setProperty("format_sql", "true");
+//		hibernateProperties.setProperty("hibernate.show_sql", "true");
+//		return sessionFactory;
+//	}
+
 }
 
 
