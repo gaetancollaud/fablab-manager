@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -48,6 +49,7 @@ import net.collaud.fablab.manager.export.CsvField;
 @NoArgsConstructor
 @AllArgsConstructor
 @CsvExport(fileName = "users")
+@JsonInclude(Include.NON_ABSENT)
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -148,9 +150,19 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	public UserEO(Integer id) {
 		this.id = id;
 	}
+	
+	
 
 	@JsonIgnore
 	public String getFirstLastName() {
 		return firstname + " " + lastname;
+	}
+
+	@QueryProjection
+	public UserEO(Integer id, String firstname, String lastname, String email) {
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
 	}
 }

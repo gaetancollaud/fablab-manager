@@ -1,6 +1,7 @@
 package net.collaud.fablab.manager.service.impl;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.manager.dao.AssetRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
@@ -10,11 +11,10 @@ import net.collaud.fablab.manager.exceptions.FablabException;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AssetService;
 import net.collaud.fablab.manager.service.SecurityService;
-import net.collaud.fablab.manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Gaetan Collaud
  */
 @Service
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@Transactional
 public class AssetServiceImpl implements AssetService {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -45,7 +45,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public Optional<AssetEO> getById(Integer id) {
-		return Optional.ofNullable(assetRepository.findOne(id));
+		return Optional.ofNullable(assetRepository.findOneWithoutContent(id));
 	}
 
 	@Override
@@ -63,6 +63,19 @@ public class AssetServiceImpl implements AssetService {
 		} catch (IOException ex) {
 			throw new FablabException("Cannot upload file ", ex);
 		}
+	}
+
+	@Override
+	public List<AssetEO> findAll() {
+		if (securityService.isAuthenticated()) {
+			if (securityService.hasRole(Roles.ASSET_MANAGE)) {
+				return assetRepository.findAll();
+			} else {
+
+				return assetRepository.findAllForOwner(securityService.getCurrentUserId());
+			}
+		}
+		throw new AuthenticationCredentialsNotFoundException(null);
 	}
 
 }

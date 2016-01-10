@@ -28,8 +28,8 @@ public interface SecurityService {
 	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGOUT)
 	void logout();
 	
-	boolean hasRoles(String roles);
+	boolean hasRole(String role);
 	
-	void checkRoles(String roles);
+	void checkRole(String role);
 	
 }

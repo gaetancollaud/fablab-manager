@@ -113,7 +113,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Override
 	public UserPaymentHistory getLastPaymentEntries(Integer userId) {
 		if(!securityService.getCurrentUserId().equals(userId)){
-			securityService.checkRoles(Roles.PAYMENT_MANAGE);
+			securityService.checkRole(Roles.PAYMENT_MANAGE);
 		}
 		
 		List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);

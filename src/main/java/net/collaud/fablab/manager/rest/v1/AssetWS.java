@@ -44,6 +44,11 @@ public class AssetWS {
 		return ResponseEntity.notFound().build();
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity getList() {
+		return ResponseEntity.ok(assetService.findAll());
+	}
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ResponseEntity create(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
 		if (!file.isEmpty()) {

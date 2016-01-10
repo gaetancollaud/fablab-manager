@@ -1,16 +1,14 @@
 package net.collaud.fablab.manager.service;
 
-import java.util.Optional;
 import net.collaud.fablab.manager.data.AssetEO;
+import net.collaud.fablab.manager.service.global.ReadService;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface AssetService {
-
-	Optional<AssetEO> getById(Integer id);
+public interface AssetService extends ReadService<AssetEO>{
 
 	AssetEO upload(String name, MultipartFile file);
 	

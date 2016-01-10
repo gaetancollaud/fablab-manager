@@ -119,13 +119,13 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	}
 
 	@Override
-	public boolean hasRoles(String roles) {
+	public boolean hasRole(String role) {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null || context.getAuthentication() == null) {
 			return false;
 		}
 		for (GrantedAuthority authority : context.getAuthentication().getAuthorities()) {
-			if (authority.getAuthority().equalsIgnoreCase(roles)) {
+			if (authority.getAuthority().equalsIgnoreCase(role)) {
 				return true;
 			}
 		}
@@ -133,9 +133,9 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	}
 
 	@Override
-	public void checkRoles(String roles) {
-		if (!hasRoles(roles)) {
-			throw new FablabSecurityException("Current user has not roles " + roles);
+	public void checkRole(String role) {
+		if (!hasRole(role)) {
+			throw new FablabSecurityException("Current user has not roles " + role);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,8 +29,8 @@ import lombok.experimental.Builder;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +44,7 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	private String title;
 
 	@Lob
-	@Column(name = "asset_data", nullable = false, length =  16777215)
+	@Column(name = "asset_data", nullable = false, length = 16777215)
 	private byte[] data;
 
 	@Column(name = "mime", nullable = false)
@@ -52,5 +53,22 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "owner_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	private UserEO owner;
+
+	@QueryProjection
+	public AssetEO(Integer id, String title, String mime, UserEO owner) {
+		this.id = id;
+		this.title = title;
+		this.mime = mime;
+		this.owner = owner;
+	}
+
+	@QueryProjection
+	public AssetEO(Integer id, String title, byte[] data, String mime, UserEO owner) {
+		this.id = id;
+		this.title = title;
+		this.data = data;
+		this.mime = mime;
+		this.owner = owner;
+	}
 
 }
