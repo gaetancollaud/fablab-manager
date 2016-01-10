@@ -153,7 +153,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		String secret = propertyUtils.getProperty(PROP_RECAPTCHA_SECRET).orElse("");
 		ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(secret, recaptchaResponse);
 		if (!rep.getSuccess()) {
-			log.error("Recaptcha check failed because of " + rep.getErrorCodes());
+			LOG.error("Recaptcha check failed because of " + rep.getErrorCodes());
 			throw new RuntimeException("Captcha fail");
 		}
 	}

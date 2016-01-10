@@ -18,11 +18,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
+@Component
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);

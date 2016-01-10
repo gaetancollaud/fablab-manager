@@ -52,7 +52,7 @@ public class ConfigurationEO extends AbstractDataEO<Integer> implements Serializ
 		try {
 			return ConfigurationKey.valueOf(keyString);
 		} catch (IllegalArgumentException ex) {
-			log.error("Unknown key {}", keyString);
+			LOG.error("Unknown key {}", keyString);
 			return null;
 		}
 	}

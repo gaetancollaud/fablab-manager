@@ -74,11 +74,11 @@ public class DoorWS {
 			sb.append("did something with the door");
 		}
 
-		log.info(sb.toString());
+		LOG.info(sb.toString());
 		try {
 			AuditUtils.addAudit(auditService, user.orElse(null), AuditObject.ACCESS_DOOR, AuditAction.UPDATE, success, sb.toString());
 		} catch (FablabException ex) {
-			log.error("Cannot add audit entry");
+			LOG.error("Cannot add audit entry");
 		}
 	}
 

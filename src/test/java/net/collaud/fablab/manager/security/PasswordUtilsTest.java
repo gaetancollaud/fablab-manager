@@ -47,8 +47,8 @@ public class PasswordUtilsTest {
 		result = PasswordUtils.isPasswordValid(user, "test");
 		assertEquals(true, result);
 		
-		log.info("Passord is : {}", user.getPassword());
-		log.info("Salt is : {}", user.getPasswordSalt());
+		LOG.info("Passord is : {}", user.getPassword());
+		LOG.info("Salt is : {}", user.getPasswordSalt());
 		
 	}
 }

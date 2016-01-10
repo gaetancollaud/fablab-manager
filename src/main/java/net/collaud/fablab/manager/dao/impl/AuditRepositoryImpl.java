@@ -40,7 +40,7 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 		if(limit<=0){
 			limit = DEFAULT_LIMIT;
 		}else if(limit > MAX_LIMIT ) {
-			log.warn("Requested limit of {} which is more than the max allowed : {}", limit, MAX_LIMIT);
+			LOG.warn("Requested limit of {} which is more than the max allowed : {}", limit, MAX_LIMIT);
 			limit = MAX_LIMIT;
 		}
 

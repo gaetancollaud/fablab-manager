@@ -37,9 +37,8 @@ public class ConstansController {
 	private ConfigurationService configurationService;
 
 	@RequestMapping(value = "/constants.js", produces = "application/javascript; charset=utf-8")
-	public @ResponseBody
-	String constants() {
-		String rootUrl = propertyUtils.getProperty("url.root").orElse("/");
+	public @ResponseBody String constants() {
+		String rootUrl = propertyUtils.getProperty("url.root").orElse("");
 
 		Map<String, Object> csts = new HashMap<>();
 
@@ -92,7 +91,7 @@ public class ConstansController {
 				if (value.length > 0) {
 					api.put(
 							javascript.get().get("value").toString(),
-							rootUrl + "/api" + value[0]
+							rootUrl + value[0]
 					);
 				}
 			}
@@ -105,7 +104,7 @@ public class ConstansController {
 			try {
 				return new HibernateAwareObjectMapper().writeValueAsString(o);
 			} catch (JsonProcessingException ex) {
-				log.error("Cannot parse object " + o, ex);
+				LOG.error("Cannot parse object " + o, ex);
 			}
 		}
 		return "";

@@ -98,7 +98,7 @@ public class MailServiceImpl implements MailService {
 			t.close();
 			return true;
 		} catch (MessagingException ex) {
-			log.error("Cannot send message");
+			LOG.error("Cannot send message");
 		}
 		return false;
 	}
@@ -123,7 +123,7 @@ public class MailServiceImpl implements MailService {
 			writer.flush();
 			return writer.toString();
 		} catch (NullPointerException | IOException ex) {
-			log.error("Cannot open template file " + path, ex);
+			LOG.error("Cannot open template file " + path, ex);
 			return "";
 		}
 	}

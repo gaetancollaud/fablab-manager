@@ -211,7 +211,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 						"Subscription (type: "+subscription.getMembershipType().getName()+", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
 				break;
 			default:
-				log.error("Cannot remove {} history entry", historyId.getType());
+				LOG.error("Cannot remove {} history entry", historyId.getType());
 				return null;
 		}
 		return historyId;

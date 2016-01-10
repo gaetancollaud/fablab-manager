@@ -36,7 +36,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
 	public ReservationEO save(ReservationEO reservation) {
-		log.debug("Save "+reservation);
+		LOG.debug("Save "+reservation);
 		reservation.setUser(new UserEO(securityService.getCurrentUserId()));
 		return reservationRepository.save(reservation);
 	}
@@ -44,14 +44,14 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
 	public void remove(Integer reservationId) {
-		log.debug("Remove with id"+reservationId);
+		LOG.debug("Remove with id"+reservationId);
 		reservationRepository.delete(reservationId);
 	}
 
 	@Override
 	@Secured({Roles.RESERVATION_VIEW})
 	public List<ReservationEO> findReservations(Date dateFrom, Date dateTo){
-		log.debug("find reservation from "+dateFrom+" to "+dateTo);
+		LOG.debug("find reservation from "+dateFrom+" to "+dateTo);
 		return reservationRepository.findReservations(dateFrom, dateTo);
 	}
 

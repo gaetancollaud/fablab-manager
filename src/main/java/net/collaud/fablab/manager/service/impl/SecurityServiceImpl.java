@@ -3,6 +3,7 @@ package net.collaud.fablab.manager.service.impl;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.UserEO;
@@ -33,10 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@Slf4j
 public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
-
-	private static final Logger LOG = LoggerFactory
-			.getLogger(SecurityServiceImpl.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -76,10 +75,15 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public Integer getCurrentUserId() {
 		SecurityContext context = SecurityContextHolder.getContext();
-		if (context == null || context.getAuthentication()==null) {
+		if (context == null || context.getAuthentication() == null) {
 			return -1;
 		}
-		return Integer.parseInt(context.getAuthentication().getName());
+		try {
+			return Integer.parseInt(context.getAuthentication().getName());
+		} catch (NumberFormatException ex) {
+			LOG.error("Cannot parse user id '{}'", context.getAuthentication().getName());
+			return -1;
+		}
 	}
 
 	@Override
@@ -117,11 +121,11 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	@Override
 	public boolean hasRoles(String roles) {
 		SecurityContext context = SecurityContextHolder.getContext();
-		if(context==null || context.getAuthentication()==null){
+		if (context == null || context.getAuthentication() == null) {
 			return false;
 		}
-		for(GrantedAuthority authority :  context.getAuthentication().getAuthorities()){
-			if(authority.getAuthority().equalsIgnoreCase(roles)){
+		for (GrantedAuthority authority : context.getAuthentication().getAuthorities()) {
+			if (authority.getAuthority().equalsIgnoreCase(roles)) {
 				return true;
 			}
 		}
@@ -130,8 +134,8 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 
 	@Override
 	public void checkRoles(String roles) {
-		if(!hasRoles(roles)){
-			throw new FablabSecurityException("Current user has not roles "+roles);
+		if (!hasRoles(roles)) {
+			throw new FablabSecurityException("Current user has not roles " + roles);
 		}
 	}
 

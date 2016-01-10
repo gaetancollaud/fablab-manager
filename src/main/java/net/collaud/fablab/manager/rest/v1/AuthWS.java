@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @JavascriptAPIConstant("AUTH_API")
-@RequestMapping("/v1/auth")
+@RequestMapping("/api/v1/auth")
 @Slf4j
 public class AuthWS {
 
@@ -38,7 +38,7 @@ public class AuthWS {
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public LoginResult login(@RequestBody AuthCredential credential) {
-		log.debug("Login for " + credential);
+		LOG.debug("Login for " + credential);
 		return securityService.login(credential.getLogin(), credential.getPassword());
 	}
 

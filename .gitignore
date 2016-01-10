@@ -8,3 +8,5 @@ nbactions.xml
 nb-configuration.xml
 *.mwb.bak
 *.war
+nb_jr_remoting.cfg
+
