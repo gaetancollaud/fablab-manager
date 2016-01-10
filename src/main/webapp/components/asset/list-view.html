@@ -1,97 +1,23 @@
 
-<div class="header-control">
-	<div class="btn-group">
-		<a class="btn btn-primary" href="" ng-click="details.open=!details.open">
-			{{'button.detail'| translate}} 
-		</a>
-		<a class="btn btn-success" href="#/users/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
-		<a class="btn btn-danger" ng-click="export()">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
-		<a class="btn btn-warning" href=""
-		   ng-if="hasAnyRole('MAILINGLIST_MANAGE')"
-		   ng-click="updateMailingList()">{{'button.updateMailingList'| translate}} <span class="glyphicon glyphicon-envelope"> </span></a>
-	</div>
-</div>
-
-
-<div ng-show="details.open">
-	<div class="well">
-		<div class="row">
-			<div class="col-md-3">Total users</div>
-			<div class="col-md-2 text-bold">{{details.nb}} </div>
-		</div>
-		<div class="row text-success">
-			<div class="col-md-3">Users with positiv balance</div>
-			<div class="col-md-2 text-bold">{{details.balance.positiv.nb}} ({{details.balance.positiv.total|currency}})</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3">Member with valid subscription</div>
-			<div class="col-md-2 text-bold">{{details.subscription.positiv}}</div>
-			<div class="col-md-1"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">Users with neutral balance</div>
-			<div class="col-md-2 text-bold">{{details.balance.neutral.nb}}</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3">Never confirmed subscription</div>
-			<div class="col-md-2 text-bold">{{details.subscription.unconfirmed}}</div>
-			<div class="col-md-1"></div>
-		</div>
-		<div class="row text-danger">
-			<div class="col-md-3">Users with negativ balance</div>
-			<div class="col-md-2 text-bold">{{details.balance.negativ.nb}}  ({{details.balance.negativ.total|currency}})</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3">Member with invalid subscription</div>
-			<div class="col-md-2 text-bold">{{details.subscription.negativ}}</div>
-			<div class="col-md-1"></div>
-		</div>
-	</div>
-</div>
-
 <table ng-table="tableParams" class="table" show-filter="true">
-    <tr ng-repeat="user in $data">
+    <tr ng-repeat="asset in $data">
         <td 
-			data-title="'user.firstname' | translate" 
-			sortable="'firstname'"
-			filter="{'firstname':'text'}">
-			{{user.firstname}}
+			data-title="'asset.firstname' | translate" 
+			sortable="'title'"
+			filter="{'title':'text'}">
+			{{asset.title}}
 		</td>
         <td 
-			data-title="'user.lastname' | translate" 
+			data-title="'asset.lastname' | translate" 
 			sortable="'lastname'"
 			filter="{'lastname':'text'}">
-			{{user.lastname}}
+			{{asset.dateUpload}}
 		</td>
         <td 
-			data-title="'user.email' | translate" 
+			data-title="'asset.email' | translate" 
 			sortable="'email'"
 			filter="{'email':'text'}">
-			{{user.email}}
-		</td>
-        <td 
-			data-title="'user.balance' | translate"
-			sortable="'balance.value'"
-			ng-class="{'negativBalance' : user.balanceValue < 0}">
-			{{user.balanceValue}}
-		</td>
-        <td 
-			data-title="'user.membership' | translate"
-			sortable="'membershipType.name'">
-			{{user.membershipType.name}}
-		</td>
-        <td 
-			data-title="'user.subscription.text' | translate"
-			sortable="'subsriptionExpireDay'"
-			ng-class="{'negativBalance' : user.subsriptionExpireDay < 0}">
-			<span ng-bind-html="user.subsriptionExpireDayText"></span>
-		</td>
-        <td>
-			<div class="btn-group">
-				<a class="btn btn-sm btn-default" href="#/users/edit/{{user.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
-				<button class="btn btn-sm btn-danger" 
-						ng-really-click="remove(user)"
-						ng-really-message="{{'user.confirmation.remove'|translate}}">
-					<span class="glyphicon glyphicon-trash"></span>
-				</button>
-			</div>
+			{{asset.size}}
 		</td>
     </tr>
 </table> 

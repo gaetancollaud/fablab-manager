@@ -1,6 +1,7 @@
 package net.collaud.fablab.manager.service.impl;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.manager.dao.AssetRepository;
@@ -12,7 +13,6 @@ import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AssetService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.access.annotation.Secured;
@@ -66,6 +66,8 @@ public class AssetServiceImpl implements AssetService {
 					.data(file.getBytes())
 					.mime(file.getContentType())
 					.title(name)
+					.size((int)file.getSize())
+					.dateUpload(LocalDateTime.now())
 					.owner(currentUser)
 					.build();
 			return assetRepository.save(asset);

@@ -64,7 +64,4 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 				.where(asset.owner.id.eq(ownerId))
 				.list(AssetProjection.projectionWithoutContent(asset));
 	}
-	
-	
-
 }

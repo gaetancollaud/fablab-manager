@@ -26,6 +26,9 @@
 		}).when('/profil', {
 			templateUrl: './components/user/profil-view.html',
 			controller: 'UserProfilController'
+		}).when('/assets', {
+			templateUrl: './components/asset/list-view.html',
+			controller: 'AssetListController'
 		}).when('/users', {
 			templateUrl: './components/user/list-view.html',
 			controller: 'UserListController'
