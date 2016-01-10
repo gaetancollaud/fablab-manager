@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/group")
+@RequestMapping("/api/v1/group")
 @JavascriptAPIConstant("GROUP_API")
 public class GroupWS {
 

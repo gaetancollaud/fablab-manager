@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/payment")
+@RequestMapping("/api/api/v1/payment")
 @JavascriptAPIConstant("PAYMENT_API")
 public class PaymentWS {
 

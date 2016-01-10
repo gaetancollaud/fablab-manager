@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @JavascriptAPIConstant("AUTH_API")
-@RequestMapping("/v1/auth")
+@RequestMapping("/api/v1/auth")
 @Slf4j
 public class AuthWS {
 

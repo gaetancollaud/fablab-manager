@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/user")
+@RequestMapping("/api/v1/user")
 @JavascriptAPIConstant("USER_API")
 public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
 

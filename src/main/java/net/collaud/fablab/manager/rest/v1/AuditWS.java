@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/audit")
+@RequestMapping("/api/v1/audit")
 @JavascriptAPIConstant("AUDIT_API")
 public class AuditWS {
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/machine")
+@RequestMapping("/api/v1/machine")
 @JavascriptAPIConstant("MACHINE_API")
 @Slf4j
 public class MachineWS extends ReadRestWebservice<MachineEO, MachineService>{

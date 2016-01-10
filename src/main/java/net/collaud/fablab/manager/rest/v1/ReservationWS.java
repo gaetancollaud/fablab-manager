@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
-@RequestMapping("/v1/reservation")
+@RequestMapping("/api/v1/reservation")
 @JavascriptAPIConstant("RESERVATION_API")
 @Slf4j
 public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, ReservationService>{
