@@ -34,7 +34,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	public AssetEO findOneWithoutContent(Integer id) {
 		return new JPAQuery(entityManager)
 				.from(asset)
-				.innerJoin(asset.owner).fetch()
+				.innerJoin(asset.owner)
 				.where(asset.id.eq(id))
 				.singleResult(AssetProjection.projectionWithoutContent(asset));
 	}
@@ -43,7 +43,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	public AssetEO findOneWithContent(Integer id) {
 		return new JPAQuery(entityManager)
 				.from(asset)
-				.innerJoin(asset.owner).fetch()
+				.innerJoin(asset.owner)
 				.where(asset.id.eq(id))
 				.singleResult(AssetProjection.projectionWithContent(asset));
 	}
@@ -60,7 +60,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	public List<AssetEO> findAllForOwner(Integer ownerId) {
 		return new JPAQuery(entityManager)
 				.from(asset)
-				.innerJoin(asset.owner).fetch()
+				.innerJoin(asset.owner)
 				.where(asset.owner.id.eq(ownerId))
 				.list(AssetProjection.projectionWithoutContent(asset));
 	}

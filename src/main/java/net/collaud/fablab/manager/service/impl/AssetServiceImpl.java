@@ -12,6 +12,9 @@ import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AssetService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
@@ -36,16 +39,22 @@ public class AssetServiceImpl implements AssetService {
 	private UserRepository userRepository;
 
 	@Override
-	@Secured({Roles.ASSET_MANAGE})
+	@Secured({Roles.ASSET_MANAGE, Roles.ASSET_MANAGE})
 	public void remove(Integer id) {
-		//TODO check rights (ownership)
-		//TODO check where it's used
+		final AssetEO asset = assetRepository.findOneWithoutContent(id);
+		if (asset == null) {
+			throw new DataRetrievalFailureException("asset not found");
+		}
+		if (!securityService.hasRole(Roles.ASSET_MANAGE)
+				&& !securityService.getCurrentUserId().equals(asset.getOwner().getId())) {
+			throw new PermissionDeniedDataAccessException("Not the owner", null);
+		}
 		assetRepository.delete(id);
 	}
 
 	@Override
 	public Optional<AssetEO> getById(Integer id) {
-		return Optional.ofNullable(assetRepository.findOneWithoutContent(id));
+		return Optional.ofNullable(assetRepository.findOneWithContent(id));
 	}
 
 	@Override
