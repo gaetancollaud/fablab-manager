@@ -4,6 +4,7 @@ import java.util.List;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.data.GroupEO;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringDataTest extends BaseTest {
 

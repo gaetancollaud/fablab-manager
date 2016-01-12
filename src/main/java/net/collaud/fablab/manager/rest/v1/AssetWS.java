@@ -50,10 +50,10 @@ public class AssetWS {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public ResponseEntity create(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
+	public ResponseEntity create(@RequestParam("file") MultipartFile file) {
 		if (!file.isEmpty()) {
 			try {
-				final AssetEO asset = assetService.upload(name, file);
+				final AssetEO asset = assetService.upload(file);
 				asset.setData(null);
 				return ResponseEntity.ok().body(asset);
 			} catch (FablabException ex) {

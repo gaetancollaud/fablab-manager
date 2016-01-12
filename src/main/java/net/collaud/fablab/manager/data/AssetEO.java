@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,29 +60,30 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_upload", nullable = false)
-	private LocalDateTime dateUpload;
+	private Date dateUpload;
+
+	@Column(name = "extension", nullable = false)
+	private String extension;
 
 	@JoinColumn(name = "owner_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	private UserEO owner;
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, String mime, Integer size, LocalDateTime dateUpload, UserEO owner) {
+	public AssetEO(Integer id, String title, String mime, Integer size, Date dateUpload, String extension, UserEO owner) {
 		this.id = id;
 		this.title = title;
 		this.mime = mime;
+		this.size = size;
+		this.extension = extension;
 		this.owner = owner;
+		this.dateUpload = dateUpload;
 	}
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, byte[] data, String mime, Integer size, LocalDateTime dateUpload, UserEO owner) {
-		this.id = id;
-		this.title = title;
+	public AssetEO(Integer id, String title, byte[] data, String mime, Integer size, Date dateUpload, String extension, UserEO owner) {
+		this(id, title, mime, size, dateUpload, extension, owner);
 		this.data = data;
-		this.mime = mime;
-		this.size = size;
-		this.dateUpload = dateUpload;
-		this.owner = owner;
 	}
 
 }

@@ -1,8 +1,6 @@
 angular.module('Fablab').controller('AssetListController', function ($scope, $filter, $location,
 		ngTableParams, AssetService, NotificationService) {
 
-	
-
 	$scope.tableParams = new ngTableParams(
 			angular.extend({
 				page: 1, // show first page

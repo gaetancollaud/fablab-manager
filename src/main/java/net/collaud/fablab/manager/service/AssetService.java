@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AssetService extends ReadService<AssetEO>{
 
-	AssetEO upload(String name, MultipartFile file);
+	AssetEO upload(MultipartFile file);
 	
 	void remove(Integer id);
 

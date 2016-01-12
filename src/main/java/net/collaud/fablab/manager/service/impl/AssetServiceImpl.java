@@ -1,7 +1,8 @@
 package net.collaud.fablab.manager.service.impl;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.manager.dao.AssetRepository;
@@ -9,15 +10,20 @@ import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.AssetEO;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.exceptions.FablabException;
+import net.collaud.fablab.manager.exceptions.FileTypeNotAllowedException;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AssetService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.NestedRuntimeException;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Gaetan Collaud
  */
-@Service
+@Component
 @Transactional
 public class AssetServiceImpl implements AssetService {
 
@@ -37,6 +43,9 @@ public class AssetServiceImpl implements AssetService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+    @Autowired
+    private Environment env;
 
 	@Override
 	@Secured({Roles.ASSET_MANAGE, Roles.ASSET_MANAGE})
@@ -59,15 +68,30 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	@Secured({Roles.ASSET_UPLOAD})
-	public AssetEO upload(String name, MultipartFile file) {
+	public AssetEO upload(MultipartFile file) {
+		checkIfMimeIsAllowed(file.getContentType());
+		
+		UserEO currentUser = userRepository.findOne(securityService.getCurrentUserId());
+		
+		int extIndex = file.getOriginalFilename().lastIndexOf(".");
+		String name;
+		String ext;
+		if (extIndex != -1) {
+			name = file.getOriginalFilename().substring(0, extIndex);
+			ext = file.getOriginalFilename().substring(extIndex+1);
+		} else {
+			name = file.getOriginalFilename();
+			ext = "";
+		}
+		
 		try {
-			UserEO currentUser = userRepository.findOne(securityService.getCurrentUserId());
 			AssetEO asset = AssetEO.builder()
 					.data(file.getBytes())
 					.mime(file.getContentType())
 					.title(name)
-					.size((int)file.getSize())
-					.dateUpload(LocalDateTime.now())
+					.extension(ext)
+					.size((int) file.getSize())
+					.dateUpload(new Date())
 					.owner(currentUser)
 					.build();
 			return assetRepository.save(asset);
@@ -87,6 +111,16 @@ public class AssetServiceImpl implements AssetService {
 			}
 		}
 		throw new AuthenticationCredentialsNotFoundException(null);
+	}
+	
+	
+	private void checkIfMimeIsAllowed(String mime){
+		String mimeAllowed = env.getProperty("assets.mime.allowed");
+		if(!Arrays.stream(mimeAllowed.split(","))
+				.map(String::trim)
+				.anyMatch(s -> s.equalsIgnoreCase(mime))){
+			throw new FileTypeNotAllowedException("File type "+mime+" not allowed");
+		}
 	}
 
 }

@@ -95,7 +95,6 @@
 			<version>5.0.6.Final</version>
 		</dependency>
 		
-		
 		<!-- QueryDSL -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>

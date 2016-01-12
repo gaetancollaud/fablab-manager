@@ -17,6 +17,7 @@ public class AssetProjection {
 				asset.mime,
 				asset.size,
 				asset.dateUpload,
+				asset.extension,
 				UserProjections.getSimpleUser(asset.owner));
 	}
 
@@ -27,6 +28,7 @@ public class AssetProjection {
 				asset.mime,
 				asset.size,
 				asset.dateUpload,
+				asset.extension,
 				UserProjections.getSimpleUser(asset.owner));
 	}
 }
