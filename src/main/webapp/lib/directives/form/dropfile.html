@@ -1,0 +1,10 @@
+<div>
+	<div ngf-drop ngf-select 
+		 ng-model="files" 
+		 class="drop-file" 
+		 ngf-drag-over-class="'dragover'" 
+		 ngf-multiple="true"
+		 accept="{{mime}}" 
+		 ngf-pattern="'{{mime}}'"><ng-transclude></ng-transclude></div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+</div>
