@@ -10,3 +10,4 @@ nb-configuration.xml
 *.war
 nb_jr_remoting.cfg
 
+src/main/webapp/ext-lib/
