@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.ConfigurationRepository;
+import net.collaud.fablab.manager.data.ConfigurationEO;
 import net.collaud.fablab.manager.data.type.ConfigurationKey;
 import net.collaud.fablab.manager.service.impl.AbstractServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +33,14 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
 				.filter(c -> c.getValue() != null)
 				.collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
 		return Stream.of(ConfigurationKey.values())
-				.collect(Collectors.toMap(k -> k, k -> Optional.ofNullable(map.get(k)).orElse(k.getDef().orElse(StringUtils.EMPTY))));
+				.collect(Collectors.toMap(k -> k, k -> Optional.ofNullable(map.get(k)).orElse(k.getDef())));
+	}
+
+	@Override
+	public String getValue(ConfigurationKey key) {
+		Optional<ConfigurationEO> opt = configurationRepository.getFromKey(key.name());
+		return opt.map(ConfigurationEO::getValue)
+				.orElse(key.getDef());
 	}
 	
 }

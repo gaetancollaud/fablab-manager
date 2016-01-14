@@ -1,23 +1,31 @@
 
+<div class="">
+	<drop-file target="uploadTarget" >Drop file here</drop-file>
+	
+</div>
+
+
 <table ng-table="tableParams" class="table" show-filter="true">
     <tr ng-repeat="asset in $data">
         <td 
-			data-title="'asset.firstname' | translate" 
+			data-title="'asset.title' | translate" 
 			sortable="'title'"
 			filter="{'title':'text'}">
-			{{asset.title}}
+			{{asset.title}}.{{asset.extension}}
 		</td>
         <td 
-			data-title="'asset.lastname' | translate" 
-			sortable="'lastname'"
-			filter="{'lastname':'text'}">
-			{{asset.dateUpload}}
+			data-title="'asset.date' | translate" 
+			sortable="'dateUpload'">
+			{{asset.dateUpload|formatTimestamp}}
 		</td>
         <td 
-			data-title="'asset.email' | translate" 
-			sortable="'email'"
-			filter="{'email':'text'}">
-			{{asset.size}}
+			data-title="'asset.size' | translate" 
+			sortable="'size'">
+			{{asset.size|fileSize}}
+		</td>
+        <td 
+			data-title="'asset.action' | translate" >
+			<a href="{{getUrl(asset)}}">Show</a>
 		</td>
     </tr>
 </table> 

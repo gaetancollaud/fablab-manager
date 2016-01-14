@@ -2,7 +2,6 @@ package net.collaud.fablab.manager.data.type;
 
 import java.util.Optional;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -15,12 +14,13 @@ public enum ConfigurationKey {
 	GOOGLE_CALENDAR_API_KEY(""),
 	RECAPTCHA_SITE_KEY(""),
 	RECAPTCHA_SECRET(""),
-	CURRENCY("$");
+	CURRENCY("$"),
+	UPLOAD_MIME_ALLOWED("image/gif,image/jpg");
 	
 	@Getter
-	private final Optional<String> def;
+	private final String def;
 
 	private ConfigurationKey(String def) {
-		this.def = Optional.ofNullable(def);
+		this.def = def;
 	}
 }

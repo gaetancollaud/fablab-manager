@@ -53,6 +53,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 		return new JPAQuery(entityManager)
 				.from(asset)
 				.innerJoin(asset.owner)
+				.orderBy(asset.id.desc())
 				.list(AssetProjection.projectionWithoutContent(asset));
 	}
 

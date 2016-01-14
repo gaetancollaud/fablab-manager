@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.boot;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import net.collaud.fablab.manager.rest.HibernateAwareObjectMapper;
@@ -24,6 +25,7 @@ public class WebMVCConfiguration extends WebMvcAutoConfigurationAdapter {
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 		converter.setObjectMapper(new HibernateAwareObjectMapper());
 		converter.setPrettyPrint(true);
+		converter.getObjectMapper().setDateFormat(DateFormat.getDateInstance());
 		converter.setSupportedMediaTypes(supportedMediaTypes);
 		converters.add(converter);
 		super.configureMessageConverters(converters);

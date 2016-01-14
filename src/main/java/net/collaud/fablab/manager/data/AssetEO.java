@@ -3,8 +3,9 @@ package net.collaud.fablab.manager.data;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,9 +56,8 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "data_size", nullable = false)
 	private Integer size;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_upload", nullable = false)
-	private Date dateUpload;
+	private Instant dateUpload;
 
 	@Column(name = "extension", nullable = false)
 	private String extension;
@@ -70,7 +67,7 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	private UserEO owner;
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, String mime, Integer size, Date dateUpload, String extension, UserEO owner) {
+	public AssetEO(Integer id, String title, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
 		this.id = id;
 		this.title = title;
 		this.mime = mime;
@@ -81,7 +78,7 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	}
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, byte[] data, String mime, Integer size, Date dateUpload, String extension, UserEO owner) {
+	public AssetEO(Integer id, String title, byte[] data, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
 		this(id, title, mime, size, dateUpload, extension, owner);
 		this.data = data;
 	}

@@ -1,25 +1,24 @@
 package net.collaud.fablab.manager.service.impl;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.manager.dao.AssetRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.AssetEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.ConfigurationKey;
 import net.collaud.fablab.manager.exceptions.FablabException;
 import net.collaud.fablab.manager.exceptions.FileTypeNotAllowedException;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AssetService;
+import net.collaud.fablab.manager.service.ConfigurationService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.NestedRuntimeException;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -43,9 +42,12 @@ public class AssetServiceImpl implements AssetService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-    @Autowired
-    private Environment env;
+
+	@Autowired
+	private ConfigurationService configurationService;
+
+	@Autowired
+	private Environment env;
 
 	@Override
 	@Secured({Roles.ASSET_MANAGE, Roles.ASSET_MANAGE})
@@ -70,20 +72,20 @@ public class AssetServiceImpl implements AssetService {
 	@Secured({Roles.ASSET_UPLOAD})
 	public AssetEO upload(MultipartFile file) {
 		checkIfMimeIsAllowed(file.getContentType());
-		
+
 		UserEO currentUser = userRepository.findOne(securityService.getCurrentUserId());
-		
+
 		int extIndex = file.getOriginalFilename().lastIndexOf(".");
 		String name;
 		String ext;
 		if (extIndex != -1) {
 			name = file.getOriginalFilename().substring(0, extIndex);
-			ext = file.getOriginalFilename().substring(extIndex+1);
+			ext = file.getOriginalFilename().substring(extIndex + 1);
 		} else {
 			name = file.getOriginalFilename();
 			ext = "";
 		}
-		
+
 		try {
 			AssetEO asset = AssetEO.builder()
 					.data(file.getBytes())
@@ -91,7 +93,7 @@ public class AssetServiceImpl implements AssetService {
 					.title(name)
 					.extension(ext)
 					.size((int) file.getSize())
-					.dateUpload(new Date())
+					.dateUpload(Instant.now())
 					.owner(currentUser)
 					.build();
 			return assetRepository.save(asset);
@@ -112,14 +114,13 @@ public class AssetServiceImpl implements AssetService {
 		}
 		throw new AuthenticationCredentialsNotFoundException(null);
 	}
-	
-	
-	private void checkIfMimeIsAllowed(String mime){
-		String mimeAllowed = env.getProperty("assets.mime.allowed");
-		if(!Arrays.stream(mimeAllowed.split(","))
+
+	private void checkIfMimeIsAllowed(String mime) {
+		String mimeAllowed = configurationService.getValue(ConfigurationKey.UPLOAD_MIME_ALLOWED);
+		if (!Arrays.stream(mimeAllowed.split(","))
 				.map(String::trim)
-				.anyMatch(s -> s.equalsIgnoreCase(mime))){
-			throw new FileTypeNotAllowedException("File type "+mime+" not allowed");
+				.anyMatch(s -> s.equalsIgnoreCase(mime))) {
+			throw new FileTypeNotAllowedException("File type " + mime + " not allowed");
 		}
 	}
 

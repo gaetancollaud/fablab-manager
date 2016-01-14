@@ -1,5 +1,7 @@
 angular.module('Fablab').controller('AssetListController', function ($scope, $filter, $location,
 		ngTableParams, AssetService, NotificationService) {
+			
+			$scope.uploadTarget = App.API.ASSET_API+'/upload';
 
 	$scope.tableParams = new ngTableParams(
 			angular.extend({
@@ -36,6 +38,10 @@ angular.module('Fablab').controller('AssetListController', function ($scope, $fi
 			NotificationService.notify("success", "asset.notification.removed");
 			updateAssetList();
 		});
+	};
+	
+	$scope.getUrl = function(asset){
+		return App.API.ASSET_API+'/'+asset.id+'.'+asset.extension;
 	};
 
 

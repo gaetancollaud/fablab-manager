@@ -4,7 +4,7 @@
 	angular.module('Fablab', [
 		//ext-lib
 		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
-		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 
+		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'ngFileUpload',
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
 	]).config(function ($routeProvider, $httpProvider, $translateProvider) {

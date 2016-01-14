@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate5</artifactId>
-		</dependency>   
+		</dependency> 
  
 		<!-- ORM integration, e.g Hibernate -->
 		<dependency>
@@ -92,6 +92,11 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.6.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
 			<version>5.0.6.Final</version>
 		</dependency>
 		
