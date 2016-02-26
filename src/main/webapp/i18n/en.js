@@ -27,10 +27,13 @@ angular.module('Fablab').config(function ($translateProvider) {
 		menu: {
 			home: 'Home',
 			users: 'Users',
-			reservation: 'Reservation',
-			payment: 'Payment',
+			reservation: 'Reservations',
+			payment: 'Payments',
 			accounting: 'Accounting',
 			audit: 'Audit',
+			admin:'Admin',
+			assets:'Assets',
+			projects:'Projects',
 			login: 'Login',
 			logout: 'Logout',
 			signup: 'Signup'

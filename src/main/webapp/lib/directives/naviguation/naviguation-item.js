@@ -2,6 +2,7 @@ var naviguation = angular.module('Fablab');
 naviguation.directive('fabNavItem', function () {
 	return {
 		restrict: 'EA',
+		transclude:true,
 		scope: {
 			link: '@',
 			icon: '@',
@@ -10,6 +11,6 @@ naviguation.directive('fabNavItem', function () {
 		},
 		template: '<a ng-show="show===undefined || show" href="#/{{link}}">'
 				+ '	<span class="glyphicon glyphicon-{{icon}}"></span> {{label | translate}}'
-				+ '</a>'
+				+ '</a><ng-transclude />'
 	};
 });

@@ -27,6 +27,7 @@
 
 		<link href="./components/audit/style.css" rel="stylesheet">
 		<link href="./components/accounting/style.css" rel="stylesheet">
+		<link href="./components/asset/style.css" rel="stylesheet">
 		<link href="./components/auth/style.css" rel="stylesheet">
 		<link href="./components/payment/style.css" rel="stylesheet">
 		<link href="./components/reservation/style.css" rel="stylesheet">
@@ -64,15 +65,30 @@
 					<li fab-nav-item link="payments" icon="shopping-cart" 
 						label="menu.payment" 
 						show="hasAnyRole('PAYMENT_VIEW')"></li>
-					<li fab-nav-item link="users" icon="user" 
-						label="menu.users" 
-						show="hasAnyRole('USER_VIEW')"></li>
-					<li fab-nav-item link="accounting" icon="euro" 
-						label="menu.accounting" 
-						show="hasAnyRole('ACCOUNTING_VIEW')"></li>
-					<li fab-nav-item link="audit" icon="menu-hamburger" 
-						label="menu.audit" 
-						show="hasAnyRole('AUDIT_VIEW')"></li>
+					<li fab-nav-item link="projets" icon="file" 
+						label="menu.projects" ></li>
+
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-cog"></span> {{'menu.admin'| translate}}
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+							<li fab-nav-item link="assets" icon="picture" 
+								label="menu.assets" 
+								show="hasAnyRole('ASSET_UPLOAD')"></li>
+							<li class="divider"></li>
+							<li fab-nav-item link="accounting" icon="euro" 
+								label="menu.accounting" 
+								show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+							<li fab-nav-item link="audit" icon="menu-hamburger" 
+								label="menu.audit" 
+								show="hasAnyRole('AUDIT_VIEW')"></li>
+							<li fab-nav-item link="users" icon="user" 
+								label="menu.users" 
+								show="hasAnyRole('USER_VIEW')"></li>
+						</ul>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
@@ -118,14 +134,14 @@
 	<script src="./ext-lib/angular-resource/angular-resource.min.js"></script>
 	<!--	<script src="./ext-lib/angular-1.3.8/angular-animate.min.js"></script>
 		<script src="./ext-lib/angular-1.3.8/i18n/angular-locale_fr-ch.js"></script>-->
-	
+
 	<script src="./ext-lib/ng-file-upload/ng-file-upload-all.min.js"></script>
 
 	<script src="./ext-lib/moment/min/moment-with-locales.min.js"></script>
 	<script src="./ext-lib/moment-range/lib/moment-range.min.js"></script>
 	<script src="./ext-lib/fullcalendar/dist/fullcalendar.min.js"></script>
 	<script src="./ext-lib/fullcalendar/dist/gcal.js"></script>
-	
+
 	<script src="./ext-lib/angular-ui-calendar/src/calendar.js"></script>
 	<script src="./ext-lib/angular-translate/angular-translate.min.js"></script>
 	<script src="./ext-lib/ng-table/dist/ng-table.min.js"></script>
@@ -173,7 +189,7 @@
 	<script src="./components/services/user-service.js"></script>
 
 	<script src="./components/dashboard/home-ctrl.js"></script>
-	
+
 	<script src="./components/asset/list-ctrl.js"></script>
 
 	<script src="./components/auth/login-ctrl.js"></script>
@@ -199,7 +215,7 @@
 	<script src="./components/payment/directive-add-subscription.js"></script>
 
 	<script src="./components/accounting/accounting-list-ctrl.js"></script>
-	
+
 	<script src="./components/audit/audit-list-ctrl.js"></script>
 
 	<script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
