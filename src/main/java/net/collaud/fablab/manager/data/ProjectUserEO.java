@@ -20,19 +20,19 @@ import lombok.ToString;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
-@Table(name = "r_price_machine")
+@Table(name = "r_project_user")
 @Getter
 @Setter
 @ToString
-@IdClass(PriceMachineEOPK.class)
+@IdClass(ProjectUserEOPK.class)
 public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Serializable {
 
 	@Id
-	@Column(name = "machine_type_id", nullable = false)
+	@Column(name = "project_id", nullable = false)
 	private int projectId;
 
 	@Id
-	@Column(name = "membership_type_id", nullable = false)
+	@Column(name = "user_id", nullable = false)
 	private int userId;
 
 	@Column(name = "can_edit", nullable = false)
@@ -43,7 +43,7 @@ public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Se
 
 	@JoinColumn(name = "project_id", referencedColumnName = "project_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	private ProjectUserEO project;
+	private ProjectEO project;
 
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)

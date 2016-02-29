@@ -3,7 +3,7 @@ package net.collaud.fablab.manager.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_projet")
 @Data
 @NoArgsConstructor
-public class ProjetEO extends AbstractDataEO<Integer> implements Serializable {
+public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,16 +48,8 @@ public class ProjetEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "date_end")
 	private Date dateEnd;
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machine", fetch = FetchType.LAZY)
-	private Set<UserEO> reservationList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project", fetch = FetchType.LAZY)
+	private Set<ProjectUserEO> users;
 
-	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id")
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	private MachineTypeEO machineType;
-
-	public ProjetEO(Integer id) {
-		this.id = id;
-	}
 
 }
