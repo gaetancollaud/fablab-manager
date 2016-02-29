@@ -2,6 +2,7 @@ package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import lombok.ToString;
 public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Serializable {
 
 	@Id
+	@JsonIgnore
 	@Column(name = "project_id", nullable = false)
 	private int projectId;
 
@@ -41,6 +43,7 @@ public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Se
 	@Column(name = "role")
 	private String role;
 
+	@JsonBackReference("project-users")
 	@JoinColumn(name = "project_id", referencedColumnName = "project_id", insertable = false, updatable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private ProjectEO project;

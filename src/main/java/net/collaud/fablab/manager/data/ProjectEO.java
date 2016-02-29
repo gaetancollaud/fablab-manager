@@ -1,6 +1,6 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
@@ -23,7 +21,7 @@ import lombok.NoArgsConstructor;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
-@Table(name = "t_projet")
+@Table(name = "t_project")
 @Data
 @NoArgsConstructor
 public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
@@ -48,8 +46,9 @@ public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "date_end")
 	private Date dateEnd;
 
+	@JsonManagedReference("project-users")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project", fetch = FetchType.LAZY)
-	private Set<ProjectUserEO> users;
+	private Set<ProjectUserEO> projectUsers;
 
 
 }
