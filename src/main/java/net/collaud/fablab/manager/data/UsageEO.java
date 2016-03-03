@@ -32,14 +32,14 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
+public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usage_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)

@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProjectUserEOPK implements Serializable {
 
-	private int projectId;
+	private Long projectId;
 
-	private int userId;
+	private Long userId;
 
 
 }

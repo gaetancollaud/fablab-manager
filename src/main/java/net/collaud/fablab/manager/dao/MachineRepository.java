@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface MachineRepository extends JpaRepository<MachineEO, Integer>{
+public interface MachineRepository extends JpaRepository<MachineEO, Long>{
 	
 	@Query("SELECT m "
 			+ " FROM MachineEO m"

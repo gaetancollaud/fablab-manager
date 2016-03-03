@@ -2,7 +2,7 @@ package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,11 +31,12 @@ public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Se
 	@Id
 	@JsonIgnore
 	@Column(name = "project_id", nullable = false)
-	private int projectId;
+	private Long projectId;
 
 	@Id
+	@JsonIgnore
 	@Column(name = "user_id", nullable = false)
-	private int userId;
+	private Long userId;
 
 	@Column(name = "can_edit", nullable = false)
 	private Boolean canEdit;
@@ -56,6 +57,14 @@ public class ProjectUserEO extends AbstractDataEO<ProjectUserEOPK> implements Se
 	@Override
 	public ProjectUserEOPK getId() {
 		return new ProjectUserEOPK(projectId, userId);
+	}
+
+	@QueryProjection
+	public ProjectUserEO(Long projectId, Boolean canEdit, String role, UserEO user) {
+		this.projectId = projectId;
+		this.canEdit = canEdit;
+		this.role = role;
+		this.user = user;
 	}
 
 

@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddSubscriptionTO {
-	private Integer userId;
+	private Long userId;
 	private Date startDate;
 	private Date paymentDate;
 	private String comment;

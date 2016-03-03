@@ -21,7 +21,7 @@ import net.collaud.fablab.manager.export.CsvField;
 @CsvExport(fileName = "accounting")
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
-	private final int id;
+	private final Long id;
 	@CsvField(headerName = "type")
 	private final HistoryEntryType type;
 	@CsvField(headerName = "date")
@@ -68,7 +68,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	@Override
 	public int compareTo(HistoryEntry o) {
 		int res = -this.date.compareTo(o.getDate());
-		return res == 0 ? Integer.compare(this.id, o.id) : res;
+		return res == 0 ? Long.compare(this.id, o.id) : res;
 	}
 
 }

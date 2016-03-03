@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface AssetRepositoryCustom {
 
-	AssetEO findOneWithoutContent(Integer id);
+	AssetEO findOneWithoutContent(Long id);
 
-	AssetEO findOneWithContent(Integer id);
+	AssetEO findOneWithContent(Long id);
 	
 	List<AssetEO> findAll();
 	
-	List<AssetEO> findAllForOwner(Integer userId);
+	List<AssetEO> findAllForOwner(Long userId);
 
 }

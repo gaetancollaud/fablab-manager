@@ -12,7 +12,7 @@ import net.collaud.fablab.manager.data.UserEO;
 @EqualsAndHashCode(of = {"id"})
 public class HistoryEntryUser  {
 
-	private final int id;
+	private final Long id;
 	private final String lastname;
 	private final String firstname;
 	public HistoryEntryUser(UserEO user){

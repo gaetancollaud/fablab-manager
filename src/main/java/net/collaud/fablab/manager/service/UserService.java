@@ -24,7 +24,7 @@ public interface UserService extends ReadWriteService<UserEO>{
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
-	public void remove(Integer id);
+	public void remove(Long id);
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)

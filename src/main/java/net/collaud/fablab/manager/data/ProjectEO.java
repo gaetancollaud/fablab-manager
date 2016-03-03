@@ -1,6 +1,7 @@
 package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -24,12 +25,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_project")
 @Data
 @NoArgsConstructor
-public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
+public class ProjectEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "title", nullable = false)
 	private String title;
@@ -53,5 +54,25 @@ public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<ProjectUserEO> projectUsers;
 
+	@QueryProjection
+	public ProjectEO(Long id, String title, String introduction, String state, Date dateStart, Date dateEnd, Set<ProjectUserEO> projectUsers) {
+		this.id = id;
+		this.title = title;
+		this.introduction = introduction;
+		this.state = state;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+		this.projectUsers = projectUsers;
+	}
+
+	@QueryProjection
+	public ProjectEO(Long id, String title, String introduction, String state, Date dateStart, Date dateEnd) {
+		this.id = id;
+		this.title = title;
+		this.introduction = introduction;
+		this.state = state;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+	}
 
 }

@@ -27,14 +27,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
+public class RoleEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -54,11 +54,11 @@ public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 	public RoleEO() {
 	}
 
-	public RoleEO(Integer id) {
+	public RoleEO(Long id) {
 		this.id = id;
 	}
 
-	public RoleEO(Integer roleId, String name) {
+	public RoleEO(Long roleId, String name) {
 		this.id = roleId;
 		this.name = name;
 	}

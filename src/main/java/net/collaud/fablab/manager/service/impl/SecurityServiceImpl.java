@@ -45,7 +45,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 
 	@Override
 	public Optional<UserEO> getCurrentUser() {
-		Integer id = getCurrentUserId();
+		Long id = getCurrentUserId();
 		if (id < 0) {
 			return Optional.empty();
 		}
@@ -73,16 +73,16 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	}
 
 	@Override
-	public Integer getCurrentUserId() {
+	public Long getCurrentUserId() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null || context.getAuthentication() == null) {
-			return -1;
+			return -1l;
 		}
 		try {
-			return Integer.parseInt(context.getAuthentication().getName());
+			return Long.parseLong(context.getAuthentication().getName());
 		} catch (NumberFormatException ex) {
 			LOG.error("Cannot parse user id '{}'", context.getAuthentication().getName());
-			return -1;
+			return -1l;
 		}
 	}
 

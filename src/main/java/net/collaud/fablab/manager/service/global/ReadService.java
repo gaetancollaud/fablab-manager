@@ -10,5 +10,5 @@ import java.util.Optional;
  */
 public interface ReadService<T> {
 	List<T> findAll();
-	Optional<T> getById(Integer id);
+	Optional<T> getById(Long id);
 }

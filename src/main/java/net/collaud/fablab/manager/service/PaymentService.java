@@ -20,16 +20,16 @@ import net.collaud.fablab.manager.rest.v1.criteria.PeriodSearchCriteria;
 public interface PaymentService {
 	
 	@Audit(object = AuditObject.SUBSCRIPTION, action = AuditAction.INSERT)
-	SubscriptionEO addSubscription(Integer userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly);
+	SubscriptionEO addSubscription(Long userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly);
 
 	@Audit(object = AuditObject.PAYMENT, action = AuditAction.INSERT)
-	PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
+	PaymentEO addPayment(Long userId, Date datePayment, double amount, String comment);
 
 	@Audit(object = AuditObject.USAGE, action = AuditAction.INSERT)
-	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes,
+	UsageEO useMachine(Long userId, Long machineId, Date startDate, int minutes,
 			double additionalCost, String comment, boolean paidDirectly);
 
-	UserPaymentHistory getLastPaymentEntries(Integer userId);
+	UserPaymentHistory getLastPaymentEntries(Long userId);
 
 	List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
 

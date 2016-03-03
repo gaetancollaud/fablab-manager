@@ -18,7 +18,7 @@ public interface SecurityService {
 	
 	Optional<UserEO> getCurrentUser();
 	
-	Integer getCurrentUserId();
+	Long getCurrentUserId();
 	
 	Boolean isAuthenticated();
 	

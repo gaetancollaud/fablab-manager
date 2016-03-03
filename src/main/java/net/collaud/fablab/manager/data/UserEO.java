@@ -50,14 +50,14 @@ import net.collaud.fablab.manager.export.CsvField;
 @AllArgsConstructor
 @CsvExport(fileName = "users")
 @JsonInclude(Include.NON_ABSENT)
-public class UserEO extends AbstractDataEO<Integer> implements Serializable {
+public class UserEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@JsonIgnore
 	@Column(name = "password")
@@ -147,7 +147,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private UserBalanceEO balance;
 
-	public UserEO(Integer id) {
+	public UserEO(Long id) {
 		this.id = id;
 	}
 	
@@ -159,7 +159,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	}
 
 	@QueryProjection
-	public UserEO(Integer id, String firstname, String lastname, String email) {
+	public UserEO(Long id, String firstname, String lastname, String email) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;

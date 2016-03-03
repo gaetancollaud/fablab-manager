@@ -31,7 +31,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	private EntityManager entityManager;
 
 	@Override
-	public AssetEO findOneWithoutContent(Integer id) {
+	public AssetEO findOneWithoutContent(Long id) {
 		return new JPAQuery(entityManager)
 				.from(asset)
 				.innerJoin(asset.owner)
@@ -40,7 +40,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	}
 
 	@Override
-	public AssetEO findOneWithContent(Integer id) {
+	public AssetEO findOneWithContent(Long id) {
 		return new JPAQuery(entityManager)
 				.from(asset)
 				.innerJoin(asset.owner)
@@ -58,7 +58,7 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 	}
 
 	@Override
-	public List<AssetEO> findAllForOwner(Integer ownerId) {
+	public List<AssetEO> findAllForOwner(Long ownerId) {
 		return new JPAQuery(entityManager)
 				.from(asset)
 				.innerJoin(asset.owner)

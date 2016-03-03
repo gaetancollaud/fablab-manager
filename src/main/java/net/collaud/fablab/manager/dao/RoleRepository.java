@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface RoleRepository extends JpaRepository<RoleEO, Integer>{
+public interface RoleRepository extends JpaRepository<RoleEO, Long>{
 }

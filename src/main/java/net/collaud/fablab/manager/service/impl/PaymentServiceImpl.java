@@ -69,7 +69,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
+	public PaymentEO addPayment(Long userId, Date datePayment, double amount, String comment) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
 		payment = paymentRepository.save(payment);
@@ -78,7 +78,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
+	public UsageEO useMachine(Long userId, Long machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
 		double hourPrice = machine.getMachineType().getPriceList().stream()
@@ -111,7 +111,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	}
 
 	@Override
-	public UserPaymentHistory getLastPaymentEntries(Integer userId) {
+	public UserPaymentHistory getLastPaymentEntries(Long userId) {
 		if(!securityService.getCurrentUserId().equals(userId)){
 			securityService.checkRole(Roles.PAYMENT_MANAGE);
 		}
@@ -123,7 +123,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		return new UserPaymentHistory(listHistory, balance);
 	}
 
-	protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
+	protected List<HistoryEntry> getHistoryEntriesForuser(Long userId) {
 		List<UsageEO> listUsage = usageRepository.getByUser(userId);
 		List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
 		List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
@@ -147,7 +147,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Secured({Roles.PAYMENT_MANAGE})
 	@Override
-	public SubscriptionEO addSubscription(Integer userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly) {
+	public SubscriptionEO addSubscription(Long userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly) {
 	
 		//save user last subscription date
 		UserEO user = userRepository.findOneDetails(userId)
@@ -184,7 +184,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
-		final int id = historyId.getId();
+		final Long id = historyId.getId();
 		switch (historyId.getType()) {
 			case PAYMENT:
 				PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))

@@ -14,7 +14,7 @@ import net.collaud.fablab.manager.data.type.HistoryEntryType;
 @EqualsAndHashCode(of = {"id", "type"})
 public class HistoryEntryId {
 	
-	private int id;
+	private Long id;
 	private HistoryEntryType type;
 	
 

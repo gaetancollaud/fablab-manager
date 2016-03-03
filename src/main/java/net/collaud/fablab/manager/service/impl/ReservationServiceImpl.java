@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
-	public void remove(Integer reservationId) {
+	public void remove(Long reservationId) {
 		LOG.debug("Remove with id"+reservationId);
 		reservationRepository.delete(reservationId);
 	}
@@ -59,7 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public Optional<ReservationEO> getById(Integer id) {
+	public Optional<ReservationEO> getById(Long id) {
 		return Optional.ofNullable(reservationRepository.findOne(id));
 	}
 

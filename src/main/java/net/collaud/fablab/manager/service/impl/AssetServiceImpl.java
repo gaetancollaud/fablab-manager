@@ -51,7 +51,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	@Secured({Roles.ASSET_MANAGE, Roles.ASSET_MANAGE})
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		final AssetEO asset = assetRepository.findOneWithoutContent(id);
 		if (asset == null) {
 			throw new DataRetrievalFailureException("asset not found");
@@ -64,7 +64,7 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Optional<AssetEO> getById(Integer id) {
+	public Optional<AssetEO> getById(Long id) {
 		return Optional.ofNullable(assetRepository.findOneWithContent(id));
 	}
 

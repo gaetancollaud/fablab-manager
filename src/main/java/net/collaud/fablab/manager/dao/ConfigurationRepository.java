@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Transactional
-public interface ConfigurationRepository extends JpaRepository<ConfigurationEO, Integer>{
+public interface ConfigurationRepository extends JpaRepository<ConfigurationEO, Long>{
 	
 	@Query("SELECT c "
 			+ " FROM ConfigurationEO c "

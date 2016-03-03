@@ -27,12 +27,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude = {"priceList", "machineList"})
-public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializable{
+public class MachineTypeEO extends AbstractDataEO<Long> implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "machine_type_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "technicalname", nullable = false)
 	private String technicalname;
@@ -55,11 +55,11 @@ public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializab
 	public MachineTypeEO() {
 	}
 
-	public MachineTypeEO(Integer machineTypeId) {
+	public MachineTypeEO(Long machineTypeId) {
 		this.id = machineTypeId;
 	}
 
-	public MachineTypeEO(Integer machineTypeId, String name) {
+	public MachineTypeEO(Long machineTypeId, String name) {
 		this.id = machineTypeId;
 		this.name = name;
 	}

@@ -29,7 +29,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl implements ProjectSe
 	}
 
 	@Override
-	public Optional<ProjectEO> getById(Integer id) {
+	public Optional<ProjectEO> getById(Long id) {
 		return Optional.ofNullable(projectRepository.findOne(id));
 	}
 
@@ -39,7 +39,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl implements ProjectSe
 	}
 
 	@Override
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		projectRepository.delete(id);
 	}
 }

@@ -15,7 +15,7 @@ import net.collaud.fablab.manager.data.UserEO;
 @Setter
 public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSimpleTO> {
 
-	private Integer id;
+	private Long id;
 
 	private Date dateStart;
 
@@ -23,7 +23,7 @@ public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSi
 
 	private UserSimpleTO user;
 
-	private Integer machineId;
+	private Long machineId;
 
 	public ReservationSimpleTO() {
 	}

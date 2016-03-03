@@ -29,12 +29,12 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
+public class MachineEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "machine_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name")
 	private String name;
@@ -47,7 +47,7 @@ public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineTypeEO machineType;
 
-	public MachineEO(Integer id) {
+	public MachineEO(Long id) {
 		this.id = id;
 	}
 

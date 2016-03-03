@@ -33,7 +33,7 @@ public class MachineServiceImpl extends AbstractServiceImpl implements MachineSe
 
 	@Override
 	@Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
-	public Optional<MachineEO> getById(Integer id) {
+	public Optional<MachineEO> getById(Long id) {
 		return Optional.ofNullable(machineDao.findOne(id));
 	}
 }

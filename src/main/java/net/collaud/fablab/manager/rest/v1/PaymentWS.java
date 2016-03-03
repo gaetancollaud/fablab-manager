@@ -29,7 +29,7 @@ public class PaymentWS {
 	private PaymentService paymentService;
 
 	@RequestMapping(value = "{userId}/history", method = RequestMethod.GET)
-	public BaseModel getallMembershipType(@PathVariable Integer userId) {
+	public BaseModel getallMembershipType(@PathVariable Long userId) {
 		return new DataModel(paymentService.getLastPaymentEntries(userId));
 	}
 
@@ -62,7 +62,7 @@ public class PaymentWS {
 	}
 
 //	@RequestMapping(value = "subscription/confirm/{id}", method = RequestMethod.GET)
-//	public BaseModel confirmSubscription(@PathVariable Integer id) {
+//	public BaseModel confirmSubscription(@PathVariable Long id) {
 //		return new DataModel(paymentService.addSubscriptionConfirmation(id));
 //	}
 

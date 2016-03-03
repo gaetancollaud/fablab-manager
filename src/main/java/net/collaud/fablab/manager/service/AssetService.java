@@ -12,6 +12,6 @@ public interface AssetService extends ReadService<AssetEO>{
 
 	AssetEO upload(MultipartFile file);
 	
-	void remove(Integer id);
+	void remove(Long id);
 
 }

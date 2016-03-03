@@ -34,13 +34,13 @@ abstract public class ReadWriteRestWebservice<ENTITY extends AbstractDataEO, SER
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public void edit(@PathVariable Integer id, @RequestBody ENTITY entity) {
+	public void edit(@PathVariable Long id, @RequestBody ENTITY entity) {
 		LOG.debug("edit entity " + entity);
 		service.save(entity);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable Integer id) throws FablabException {
+	public void remove(@PathVariable Long id) throws FablabException {
 		LOG.debug("delete entity with id " + id);
 		service.remove(id);
 	}

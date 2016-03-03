@@ -13,6 +13,6 @@ public interface AuditService {
 
 	AuditEO addEntry(AuditEO entry);
 
-	List<AuditEO> search(Integer userId, List<AuditObject> type, Date after, Date before, String content, int limit);
+	List<AuditEO> search(Long userId, List<AuditObject> type, Date after, Date before, String content, int limit);
 
 }

@@ -29,14 +29,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
+public class PaymentEO extends AbstractDataEO<Long> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "payment_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "total", nullable = false)
 	private double total;
@@ -59,7 +59,7 @@ public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
 	private UserEO cashier;
 
 	public PaymentEO(Date datePayement, double total, UserEO user, UserEO cashier, String comment) {
-		this.id = 0;
+		this.id = 0l;
 		this.datePayment = datePayement;
 		this.total = total;
 		this.user = user;

@@ -1,7 +1,5 @@
 package net.collaud.fablab.manager.service.global;
 
-import net.collaud.fablab.manager.service.global.ReadService;
-
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
@@ -9,5 +7,5 @@ import net.collaud.fablab.manager.service.global.ReadService;
  */
 public interface ReadWriteService<T> extends ReadService<T>{
 	T save(T entity);
-	void remove(Integer id);
+	void remove(Long id);
 }

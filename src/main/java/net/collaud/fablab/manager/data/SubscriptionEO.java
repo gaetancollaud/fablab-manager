@@ -27,14 +27,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SubscriptionEO extends AbstractDataEO<Integer> implements Serializable {
+public class SubscriptionEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "subscription_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "date_subscription", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)

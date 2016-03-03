@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
-import javax.interceptor.Interceptors;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
@@ -71,7 +70,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
-	public Optional<UserEO> getById(Integer id) {
+	public Optional<UserEO> getById(Long id) {
 		return userDao.findOneDetails(id);
 	}
 
@@ -79,7 +78,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	@Secured({Roles.USER_MANAGE})
 	public UserEO save(UserEO user) {
 		if (user.getId() == null) {
-			user.setId(0);
+			user.setId(0l);
 		}
 		boolean changePassword = !StringUtils.isBlank(user.getPasswordNew());
 		if (changePassword) {
@@ -119,7 +118,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		UserEO user = userDao.findOne(id);
 		user.setEnabled(false);
 		userDao.saveAndFlush(user);

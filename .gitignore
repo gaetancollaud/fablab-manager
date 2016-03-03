@@ -9,5 +9,5 @@ nb-configuration.xml
 *.mwb.bak
 *.war
 nb_jr_remoting.cfg
-
 src/main/webapp/ext-lib/
+logs/

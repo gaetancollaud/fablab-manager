@@ -28,12 +28,12 @@ public class AssetWS {
 	private AssetService assetService;
 
 	@RequestMapping(value = "/{id}.{ext}", method = RequestMethod.GET)
-	public ResponseEntity getByIdWithExt(@PathVariable Integer id) {
+	public ResponseEntity getByIdWithExt(@PathVariable Long id) {
 		return getById(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity getById(@PathVariable Integer id) {
+	public ResponseEntity getById(@PathVariable Long id) {
 		final Optional<AssetEO> optAsst = assetService.getById(id);
 		if (optAsst.isPresent()) {
 			AssetEO asset = optAsst.get();

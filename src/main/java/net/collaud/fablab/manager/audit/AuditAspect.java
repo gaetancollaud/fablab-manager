@@ -59,7 +59,7 @@ public class AuditAspect {
 			Object result = pjp.proceed();
 			try {
 				Object object = getObjectOutOfResultAndParameters(ann, result, pjp.getArgs());
-				Integer id = getIdOfObject(object);
+				Long id = getIdOfObject(object);
 				addEntry(ann.action(), ann.object(), id, true, getReadableMessage(ann.object(), ann.action(), object, pjp.getArgs()), null);
 			} catch (Exception ex) {
 				LOG.error("Cannot add login for themod " + method.getName(), ex);
@@ -67,13 +67,13 @@ public class AuditAspect {
 			return result;
 		} catch (Exception ex) {
 			Object entity = getObjectOutOfResultAndParameters(ann, null, pjp.getArgs());
-			Integer id = getIdOfObject(entity);
+			Long id = getIdOfObject(entity);
 			addEntry(ann.action(), ann.object(), id, true, "Error while " + ann.action() + " " + ann.object() + " with id  " + id, ex.getMessage());
 			throw ex;
 		}
 	}
 	
-	private void addEntry(AuditAction action, AuditObject object, Integer objectId, boolean success, String content, String detail) throws FablabException {
+	private void addEntry(AuditAction action, AuditObject object, Long objectId, boolean success, String content, String detail) throws FablabException {
 		if (detail != null && detail.isEmpty()) {
 			detail = null;
 		}
@@ -98,9 +98,9 @@ public class AuditAspect {
 		return null;
 	}
 	
-	private Integer getIdOfObject(Object entity) {
+	private Long getIdOfObject(Object entity) {
 		if (entity instanceof AbstractDataEO) {
-			return (Integer) ((AbstractDataEO) entity).getId();
+			return (Long) ((AbstractDataEO) entity).getId();
 		}
 		return null;
 	}

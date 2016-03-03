@@ -1,8 +1,6 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
@@ -26,12 +24,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class GroupEO extends AbstractDataEO<Integer> implements Serializable {
+public class GroupEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "group_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@JsonIgnore
 	@Column(name = "technicalname", nullable = false)

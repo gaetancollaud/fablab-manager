@@ -18,7 +18,7 @@ public interface ReservationService extends ReadWriteService<ReservationEO>{
 
 	@Override
 	@Audit(object = AuditObject.RESERVATION, action = AuditAction.DELETE)
-	public void remove(Integer id);
+	public void remove(Long id);
 
 	@Override
 	@Audit(object = AuditObject.RESERVATION, action = AuditAction.SAVE)

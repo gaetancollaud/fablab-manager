@@ -34,14 +34,14 @@ import lombok.experimental.Builder;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
+public class AssetEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "asset_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "title", nullable = true)
 	private String title;
@@ -67,7 +67,7 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	private UserEO owner;
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
+	public AssetEO(Long id, String title, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
 		this.id = id;
 		this.title = title;
 		this.mime = mime;
@@ -78,7 +78,7 @@ public class AssetEO extends AbstractDataEO<Integer> implements Serializable {
 	}
 
 	@QueryProjection
-	public AssetEO(Integer id, String title, byte[] data, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
+	public AssetEO(Long id, String title, byte[] data, String mime, Integer size, Instant dateUpload, String extension, UserEO owner) {
 		this(id, title, mime, size, dateUpload, extension, owner);
 		this.data = data;
 	}
