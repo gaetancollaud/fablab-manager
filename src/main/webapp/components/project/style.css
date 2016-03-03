@@ -2,6 +2,10 @@ textarea.markdown-input{
 	height: 200px;
 }
 
+/*
+ * List of projects
+ */
+
 .projects .project-card{
 	border:1px solid #DDDDDD;
     width: 200px;
@@ -44,4 +48,27 @@ textarea.markdown-input{
 	background: rgba(255, 255, 255, 0.7);
 	width: 100%;
 	height: 100%;
+}
+
+/**
+ * One project
+ */
+.projects .actions{
+	float:right;
+	margin:0 10px;
+}
+.projects .members{
+	float:right;
+	border:1px solid #DDDDDD;
+	width: 250px;
+	padding: 10px;
+	border-radius: 5px;
+}
+.projects .members ul{
+	list-style: none;
+}
+.projects .members .role{
+	color:#888;
+	font-style: italic;
+	font-size: 0.9em;
 }

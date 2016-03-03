@@ -68,5 +68,17 @@ public class ProjectEO extends AbstractDataEO<Long> implements Serializable {
 		this.dateEnd = dateEnd;
 	}
 
+	@QueryProjection
+	public ProjectEO(Long id, String title, String description, String introduction, String state, String image_url, Date dateStart, Date dateEnd) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.introduction = introduction;
+		this.state = state;
+		this.image_url = image_url;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+	}
+
 	
 }

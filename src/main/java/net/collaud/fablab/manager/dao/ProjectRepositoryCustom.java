@@ -10,5 +10,7 @@ import net.collaud.fablab.manager.data.ProjectEO;
 public interface ProjectRepositoryCustom{
 
 	List<ProjectEO> findAll();
+	
+	ProjectEO findOneWithDescription(Long projectId);
 
 }

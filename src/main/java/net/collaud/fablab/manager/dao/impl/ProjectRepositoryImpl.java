@@ -11,13 +11,11 @@ import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.ProjectRepositoryCustom;
 import net.collaud.fablab.manager.dao.projection.ProjectProjection;
-import net.collaud.fablab.manager.dao.projection.UserProjections;
 import net.collaud.fablab.manager.data.ProjectEO;
 import net.collaud.fablab.manager.data.ProjectUserEO;
 import net.collaud.fablab.manager.data.QProjectEO;
 import net.collaud.fablab.manager.data.QProjectUserEO;
 import net.collaud.fablab.manager.data.QUserEO;
-import net.collaud.fablab.manager.data.UserEO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +39,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 	public List<ProjectEO> findAll() {
 		final List<ProjectEO> projects = new JPAQuery(entityManager)
 				.from(project)
-				.leftJoin(project.projectUsers).fetchAll()
 				.orderBy(project.id.desc())
 				.list(ProjectProjection.projectionWithoutContent(project));
 
@@ -57,12 +54,30 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 				.list(ProjectProjection.projectionProjectUser(projectUser))
 				.stream()
 				.collect(Collectors.groupingBy(ProjectUserEO::getProjectId));
-		
+
 		projects.stream()
 				.filter(p -> projectUserByProjectId.containsKey(p.getId()))
 				.forEach(p -> p.setProjectUsers(new HashSet<>(projectUserByProjectId.get(p.getId()))));
 
 		return projects;
+	}
+
+	@Override
+	public ProjectEO findOneWithDescription(Long projectId) {
+		final ProjectEO projectEO = new JPAQuery(entityManager)
+				.from(project)
+				.where(project.id.eq(projectId))
+				.singleResult(ProjectProjection.projectionWithContent(project));
+
+		final List<ProjectUserEO> projectUserEO = new JPAQuery(entityManager)
+				.from(projectUser)
+				.innerJoin(projectUser.user)
+				.where(projectUser.projectId.eq(projectId))
+				.list(ProjectProjection.projectionProjectUser(projectUser));
+
+		projectEO.setProjectUsers(new HashSet<>(projectUserEO));
+
+		return projectEO;
 	}
 
 }

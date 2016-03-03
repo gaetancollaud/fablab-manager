@@ -22,6 +22,18 @@ public class ProjectProjection {
 				project.dateStart,
 				project.dateEnd);
 	}
+
+	public static final Expression<ProjectEO> projectionWithContent(QProjectEO project) {
+		return QProjectEO.create(
+				project.id,
+				project.title,
+				project.description,
+				project.introduction,
+				project.state,
+				project.image_url,
+				project.dateStart,
+				project.dateEnd);
+	}
 	
 	public static final Expression<ProjectUserEO> projectionProjectUser(QProjectUserEO projectUser){
 		return QProjectUserEO.create(

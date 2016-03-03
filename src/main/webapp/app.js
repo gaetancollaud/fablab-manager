@@ -63,6 +63,12 @@
 		}).when('/projects', {
 			templateUrl: './components/project/project-list-view.html',
 			controller: 'ProjectListController'
+		}).when('/projects/:id', {
+			templateUrl: './components/project/project-view-view.html',
+			controller: 'ProjectViewController'
+		}).when('/projects/edit/:id', {
+			templateUrl: './components/project/project-edit-view.html',
+			controller: 'ProjectEditController'
 		}).otherwise({
 			redirectTo: '/'
 		});

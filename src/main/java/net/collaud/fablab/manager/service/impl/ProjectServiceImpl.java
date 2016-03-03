@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.manager.dao.ProjectRepository;
 import net.collaud.fablab.manager.data.ProjectEO;
-import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +28,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl implements ProjectSe
 
 	@Override
 	public Optional<ProjectEO> getById(Long id) {
-		return Optional.ofNullable(projectRepository.findOne(id));
+		return Optional.ofNullable(projectRepository.findOneWithDescription(id));
 	}
 
 	@Override
