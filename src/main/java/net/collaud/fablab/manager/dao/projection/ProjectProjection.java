@@ -1,8 +1,6 @@
 package net.collaud.fablab.manager.dao.projection;
 
 import com.mysema.query.types.Expression;
-import com.mysema.query.types.path.SetPath;
-import java.util.Set;
 import net.collaud.fablab.manager.data.ProjectEO;
 import net.collaud.fablab.manager.data.ProjectUserEO;
 import net.collaud.fablab.manager.data.QProjectEO;
@@ -20,6 +18,7 @@ public class ProjectProjection {
 				project.title,
 				project.introduction,
 				project.state,
+				project.image_url,
 				project.dateStart,
 				project.dateEnd);
 	}

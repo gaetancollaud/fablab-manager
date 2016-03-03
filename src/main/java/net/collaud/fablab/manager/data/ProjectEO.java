@@ -43,6 +43,9 @@ public class ProjectEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Column(name = "state", nullable = false)
 	private String state;
+	
+	@Column(name = "image_url", length = 255)
+	private String image_url;
 
 	@Column(name = "date_start", nullable = false)
 	private Date dateStart;
@@ -55,24 +58,15 @@ public class ProjectEO extends AbstractDataEO<Long> implements Serializable {
 	private Set<ProjectUserEO> projectUsers;
 
 	@QueryProjection
-	public ProjectEO(Long id, String title, String introduction, String state, Date dateStart, Date dateEnd, Set<ProjectUserEO> projectUsers) {
+	public ProjectEO(Long id, String title, String introduction, String state, String image_url, Date dateStart, Date dateEnd) {
 		this.id = id;
 		this.title = title;
 		this.introduction = introduction;
 		this.state = state;
-		this.dateStart = dateStart;
-		this.dateEnd = dateEnd;
-		this.projectUsers = projectUsers;
-	}
-
-	@QueryProjection
-	public ProjectEO(Long id, String title, String introduction, String state, Date dateStart, Date dateEnd) {
-		this.id = id;
-		this.title = title;
-		this.introduction = introduction;
-		this.state = state;
+		this.image_url = image_url;
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
 
+	
 }

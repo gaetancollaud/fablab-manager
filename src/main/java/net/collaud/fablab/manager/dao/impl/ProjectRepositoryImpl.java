@@ -41,7 +41,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 	public List<ProjectEO> findAll() {
 		final List<ProjectEO> projects = new JPAQuery(entityManager)
 				.from(project)
-				.innerJoin(project.projectUsers).fetchAll()
+				.leftJoin(project.projectUsers).fetchAll()
 				.orderBy(project.id.desc())
 				.list(ProjectProjection.projectionWithoutContent(project));
 
@@ -59,6 +59,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 				.collect(Collectors.groupingBy(ProjectUserEO::getProjectId));
 		
 		projects.stream()
+				.filter(p -> projectUserByProjectId.containsKey(p.getId()))
 				.forEach(p -> p.setProjectUsers(new HashSet<>(projectUserByProjectId.get(p.getId()))));
 
 		return projects;
