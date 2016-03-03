@@ -4,7 +4,8 @@
 	angular.module('Fablab', [
 		//ext-lib
 		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
-		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'ngFileUpload',
+		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 
+		'ngFileUpload', 'wiz.markdown',
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
 	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
@@ -59,6 +60,9 @@
 		}).when('/audit', {
 			templateUrl: './components/audit/audit-list-view.html',
 			controller: 'AuditListController'
+		}).when('/projects', {
+			templateUrl: './components/project/project-list-view.html',
+			controller: 'ProjectListController'
 		}).otherwise({
 			redirectTo: '/'
 		});

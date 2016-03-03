@@ -1,0 +1,15 @@
+<div class="projects">
+	<h1>Projects</h1>
+
+	<div ng-repeat="project in projects">
+		<h2>{{project.title}}</h2>
+
+		<wiz-markdown-editor content="project.description" textareaclass="form-control">
+			<wiz-toolbar-button ng-repeat="action in actions"
+								command="{{action}}" buttonclass="btn btn-default">{{action}}</wiz-toolbar-button>
+		</wiz-markdown-editor>
+
+		<wiz-markdown content="project.description"></wiz-markdown>
+
+	</div>
+</div>

@@ -36,6 +36,9 @@ public class ProjectEO extends AbstractDataEO<Integer> implements Serializable {
 
 	@Column(name = "description", nullable = false)
 	private String description;
+	
+	@Column(name = "introduction", length = 255)
+	private String introduction;
 
 	@Column(name = "state", nullable = false)
 	private String state;
