@@ -1,11 +1,19 @@
 <div class="projects">
 
-	<a ng-repeat="project in projects" class="project-card"
-		 style="background-image: url('{{project.image_url}}')"
-		 href="/#/projects/{{project.id}}">
+	
+
+	<div class="grid">
+		<div ng-repeat="project in projects" class="grid-item">
+			<img src="{{project.image_url}}" style="max-width: 100%" />
+		</div>
+	</div>
+
+<!--	<a ng-repeat="project in projects" class="project-card"
+	   href="/#/projects/{{project.id}}">
 		<span class="title">{{project.title}}</span>
 		<span class="introduction">{{project.introduction}}</span>
-	</a>
+		<img src="{{project.image_url}}" style="max-width: 200px" />
+	</a>-->
 
 	<!--		<wiz-markdown-editor content="project.description" textareaclass="form-control">
 				<wiz-toolbar-button ng-repeat="action in actions"

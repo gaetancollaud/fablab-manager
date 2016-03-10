@@ -82,3 +82,32 @@ textarea.markdown-input{
 	border: 1px solid #888;
 	padding: 3px;
 }
+
+
+/* ---- grid ---- */
+
+.grid {
+  /* center */
+  margin: 0 auto;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 180px;
+  float: left;
+  border: 2px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.5);
+  border-radius: 5px;
+}
+
+.grid-item--height2 { height: 200px; }
+.grid-item--height3 { height: 260px; }
+
