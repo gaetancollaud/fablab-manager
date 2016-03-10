@@ -1,8 +1,8 @@
 angular.module('Fablab').controller('ProjectEditController', function ($scope, $filter, $routeParams, ProjectService) {
 
-	$scope.actions = ['undo', 'redo', 'bold', 'italic', 'heading', 'code',
-		'ullist', 'ollist', 'indent', 'outdent', 'link', 'img', 'hr', 'h0', 
-		'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'tab', 'untab'];
+	$scope.actions = ['bold', 'italic', 'code',
+		'ullist', 'ollist', 'link', 'img', 'h0', 
+		'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 	var loadProject = function (projectId) {
 		ProjectService.get(projectId, function (data) {
