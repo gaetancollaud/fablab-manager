@@ -58,3 +58,29 @@ body{
 .drop-file.dragover{
 	border: 3px dashed blue;
 }
+/* ---- grid ---- */
+.masonry-grid-wrapper{
+	margin: 0 auto;
+	width:50%;
+}
+@media(max-width: 1100px){
+	.masonry-grid-wrapper{
+		width:100%;
+	}
+}
+.masonry-grid {
+	margin: 0 auto;
+}
+/* clearfix */
+.masonry-grid:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.masonry-grid-item {
+	width: 300px;
+	float: left;
+	border: 2px solid #333;
+	border-color: hsla(0, 0%, 0%, 0.5);
+	border-radius: 5px;
+}

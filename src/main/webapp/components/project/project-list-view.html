@@ -1,19 +1,25 @@
 <div class="projects">
 
-	
 
-	<div class="grid">
-		<div ng-repeat="project in projects" class="grid-item">
+	<masonry>
+		<masonry-brick 
+			 image="project.image_url"
+			 ng-repeat="project in projects">
+		</masonry-brick>
+	</masonry>
+
+<!--	<div id="masonry-test" class="masonry-grid">
+		<div ng-repeat="project in projects" class="masonry-grid-item">
 			<img src="{{project.image_url}}" style="max-width: 100%" />
 		</div>
-	</div>
+	</div>-->
 
-<!--	<a ng-repeat="project in projects" class="project-card"
-	   href="/#/projects/{{project.id}}">
-		<span class="title">{{project.title}}</span>
-		<span class="introduction">{{project.introduction}}</span>
-		<img src="{{project.image_url}}" style="max-width: 200px" />
-	</a>-->
+	<!--	<a ng-repeat="project in projects" class="project-card"
+		   href="/#/projects/{{project.id}}">
+			<span class="title">{{project.title}}</span>
+			<span class="introduction">{{project.introduction}}</span>
+			<img src="{{project.image_url}}" style="max-width: 200px" />
+		</a>-->
 
 	<!--		<wiz-markdown-editor content="project.description" textareaclass="form-control">
 				<wiz-toolbar-button ng-repeat="action in actions"

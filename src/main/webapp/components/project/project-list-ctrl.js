@@ -4,11 +4,12 @@ angular.module('Fablab').controller('ProjectListController', function ($scope, $
 		ProjectService.list(function (data) {
 			$scope.projects = data;
 			$timeout(function () {
-				$('.grid').masonry({
-					columnWidth: 180,
-					isFitWidth: true
+				$("#masonry-test").masonry({
+					columnWidth: 300,
+					isFitWidth: true,
+					transitionDuration: "0.5s"
 				});
-			}, 100);
+			}, 200);
 		});
 	};
 
