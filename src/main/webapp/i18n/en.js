@@ -52,6 +52,11 @@ angular.module('Fablab').config(function ($translateProvider) {
 			detail: 'Detail',
 			updateMailingList: 'Update mailing list'
 		},
+		markdown:{
+			actions:{
+				bold:'Bold'
+			}
+		},
 		panel: {
 			search: 'Filters'
 		},

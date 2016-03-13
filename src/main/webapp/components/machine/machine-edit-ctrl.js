@@ -1,17 +1,14 @@
-angular.module('Fablab').controller('MachineEditController', function ($scope, $filter, $routeParams, ProjectService) {
+angular.module('Fablab').controller('MachineEditController', function ($scope, $filter, $routeParams, MachineService) {
 
-	$scope.actions = ['bold', 'italic', 'code',
-		'ullist', 'ollist', 'link', 'img', 'h0', 
-		'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-	var loadProject = function (projectId) {
-		ProjectService.get(projectId, function (data) {
-			$scope.project = data;
+	var loadMachine = function (projectId) {
+		MachineService.get(projectId, function (data) {
+			$scope.machine = data;
 			//TODO check rights
 		});
 	};
 
-	loadProject($routeParams.id);
+	loadMachine($routeParams.id);
 
 });
 
