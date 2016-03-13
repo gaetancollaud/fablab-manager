@@ -1,4 +1,11 @@
 -- -----------------------------------------------------
+-- Schema fablab
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `fablab` ;
+CREATE SCHEMA IF NOT EXISTS `fablab` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `fablab` ;
+
+-- -----------------------------------------------------
 -- Table `fablab`.`t_membership_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `fablab`.`t_membership_type` (
@@ -62,6 +69,9 @@ CREATE TABLE IF NOT EXISTS `fablab`.`t_machine` (
   `machine_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `machine_type_id` INT NOT NULL,
+  `introduction` VARCHAR(255) NULL,
+  `description` TEXT NULL,
+  `image_url` VARCHAR(255) NULL,
   PRIMARY KEY (`machine_id`),
   INDEX `fk_t_machines_t_machine_type1_idx` (`machine_type_id` ASC),
   CONSTRAINT `fk_t_machines_t_machine_type1`
@@ -332,7 +342,67 @@ CREATE TABLE IF NOT EXISTS `fablab`.`t_configuration` (
   UNIQUE INDEX `conf_key_UNIQUE` (`conf_key` ASC))
 ENGINE = InnoDB;
 
-USE `fablab` ;
+
+-- -----------------------------------------------------
+-- Table `fablab`.`t_project`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fablab`.`t_project` (
+  `project_id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `introduction` VARCHAR(255) NULL,
+  `description` LONGTEXT NOT NULL,
+  `state` VARCHAR(45) NOT NULL,
+  `date_start` DATETIME NOT NULL,
+  `date_end` DATETIME NULL,
+  `image_url` VARCHAR(255) NULL,
+  PRIMARY KEY (`project_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fablab`.`r_project_user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fablab`.`r_project_user` (
+  `project_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `can_edit` TINYINT(1) NOT NULL,
+  `role` VARCHAR(45) NULL,
+  PRIMARY KEY (`project_id`, `user_id`),
+  INDEX `fk_t_project_has_t_user_t_user1_idx` (`user_id` ASC),
+  INDEX `fk_t_project_has_t_user_t_project1_idx` (`project_id` ASC),
+  CONSTRAINT `fk_t_project_has_t_user_t_project1`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `fablab`.`t_project` (`project_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_project_has_t_user_t_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `fablab`.`t_user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fablab`.`t_asset`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `fablab`.`t_asset` (
+  `asset_id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NULL,
+  `asset_data` MEDIUMBLOB NOT NULL,
+  `mime` VARCHAR(45) NOT NULL,
+  `owner_id` INT NOT NULL,
+  `date_upload` DATETIME NOT NULL,
+  `data_size` INT NOT NULL,
+  `extension` VARCHAR(6) NOT NULL,
+  PRIMARY KEY (`asset_id`),
+  INDEX `fk_t_asset_t_user1_idx` (`owner_id` ASC),
+  CONSTRAINT `fk_t_asset_t_user1`
+    FOREIGN KEY (`owner_id`)
+    REFERENCES `fablab`.`t_user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Placeholder table for view `fablab`.`v_group_user`
