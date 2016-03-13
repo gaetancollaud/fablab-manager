@@ -1,12 +1,12 @@
-angular.module('Fablab').controller('MachineViewController', function ($scope, $filter, $routeParams, ProjectService) {
+angular.module('Fablab').controller('MachineViewController', function ($scope, $filter, $routeParams, MachineService) {
 
-	var loadProject = function (projectId) {
-		ProjectService.get(projectId, function (data) {
-			$scope.project = data;
+	var loadMachine = function (projectId) {
+		MachineService.get(projectId, function (data) {
+			$scope.machine = data;
 		});
 	};
 
-	loadProject($routeParams.id);
+	loadMachine($routeParams.id);
 
 });
 

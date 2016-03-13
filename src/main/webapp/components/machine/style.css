@@ -1,38 +1,18 @@
-textarea.markdown-input{
-	height: 200px;
+.machines .masonry-grid-item{
+	width: 400px;
 }
 
 /**
- * One project
+ * One Machines
  */
-.projects .actions{
+.machines .actions{
 	float:right;
 	margin:0 10px;
 }
-.projects .members{
+.machines .image{
 	float:right;
 	border:1px solid #DDDDDD;
-	width: 250px;
+	width: 420px;
 	padding: 10px;
 	border-radius: 5px;
 }
-.projects .members ul{
-	list-style: none;
-}
-.projects .members .role{
-	color:#888;
-	font-style: italic;
-	font-size: 0.9em;
-}
-
-.projects code{
-	white-space: pre-line;
-	display: block;
-}
-
-.projects .markdown-output td, .projects .markdown-output th{
-	border: 1px solid #888;
-	padding: 3px;
-}
-
-

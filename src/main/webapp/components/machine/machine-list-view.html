@@ -2,7 +2,7 @@
 
 	<h1>Machines</h1>
 
-	<div class="text-center">
+	<div class="text-center" style="margin-bottom:20px;">
 		<div class="btn-group" role="group" aria-label="...">
 			<button ng-repeat="type in machineTypes"
 					type="button" class="btn btn-default"
@@ -12,7 +12,7 @@
 	</div>
 
 
-	<div class="masonry-grid">
+	<div class="masonry-grid" grid-width="400">
 		<div ng-repeat="machine in machines" class="masonry-grid-item">
 			<a class="masonry-card"
 			   href="/#/machines/{{machine.id}}">

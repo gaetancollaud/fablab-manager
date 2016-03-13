@@ -4,10 +4,12 @@ angular.module('Fablab').directive('masonryGrid', function ($timeout, $log) {
 		restrict: 'C',
 		link: function (scope, element, attrs, ctrl, transclude)
 		{
+			var width = attrs.gridWidth ? parseInt(attrs.gridWidth) : 300;
+			
 			scope.reload = function () {
 				$timeout(function () {
 					$(element).masonry({
-						columnWidth: 300,
+						columnWidth: width,
 						isFitWidth: true,
 						transitionDuration: "0.5s"
 					});

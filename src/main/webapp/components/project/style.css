@@ -1,6 +1,3 @@
-textarea.markdown-input{
-	height: 200px;
-}
 
 /**
  * One project
@@ -23,16 +20,6 @@ textarea.markdown-input{
 	color:#888;
 	font-style: italic;
 	font-size: 0.9em;
-}
-
-.projects code{
-	white-space: pre-line;
-	display: block;
-}
-
-.projects .markdown-output td, .projects .markdown-output th{
-	border: 1px solid #888;
-	padding: 3px;
 }
 
 

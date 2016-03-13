@@ -123,3 +123,20 @@ body{
 	display: block;
 	background: rgba(255, 255, 255, 0.7);
 }
+
+/**
+ * Markdown
+ */
+textarea.markdown-input{
+	height: 200px;
+}
+
+.markdown-output code{
+	white-space: pre-line;
+	display: block;
+}
+
+.markdown-output td, .projects .markdown-output th{
+	border: 1px solid #888;
+	padding: 3px;
+}
