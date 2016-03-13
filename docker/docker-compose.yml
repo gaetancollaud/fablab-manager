@@ -6,7 +6,7 @@ fablab-manager-mysql:
     - MYSQL_USER=fablab
     - MYSQL_PASSWORD=fablab
 fablab-manager:
-  image: gaetancollaud/fablab-manager
+  image: gaetancollaud/fablab-manager-springboot
   ports:
     - "8080:8080"
   links:

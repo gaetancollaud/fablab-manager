@@ -1,14 +1,12 @@
 package net.collaud.fablab.manager.boot;
 
-import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import net.collaud.fablab.manager.data.UserEO;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 
 /**
  *
@@ -27,6 +25,13 @@ public class Database {
 		}
 		return datasource;
 	}
+
+	@Bean
+    public HibernateJpaSessionFactoryBean sessionFactory(EntityManagerFactory emf) {
+         HibernateJpaSessionFactoryBean factory = new HibernateJpaSessionFactoryBean();
+         factory.setEntityManagerFactory(emf);
+         return factory;
+    }
 
 //	@Bean
 //	public LocalSessionFactoryBean sessionFactory() {
@@ -50,7 +55,7 @@ public class Database {
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
+
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="fablabDataSource" />
 		<property name="packagesToScan" value="net.collaud.fablab.manager.data" />
@@ -62,16 +67,16 @@ public class Database {
 			</props>
 		</property>
 	</bean>
-	
+
 	<tx:annotation-driven transaction-manager="txManager"/>
-    <bean id="txManager" 
+    <bean id="txManager"
           class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
-	
+
 	<data:repositories base-package="net.collaud.fablab.manager.dao"
 					   entity-manager-factory-ref="entityManagerFactory"
 					   transaction-manager-ref="txManager"/>
-	
+
 	<bean id="entityManagerFactory"
 		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="packagesToScan" value="net.collaud.fablab.manager.data" />
