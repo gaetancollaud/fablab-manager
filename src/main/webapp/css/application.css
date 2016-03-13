@@ -80,7 +80,46 @@ body{
 .masonry-grid-item {
 	width: 300px;
 	float: left;
-	border: 2px solid #333;
-	border-color: hsla(0, 0%, 0%, 0.5);
-	border-radius: 5px;
+}
+
+.masonry-card{
+	cursor: pointer;
+	font-style: normal;
+	text-decoration: none;
+	color:black;
+}
+.masonry-card:hover{
+	text-decoration: none;
+}
+
+.masonry-card .title{
+	text-align: center;
+	display: block;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.masonry-card:hover .title{
+	background: rgba(0, 0, 0, 0.2);
+	color:black;
+}
+
+.masonry-card .introduction{
+	display: none;
+	padding: 10px;
+	width: 100%;
+	height: calc(100% - 30px);
+	position: absolute;
+	top: 30px;
+	left: 0;
+	z-index: 10;
+}
+
+.masonry-card:hover .introduction{
+	display: block;
+	background: rgba(255, 255, 255, 0.7);
 }

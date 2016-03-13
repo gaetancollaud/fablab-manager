@@ -61,14 +61,16 @@
 				<ul class="nav navbar-nav">
 					<li fab-nav-item link="" icon="home" 
 						label="menu.home"></li>
+					<li fab-nav-item link="projects" icon="file" 
+						label="menu.projects" ></li>
+					<li fab-nav-item link="machines" icon="wrench" 
+						label="menu.machines" ></li>
 					<li fab-nav-item link="reservations" icon="calendar" 
 						label="menu.reservation"
 						show="hasAnyRole('RESERVATION_VIEW')"></li>
 					<li fab-nav-item link="payments" icon="shopping-cart" 
 						label="menu.payment" 
 						show="hasAnyRole('PAYMENT_VIEW')"></li>
-					<li fab-nav-item link="projects" icon="file" 
-						label="menu.projects" ></li>
 
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
@@ -177,8 +179,8 @@
 	<script src="./lib/directives/form/recaptcha.js"></script>
 	<script src="./lib/directives/form/dropfile.js"></script>
 	<script src="./lib/directives/calendar/calendar.js"></script>
-	<script src="./lib/directives/masonry/masonry.js"></script>
-	<script src="./lib/directives/masonry/masonry-brick.js"></script>
+	<script src="./lib/directives/masonry/masonry-grid.js"></script>
+	<script src="./lib/directives/masonry/masonry-grid-item.js"></script>
 
 	<script src="./i18n/en.js"></script>
 	<script src="./i18n/fr.js"></script>
@@ -223,6 +225,10 @@
 	<script src="./components/accounting/accounting-list-ctrl.js"></script>
 
 	<script src="./components/audit/audit-list-ctrl.js"></script>
+	
+	<script src="./components/machine/machine-list-ctrl.js"></script>
+	<script src="./components/machine/machine-view-ctrl.js"></script>
+	<script src="./components/machine/machine-edit-ctrl.js"></script>
 	
 	<script src="./components/project/project-list-ctrl.js"></script>
 	<script src="./components/project/project-view-ctrl.js"></script>

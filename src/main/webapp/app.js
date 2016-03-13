@@ -60,6 +60,15 @@
 		}).when('/audit', {
 			templateUrl: './components/audit/audit-list-view.html',
 			controller: 'AuditListController'
+		}).when('/machines', {
+			templateUrl: './components/machine/machine-list-view.html',
+			controller: 'MachineListController'
+		}).when('/machines/:id', {
+			templateUrl: './components/machine/machine-view-view.html',
+			controller: 'MachineViewController'
+		}).when('/machines/edit/:id', {
+			templateUrl: './components/machine/machine-edit-view.html',
+			controller: 'MachineEditController'
 		}).when('/projects', {
 			templateUrl: './components/project/project-list-view.html',
 			controller: 'ProjectListController'
