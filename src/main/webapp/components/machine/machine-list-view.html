@@ -1,7 +1,17 @@
 <div class="machines">
 
 	<h1>Machines</h1>
-	
+
+	<div class="text-center">
+		<div class="btn-group" role="group" aria-label="...">
+			<button ng-repeat="type in machineTypes"
+					type="button" class="btn btn-default"
+					ng-click="toggleMachineType(type)"
+					ng-class="{'active':isMachineTypeSelected(type)}">{{type.name}}</button>
+		</div>
+	</div>
+
+
 	<div class="masonry-grid">
 		<div ng-repeat="machine in machines" class="masonry-grid-item">
 			<a class="masonry-card"

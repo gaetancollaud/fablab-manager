@@ -11,6 +11,8 @@ angular.module('Fablab').directive('masonryGrid', function ($timeout, $log) {
 						isFitWidth: true,
 						transitionDuration: "0.5s"
 					});
+
+					$(element).masonry('reloadItems');
 				});
 			};
 

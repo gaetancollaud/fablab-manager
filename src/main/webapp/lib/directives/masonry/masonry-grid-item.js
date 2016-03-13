@@ -7,7 +7,12 @@ angular.module('Fablab').directive('masonryGridItem', function ($timeout) {
 			element.find('img').bind('load', function () {
 				masonryCtrl.reload();
 			});
+			
 			masonryCtrl.reload();
+
+			scope.$on('$destroy', function () {
+				masonryCtrl.reload();
+			});
 		}
 	};
 });
