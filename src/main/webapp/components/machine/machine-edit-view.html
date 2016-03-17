@@ -13,8 +13,9 @@
 			<label class="form-label">Image url</label>
 			<div class="input-group">
 				<input type="text" class="form-control" ng-model="machine.image_url" />
-				<span class = "input-group-btn">
-					<button class = "btn btn-default" type = "button">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"
+							ng-click="clickAssetImageUrl()">
 						Assets
 					</button>
 				</span>
@@ -24,4 +25,5 @@
 		</div>
 	</form>
 	<markdown-editor ng-model="machine.description"></markdown-editor>
+	<asset-select></asset-select>
 </div>

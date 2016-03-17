@@ -1,5 +1,13 @@
-angular.module('Fablab').controller('MachineEditController', function ($scope, $filter, $routeParams, MachineService) {
+angular.module('Fablab').controller('MachineEditController', function ($scope, 
+	$filter, $routeParams, MachineService, AssetSelectService) {
 
+	$scope.clickAssetImageUrl = function(){
+		AssetSelectService.openAssetSelector(function(file){
+			if(file){
+				$scope.machine.image_url = file;
+			}
+		});
+	};
 
 	var loadMachine = function (projectId) {
 		MachineService.get(projectId, function (data) {
