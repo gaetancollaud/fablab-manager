@@ -3,7 +3,8 @@ angular.module('Fablab').directive('dropFile', function (Upload, $timeout) {
 		restrict: 'EA',
 		scope: {
 			target: '=',
-			mimeAllowed: '@'
+			mimeAllowed: '@',
+			uploadDone:'&?'
 		},
 		transclude: true,
 		templateUrl: 'lib/directives/form/dropfile.html',
@@ -29,6 +30,9 @@ angular.module('Fablab').directive('dropFile', function (Upload, $timeout) {
 											', Response: ' + JSON.stringify(resp.data) +
 											'\n' + $scope.log;
 								});
+								if($scope.uploadDone){
+									$scope.uploadDone();
+								}
 							}, null, function (evt) {
 								var progressPercentage = parseInt(100.0 *
 										evt.loaded / evt.total);

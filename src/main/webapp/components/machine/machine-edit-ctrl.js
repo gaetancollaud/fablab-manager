@@ -8,7 +8,14 @@ angular.module('Fablab').controller('MachineEditController', function ($scope, $
 		});
 	};
 
-	loadMachine($routeParams.id);
+	if ($routeParams.id) {
+		loadMachine($routeParams.id);
+	}else{
+		$scope.machine = {
+			name:'Machine name',
+			description:'#Machine name'
+		};
+	}
 
 });
 

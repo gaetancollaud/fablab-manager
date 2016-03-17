@@ -63,6 +63,9 @@
 		}).when('/machines', {
 			templateUrl: './components/machine/machine-list-view.html',
 			controller: 'MachineListController'
+		}).when('/machines/add', {
+			templateUrl: './components/machine/machine-edit-view.html',
+			controller: 'MachineEditController'
 		}).when('/machines/:id', {
 			templateUrl: './components/machine/machine-view-view.html',
 			controller: 'MachineViewController'

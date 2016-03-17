@@ -128,7 +128,7 @@ body{
  * Markdown
  */
 textarea.markdown-input{
-	height: 200px;
+	height: 1000px;
 }
 
 .markdown-output code{
@@ -139,4 +139,9 @@ textarea.markdown-input{
 .markdown-output td, .projects .markdown-output th{
 	border: 1px solid #888;
 	padding: 3px;
+}
+
+form.editor{
+	margin:0 15px;
+	max-width: 500px;
 }
