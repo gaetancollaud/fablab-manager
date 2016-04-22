@@ -55,6 +55,34 @@ angular.module('Fablab').config(function ($translateProvider) {
 			from: 'From',
 			to: 'To'
 		},
+		form:{
+			preset:{
+				day:{
+					label:'Day',
+					current:'Today',
+					ago:'{{x}} day(s) ago',
+					next:'in {{x}} day(s)'
+				},
+				week:{
+					label:'Week',
+					current:'This week',
+					ago:'{{x}} week(s) ago',
+					next:'in {{x}} week(s)'
+				},
+				month:{
+					label:'Month',
+					current:'This month',
+					ago:'{{x}} month(s) ago',
+					next:'in {{x}} month(s)'
+				},
+				year:{
+					label:'Year',
+					current:'This year',
+					ago:'{{x}} year(s) ago',
+					next:'in {{x}} year(s)'
+				}
+			}
+		},
 		auth: {
 			result: {
 				ok: 'Welcome',

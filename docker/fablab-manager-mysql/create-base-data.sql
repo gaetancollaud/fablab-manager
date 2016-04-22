@@ -155,6 +155,7 @@ INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (2, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (3, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (4, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (5, 1);
+INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (6, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (7, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (8, 1);
 INSERT INTO `fablab`.`r_group_role` (`role_id`, `group_id`) VALUES (9, 1);

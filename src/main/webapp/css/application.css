@@ -43,3 +43,15 @@ body{
 .text-bold{
 	font-weight: bold;
 }
+
+.date-preset{
+	text-align: center;
+}
+.date-preset .btn-group{
+	margin-bottom:10px;
+}
+.date-preset .summary{
+	margin-bottom:10px;
+	font-size:1.5em;
+	height: 30px;
+}
