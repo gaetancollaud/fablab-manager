@@ -5,28 +5,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" translate="panel.search"></div>
 			<div class="panel-body">
-				<div class="pressets">
-					<button ng-repeat="i in intervals"
-							class="btn" type="button" 
-							ng-class="(i===selectedInterval ? 'btn-primary' : 'btn-default')"
-							translate="{{'accounting.' + i.label}}" 
-							ng-click="periodPreset(i)"></button>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-1"></div>
-					<label class="col-sm-1 control-label" translate="filter.from"></label>
-					<div class="col-sm-4">
-						<input class="form-control" type="date"
-							   ng-change="dateManuallyUpdated()"
-							   ng-model="criteria.dateFrom" required />
-					</div>
-					<label class="col-sm-1 control-label" translate="filter.to"></label>
-					<div class="col-sm-4">
-						<input class="form-control" type="date"
-							   ng-change="dateManuallyUpdated()"
-							   ng-model="criteria.dateTo" required />
-					</div>
-				</div>
+				<date-preset criteria="criteria" date-changed="reloadAudit()"></date-preset>
 			</div>
 			<div class="panel-footer text-right">
 <!--				<button type="button" class="btn btn-danger"ng-click="export()">
@@ -35,13 +14,18 @@
 				</button>-->
 				<button type="submit" class="btn btn-primary" 
 						ng-disabled="auditFitler.$invalid"
-						ng-click="updateAccounting()">
+						ng-click="reloadAudit()">
 					{{'button.search'| translate}} 
 					<span class="glyphicon glyphicon-search"> </span>
 				</button>
 			</div>
 		</div>
 	</form>
+	
+	<div class="alert alert-warning"
+		 ng-show="history.length>=criteria.limit"
+		 translate="audit.alertLimit" translate-values="criteria">
+	</div>
 
 	<table class="table">
 		<thead>

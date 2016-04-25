@@ -44,6 +44,20 @@ Password : **fablab**
 * Create database schema (use Mysql workbench)
 * Deploy the WAR file previously compiled
 
+### Docker
+
+You can easily run this application by using docker. See the docker folder. You need
+* [docker-engine](https://docs.docker.com/installation/ubuntulinux/)
+* [docker-compose](https://docs.docker.com/compose/install/)
+
+To run the application and the database : 
+
+```sh
+cd docker/
+docker-compose up
+```
+
+
 ### Install from scratch
 
 If you are lazy just run the script to install everything for your 
