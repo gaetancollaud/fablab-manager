@@ -1,27 +1,34 @@
 <div class="machines">
 	<div class="actions">
-		<a href="" class="btn btn-primary">Save</a>
+		<button ng-really-click="cancel()"
+				ng-really-message="{{'machines.confirmation.remove'|translate}}"
+				type="button" class="btn btn-secondary">Cancel
+		</button>
+		<button ng-click="save()" type="button" class="btn btn-primary">Save</button>
 	</div>
 
 	<form class="form-horizontal editor">
 		<div class="form-group">
-			<label class="form-label">Title</label>
-			<input type="text" class="form-control" ng-model="machine.name" />
+			<label class="form-label">TITLE</label>
+			<input type="text" class="form-control" ng-model="machine.name"/>
 		</div>
 
 		<div class="form-group">
-			<label class="form-label">Image url</label>
+			<label class="form-label">IMAGEURL</label>
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="machine.image_url" />
+				<input type="text" class="form-control" ng-model="machine.image_url"/>
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="button"
 							ng-click="clickAssetImageUrl()">
 						Assets
 					</button>
 				</span>
-				<!--<span class="input-group-addon" id="basic-addon2">@example.com</span>-->
-				<!--<button type="button" class="input-group-btn">Assets</button>-->
 			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="form-label">INTRODUCTION</label>
+			<textarea class="form-control">{{machine.introduction}}</textarea>
 		</div>
 	</form>
 	<markdown-editor ng-model="machine.description"></markdown-editor>

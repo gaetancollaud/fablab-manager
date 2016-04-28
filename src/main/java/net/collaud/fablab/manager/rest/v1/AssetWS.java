@@ -64,4 +64,10 @@ public class AssetWS {
 		return ResponseEntity.badRequest().body("Empty file");
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity delete(@PathVariable Long id) {
+		assetService.remove(id);
+		return ResponseEntity.ok().build();
+	}
+
 }

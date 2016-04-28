@@ -1,15 +1,4 @@
 <div class="projects">
-	<div class="row">
-		<div class="col-md-6">
-			<wiz-markdown-editor content="project.description" textareaclass="form-control">
-				<wiz-toolbar-button ng-repeat="action in actions"
-									command="{{action}}" buttonclass="btn btn-default">
-					<span translate>markdown.actions.{{action}}</span>
-				</wiz-toolbar-button>
-			</wiz-markdown-editor>
-		</div>
-		<div class="col-md-6">
-			<wiz-markdown content="project.description"></wiz-markdown>
-		</div>
-	</div>
+	<markdown-editor ng-model="machine.description"></markdown-editor>
+	<asset-select></asset-select>
 </div>

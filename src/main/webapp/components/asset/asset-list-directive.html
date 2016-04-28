@@ -6,26 +6,38 @@
 
 	<table ng-table="tableParams" class="table" show-filter="true">
 		<tr ng-repeat="asset in $data">
-			<td 
-				data-title="'asset.title' | translate" 
-				sortable="'title'"
-				filter="{'title':'text'}">
+			<td
+					data-title="'asset.title' | translate"
+					sortable="'title'"
+					filter="{'title':'text'}">
 				{{asset.title}}.{{asset.extension}}
 			</td>
-			<td 
-				data-title="'asset.date' | translate" 
-				sortable="'dateUpload'">
+			<td
+					data-title="'asset.date' | translate"
+					sortable="'dateUpload'">
 				{{asset.dateUpload|formatTimestamp}}
 			</td>
-			<td 
-				data-title="'asset.size' | translate" 
-				sortable="'size'">
+			<td
+					data-title="'asset.size' | translate"
+					sortable="'size'">
 				{{asset.size|fileSize}}
 			</td>
-			<td 
-				data-title="'asset.action' | translate" >
-				<a href="{{getUrl(asset)}}">Show</a>
+			<td style="width:140px"
+					data-title="'asset.action' | translate">
+				<div class="btn-group">
+					<button ng-show="showSelectBtn" class="btn btn-primary" type="button" ng-click="select(asset)">
+						<span class="glyphicon glyphicon-check"></span>
+					</button>
+					<a class="btn btn-default" href="{{getUrl(asset)}}" target="_blank">
+						<span class="glyphicon glyphicon-film"></span>
+					</a>
+					<button ng-really-click="remove(asset)"
+							ng-really-message="{{'assets.confirmation.remove'|translate}}"
+							class="btn btn-danger" type="button">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</div>
 			</td>
 		</tr>
-	</table> 
+	</table>
 </div>

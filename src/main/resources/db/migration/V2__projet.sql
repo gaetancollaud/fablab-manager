@@ -59,6 +59,25 @@ CREATE TABLE t_asset (
 	DEFAULT CHARACTER SET = utf8
 	COLLATE = utf8_general_ci;
 
+INSERT INTO t_role (name, technicalname) VALUES ('Upload assets', 'ROLE_ASSET_UPLOAD');
+INSERT INTO t_role (name, technicalname) VALUES ('Manage assets', 'ROLE_ASSET_MANAGE');
+INSERT INTO t_role (name, technicalname) VALUES ('Create projects', 'ROLE_PROJECT_CREATE');
+INSERT INTO t_role (name, technicalname) VALUES ('Manage projects', 'ROLE_PROJECT_MANAGE');
+
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ASSET_UPLOAD'), (SELECT group_id FROM t_group WHERE technicalname='comite');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ASSET_MANAGE'), (SELECT group_id FROM t_group WHERE technicalname='comite');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_PROJECT_CREATE'), (SELECT group_id FROM t_group WHERE technicalname='comite');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_PROJECT_MANAGE'), (SELECT group_id FROM t_group WHERE technicalname='comite');
+
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ASSET_UPLOAD'), (SELECT group_id FROM t_group WHERE technicalname='animator');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ASSET_MANAGE'), (SELECT group_id FROM t_group WHERE technicalname='animator');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_PROJECT_CREATE'), (SELECT group_id FROM t_group WHERE technicalname='animator');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_PROJECT_MANAGE'), (SELECT group_id FROM t_group WHERE technicalname='animator');
+
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_ASSET_UPLOAD'), (SELECT group_id FROM t_group WHERE technicalname='member');
+INSERT INTO r_group_role (role_id, group_id) SELECT (SELECT role_id FROM t_role WHERE technicalname = 'ROLE_PROJECT_CREATE'), (SELECT group_id FROM t_group WHERE technicalname='member');
+
+INSERT INTO t_configuration (conf_key, conf_value) VALUES('UPLOAD_MIME_ALLOWED', 'image/gif,image/jpg,image/jpeg,image/png');
 
 -- -----------------------------------------------------
 -- View v_group_user

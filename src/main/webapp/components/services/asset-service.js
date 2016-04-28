@@ -23,6 +23,12 @@
 					method: 'GET',
 					url: App.API.ASSET_API,
 				}).success(successFn);
+			},
+			remove:function(asset, successFn){
+				$http({
+					method: 'DELETE',
+					url: App.API.ASSET_API+"/"+asset.id,
+				}).success(successFn);
 			}
 		};
 	});

@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+
 import net.collaud.fablab.manager.dao.MachineRepository;
 import net.collaud.fablab.manager.data.MachineEO;
+import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
@@ -30,5 +32,17 @@ public class MachineServiceImpl extends AbstractServiceImpl implements MachineSe
 	@Override
 	public Optional<MachineEO> getById(Long id) {
 		return Optional.ofNullable(machineDao.findOneWithDescription(id));
+	}
+
+	@Override
+	@Secured({Roles.MACHINE_MANAGE})
+	public MachineEO save(MachineEO entity) {
+		return machineDao.save(entity);
+	}
+
+	@Override
+	@Secured({Roles.MACHINE_MANAGE})
+	public void remove(Long id) {
+		machineDao.delete(id);
 	}
 }

@@ -1,15 +1,21 @@
 <div class="projects">
 
 
+
+
 	<div class="masonry-grid" ng-model="project">
 		<div ng-repeat="project in projects" class="masonry-grid-item">
 			<a class="masonry-card"
 			   href="/#/projects/{{project.id}}">
 				<span class="title">{{project.title}}</span>
 				<span class="introduction">{{project.introduction}}</span>
-				<img src="{{project.image_url}}" style="max-width: 100%" />
+				<img ng-src="{{project.image_url}}" style="max-width: 100%" />
 			</a>
 		</div>
+	</div>
+
+	<div class="actions">
+		<a href="/#/projects/add" class="btn btn-primary">ADD PROJECT</a>
 	</div>
 
 	<!--	<a ng-repeat="project in projects" class="masonry-card"
