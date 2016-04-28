@@ -1,4 +1,4 @@
-<form class="form-signin">
+<form class="form-signin" ng-submit="login()">
 	<h2 class="form-signin-heading" translate="auth.pleaseSignIn"></h2>
 	<label for="inputEmail" class="sr-only" translate="auth.email"></label>
 	<input ng-model="email"
@@ -14,10 +14,8 @@
 		   class="form-control"
 		   placeholder="Password" 
 		   required>
-	<button 
-		class="btn btn-lg btn-primary btn-block" 
-		type="button" 
-		ng-click="login()"
+	<input type="submit"
+		class="btn btn-lg btn-primary btn-block"
 		translate="auth.signIn"></button>
 
 	<div class="forgot-password">
