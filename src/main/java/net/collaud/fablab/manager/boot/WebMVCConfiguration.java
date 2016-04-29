@@ -25,7 +25,7 @@ public class WebMVCConfiguration extends WebMvcAutoConfigurationAdapter {
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 		converter.setObjectMapper(new HibernateAwareObjectMapper());
 		converter.setPrettyPrint(true);
-		converter.getObjectMapper().setDateFormat(DateFormat.getDateInstance());
+		//converter.getObjectMapper().setDateFormat(DateFormat.getDateInstance());
 		converter.setSupportedMediaTypes(supportedMediaTypes);
 		converters.add(converter);
 		super.configureMessageConverters(converters);

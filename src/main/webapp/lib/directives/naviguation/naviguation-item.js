@@ -10,7 +10,7 @@ naviguation.directive('fabNavItem', function () {
 			show: '='
 		},
 		template: '<a ng-show="show===undefined || show" href="#/{{link}}">'
-				+ '	<span class="glyphicon glyphicon-{{icon}}"></span> {{label | translate}}'
+				+ '	<i class="fa fa-{{icon}}"></i> {{label | translate}}'
 				+ '</a><ng-transclude />'
 	};
 });

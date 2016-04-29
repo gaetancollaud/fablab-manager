@@ -13,7 +13,7 @@ angular.module('Fablab').directive('markdownEditor', function ($timeout, $transl
 					command: action,
 					icon: icon
 				});
-			}
+			};
 
 			addAction('bold', 'bold');
 			addAction('italic', 'italic');

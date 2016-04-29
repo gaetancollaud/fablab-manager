@@ -1,8 +1,5 @@
 <div class="projects">
 
-
-
-
 	<div class="masonry-grid" ng-model="project">
 		<div ng-repeat="project in projects" class="masonry-grid-item">
 			<a class="masonry-card"
@@ -14,7 +11,7 @@
 		</div>
 	</div>
 
-	<div class="actions">
+	<div class="actions" ng-if="hasAnyRole('MACHINE_MANAGE')">
 		<a href="/#/projects/add" class="btn btn-primary">ADD PROJECT</a>
 	</div>
 

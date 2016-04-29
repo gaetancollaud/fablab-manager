@@ -28,7 +28,7 @@
 
 		<div class="form-group">
 			<label class="form-label">INTRODUCTION</label>
-			<textarea class="form-control" msd-eleastic>{{machine.introduction}}</textarea>
+			<textarea class="form-control" msd-elastic="\n" ng-model="machine.introduction"></textarea>
 		</div>
 	</form>
 	<markdown-editor ng-model="machine.description"></markdown-editor>

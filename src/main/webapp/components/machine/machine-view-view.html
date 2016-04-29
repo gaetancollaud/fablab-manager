@@ -1,10 +1,25 @@
 <div class="machines">
-	<div class="image">
-		<img src="{{machine.image_url}}" style="width: 400px" />
-	</div>
-	<div class="actions">
-		<a href="/#/machines/edit/{{machine.id}}" class="btn btn-primary">Edit machine</a>
-		<a href="/#/machines" class="btn btn-default">Back</a>
+	<div class="information">
+
+		<div class="actions" ng-if="hasAnyRole('MACHINE_MANAGE')">
+			<a href="/#/machines/edit/{{machine.id}}" class="btn btn-primary">Edit
+				machine</a>
+		</div>
+
+		<div class="image">
+			<img src="{{machine.image_url}}" style="width: 400px"/>
+		</div>
+
+		<div class="prices">
+			<h3>PRICES</h3>
+			<p>PER HOUR</p>
+			<table class="table table-striped">
+				<tr ng-repeat="mt in membershipTypes">
+					<td>{{mt.name}}</td>
+					<td>{{getPriceForMembershipType(mt)|currency}}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 
 	<div class="description">

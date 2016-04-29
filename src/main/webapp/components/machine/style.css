@@ -5,14 +5,16 @@
 /**
  * One Machines
  */
-.machines .actions{
+.machines .information{
 	float:right;
 	margin:0 10px;
 }
-.machines .image{
-	float:right;
+.machines .information div{
+	padding: 10px;
 	border:1px solid #DDDDDD;
 	width: 420px;
-	padding: 10px;
 	border-radius: 5px;
+}
+.machines .information .actions{
+	text-align: center;
 }
