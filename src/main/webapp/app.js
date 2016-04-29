@@ -5,7 +5,7 @@
 		//ext-lib
 		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
 		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 
-		'ngFileUpload', 'wiz.markdown',
+		'ngFileUpload', 'wiz.markdown', 'monospaced.elastic',
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
 	]).config(function ($routeProvider, $httpProvider, $translateProvider) {

@@ -38,7 +38,8 @@
     "ng-file-upload-shim": "~11.1.1",
     "wiz-markdown": "*",
     "masonry": "~4.0.0",
-    "components-font-awesome": "~4.5.0"
+    "components-font-awesome": "~4.5.0",
+    "angular-elastic": "~2.5.1"
   },
   "resolutions": {
     "angular": "1.5.5",
