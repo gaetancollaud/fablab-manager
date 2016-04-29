@@ -1,17 +1,20 @@
 <div class="machines">
 
-	<h1>Machines</h1>
-	
-	<div class="actions" ng-if="hasAnyRole('MACHINE_MANAGE')">
-		<a href="/#/machines/add" class="btn btn-primary">Add machine</a>
+
+	<div class="information">
+		<div class="actions" ng-if="hasAnyRole('ASSET_UPLOAD', 'ACCOUNTING_VIEW', 'AUDIT_VIEW', 'USER_VIEW')">
+			<a href="/#/machines/add" class="btn btn-primary" translate="machine.add"></a>
+		</div>
 	</div>
+	<h1 translate="machine.title"></h1>
 
 	<div class="text-center" style="margin-bottom:20px;">
 		<div class="btn-group" role="group" aria-label="...">
 			<button ng-repeat="type in machineTypes"
 					type="button" class="btn btn-default"
 					ng-click="toggleMachineType(type)"
-					ng-class="{'active':isMachineTypeSelected(type)}">{{type.name}}</button>
+					ng-class="{'active':isMachineTypeSelected(type)}">{{type.name}}
+			</button>
 		</div>
 	</div>
 
@@ -22,7 +25,7 @@
 			   href="/#/machines/{{machine.id}}">
 				<span class="title">{{machine.name}}</span>
 				<span class="introduction">{{machine.introduction}}</span>
-				<img src="{{machine.image_url}}" style="max-width: 100%" />
+				<img ng-image="machine.image_url" style="max-width: 100%"/>
 			</a>
 		</div>
 	</div>

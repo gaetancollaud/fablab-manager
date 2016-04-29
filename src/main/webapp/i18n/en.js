@@ -14,7 +14,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			detail:'Detail',
 			comment:'Comment',
 			form: {
-				duration: 'Duration'
+				duration: 'Duration',
 			}
 		},
 		error: {
@@ -50,7 +50,10 @@ angular.module('Fablab').config(function ($translateProvider) {
 			export: 'Export',
 			search: 'Search',
 			detail: 'Detail',
-			updateMailingList: 'Update mailing list'
+			updateMailingList: 'Update mailing list',
+			edit:'Edit',
+			back:'Back',
+			add:'Add'
 		},
 		markdown:{
 			actions:{
@@ -224,6 +227,14 @@ angular.module('Fablab').config(function ($translateProvider) {
 			action:'Action',
 			title:'Audit',
 			alertLimit:'The request reach the limit of {{limit}} entries !'
+		},
+		machine:{
+			title:'Machines',
+			add:'Add machine',
+			edit:'Edit machine',
+			prices:'Prices',
+			perhour:'Per hour',
+			book:'Book'
 		}
 	});
 });

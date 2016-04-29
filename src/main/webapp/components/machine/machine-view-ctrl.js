@@ -7,13 +7,16 @@ angular.module('Fablab').controller('MachineViewController', function ($scope, $
 			MembershipTypeService.list(function (data) {
 				$scope.membershipTypes = data;
 			});
+
+			$scope.bookUrl = $scope.hasAnyRole('RESERVATION_USE') ?
+			'/#/reservations/edit?machineId='+$scope.machine.id :
+				'/#/login';
 		});
 	};
 
 	$scope.getPriceForMembershipType = function (m) {
 		var price = -1;
-		$scope.machine.machineType.priceList.fo
-		rEach(function(p){
+		$scope.machine.machineType.priceList.forEach(function(p){
 			if(p.membershipTypeId==m.id){
 				price = p.price;
 			}
