@@ -221,6 +221,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 		audit:{
 			content:'Content',
 			object:'Object',
+			action:'Action',
 			title:'Audit',
 			alertLimit:'The request reach the limit of {{limit}} entries !'
 		}

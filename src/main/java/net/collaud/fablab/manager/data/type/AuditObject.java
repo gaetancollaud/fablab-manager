@@ -14,10 +14,13 @@ public enum AuditObject {
 	RESERVATION("Reservation"),
 	USER("User"),
 	SECURITY("Security"),
-	SYSTEM_STATUS("SystemStatus");
+	SYSTEM_STATUS("SystemStatus"),
+	MACHINE("Machine"),
+	PROJECT("Project"),
+	ASSET("ASSET");
 	private final String name;
 
-	private AuditObject(String name) {
+	AuditObject(String name) {
 		this.name = name;
 	}
 

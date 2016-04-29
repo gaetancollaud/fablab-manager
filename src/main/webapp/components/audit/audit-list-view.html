@@ -32,6 +32,7 @@
 			<tr>
 				<th style="width:130px" translate="general.date"></th>
 				<th style="width:100px" translate="audit.object"></th>
+				<th style="width:100px" translate="audit.action"></th>
 				<th style="min-width:150px"translate="general.user"></th>
 				<th translate="audit.content"></th>
 			</tr>
@@ -41,6 +42,7 @@
 				ng-class="h.object|lowercase">
 				<td>{{h.when|formatTimestamp:'DD.MM.YYYY HH:mm'}}</td>
 				<td>{{h.object}}</td>
+				<td>{{h.action}}</td>
 				<td>{{h.who|prettyUser}}</td>
 				<td>{{h.content}}</td>
 			</tr>
