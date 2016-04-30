@@ -1,6 +1,6 @@
 angular.module('Fablab').directive('assetList', function ($timeout, $translate, $location,
 														  $filter, ngTableParams, AssetService, NotificationService) {
-	var index = 0;
+
 	return {
 		restrict: 'EA',
 		scope: {
@@ -10,23 +10,22 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 		controller: function ($scope) {
 
 			$scope.uploadTarget = App.API.ASSET_API + '/upload';
+			$scope.assets = [];
 
 			$scope.showSelectBtn = $scope.callback !== undefined
 
 			$scope.tableParams = new ngTableParams(
 				angular.extend({
 					page: 1, // show first page
-					count: 25, // count per page
+					count: 10, // count per page
 					sorting: {
-						dateUpload: 'asc',
+						sortDate: 'desc',
 					}
 				}, $location.search()), {
-					//total: $scope.assets.length, // length of data
+					total: $scope.assets.length, // length of data
 					getData: function ($defer, params) {
 						if ($scope.assets) {
 							params.total($scope.assets.length);
-
-							$location.search(params.url()); // put params in url
 
 							var filteredData = params.filter() ? $filter('filter')($scope.assets, params.filter()) : $scope.assets;
 
@@ -39,6 +38,9 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 
 			var updateAssetList = function () {
 				AssetService.list(function (data) {
+					data.forEach(function(a){
+						a.sortDate = moment(a.dateUpload).unix();
+					})
 					$scope.assets = data;
 					$scope.tableParams.reload();
 				});
