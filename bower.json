@@ -41,7 +41,6 @@
     "wiz-markdown": "*"
   },
   "resolutions": {
-    "angular": "1.5.5",
-    "fullcalendar": "~2.3.1"
+    "angular": "1.5.5"
   }
 }

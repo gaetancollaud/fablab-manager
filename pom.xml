@@ -336,51 +336,32 @@
 				</executions>
 			</plugin>
 
-			<!--			<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>aspectj-maven-plugin</artifactId>
-			<version>1.0</version>
-			<dependencies>
-			<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.6.10</version>
-		</dependency>
-		<dependency>
-		<groupId>org.aspectj</groupId>
-		<artifactId>aspectjtools</artifactId>
-		<version>1.6.10</version>
-	</dependency>
-</dependencies>
-<executions>
-<execution>
-<goals>
-<goal>compile</goal>
-<goal>test-compile</goal>
-</goals>
-</execution>
-</executions>
-<configuration>
-<outxml>true</outxml>
-<verbose>true</verbose>
-<showWeaveInfo>true</showWeaveInfo>
-<aspectLibraries>
-<aspectLibrary>
-<groupId>org.springframework</groupId>
-<artifactId>spring-aspects</artifactId>
-</aspectLibrary>
-</aspectLibraries>
-<source>1.8</source>
-<target>1.8</target>
-</configuration>
-</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>exec-bower-install</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<executable>bower</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 <plugin>
 	<groupId>com.spotify</groupId>
 	<artifactId>docker-maven-plugin</artifactId>
 	<version>0.2.3</version>
 	<configuration>
 		<imageName>gaetancollaud/fablab-manager</imageName>
-		<dockerDirectory>docker/fablab-manager-springboot</dockerDirectory>
+		<dockerDirectory>docker/fablab-manager</dockerDirectory>
 		<resources>
 			<resource>
 				<targetPath>/</targetPath>

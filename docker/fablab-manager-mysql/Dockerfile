@@ -7,8 +7,4 @@ ENV MYSQL_DATABASE=fablab
 ENV MYSQL_USER=fablab
 ENV MYSQL_PASSWORD=fablab
 
-ADD create-tables.sql /docker-entrypoint-initdb.d/01-create-table.sql
-ADD create-base-data.sql /docker-entrypoint-initdb.d/02-create-base-data.sql
-
-
-
+ADD create-schema.sql /docker-entrypoint-initdb.d/01-create-schema.sql
