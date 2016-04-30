@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.collaud.fablab</groupId>
 	<artifactId>fablab-manager</artifactId>
@@ -337,70 +337,85 @@
 			</plugin>
 
 			<!--			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.0</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>1.6.10</version>
-					</dependency>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjtools</artifactId>
-						<version>1.6.10</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outxml>true</outxml>
-					<verbose>true</verbose>
-					<showWeaveInfo>true</showWeaveInfo>
-					<aspectLibraries>
-						<aspectLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-aspects</artifactId>
-						</aspectLibrary>
-					</aspectLibraries>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>-->
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>aspectj-maven-plugin</artifactId>
+			<version>1.0</version>
+			<dependencies>
+			<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.10</version>
+		</dependency>
+		<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjtools</artifactId>
+		<version>1.6.10</version>
+	</dependency>
+</dependencies>
+<executions>
+<execution>
+<goals>
+<goal>compile</goal>
+<goal>test-compile</goal>
+</goals>
+</execution>
+</executions>
+<configuration>
+<outxml>true</outxml>
+<verbose>true</verbose>
+<showWeaveInfo>true</showWeaveInfo>
+<aspectLibraries>
+<aspectLibrary>
+<groupId>org.springframework</groupId>
+<artifactId>spring-aspects</artifactId>
+</aspectLibrary>
+</aspectLibraries>
+<source>1.8</source>
+<target>1.8</target>
+</configuration>
+</plugin>-->
+<plugin>
+	<groupId>com.spotify</groupId>
+	<artifactId>docker-maven-plugin</artifactId>
+	<version>0.2.3</version>
+	<configuration>
+		<imageName>gaetancollaud/fablab-manager</imageName>
+		<dockerDirectory>docker/fablab-manager-springboot</dockerDirectory>
+		<resources>
+			<resource>
+				<targetPath>/</targetPath>
+				<directory>${project.build.directory}</directory>
+				<include>${project.build.finalName}.jar</include>
+			</resource>
+		</resources>
+	</configuration>
+</plugin>
 
+</plugins>
+</build>
 
-		</plugins>
-	</build>
+<repositories>
+	<repository>
+		<id>spring-releases</id>
+		<url>http://repo.spring.io/libs-release</url>
+	</repository>
 
-	<repositories>
-		<repository>
-			<id>spring-releases</id>
-			<url>http://repo.spring.io/libs-release</url>
-		</repository>
+</repositories>
+<pluginRepositories>
+	<pluginRepository>
+		<id>spring-releases</id>
+		<url>http://repo.spring.io/libs-release</url>
+	</pluginRepository>
+</pluginRepositories>
+<ciManagement>
+	<system>hudson</system>
+	<url>http://collaud2.collaud.me:8080/job/fablab-manager/</url>
+</ciManagement>
 
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-releases</id>
-			<url>http://repo.spring.io/libs-release</url>
-		</pluginRepository>
-	</pluginRepositories>
-	<ciManagement>
-		<system>hudson</system>
-		<url>http://collaud2.collaud.me:8080/job/fablab-manager/</url>
-	</ciManagement>
-
-	<scm>
-		<url>https://github.com/gaetancollaud/fablab-manager</url>
-		<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
-		<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+<scm>
+	<url>https://github.com/gaetancollaud/fablab-manager</url>
+	<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
+	<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
+	<tag>HEAD</tag>
+</scm>
 </project>
