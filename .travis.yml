@@ -4,5 +4,10 @@ jdk:
   
 sudo: false
 
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install nodejs
+  - sudo npm install -g bower
+
 notifications:
   slack: fablabs-ch:ViuClvLZOVFlDASnZCPC1vId
