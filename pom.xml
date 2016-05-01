@@ -358,10 +358,12 @@
 <plugin>
 	<groupId>com.spotify</groupId>
 	<artifactId>docker-maven-plugin</artifactId>
-	<version>0.2.3</version>
+	<version>0.4.9</version>
 	<configuration>
 		<imageName>gaetancollaud/fablab-manager</imageName>
 		<dockerDirectory>docker/fablab-manager</dockerDirectory>
+		<serverId>docker-hub</serverId>
+		<pushImage>true</pushImage>
 		<resources>
 			<resource>
 				<targetPath>/</targetPath>
