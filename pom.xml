@@ -22,8 +22,6 @@
 	</parent>
 
 	<dependencies>
-		<!-- String -->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -290,6 +288,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.springframework</groupId>
@@ -358,12 +359,13 @@
 <plugin>
 	<groupId>com.spotify</groupId>
 	<artifactId>docker-maven-plugin</artifactId>
-	<version>0.4.9</version>
+	<version>0.4.10</version>
 	<configuration>
 		<imageName>gaetancollaud/fablab-manager</imageName>
-		<dockerDirectory>docker/fablab-manager</dockerDirectory>
+		<dockerDirectory>./</dockerDirectory>
 		<serverId>docker-hub</serverId>
-		<pushImage>true</pushImage>
+		<!-- <pushImage>true</pushImage> -->
+		<useConfigFile>true</useConfigFile>
 		<resources>
 			<resource>
 				<targetPath>/</targetPath>
