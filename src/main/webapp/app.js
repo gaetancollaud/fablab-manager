@@ -72,18 +72,6 @@
 		}).when('/machines/edit/:id', {
 			templateUrl: './components/machine/machine-edit-view.html',
 			controller: 'MachineEditController'
-		}).when('/projects', {
-			templateUrl: './components/project/project-list-view.html',
-			controller: 'ProjectListController'
-		}).when('/projects/add', {
-			templateUrl: './components/project/project-edit-view.html',
-			controller: 'ProjectEditController'
-		}).when('/projects/edit/:id', {
-			templateUrl: './components/project/project-edit-view.html',
-			controller: 'ProjectEditController'
-		}).when('/projects/:id', {
-			templateUrl: './components/project/project-view-view.html',
-			controller: 'ProjectViewController'
 		}).otherwise({
 			redirectTo: '/'
 		});

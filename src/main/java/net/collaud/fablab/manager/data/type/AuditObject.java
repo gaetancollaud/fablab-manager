@@ -16,7 +16,6 @@ public enum AuditObject {
 	SECURITY("Security"),
 	SYSTEM_STATUS("SystemStatus"),
 	MACHINE("Machine"),
-	PROJECT("Project"),
 	ASSET("ASSET");
 	private final String name;
 

@@ -33,7 +33,6 @@ angular.module('Fablab').config(function ($translateProvider) {
 			audit: 'Audit',
 			admin:'Admin',
 			assets:'Assets',
-			projects:'Projects',
 			machines:'Machines',
 			login: 'Login',
 			logout: 'Logout',

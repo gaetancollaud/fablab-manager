@@ -13,7 +13,6 @@ import net.collaud.fablab.manager.dao.MachineRepositoryCustom;
 import net.collaud.fablab.manager.dao.projection.MachineProjection;
 import net.collaud.fablab.manager.data.MachineEO;
 import net.collaud.fablab.manager.data.PriceMachineEO;
-import net.collaud.fablab.manager.data.ProjectUserEO;
 import net.collaud.fablab.manager.data.QMachineEO;
 import net.collaud.fablab.manager.data.QMachineTypeEO;
 import net.collaud.fablab.manager.data.QPriceMachineEO;

@@ -135,7 +135,7 @@ textarea.markdown-input{
 	display: block;
 }
 
-.markdown-output td, .projects .markdown-output th{
+.markdown-output td{
 	border: 1px solid #888;
 	padding: 3px;
 }

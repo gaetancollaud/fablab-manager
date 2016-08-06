@@ -9,8 +9,8 @@ angular.module('Fablab').controller('MachineEditController', function ($scope, $
 		});
 	};
 
-	var loadMachine = function (projectId) {
-		MachineService.get(projectId, function (data) {
+	var loadMachine = function (machineId) {
+		MachineService.get(machineId, function (data) {
 			$scope.machine = data;
 			//TODO check rights
 		});
