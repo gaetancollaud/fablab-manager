@@ -1,5 +1,6 @@
 FROM java:8
 VOLUME /tmp
+VOLUME /logs
 EXPOSE 8080
 ADD target/fablab-manager*.jar ./
 RUN mv fablab-manager*.jar app.jar
