@@ -5,10 +5,10 @@
 			</pattern>
 		</encoder>
 	</appender>
-	
+
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/fablab.log</file>
-		
+
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>logs/fablab.%i.log.zip</fileNamePattern>
 			<minIndex>1</minIndex>
@@ -18,23 +18,31 @@
 		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
 			<maxFileSize>10MB</maxFileSize>
 		</triggeringPolicy>
-						
+
 		<encoder>
 			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
+	<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>logaggregator:5000</destination>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+    	<customFields>{"appname":"fablab-manager"}</customFields>
+		</encoder>
+	</appender>
+
 	<logger name="net.collaud.fabab.manager" level="DEBUG" />
 	<!--<logger name="org.springframework" level="DEBUG" />-->
-	<logger name="org.springframework.http.converter" level="DEBUG" />
-	<logger name="org.springframework.http.converter" level="DEBUG" />
-	
+	<!-- <logger name="org.springframework.http.converter" level="DEBUG" /> -->
+	<!-- <logger name="org.springframework.http.converter" level="DEBUG" /> -->
+
 	<logger name="org.hibernate.SQL" level="WARN" />
 	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
 
 	<root level="INFO">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="stash" />
 	</root>
-	
+
 </configuration>

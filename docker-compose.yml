@@ -7,8 +7,11 @@ services:
      - MYSQL_DATABASE=fablab
      - MYSQL_USER=fablab
      - MYSQL_PASSWORD=fablab
+
   web:
     image: gaetancollaud/fablab-manager
+    volumes:
+      - ./config/application.properties:/application.properties
     ports:
      - "8080:8080"
     links:
