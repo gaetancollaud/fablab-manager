@@ -39,12 +39,12 @@ public class PasswordUtilsTest {
 	 */
 	@Test
 	public void testPasswordChange() {
-		boolean result = PasswordUtils.isPasswordValid(user, "test");
+		boolean result = PasswordUtils.isPasswordValid(user, "test", UserEO::getPassword);
 		assertEquals(false, result);
 		
 		PasswordUtils.setUseEONewPassword(user, "test");
 
-		result = PasswordUtils.isPasswordValid(user, "test");
+		result = PasswordUtils.isPasswordValid(user, "test", UserEO::getPassword);
 		assertEquals(true, result);
 		
 		LOG.info("Passord is : {}", user.getPassword());

@@ -20,6 +20,8 @@ public interface UserService extends ReadWriteService<UserEO>{
 	
 	void forgotPassword(String email, String recaptchaResponse);
 
+	UserEO acceptPasswordChange(UserEO user);
+
 	void updateMailingList();
 
 	@Override

@@ -63,6 +63,11 @@ public class UserEO extends AbstractDataEO<Long> implements Serializable {
 	@Column(name = "password")
 	private String password;
 
+	//password set when requesting for a new password
+	@JsonIgnore
+	@Column(name = "password_request")
+	private String passwordRequest;
+
 	@JsonIgnore
 	@Column(name = "password_salt")
 	private String passwordSalt;

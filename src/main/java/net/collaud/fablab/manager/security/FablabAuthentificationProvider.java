@@ -1,10 +1,5 @@
 package net.collaud.fablab.manager.security;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.service.UserService;
 import org.slf4j.Logger;
@@ -20,8 +15,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
  */
 @Component
@@ -41,7 +37,11 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 		final Optional<UserEO> opt = userService.findByLogin(login);
 		if (opt.isPresent()) {
 			UserEO user = opt.get();
-			if (PasswordUtils.isPasswordValid(user, password)) {
+			if (PasswordUtils.isPasswordValid(user, password, UserEO::getPasswordRequest)) {
+				//the new password is correct enable it
+				user = userService.acceptPasswordChange(user);
+			}
+			if (PasswordUtils.isPasswordValid(user, password, UserEO::getPassword)) {
 				Set<GrantedAuthority> roles = new HashSet<>();
 				List<String> groupsStr = new ArrayList<>();
 				List<String> rolesStr = new ArrayList<>();
@@ -49,13 +49,13 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 						.forEach(g -> {
 							groupsStr.add(g.getTechnicalname());
 							g.getRoles()
-							.forEach(r -> {
-								roles.add(new SimpleGrantedAuthority(r.getTechnicalname()));
-								rolesStr.add(r.getTechnicalname());
-							});
+									.forEach(r -> {
+										roles.add(new SimpleGrantedAuthority(r.getTechnicalname()));
+										rolesStr.add(r.getTechnicalname());
+									});
 						});
-				LOG.info("Authentification success for user=" + login + ", groups=" + groupsStr + ", roles=" + rolesStr);
-				//FIXME audit this
+
+				LOG.info("Authentification success for user={}, groups={}, roles={}", login, groupsStr, rolesStr);
 
 				return new UsernamePasswordAuthenticationToken(user.getId(), password, roles);
 			} else {

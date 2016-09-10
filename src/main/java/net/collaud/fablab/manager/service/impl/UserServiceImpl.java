@@ -75,6 +75,14 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
+	public UserEO acceptPasswordChange(UserEO user) {
+		UserEO userEO = userDao.getOne(user.getId());
+		userEO.setPassword(userEO.getPasswordRequest());
+		userEO.setPasswordRequest(null);
+		return userDao.save(userEO);
+	}
+
+	@Override
 	@Secured({Roles.USER_MANAGE})
 	public UserEO save(UserEO user) {
 		if (user.getId() == null) {

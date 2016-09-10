@@ -4,6 +4,8 @@ import net.collaud.fablab.manager.data.UserEO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 
+import java.util.function.Function;
+
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
@@ -17,9 +19,9 @@ abstract public class PasswordUtils {
 		return new MessageDigestPasswordEncoder(DIGEST_ALGORITHM);
 	}
 
-	public static boolean isPasswordValid(UserEO user, String password) {
+	public static boolean isPasswordValid(UserEO user, String password, Function<UserEO, String> getPassword) {
 //		return true;
-		return getDigest().isPasswordValid(user.getPassword(), password, user.getPasswordSalt());
+		return getDigest().isPasswordValid(getPassword.apply(user), password, user.getPasswordSalt());
 	}
 
 	public static UserEO setUseEONewPassword(UserEO user, String newPassword) {
@@ -31,7 +33,7 @@ abstract public class PasswordUtils {
 	
 	public static String setUserEONewRandomPassword(UserEO user){
 		String password = RandomStringUtils.randomAlphanumeric(10);
-		setUseEONewPassword(user, password);
+		user.setPasswordRequest(getDigest().encodePassword(password, user.getPasswordSalt()));
 		return password;
 	}
 }
