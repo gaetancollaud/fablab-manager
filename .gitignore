@@ -13,3 +13,4 @@ src/main/webapp/ext-lib/
 logs/
 .idea/
 fablab-manager.iml
+application-dev.properties

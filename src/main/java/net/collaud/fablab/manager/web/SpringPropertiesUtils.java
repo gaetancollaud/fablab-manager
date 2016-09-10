@@ -5,38 +5,32 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Component
-public class SpringPropertiesUtils extends PropertyPlaceholderConfigurer {
-	
-	private Map<String, String> propertiesMap;
+public class SpringPropertiesUtils extends PropertySourcesPlaceholderConfigurer {
+
+	private Environment environment;
 
 	@Override
-	protected void processProperties(ConfigurableListableBeanFactory beanFactory,
-			Properties props) throws BeansException {
-		super.processProperties(beanFactory, props);
-		propertiesMap = new HashMap<>();
-		props.keySet().stream().map(key -> key.toString()).forEach(keyStr
-				-> propertiesMap.put(keyStr, props.getProperty(keyStr))
-		);
+	public void setEnvironment(Environment environment) {
+		super.setEnvironment(environment);
+		this.environment = environment;
 	}
 
 	public Optional<String> getProperty(String name) {
-		return Optional.ofNullable(propertiesMap.get(name));
+		return Optional.ofNullable(environment.getProperty(name));
 	}
 
-	public Map<String, Optional<String>> getProperties(Map.Entry<String, String>... keys) {
-		Map<String, Optional<String>> ret = new HashMap<>();
-		for (Map.Entry<String, String> e : keys) {
-			ret.put(e.getValue(), getProperty(e.getKey()));
-		}
-		return ret;
-	}
+
 }

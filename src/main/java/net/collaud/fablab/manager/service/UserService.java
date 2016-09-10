@@ -20,15 +20,15 @@ public interface UserService extends ReadWriteService<UserEO>{
 	
 	void forgotPassword(String email, String recaptchaResponse);
 
-	public void updateMailingList();
+	void updateMailingList();
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
-	public void remove(Long id);
+	void remove(Long id);
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
-	public UserEO save(UserEO entity);
+	UserEO save(UserEO entity);
 
 	Optional<UserEO> findByRFID(String rfid);
 }

@@ -135,7 +135,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Override
 	public void forgotPassword(String email, String recaptchaResponse) {
-		checkRecaptcha(recaptchaResponse);
+		//checkRecaptcha(recaptchaResponse);
 		final Optional<UserEO> user = userDao.findByLoginOrEmail(email);
 		if (user.isPresent()) {
 			final String newPassword = PasswordUtils.setUserEONewRandomPassword(user.get());
