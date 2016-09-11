@@ -1,4 +1,5 @@
 <configuration>
+
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
@@ -24,10 +25,13 @@
 		</encoder>
 	</appender>
 
+	<springProperty name="applicationName" source="logstash.application-name"/>
+	<springProperty name="logstashHost" source="logstash.host"/>
+
 	<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-		<destination>logaggregator:5000</destination>
+		<destination>${logstashHost}</destination>
 		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
-    	<customFields>{"appname":"fablab-manager"}</customFields>
+    	<customFields>{"appname":"${applicationName}"}</customFields>
 		</encoder>
 	</appender>
 
