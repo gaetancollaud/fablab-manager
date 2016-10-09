@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/api/api/v1/payment")

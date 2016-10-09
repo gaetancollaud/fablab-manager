@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Component
 public class CrossDomainFilter implements Filter{

@@ -20,7 +20,7 @@ import lombok.ToString;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_role")

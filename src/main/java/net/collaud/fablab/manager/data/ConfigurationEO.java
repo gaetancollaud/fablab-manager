@@ -18,7 +18,7 @@ import net.collaud.fablab.manager.data.type.ConfigurationKey;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_configuration")

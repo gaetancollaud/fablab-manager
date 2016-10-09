@@ -9,7 +9,7 @@ import net.collaud.fablab.manager.data.UserEO;
 import java.util.Date;
 
 /**
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Getter
 @Setter

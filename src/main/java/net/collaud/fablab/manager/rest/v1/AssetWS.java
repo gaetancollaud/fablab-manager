@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/api/v1/asset")

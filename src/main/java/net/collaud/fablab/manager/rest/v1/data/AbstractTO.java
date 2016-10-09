@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  * @param <EO>
  * @param <TO>
  */

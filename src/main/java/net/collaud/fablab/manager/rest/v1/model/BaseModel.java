@@ -2,7 +2,7 @@ package net.collaud.fablab.manager.rest.v1.model;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 public class BaseModel {
 	private String message;

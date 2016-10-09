@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

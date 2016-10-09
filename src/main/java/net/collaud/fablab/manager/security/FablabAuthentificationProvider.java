@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Component
 public class FablabAuthentificationProvider implements AuthenticationProvider {
