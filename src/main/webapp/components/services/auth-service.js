@@ -37,6 +37,13 @@
 					url: App.API.AUTH_API + "/forgotPassword",
 					params: params
 				}).success(successFn);
+			},
+			changePassword: function (data, successFn) {
+				$http({
+					method: 'POST',
+					url: App.API.AUTH_API + "/changePassword",
+					data: data
+				}).success(successFn);
 			}
 		};
 	});

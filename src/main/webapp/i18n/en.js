@@ -124,6 +124,8 @@ angular.module('Fablab').config(function ($translateProvider) {
 			comment: 'comment',
 			birthdate: 'Birth date',
 			gender: 'Gender',
+			oldPassword:'Old password',
+			repeatPassword:'Repeat',
 			genderEnum: {
 				unknown: 'Unknown',
 				male: 'Male',
@@ -153,8 +155,14 @@ angular.module('Fablab').config(function ($translateProvider) {
 			},
 			notification: {
 				saved: 'User saved',
-				removed: 'User removed'
-			}
+				removed: 'User removed',
+				wrongPassword:'Wrong password',
+				wrongRepeat:'New password doesn\'t match or is not complicated enough',
+				passwordChanged:'Password changed'
+			},
+			profile:{
+				changePassword:'Change password'
+			},
 		},
 		reservation: {
 			day: 'Day',

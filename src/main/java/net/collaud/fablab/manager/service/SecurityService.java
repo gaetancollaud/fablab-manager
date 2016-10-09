@@ -5,6 +5,7 @@ import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
+import net.collaud.fablab.manager.data.type.ChangePasswordResult;
 import net.collaud.fablab.manager.data.type.LoginResult;
 import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
 

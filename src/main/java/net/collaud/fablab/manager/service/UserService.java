@@ -5,6 +5,7 @@ import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
+import net.collaud.fablab.manager.data.type.ChangePasswordResult;
 import net.collaud.fablab.manager.service.global.ReadWriteService;
 
 /**
@@ -33,4 +34,6 @@ public interface UserService extends ReadWriteService<UserEO>{
 	UserEO save(UserEO entity);
 
 	Optional<UserEO> findByRFID(String rfid);
+
+	ChangePasswordResult changePassword(String old, String newPass, String repeatPass);
 }

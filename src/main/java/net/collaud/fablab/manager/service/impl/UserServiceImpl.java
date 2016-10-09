@@ -6,16 +6,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import static java.util.stream.Collectors.toList;
+
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.GroupEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.ChangePasswordResult;
+import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.manager.security.PasswordUtils;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.MailService;
+import net.collaud.fablab.manager.service.SecurityService;
 import net.collaud.fablab.manager.service.UserService;
 import net.collaud.fablab.manager.service.util.recaptcha.ReCaptchaChecker;
 import net.collaud.fablab.manager.service.util.recaptcha.ReCaptchaCheckerReponse;
@@ -28,7 +33,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
@@ -44,6 +48,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 
 	@Autowired
 	private UserRepository userDao;
+
+	@Autowired
+	private SecurityService securityService;
 
 	@Autowired
 	private MembershipTypeRepository membershipTypeDao;
@@ -180,4 +187,24 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		return userDao.findByRFID(rfid);
 	}
 
+	@Override
+	public ChangePasswordResult changePassword(String old, String newPass, String repeatPass) {
+		Optional<UserEO> optUser = securityService.getCurrentUser();
+		if (newPass == null || !newPass.equals(repeatPass) || newPass.length()<6) {
+			return ChangePasswordResult.WRONG_REPEAT;
+		}
+
+		if (!optUser.isPresent()) {
+			return ChangePasswordResult.NOT_AUTHENTICATED;
+		}
+
+		UserEO user = optUser.get();
+		if (!PasswordUtils.isPasswordValid(user, old, UserEO::getPassword)) {
+			return ChangePasswordResult.WRONG_PASSWORD;
+		}
+
+		user = PasswordUtils.setUseEONewPassword(user, newPass);
+		userDao.save(user);
+		return ChangePasswordResult.OK;
+	}
 }

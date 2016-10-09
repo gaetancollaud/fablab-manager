@@ -9,7 +9,7 @@
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
 	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
-		$routeProvider.when('/', {
+		$routeProvider.when('/home', {
 			templateUrl: './components/dashboard/home-view.html',
 			controller: 'DashboardHomeController'
 		}).when('/login', {
@@ -73,7 +73,7 @@
 			templateUrl: './components/machine/machine-edit-view.html',
 			controller: 'MachineEditController'
 		}).otherwise({
-			redirectTo: '/'
+			redirectTo: '/login'
 		});
 
 		// HTTP Interceptor
