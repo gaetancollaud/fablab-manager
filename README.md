@@ -22,7 +22,7 @@ Fablab-manager is a fully open-source web application that allows you to easily 
 
 Live demo on [quality.fablab-fribourg.ch](https://quality.fablab-fribourg.ch/)
 
-User : **1@email.com**
+User : **admin@gmail.com**
 
 Password : **fablab**
 
