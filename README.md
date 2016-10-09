@@ -20,7 +20,7 @@ Fablab-manager is a fully open-source web application that allows you to easily 
 
 #Demo
 
-Live demo on [collaud2.collaud.me/fablab-manager](http://collaud2.collaud.me/fablab-manager)
+Live demo on [quality.fablab-fribourg.ch](https://quality.fablab-fribourg.ch/)
 
 User : **1@email.com**
 
