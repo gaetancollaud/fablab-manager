@@ -14,3 +14,5 @@ logs/
 .idea/
 fablab-manager.iml
 application-dev.properties
+node/
+node_modules/

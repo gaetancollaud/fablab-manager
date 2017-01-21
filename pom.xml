@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.collaud.fablab</groupId>
 	<artifactId>fablab-manager</artifactId>
@@ -232,12 +232,12 @@
 			<version>0.0.7</version>
 		</dependency>
 
-		<!-- FIxme remove ? -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<type>jar</type>
-		</dependency>
+		<!--&lt;!&ndash; FIxme remove ? &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>javax.servlet</groupId>-->
+			<!--<artifactId>javax.servlet-api</artifactId>-->
+			<!--<type>jar</type>-->
+		<!--</dependency>-->
 
 		<!-- Fixme remove interceptor -->
 		<dependency>
@@ -253,12 +253,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
@@ -343,69 +341,72 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.3</version>
 				<executions>
 					<execution>
-						<id>exec-bower-install</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<executable>bower</executable>
-							<arguments>
-								<argument>install</argument>
-							</arguments>
-						</configuration>
+						<id>install node and npm</id>
 						<goals>
-							<goal>exec</goal>
+							<goal>install-node-and-npm</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
 				</executions>
+				<configuration>
+					<nodeVersion>v4.6.0</nodeVersion>
+				</configuration>
 			</plugin>
-<plugin>
-	<groupId>com.spotify</groupId>
-	<artifactId>docker-maven-plugin</artifactId>
-	<version>0.4.10</version>
-	<configuration>
-		<imageName>gaetancollaud/fablab-manager</imageName>
-		<dockerDirectory>./</dockerDirectory>
-		<serverId>docker-hub</serverId>
-		<!-- <pushImage>true</pushImage> -->
-		<useConfigFile>true</useConfigFile>
-		<resources>
-			<resource>
-				<targetPath>/</targetPath>
-				<directory>${project.build.directory}</directory>
-				<include>${project.build.finalName}.jar</include>
-			</resource>
-		</resources>
-	</configuration>
-</plugin>
 
-</plugins>
-</build>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.10</version>
+				<configuration>
+					<imageName>gaetancollaud/fablab-manager</imageName>
+					<dockerDirectory>./</dockerDirectory>
+					<serverId>docker-hub</serverId>
+					<!-- <pushImage>true</pushImage> -->
+					<useConfigFile>true</useConfigFile>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
 
-<repositories>
-	<repository>
-		<id>spring-releases</id>
-		<url>http://repo.spring.io/libs-release</url>
-	</repository>
+		</plugins>
+	</build>
 
-</repositories>
-<pluginRepositories>
-	<pluginRepository>
-		<id>spring-releases</id>
-		<url>http://repo.spring.io/libs-release</url>
-	</pluginRepository>
-</pluginRepositories>
-<ciManagement>
-	<system>hudson</system>
-	<url>http://collaud2.collaud.me:8080/job/fablab-manager/</url>
-</ciManagement>
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</repository>
 
-<scm>
-	<url>https://github.com/gaetancollaud/fablab-manager</url>
-	<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
-	<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
-	<tag>HEAD</tag>
-</scm>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<scm>
+		<url>https://github.com/gaetancollaud/fablab-manager</url>
+		<connection>scm:git:git://github.com/gaetancollaud/fablab-manager.git</connection>
+		<developerConnection>scm:git:git@github.com:gaetancollaud/fablab-manager.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 </project>
