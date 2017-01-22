@@ -234,9 +234,9 @@
 
 		<!--&lt;!&ndash; FIxme remove ? &ndash;&gt;-->
 		<!--<dependency>-->
-			<!--<groupId>javax.servlet</groupId>-->
-			<!--<artifactId>javax.servlet-api</artifactId>-->
-			<!--<type>jar</type>-->
+		<!--<groupId>javax.servlet</groupId>-->
+		<!--<artifactId>javax.servlet-api</artifactId>-->
+		<!--<type>jar</type>-->
 		<!--</dependency>-->
 
 		<!-- Fixme remove interceptor -->
@@ -358,6 +358,16 @@
 						</goals>
 						<configuration>
 							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run compile</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>run compile</arguments>
 						</configuration>
 					</execution>
 				</executions>

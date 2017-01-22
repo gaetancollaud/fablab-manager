@@ -36,7 +36,8 @@ angular.module('Fablab').config(function ($translateProvider) {
 			machines:'Machines',
 			login: 'Login',
 			logout: 'Logout',
-			signup: 'Signup'
+			signup: 'Signup',
+			others:'Others'
 		},
 		loading: {
 			title: 'Loading',

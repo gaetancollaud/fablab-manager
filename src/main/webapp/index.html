@@ -55,34 +55,33 @@
 					label="menu.home"></li>
 				<!--<li fab-nav-item link="projects" icon="file" -->
 				<!--label="menu.projects" ></li>-->
-				<li fab-nav-item link="machines" icon="wrench"
-					label="menu.machines"></li>
-				<li fab-nav-item link="reservations" icon="calendar"
-					label="menu.reservation"
-					show="hasAnyRole('RESERVATION_VIEW')"></li>
 				<li fab-nav-item link="payments" icon="shopping-cart"
 					label="menu.payment"
 					show="hasAnyRole('PAYMENT_VIEW')"></li>
+				<li fab-nav-item link="accounting" icon="money"
+					label="menu.accounting"
+					show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+				<li fab-nav-item link="audit" icon="bars"
+					label="menu.audit"
+					show="hasAnyRole('AUDIT_VIEW')"></li>
+				<li fab-nav-item link="users" icon="user"
+					label="menu.users"
+					show="hasAnyRole('USER_VIEW')"></li>
 
-				<li class="dropdown" ng-if="hasAnyRole('ASSET_UPLOAD', 'ACCOUNTING_VIEW', 'AUDIT_VIEW', 'USER_VIEW')">
+				<li class="dropdown">
 					<a href="" class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-						<span class="fa fa-cog"></span> {{'menu.admin'| translate}}
+						<span class="fa fa-cog"></span> {{'menu.others'| translate}}
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 						<li fab-nav-item link="assets" icon="picture-o"
 							label="menu.assets"
 							show="hasAnyRole('ASSET_UPLOAD')"></li>
-						<li class="divider"></li>
-						<li fab-nav-item link="accounting" icon="money"
-							label="menu.accounting"
-							show="hasAnyRole('ACCOUNTING_VIEW')"></li>
-						<li fab-nav-item link="audit" icon="bars"
-							label="menu.audit"
-							show="hasAnyRole('AUDIT_VIEW')"></li>
-						<li fab-nav-item link="users" icon="user"
-							label="menu.users"
-							show="hasAnyRole('USER_VIEW')"></li>
+						<li fab-nav-item link="machines" icon="wrench"
+							label="menu.machines"></li>
+						<li fab-nav-item link="reservations" icon="calendar"
+							label="menu.reservation"
+							show="hasAnyRole('RESERVATION_VIEW')"></li>
 					</ul>
 				</li>
 			</ul>
@@ -132,7 +131,7 @@
 <script src="./ext-lib/moment/min/moment-with-locales.min.js"></script>
 <script src="./ext-lib/moment-range/dist/moment-range.js"></script>
 <script src="./ext-lib/fullcalendar/dist/fullcalendar.min.js"></script>
-<script src="./ext-lib/fullcalendar/dist/gcal.js"></script>
+<script src="./ext-lib/fullcalendar/dist/gcal.min.js"></script>
 <script src="./ext-lib/angular-ui-calendar/src/calendar.js"></script>
 <script src="./ext-lib/angular-translate/dist/angular-translate.min.js"></script>
 <script src="./ext-lib/ng-table/bundles/ng-table.min.js"></script>

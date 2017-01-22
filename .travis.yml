@@ -1,5 +1,22 @@
 language: java
 jdk:
   - oraclejdk8
-  
-sudo: false
+
+sudo: required
+
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION: 1.4.2
+    - TAG: develop
+    - IMAGE_NAME: gaetancollaud/fablab-manager
+
+services:
+  - docker
+
+script:
+  - mvn clean install docker:build
+
+after_success:
+#  - docker build --build-arg tag=$TAG -t $IMAGE_NAME:$TAG .
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push $IMAGE_NAME:$TAG
