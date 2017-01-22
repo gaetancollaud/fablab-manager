@@ -5,12 +5,18 @@
 	app.factory('MachineService', function ($log, $resource, $http) {
 		var Machine = $resource(App.API.MACHINE_API + "/:id", {id: '@id'});
 
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
+
 		return {
 			list: function (successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.MACHINE_API,
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			remove: function (id, successFn) {
 				$log.debug("MachineService: remove...");

@@ -4,6 +4,12 @@
 	var app = angular.module('Fablab');
 	app.factory('AssetService', function ($log, $resource, $http) {
 
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
+
 
 		return {
 			upload: function (name, file, successFn) {
@@ -14,21 +20,19 @@
 						name:name,
 						file: file
 					}
-				}).success(function (data, status, headers, config) {
-					successFn(data);
-				});
+				}).then(getData(successFn));
 			},
 			list: function (successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.ASSET_API,
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			remove:function(asset, successFn){
 				$http({
 					method: 'DELETE',
 					url: App.API.ASSET_API+"/"+asset.id,
-				}).success(successFn);
+				}).then(getData(successFn));
 			}
 		};
 	});

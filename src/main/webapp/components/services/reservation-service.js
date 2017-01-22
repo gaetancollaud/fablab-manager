@@ -5,16 +5,20 @@
 	app.factory('ReservationService', function ($log, $resource, $http) {
 
 		var Reservation = $resource(App.API.RESERVATION_API + "/:id", {id: '@id'});
+		
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
 
 		return {
 			search: function (criteria, successFn) {
-				$http(
-						{
-							method: 'POST',
-							url: App.API.RESERVATION_API + "/search",
-							data: criteria
-						}
-				).success(successFn);
+				$http({
+					method: 'POST',
+					url: App.API.RESERVATION_API + "/search",
+					data: criteria
+				}).then(getData(successFn));
 			},
 			remove: function (id, successFn) {
 				$log.debug("ReservationService: remove...");

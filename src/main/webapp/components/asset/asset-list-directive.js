@@ -1,5 +1,5 @@
 angular.module('Fablab').directive('assetList', function ($timeout, $translate, $location,
-														  $filter, ngTableParams, AssetService, NotificationService) {
+														  $filter, NgTableParams, AssetService, NotificationService) {
 
 	return {
 		restrict: 'EA',
@@ -14,7 +14,7 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 
 			$scope.showSelectBtn = $scope.callback !== undefined
 
-			$scope.tableParams = new ngTableParams(
+			$scope.tableParams = new NgTableParams(
 				angular.extend({
 					page: 1, // show first page
 					count: 10, // count per page
@@ -23,7 +23,7 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 					}
 				}, $location.search()), {
 					total: $scope.assets.length, // length of data
-					getData: function ($defer, params) {
+					getData: function (params) {
 						if ($scope.assets) {
 							params.total($scope.assets.length);
 
@@ -31,7 +31,7 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 
 							var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
 
-							$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+							return orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 						}
 					}
 				});
@@ -40,7 +40,7 @@ angular.module('Fablab').directive('assetList', function ($timeout, $translate, 
 				AssetService.list(function (data) {
 					data.forEach(function(a){
 						a.sortDate = moment(a.dateUpload).unix();
-					})
+					});
 					$scope.assets = data;
 					$scope.tableParams.reload();
 				});

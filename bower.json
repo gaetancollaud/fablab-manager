@@ -19,28 +19,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.5.5",
-    "angular-bootstrap": "~0.13.0",
-    "angular-route": "~1.3.15",
-    "angular-elastic": "~2.5.1",
-    "angular-resource": "~1.3.15",
-    "angular-sanitize": "~1.3.15",
-    "angular-translate": "~2.7.0",
-    "angular-ui-calendar": "~1.0.0",
-    "angular-ui-select": "~0.16.1",
-    "bootstrap": "~3.3.4",
-    "components-font-awesome": "~4.5.0",
-    "fullcalendar": "~2.3.1",
-    "jquery": "~2.1.4",
-    "masonry": "~4.0.0",
-    "moment": "~2.10.3",
-    "moment-range": "~1.0.9",
-    "ng-file-upload-shim": "~11.1.1",
-    "ng-table": "~0.5.4",
-    "toastr": "~2.1.2",
-    "wiz-markdown": "*"
-  },
-  "resolutions": {
-    "angular": "1.5.5"
+    "angular": "^1.5.0",
+    "angular-bootstrap": "^2.4.0",
+    "angular-route": "^1.6.1",
+    "angular-elastic": "^2.5.1",
+    "angular-resource": "^1.6.1",
+    "angular-sanitize": "^1.6.1"
   }
 }

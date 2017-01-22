@@ -3,58 +3,64 @@
 
 	var app = angular.module('Fablab');
 	app.factory('PaymentService', function ($log, $resource, $http) {
+
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
 		return {
 			history: function (userId, successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.PAYMENT_API + '/' + userId + '/history'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			machinePrice: function (successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.PAYMENT_API + '/machine_price'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			addUsage: function (usage, successFn) {
 				$http({
 					method: 'POST',
 					data: usage,
 					url: App.API.PAYMENT_API + '/add_usage'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			addPayment: function (payment, successFn) {
 				$http({
 					method: 'POST',
 					data: payment,
 					url: App.API.PAYMENT_API + '/add_payment'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			addSubscription: function (subscription, successFn) {
 				$http({
 					method: 'POST',
 					data: subscription,
 					url: App.API.PAYMENT_API + '/add_subscription'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			removeHistory: function (history, successFn) {
 				$http({
 					method: 'POST',
 					data: history,
 					url: App.API.PAYMENT_API + '/delete_history'
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 //			subscriptionConfirmUser: function (userId, successFn) {
 //				$http({
 //					method: 'GET',
 //					url: App.API.PAYMENT_API + '/subscription/confirm/'+userId
-//				}).success(successFn);
+//				}).then(successFn);
 //			},
 //			subscriptionConfirmCurrentUser: function (successFn) {
 //				$http({
 //					method: 'GET',
 //					url: App.API.PAYMENT_API + '/subscription/confirm'
-//				}).success(successFn);
+//				}).then(successFn);
 //			}
 		};
 	});

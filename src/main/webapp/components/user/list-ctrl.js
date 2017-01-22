@@ -1,5 +1,5 @@
 angular.module('Fablab').controller('UserListController', function ($scope, $filter, $location,
-		ngTableParams, UserService, NotificationService) {
+																	NgTableParams , UserService, NotificationService) {
 
 	$scope.details = {
 		open: false
@@ -60,7 +60,7 @@ angular.module('Fablab').controller('UserListController', function ($scope, $fil
 		});
 	};
 
-	$scope.tableParams = new ngTableParams(
+	$scope.tableParams = new NgTableParams (
 			angular.extend({
 				page: 1, // show first page
 				count: 25, // count per page
@@ -70,7 +70,7 @@ angular.module('Fablab').controller('UserListController', function ($scope, $fil
 				}
 			}, $location.search()), {
 		//total: $scope.users.length, // length of data
-		getData: function ($defer, params) {
+		getData: function (params) {
 			if ($scope.users) {
 				params.total($scope.users.length);
 
@@ -80,7 +80,8 @@ angular.module('Fablab').controller('UserListController', function ($scope, $fil
 
 				var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
 
-				$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+				return orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 			}
 		}
 	});

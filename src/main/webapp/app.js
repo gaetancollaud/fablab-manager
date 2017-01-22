@@ -8,7 +8,11 @@
 		'ngFileUpload', 'wiz.markdown', 'monospaced.elastic', 
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
-	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
+	]).config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider) {
+
+		$locationProvider.html5Mode(false);
+
+
 		$routeProvider.when('/home', {
 			templateUrl: './components/dashboard/home-view.html',
 			controller: 'DashboardHomeController'

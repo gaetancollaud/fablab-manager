@@ -1,26 +1,27 @@
 <div class="panel panel-default">
-	<div class="panel-heading"  translate="payment.userTitle">
+	<div class="panel-heading" translate="payment.userTitle">
 	</div>
 	<div class="panel-body form-horizontal">
 		<table class="table table-striped">
-			<tr >
+			<tr>
 				<th translate="user.name"></th>
 				<td>
-			<ui-select 
-				ng-model="selected.user"
-				on-select="onSelectUser($item)"
-				theme="bootstrap">
-				<ui-select-match placeholder="{{'payment.enterName'|translate}}" >
-					{{$select.selected.firstname}} {{$select.selected.lastname}} 
-				</ui-select-match>
-				<ui-select-choices repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
-					<div ng-bind-html="(u.firstname+' '+u.lastname) | highlight: $select.search"></div>
-					<small>
-						{{u.address}}
-					</small>
-				</ui-select-choices>
-			</ui-select>
-			</td>
+					<ui-select
+							ng-model="selected.user"
+							on-select="onSelectUser($item)"
+							theme="bootstrap">
+						<ui-select-match placeholder="{{'payment.enterName'|translate}}">
+							{{$select.selected.firstname}} {{$select.selected.lastname}}
+						</ui-select-match>
+						<ui-select-choices
+								repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
+							<div ng-bind-html="(u.firstname+' '+u.lastname) | highlight: $select.search"></div>
+							<small>
+								{{u.address}}
+							</small>
+						</ui-select-choices>
+					</ui-select>
+				</td>
 			</tr>
 			<tr ng-show="selected.user">
 				<th translate="user.email"></th>
@@ -35,24 +36,28 @@
 				<td>{{selected.user.membershipType.name}}</td>
 			</tr>
 		</table>
-		<fab-user-subscription user="selected.user" confirm-callback="updateUser(user)" ></fab-user-subscription>
+		<fab-user-subscription user="selected.user" confirm-callback="updateUser(user)"></fab-user-subscription>
 	</div>
 </div>
 
 <div class="row" ng-show="selected.user">
 	<div class="col-md-4">
-		<user-payment-add-usage user="selected.user" min-date="minDate" callback="reloadHistory()"></user-payment-add-usage>
+		<user-payment-add-usage user="selected.user" min-date="minDate"
+								callback="reloadHistory()"></user-payment-add-usage>
 	</div>
 	<div class="col-md-4">
-		<user-payment-add-payment user="selected.user" min-date="minDate" callback="reloadHistory()" ></user-payment-add-payment>
+		<user-payment-add-payment user="selected.user" min-date="minDate"
+								  callback="reloadHistory()"></user-payment-add-payment>
 	</div>
 	<div class="col-md-4">
-		<user-payment-add-subscription user="selected.user" min-date="minDate" callback="updateUser()"></user-payment-add-subscription>
+		<user-payment-add-subscription user="selected.user" min-date="minDate"
+									   callback="updateUser()"></user-payment-add-subscription>
 	</div>
 </div>
 
 <div class="row" ng-show="selected.user">
 	<div class="col-md-12">
-		<user-payment-history user="selected.user" reload="reloadHistory" editable="true" need-reload-user="updateUser()" />
+		<user-payment-history user="selected.user" reload="reloadHistory" editable="true"
+							  need-reload-user="updateUser()"/>
 	</div>
 </div>
