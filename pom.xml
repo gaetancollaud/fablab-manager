@@ -385,7 +385,7 @@
 					<dockerDirectory>./</dockerDirectory>
 					<serverId>docker-hub</serverId>
 					<!-- <pushImage>true</pushImage> -->
-					<useConfigFile>true</useConfigFile>
+					<!--<useConfigFile>true</useConfigFile>-->
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
