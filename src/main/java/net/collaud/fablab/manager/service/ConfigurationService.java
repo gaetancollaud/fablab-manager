@@ -9,7 +9,7 @@ import net.collaud.fablab.manager.data.type.ConfigurationKey;
  */
 public interface ConfigurationService {
 
-	Map<ConfigurationKey, String> getAllConfiguration();
+	Map<ConfigurationKey, String> getAllPublicConfiguration();
 
 	String getValue(ConfigurationKey key);
 }

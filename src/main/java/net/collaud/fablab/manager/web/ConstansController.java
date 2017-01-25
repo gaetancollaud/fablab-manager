@@ -55,7 +55,7 @@ public class ConstansController {
 	}
 
 	private void addConfiguration(StringBuilder sb) {
-		final Map<String, String> config = configurationService.getAllConfiguration().entrySet().stream()
+		final Map<String, String> config = configurationService.getAllPublicConfiguration().entrySet().stream()
 				.collect(Collectors.toMap(e -> e.getKey().name(), e -> e.getValue()));
 		addConstant(sb, "App.CONFIG", config);
 	}

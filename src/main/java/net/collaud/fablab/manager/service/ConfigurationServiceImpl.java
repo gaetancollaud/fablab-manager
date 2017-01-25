@@ -35,8 +35,9 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
 
 	
 	@Override
-	public Map<ConfigurationKey, String> getAllConfiguration() {
+	public Map<ConfigurationKey, String> getAllPublicConfiguration() {
 		return Arrays.stream(ConfigurationKey.values())
+				.filter(ConfigurationKey::isPublic)
 				.collect(Collectors.toMap(
 						k -> k,
 						k -> applicationProperties.getProperty(k.getKey()).orElse(k.getDef())));

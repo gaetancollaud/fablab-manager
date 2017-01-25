@@ -24,7 +24,7 @@ public class ConfigurationWS {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public BaseModel getallMembershipType() {
-		return new DataModel(configurationService.getAllConfiguration());
+		return new DataModel(configurationService.getAllPublicConfiguration());
 	}
 
 }
