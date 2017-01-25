@@ -43,7 +43,6 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 		if (SYSTEM_USERNAME.equalsIgnoreCase(login)) {
 			return authenticateSystem(password);
-
 		}
 
 		final Optional<UserEO> opt = userService.findByLogin(login);

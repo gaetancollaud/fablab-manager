@@ -31,4 +31,9 @@ public class SystemDoorWS {
 			@RequestParam("rfid") String rfid) {
 		systemDoorService.event(action, rfid);
 	}
+
+	@RequestMapping(value="allowed")
+	public boolean allowed(@RequestParam("rfid") String rfid){
+		return systemDoorService.allowed(rfid);
+	}
 }

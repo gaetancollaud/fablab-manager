@@ -33,6 +33,7 @@ public class SystemDoorService {
 
 	@Secured({Roles.SYSTEM})
 	public Map<String, String> getRfids() {
+		LOG.info("Retrieve all rfids");
 		return userRepository.findAll().stream()
 				.filter(u -> !StringUtils.isEmpty(u.getRfid()))
 				.collect(Collectors.toMap(u -> u.getFirstLastName(), u -> u.getRfid()));
@@ -75,6 +76,14 @@ public class SystemDoorService {
 		} catch (FablabException ex) {
 			LOG.error("Cannot add audit entry");
 		}
+	}
+
+
+	@Secured({Roles.SYSTEM})
+	public boolean allowed(String rfid) {
+		boolean allowed = userRepository.findByRFID(rfid).isPresent();
+		LOG.info("RFID {} is allowed: {}", rfid, allowed);
+		return allowed;
 	}
 
 }
