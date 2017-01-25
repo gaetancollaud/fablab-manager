@@ -18,7 +18,7 @@ public enum ConfigurationKey {
 	RECAPTCHA_SECRET("google.recaptcha.secret", "", true),
 	CURRENCY("global.currency", "$", true),
 	UPLOAD_MIME_ALLOWED("global.mime.allowed", "image/gif,image/jpg", true),
-	SYSTEM_SECRET("system.secret", "secret", false);
+	SYSTEM_SECRET("security.system.secret", "secret", false);
 
 	@Getter
 	private final String key;

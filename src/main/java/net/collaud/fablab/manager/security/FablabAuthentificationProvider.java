@@ -1,6 +1,9 @@
 package net.collaud.fablab.manager.security;
 
+import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.ConfigurationKey;
+import net.collaud.fablab.manager.service.ConfigurationService;
 import net.collaud.fablab.manager.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,19 +23,28 @@ import java.util.*;
 /**
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
+@Slf4j
 @Component
 public class FablabAuthentificationProvider implements AuthenticationProvider {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FablabAuthentificationProvider.class);
+	public static final String SYSTEM_USERNAME = "system";
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ConfigurationService configurationService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String login = authentication.getName();
 		String password = authentication.getCredentials() != null
 				? authentication.getCredentials().toString() : "";
+
+		if (SYSTEM_USERNAME.equalsIgnoreCase(login)) {
+			return authenticateSystem(password);
+
+		}
 
 		final Optional<UserEO> opt = userService.findByLogin(login);
 		if (opt.isPresent()) {
@@ -59,9 +71,11 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 
 				return new UsernamePasswordAuthenticationToken(user.getId(), password, roles);
 			} else {
+				LOG.warn("Authentification failed for login={}", login);
 				throw new BadCredentialsException("wrong password");
 			}
 		} else {
+			LOG.warn("User not found. login={}", login);
 			throw new UsernameNotFoundException("Username " + login + " not found");
 		}
 	}
@@ -69,6 +83,17 @@ public class FablabAuthentificationProvider implements AuthenticationProvider {
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
+
+	protected Authentication authenticateSystem(String password) {
+		String secret = this.configurationService.getValue(ConfigurationKey.SYSTEM_SECRET);
+		if (secret.equals(password)) {
+			LOG.info("User system successfully authenticated");
+			return new UsernamePasswordAuthenticationToken("-1", password, Collections.singleton(new SimpleGrantedAuthority(Roles.SYSTEM)));
+		} else {
+			LOG.info("User system failed to authenticate, wrong secret");
+			throw new BadCredentialsException("wrong password");
+		}
 	}
 
 }
