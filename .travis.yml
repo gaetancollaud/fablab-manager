@@ -6,7 +6,6 @@ sudo: required
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION: 1.4.2
     - TAG: develop
     - IMAGE_NAME: gaetancollaud/fablab-manager
 
@@ -15,7 +14,8 @@ services:
 
 script:
   - mvn clean install
-  - docker build -t $IMAGE_NAME:$TAG .
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push $IMAGE_NAME:$TAG
+  - docker build -t gaetancollaud/fablab-manager:$TRAVIS_BRANCH .
+  - docker push gaetancollaud/fablab-manager:$TRAVIS_BRANCH
+  - if [[ "$TRAVIS_TAG" != "" ]]; then docker tag gaetancollaud/fablab-manager:$TRAVIS_BRANCH gaetancollaud/fablab-manager:latest && docker push gaetancollaud/fablab-manager:latest; fi
 
