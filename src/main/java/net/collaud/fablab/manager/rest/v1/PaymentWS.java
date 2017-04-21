@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
@@ -36,7 +35,7 @@ public class PaymentWS {
 	@RequestMapping(value = "add_usage", method = RequestMethod.POST)
 	public BaseModel addUsage(@RequestBody @Validated UsageEO usage) {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),
-				usage.getMachine().getId(), usage.getDateStart(), usage.getMinutes(),
+				usage.getMachine().getId(), usage.getDateStart(), usage.getAmount(),
 				usage.getAdditionalCost(), usage.getComment(), usage.isDirectPaid()));
 	}
 
@@ -45,7 +44,7 @@ public class PaymentWS {
 		return new DataModel(paymentService.addPayment(payment.getUser().getId()
 				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
 	}
-	
+
 	@RequestMapping(value = "add_subscription", method = RequestMethod.POST)
 	public BaseModel addSubscription(@RequestBody @Validated AddSubscriptionTO payment) {
 		return new DataModel(paymentService.addSubscription(

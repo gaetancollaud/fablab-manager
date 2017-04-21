@@ -130,7 +130,7 @@ public class AuditAspect {
 		sb.append(" used the asset ");
 		sb.append(usage.getMachine().getName());
 		sb.append(" for ");
-		sb.append(usage.getMinutes()).append("min");
+		sb.append(usage.getAmount()).append(usage.getUnit().getTextUnit());
 		sb.append(" with ");
 		if (usage.getAdditionalCost() == 0) {
 			sb.append("no additional cost");

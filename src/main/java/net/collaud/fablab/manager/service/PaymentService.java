@@ -26,7 +26,7 @@ public interface PaymentService {
 	PaymentEO addPayment(Long userId, Date datePayment, double amount, String comment);
 
 	@Audit(object = AuditObject.USAGE, action = AuditAction.INSERT)
-	UsageEO useMachine(Long userId, Long machineId, Date startDate, int minutes,
+	UsageEO useMachine(Long userId, Long machineId, Date startDate, int amount,
 			double additionalCost, String comment, boolean paidDirectly);
 
 	UserPaymentHistory getLastPaymentEntries(Long userId);

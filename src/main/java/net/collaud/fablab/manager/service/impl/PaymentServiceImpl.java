@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.audit.AuditUtils;
 import net.collaud.fablab.manager.dao.MachineRepository;
@@ -16,11 +17,7 @@ import net.collaud.fablab.manager.dao.PaymentRepository;
 import net.collaud.fablab.manager.dao.SubscriptionRepository;
 import net.collaud.fablab.manager.dao.UsageRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
-import net.collaud.fablab.manager.data.MachineEO;
-import net.collaud.fablab.manager.data.PaymentEO;
-import net.collaud.fablab.manager.data.SubscriptionEO;
-import net.collaud.fablab.manager.data.UsageEO;
-import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.*;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.virtual.HistoryEntry;
@@ -32,13 +29,13 @@ import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AuditService;
 import net.collaud.fablab.manager.service.PaymentService;
 import net.collaud.fablab.manager.service.SecurityService;
+import net.collaud.fablab.manager.service.util.recaptcha.PriceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
@@ -78,23 +75,22 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Long userId, Long machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
+	public UsageEO useMachine(Long userId, Long machineId, Date startDate, int value, double additionalCost, String comment, boolean paidDirectly) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
-		double hourPrice = machine.getMachineType().getPriceList().stream()
-				.filter(p -> p.getMembershipTypeId()==user.getMembershipType().getId())
+		PriceMachineEO priceMachine = machine.getMachineType().getPriceList().stream()
+				.filter(p -> p.getMembershipTypeId() == user.getMembershipType().getId())
 				.findFirst()
-				.map(pm -> pm.getPrice())
 				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
-		double amount = hourPrice*minutes/60+additionalCost;
-		UsageEO usage = new UsageEO(startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
+		double amount = PriceUtil.evaluatePrice(priceMachine.getEquation(), value) + additionalCost;
+		UsageEO usage = new UsageEO(startDate, priceMachine.getEquation(), value, priceMachine.getUnit(), additionalCost, comment, user, machine, user.getMembershipType());
 		usage = usageRepository.save(usage);
-		
-		if(paidDirectly){
+
+		if (paidDirectly) {
 			//the user paid directly
 			addPayment(userId, startDate, amount, comment);
 		}
-		
+
 		return usage;
 	}
 
@@ -112,10 +108,10 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	public UserPaymentHistory getLastPaymentEntries(Long userId) {
-		if(!securityService.getCurrentUserId().equals(userId)){
+		if (!securityService.getCurrentUserId().equals(userId)) {
 			securityService.checkRole(Roles.PAYMENT_MANAGE);
 		}
-		
+
 		List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
 		double balance = userRepository.getUserBalanceFromUserId(userId)
 				.map(ub -> ub.getValue())
@@ -135,11 +131,11 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		final List<HistoryEntry> listHistory = Stream.concat(
 				Stream.concat(
 						listUsage.stream()
-						.map(u -> new HistoryEntry(u)),
+								.map(u -> new HistoryEntry(u)),
 						listPayment.stream()
-						.map(p -> new HistoryEntry(p))),
+								.map(p -> new HistoryEntry(p))),
 				listSubscription.stream()
-				.map(s -> new HistoryEntry(s)))
+						.map(s -> new HistoryEntry(s)))
 				.sorted()
 				.collect(Collectors.toList());
 		return listHistory;
@@ -148,7 +144,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Secured({Roles.PAYMENT_MANAGE})
 	@Override
 	public SubscriptionEO addSubscription(Long userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly) {
-	
+
 		//save user last subscription date
 		UserEO user = userRepository.findOneDetails(userId)
 				.orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
@@ -172,12 +168,12 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		subscription.setPrice(user.getMembershipType().getPrice());
 		subscription.setMembershipType(user.getMembershipType());
 		subscription.setComment(comment);
-		
-		if(paidDirectly){
+
+		if (paidDirectly) {
 			//the user paid directly
 			addPayment(userId, datePayment, user.getMembershipType().getPrice(), comment);
 		}
-		
+
 		return subscriptionRepository.save(subscription);
 	}
 
@@ -208,7 +204,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 				checkDateAccounting(subscription.getDateSubscription());
 				subscriptionRepository.delete(subscription);
 				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Subscription (type: "+subscription.getMembershipType().getName()+", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
+						"Subscription (type: " + subscription.getMembershipType().getName() + ", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
 				break;
 			default:
 				LOG.error("Cannot remove {} history entry", historyId.getType());
