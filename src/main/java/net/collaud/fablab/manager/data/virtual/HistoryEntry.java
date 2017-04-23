@@ -52,7 +52,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		date = usage.getDateStart();
 		comment = usage.getComment();
 		detail = usage.getMachine().getName() + " | " + PriceUtil.prettyPrintValue(usage.getAmount(), usage.getUnit()) + " | " + usage.getAdditionalCost() + " CHF additional";
-		amount = -(usage.getTotal() + usage.getAdditionalCost());
+		amount = -(usage.getTotal());
 		user = new HistoryEntryUser(usage.getUser());
 	}
 

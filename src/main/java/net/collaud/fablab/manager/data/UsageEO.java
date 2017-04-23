@@ -73,7 +73,7 @@ public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 	private boolean directPaid;
 
 	public double getTotalPrice() {
-		return PriceUtil.evaluatePrice(equation, amount)+additionalCost;
+		return PriceUtil.evaluatePrice(equation, amount) + additionalCost;
 	}
 
 	public UsageEO(Date dateStart, String equation, double amount, PriceUnit unit, double additionalCost, String comment, UserEO user, MachineEO machine, MembershipTypeEO membershipType) {
@@ -86,7 +86,7 @@ public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 		this.user = user;
 		this.machine = machine;
 		this.membershipType = membershipType;
-		this.total = PriceUtil.evaluatePrice(equation, amount);
+		this.total = PriceUtil.evaluatePrice(equation, amount) + additionalCost;
 	}
 
 

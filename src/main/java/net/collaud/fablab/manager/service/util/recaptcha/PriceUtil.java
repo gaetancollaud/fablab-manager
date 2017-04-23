@@ -7,7 +7,6 @@ import net.collaud.fablab.manager.data.type.PriceUnit;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.text.DecimalFormat;
 import java.time.Duration;
 
@@ -21,7 +20,7 @@ public class PriceUtil {
 	public static double evaluatePrice(String expression, double amount) {
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		String equation = expression.replaceAll("x", Double.valueOf(amount).toString());
+		String equation = expression.replaceAll("amount", Double.valueOf(amount).toString());
 		try {
 			String result = engine.eval(equation).toString();
 			return Double.valueOf(result);
@@ -34,8 +33,8 @@ public class PriceUtil {
 		switch (unit) {
 			case HOUR:
 				Duration duration = Duration.ofSeconds((long) (amount * 3600));
-				long hour = duration.getSeconds() / 3600;
-				long min = duration.minusHours(hour).getSeconds() / 60;
+				long hour = Math.round(duration.getSeconds() / 3600.0);
+				long min = Math.round(duration.minusHours(hour).getSeconds() / 60.0);
 				return new StringBuilder()
 						.append(Long.valueOf(hour).toString()).append("h ")
 						.append(Long.valueOf(min).toString()).append("min ")

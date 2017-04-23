@@ -190,6 +190,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			machine: 'Machine',
 			date: 'Date',
 			time: 'Time',
+			gramme: 'Gramme',
 			additionalCost: 'Additional cost',
 			comment: 'Comment',
 			directPaid: 'User paid directly',

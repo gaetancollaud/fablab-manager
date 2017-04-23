@@ -42,7 +42,7 @@
 							if (p.membershipTypeId === membershipTypeId) {
 								var add = $scope.addUsage.additionalCost;
 								$scope.unit = p.unit;
-								var total = eval(p.equation.replace('x', getAmount())) + add;
+								var total = eval(p.equation.replace('amount', getAmount())) + add;
 								$scope.addUsage.total = parseFloat($filter('number')(total, 2));
 							}
 						});
