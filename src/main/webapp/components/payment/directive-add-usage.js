@@ -14,6 +14,7 @@
 					$scope.addUsage = {
 						date: new Date(),
 						time: new Date(0, 0, 0, 1, 0, 0),
+						amount: 100,
 						additionalCost: 0,
 						directPaid: false,
 						total: 0
@@ -24,14 +25,15 @@
 				StaticDataService.loadMachines(function (data) {
 					$scope.machines = data;
 				});
-				var getMinutes = function () {
-					var time = moment($scope.addUsage.time);
-					return time.hours() * 60 + time.minutes();
-				};
+				$scope.unit = 'HOUR';
 				var getAmount = function () {
-					var time = moment($scope.addUsage.time);
-					return time.hours() + time.minutes() / 60.0;
-				}
+					if ($scope.unit == 'HOUR') {
+						var time = moment($scope.addUsage.time);
+						return time.hours() + time.minutes() / 60.0;
+					} else {
+						return $scope.addUsage.amount;
+					}
+				};
 				var updateTotalPrice = function () {
 					if ($scope.addUsage.machine) {
 						var membershipTypeId = $scope.user.membershipType.id;
@@ -39,6 +41,7 @@
 						angular.forEach($scope.addUsage.machine.machineType.priceList, function (p) {
 							if (p.membershipTypeId === membershipTypeId) {
 								var add = $scope.addUsage.additionalCost;
+								$scope.unit = p.unit;
 								var total = eval(p.equation.replace('x', getAmount())) + add;
 								$scope.addUsage.total = parseFloat($filter('number')(total, 2));
 							}
@@ -47,7 +50,7 @@
 						delete $scope.addUsage.total;
 					}
 				};
-				$scope.$watchGroup(['addUsage.machine', 'addUsage.time', 'addUsage.additionalCost'], updateTotalPrice);
+				$scope.$watchGroup(['addUsage.machine', 'addUsage.time', 'addUsage.amount', 'addUsage.additionalCost'], updateTotalPrice);
 				$scope.paidDirectlyOptions = [
 					{value: false, label: 'No, use its credit'},
 					{value: true, label: 'Yes, he gives the money'}
