@@ -51,8 +51,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		id = usage.getId();
 		date = usage.getDateStart();
 		comment = usage.getComment();
-		detail = usage.getMachine().getName() + " | " + usage.getAmount() + usage.getUnit().getTextUnit() + " | " + usage.getAdditionalCost() + " CHF additional";
-		amount = -(PriceUtil.evaluatePrice(usage.getEquation(), usage.getAmount()) + usage.getAdditionalCost());
+		detail = usage.getMachine().getName() + " | " + PriceUtil.prettyPrintValue(usage.getAmount(), usage.getUnit()) + " | " + usage.getAdditionalCost() + " CHF additional";
+		amount = -(usage.getTotal());
 		user = new HistoryEntryUser(usage.getUser());
 	}
 

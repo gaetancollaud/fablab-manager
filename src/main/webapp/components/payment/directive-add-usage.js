@@ -28,6 +28,10 @@
 					var time = moment($scope.addUsage.time);
 					return time.hours() * 60 + time.minutes();
 				};
+				var getAmount = function () {
+					var time = moment($scope.addUsage.time);
+					return time.hours() + time.minutes() / 60.0;
+				}
 				var updateTotalPrice = function () {
 					if ($scope.addUsage.machine) {
 						var membershipTypeId = $scope.user.membershipType.id;
@@ -35,7 +39,7 @@
 						angular.forEach($scope.addUsage.machine.machineType.priceList, function (p) {
 							if (p.membershipTypeId === membershipTypeId) {
 								var add = $scope.addUsage.additionalCost;
-								var total = p.price * getMinutes() / 60 + add;
+								var total = eval(p.equation.replace('x', getAmount())) + add;
 								$scope.addUsage.total = parseFloat($filter('number')(total, 2));
 							}
 						});
@@ -53,10 +57,10 @@
 						user: $scope.user,
 						machine: $scope.addUsage.machine,
 						dateStart: $scope.addUsage.date,
-						minutes: getMinutes(),
+						amount: getAmount(),
 						additionalCost: $scope.addUsage.additionalCost,
 						comment: $scope.addUsage.comment,
-						directPaid : $scope.addUsage.directPaid
+						directPaid: $scope.addUsage.directPaid
 					};
 					PaymentService.addUsage(data, function () {
 						NotificationService.notify("success", "payment.notification.usageAdded");

@@ -4,18 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,13 +41,17 @@ public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 	private String equation;
 
 	@Column(name = "amount", nullable = false)
-	private int amount;
+	private double amount;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "unit", nullable = false)
 	private PriceUnit unit;
 
 	@Column(name = "additional_cost", nullable = false)
 	private double additionalCost;
+
+	@Column(name = "total", nullable = false)
+	private double total;
 
 	@Column(name = "comment")
 	private String comment;
@@ -83,7 +76,7 @@ public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 		return PriceUtil.evaluatePrice(equation, amount)+additionalCost;
 	}
 
-	public UsageEO(Date dateStart, String equation, int amount, PriceUnit unit, double additionalCost, String comment, UserEO user, MachineEO machine, MembershipTypeEO membershipType) {
+	public UsageEO(Date dateStart, String equation, double amount, PriceUnit unit, double additionalCost, String comment, UserEO user, MachineEO machine, MembershipTypeEO membershipType) {
 		this.dateStart = dateStart;
 		this.equation = equation;
 		this.amount = amount;
@@ -93,6 +86,7 @@ public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 		this.user = user;
 		this.machine = machine;
 		this.membershipType = membershipType;
+		this.total = PriceUtil.evaluatePrice(equation, amount);
 	}
 
 

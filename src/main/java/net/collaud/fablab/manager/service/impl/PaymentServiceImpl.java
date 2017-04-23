@@ -75,7 +75,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Long userId, Long machineId, Date startDate, int value, double additionalCost, String comment, boolean paidDirectly) {
+	public UsageEO useMachine(Long userId, Long machineId, Date startDate, double value, double additionalCost, String comment, boolean paidDirectly) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
 		PriceMachineEO priceMachine = machine.getMachineType().getPriceList().stream()
