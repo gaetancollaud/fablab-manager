@@ -1,8 +1,11 @@
 package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -46,18 +49,24 @@ import net.collaud.fablab.manager.export.CsvField;
 @NoArgsConstructor
 @AllArgsConstructor
 @CsvExport(fileName = "users")
-public class UserEO extends AbstractDataEO<Integer> implements Serializable {
+@JsonInclude(Include.NON_ABSENT)
+public class UserEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@JsonIgnore
 	@Column(name = "password")
 	private String password;
+
+	//password set when requesting for a new password
+	@JsonIgnore
+	@Column(name = "password_request")
+	private String passwordRequest;
 
 	@JsonIgnore
 	@Column(name = "password_salt")
@@ -143,12 +152,22 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private UserBalanceEO balance;
 
-	public UserEO(Integer id) {
+	public UserEO(Long id) {
 		this.id = id;
 	}
+	
+	
 
 	@JsonIgnore
 	public String getFirstLastName() {
 		return firstname + " " + lastname;
+	}
+
+	@QueryProjection
+	public UserEO(Long id, String firstname, String lastname, String email) {
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
 	}
 }

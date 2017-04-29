@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface SubscriptionRepository extends JpaRepository<SubscriptionEO, Integer>{
+public interface SubscriptionRepository extends JpaRepository<SubscriptionEO, Long>{
 
 	@Query(" SELECT s "
 			+ " FROM SubscriptionEO s "
@@ -24,6 +24,6 @@ public interface SubscriptionRepository extends JpaRepository<SubscriptionEO, In
 	@Query(" SELECT s "
 			+ " FROM  SubscriptionEO s "
 			+ " WHERE s.user.id=:userId")
-	public List<SubscriptionEO> getByUser(@Param("userId") Integer user);
+	public List<SubscriptionEO> getByUser(@Param("userId") Long user);
 	
 }

@@ -1,6 +1,5 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ReservationEO extends AbstractDataEO<Integer> implements Serializable {
+public class ReservationEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +42,7 @@ public class ReservationEO extends AbstractDataEO<Integer> implements Serializab
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reservation_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "date_start", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)

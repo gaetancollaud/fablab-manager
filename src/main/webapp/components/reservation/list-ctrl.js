@@ -2,13 +2,13 @@
 	'use strict';
 	
 	angular.module('Fablab').controller('ReservationListController', function ($scope, $filter,
-		$location, ngTableParams, ReservationService) {
+		$location, NgTableParams, ReservationService) {
 	$scope.criteria = {
 		dateFrom: moment().startOf('month').toDate(),
 		dateTo: moment().endOf('month').toDate()
 	};
 
-	$scope.tableParams = new ngTableParams(
+	$scope.tableParams = new NgTableParams(
 			angular.extend({
 				page: 1, // show first page
 				count: 25, // count per page
@@ -16,11 +16,11 @@
 					dateStart: 'asc'
 				}
 			}, $location.search()), {
-		getData: function ($defer, params) {
+		getData: function (params) {
 			if ($scope.reservations) {
 				var filteredData = params.filter() ? $filter('filter')($scope.reservations, params.filter()) : $scope.reservations;
 				var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-				$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+				return orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 			}
 		}
 	});

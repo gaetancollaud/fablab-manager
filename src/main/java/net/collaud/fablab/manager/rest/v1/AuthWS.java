@@ -3,8 +3,10 @@ package net.collaud.fablab.manager.rest.v1;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.ChangePasswordResult;
 import net.collaud.fablab.manager.data.type.LoginResult;
 import net.collaud.fablab.manager.rest.v1.criteria.AuthCredential;
+import net.collaud.fablab.manager.rest.v1.data.ChangePasswordTO;
 import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.manager.service.SecurityService;
 import net.collaud.fablab.manager.service.UserService;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @JavascriptAPIConstant("AUTH_API")
@@ -62,6 +64,11 @@ public class AuthWS {
 	public void forgotPassword(@Param("email") String email,
 			@Param("recaptcha") String recaptcha){
 		userService.forgotPassword(email, recaptcha);
+	}
+
+	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
+	public ChangePasswordResult changePassword(@RequestBody ChangePasswordTO entity) {
+		return userService.changePassword(entity.getOldPassword(), entity.getNewPassword(), entity.getRepeatPassword());
 	}
 	
 }

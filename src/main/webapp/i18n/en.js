@@ -14,7 +14,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			detail:'Detail',
 			comment:'Comment',
 			form: {
-				duration: 'Duration'
+				duration: 'Duration',
 			}
 		},
 		error: {
@@ -27,13 +27,17 @@ angular.module('Fablab').config(function ($translateProvider) {
 		menu: {
 			home: 'Home',
 			users: 'Users',
-			reservation: 'Reservation',
-			payment: 'Payment',
+			reservation: 'Reservations',
+			payment: 'Payments',
 			accounting: 'Accounting',
 			audit: 'Audit',
+			admin:'Admin',
+			assets:'Assets',
+			machines:'Machines',
 			login: 'Login',
 			logout: 'Logout',
-			signup: 'Signup'
+			signup: 'Signup',
+			others:'Others'
 		},
 		loading: {
 			title: 'Loading',
@@ -46,7 +50,15 @@ angular.module('Fablab').config(function ($translateProvider) {
 			export: 'Export',
 			search: 'Search',
 			detail: 'Detail',
-			updateMailingList: 'Update mailing list'
+			updateMailingList: 'Update mailing list',
+			edit:'Edit',
+			back:'Back',
+			add:'Add'
+		},
+		markdown:{
+			actions:{
+				bold:'Bold'
+			}
 		},
 		panel: {
 			search: 'Filters'
@@ -113,6 +125,8 @@ angular.module('Fablab').config(function ($translateProvider) {
 			comment: 'comment',
 			birthdate: 'Birth date',
 			gender: 'Gender',
+			oldPassword:'Old password',
+			repeatPassword:'Repeat',
 			genderEnum: {
 				unknown: 'Unknown',
 				male: 'Male',
@@ -142,8 +156,14 @@ angular.module('Fablab').config(function ($translateProvider) {
 			},
 			notification: {
 				saved: 'User saved',
-				removed: 'User removed'
-			}
+				removed: 'User removed',
+				wrongPassword:'Wrong password',
+				wrongRepeat:'New password doesn\'t match or is not complicated enough',
+				passwordChanged:'Password changed'
+			},
+			profile:{
+				changePassword:'Change password'
+			},
 		},
 		reservation: {
 			day: 'Day',
@@ -170,6 +190,7 @@ angular.module('Fablab').config(function ($translateProvider) {
 			machine: 'Machine',
 			date: 'Date',
 			time: 'Time',
+			gramme: 'Gramme',
 			additionalCost: 'Additional cost',
 			comment: 'Comment',
 			directPaid: 'User paid directly',
@@ -212,8 +233,17 @@ angular.module('Fablab').config(function ($translateProvider) {
 		audit:{
 			content:'Content',
 			object:'Object',
+			action:'Action',
 			title:'Audit',
 			alertLimit:'The request reach the limit of {{limit}} entries !'
+		},
+		machine:{
+			title:'Machines',
+			add:'Add machine',
+			edit:'Edit machine',
+			prices:'Prices',
+			perhour:'Per hour',
+			book:'Book'
 		}
 	});
 });

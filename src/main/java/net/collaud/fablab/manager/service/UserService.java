@@ -5,6 +5,7 @@ import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
+import net.collaud.fablab.manager.data.type.ChangePasswordResult;
 import net.collaud.fablab.manager.service.global.ReadWriteService;
 
 /**
@@ -20,15 +21,19 @@ public interface UserService extends ReadWriteService<UserEO>{
 	
 	void forgotPassword(String email, String recaptchaResponse);
 
-	public void updateMailingList();
+	UserEO acceptPasswordChange(UserEO user);
+
+	void updateMailingList();
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
-	public void remove(Integer id);
+	void remove(Long id);
 
 	@Override
 	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
-	public UserEO save(UserEO entity);
+	UserEO save(UserEO entity);
 
 	Optional<UserEO> findByRFID(String rfid);
+
+	ChangePasswordResult changePassword(String old, String newPass, String repeatPass);
 }

@@ -6,23 +6,25 @@
 
 		var User = $resource(App.API.USER_API + "/:id", {id: '@id'});
 
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
+
 		return {
 			updatePassword: function (user, successFn) {
 				$http({
 					method: 'POST',
 					url: App.API.USER_API + "/password",
 					data: user
-				}).success(function (data, status, headers, config) {
-					successFn(data);
-				});
+				}).then(getData(successFn));
 			},
 			list: function (successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.USER_API,
-				}).success(function (data, status, headers, config) {
-					successFn(data);
-				});
+				}).then(getData(successFn));
 			},
 			remove: function (id, successFn) {
 				User.remove({id: id}, successFn);
@@ -39,13 +41,13 @@
 				$http({
 					method: 'GET',
 					url: App.API.USER_API + "/updateMailingList",
-				}).success(successFn);
+				}).then(getData(successFn));
 			},
 			membershipTypeList: function (successFn) {
 				$http({
 					method: 'GET',
 					url: App.API.USER_API + "/membershipType",
-				}).success(successFn);
+				}).then(getData(successFn));
 
 			}
 		};
@@ -54,6 +56,11 @@
 	app.factory('GroupService', function ($log, $resource, $http) {
 
 		var Group = $resource(App.API.GROUP_API + "/:id", {id: '@id'});
+		var getData = function(successFn){
+			return function(response){
+				successFn(response.data);
+			}
+		};
 
 		return {
 			list: function (successFn) {
@@ -62,7 +69,7 @@
 							method: 'GET',
 							url: App.API.GROUP_API,
 						}
-				).success(successFn);
+				).then(getData(successFn));
 			},
 //				remove: function (id, successFn) {
 //					$log.debug("UserService: remove...");

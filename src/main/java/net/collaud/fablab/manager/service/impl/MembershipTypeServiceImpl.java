@@ -29,7 +29,7 @@ public class MembershipTypeServiceImpl extends AbstractServiceImpl implements Me
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
-	public Optional<MembershipTypeEO> getById(Integer id) {
+	public Optional<MembershipTypeEO> getById(Long id) {
 		return Optional.ofNullable(membershipTypeRepository.findOne(id));
 	}
 }

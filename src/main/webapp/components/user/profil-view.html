@@ -1,14 +1,42 @@
-
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			TODO profile
-		</div>
-		<div class="panel-body">
-			todo
-		</div>
-		<div class="panel-footer right">
-<!--			<a href="#/users" class="btn btn-default btn-glyph" >{{'button.cancel'| translate}} <span class="glyphicon glyphicon-remove"></span></a>
-			<button type="submit" class="btn btn-success btn-glyph" ng-click="">{{'button.save'| translate}} <span class="glyphicon glyphicon-floppy-disk"></span></button>-->
+<div class="row">
+	<!--<div class="col-md-6">-->
+		<!--<div class="panel panel-default">-->
+			<!--<div class="panel-heading" translate="user.profile.detail">-->
+			<!--</div>-->
+			<!--<div class="panel-body">-->
+				<!--{{connectedUser}}-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<div class="col-md-6">
+		<div class="panel panel-default ">
+			<div class="panel-heading" translate="user.profile.changePassword">
+			</div>
+			<div class="panel-body">
+				<form>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" translate="user.oldPassword"></label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" ng-model="changePasswordModel.oldPassword" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" translate="user.newpassword"></label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" ng-model="changePasswordModel.newPassword" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" translate="user.repeatPassword"></label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" ng-model="changePasswordModel.repeatPassword" required>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="panel-footer right">
+				<button type="button" class="btn btn-primary" ng-click="changePassword()">Save</button>
+			</div>
 		</div>
 	</div>
-</form>
+</div>

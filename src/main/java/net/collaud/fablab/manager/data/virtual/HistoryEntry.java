@@ -1,6 +1,7 @@
 package net.collaud.fablab.manager.data.virtual;
 
 import java.util.Date;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +11,9 @@ import net.collaud.fablab.manager.data.UsageEO;
 import net.collaud.fablab.manager.data.type.HistoryEntryType;
 import net.collaud.fablab.manager.export.CsvExport;
 import net.collaud.fablab.manager.export.CsvField;
+import net.collaud.fablab.manager.service.util.recaptcha.PriceUtil;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Getter
@@ -21,7 +22,7 @@ import net.collaud.fablab.manager.export.CsvField;
 @CsvExport(fileName = "accounting")
 public class HistoryEntry implements Comparable<HistoryEntry> {
 
-	private final int id;
+	private final Long id;
 	@CsvField(headerName = "type")
 	private final HistoryEntryType type;
 	@CsvField(headerName = "date")
@@ -36,7 +37,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	private final String comment;
 
 	public HistoryEntry(PaymentEO payment) {
-		type = payment.getTotal()>0 ? HistoryEntryType.PAYMENT : HistoryEntryType.REFUND;
+		type = payment.getTotal() > 0 ? HistoryEntryType.PAYMENT : HistoryEntryType.REFUND;
 		id = payment.getId();
 		date = payment.getDatePayment();
 		comment = payment.getComment();
@@ -50,8 +51,8 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		id = usage.getId();
 		date = usage.getDateStart();
 		comment = usage.getComment();
-		detail = usage.getMachine().getName() + " | " + usage.getMinutes() + "min" + " | " + usage.getAdditionalCost() + " CHF additional";
-		amount = -((usage.getPricePerHour() * usage.getMinutes()) / 60 + usage.getAdditionalCost());
+		detail = usage.getMachine().getName() + " | " + PriceUtil.prettyPrintValue(usage.getAmount(), usage.getUnit()) + " | " + usage.getAdditionalCost() + " CHF additional";
+		amount = -(usage.getTotal());
 		user = new HistoryEntryUser(usage.getUser());
 	}
 
@@ -60,7 +61,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 		id = subscription.getId();
 		date = subscription.getDateSubscription();
 		comment = subscription.getComment();
-		detail = "Subscription type : " + subscription.getMembershipType().getName()+", duration :"+subscription.getDuration()+" days";
+		detail = "Subscription type : " + subscription.getMembershipType().getName() + ", duration :" + subscription.getDuration() + " days";
 		amount = -subscription.getPrice();
 		user = new HistoryEntryUser(subscription.getUser());
 	}
@@ -68,7 +69,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 	@Override
 	public int compareTo(HistoryEntry o) {
 		int res = -this.date.compareTo(o.getDate());
-		return res == 0 ? Integer.compare(this.id, o.id) : res;
+		return res == 0 ? Long.compare(this.id, o.id) : res;
 	}
 
 }

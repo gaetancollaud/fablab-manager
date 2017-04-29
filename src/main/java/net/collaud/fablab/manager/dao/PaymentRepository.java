@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Repository
-public interface PaymentRepository extends JpaRepository<PaymentEO, Integer> {
+public interface PaymentRepository extends JpaRepository<PaymentEO, Long> {
 
 	@Query(" SELECT p "
 			+ " FROM PaymentEO p "
@@ -24,6 +24,6 @@ public interface PaymentRepository extends JpaRepository<PaymentEO, Integer> {
 	@Query(" SELECT p "
 			+ " FROM  PaymentEO p "
 			+ " WHERE p.user.id=:userId")
-	public List<PaymentEO> getByUser(@Param("userId") Integer userId);
+	public List<PaymentEO> getByUser(@Param("userId") Long userId);
 
 }

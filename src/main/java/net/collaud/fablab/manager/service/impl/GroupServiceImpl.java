@@ -31,7 +31,7 @@ public class GroupServiceImpl extends AbstractServiceImpl implements GroupServic
 
 	@Override
 	@Secured({Roles.USER_MANAGE})
-	public Optional<GroupEO> getById(Integer id) {
+	public Optional<GroupEO> getById(Long id) {
 		return Optional.ofNullable(groupDao.findOne(id));
 	}
 }

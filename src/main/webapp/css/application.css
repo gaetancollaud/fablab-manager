@@ -11,7 +11,6 @@ body{
 	width:24px;
 }
 
-
 .right{
 	text-align: right;
 }
@@ -42,6 +41,108 @@ body{
 }
 .text-bold{
 	font-weight: bold;
+}
+
+.drop-file{
+	background: #F8F8F8;
+    border: 3px dashed #DDD;
+    height: 65px;
+    text-align: center;
+    padding-top: 15px;
+    margin: 10px;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size:1.2em;
+}
+.drop-file.dragover{
+	border: 3px dashed blue;
+}
+/* ---- grid ---- */
+.masonry-grid-wrapper{
+	margin: 0 auto;
+	width:50%;
+}
+@media(max-width: 1100px){
+	.masonry-grid-wrapper{
+		width:100%;
+	}
+}
+.masonry-grid {
+	margin: 0 auto;
+}
+/* clearfix */
+.masonry-grid:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.masonry-grid-item {
+	width: 300px;
+	float: left;
+}
+
+.masonry-card{
+	cursor: pointer;
+	font-style: normal;
+	text-decoration: none;
+	color:black;
+}
+.masonry-card:hover{
+	text-decoration: none;
+}
+
+.masonry-card .title{
+	text-align: center;
+	display: block;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.masonry-card:hover .title{
+	background: rgba(0, 0, 0, 0.2);
+	color:black;
+}
+
+.masonry-card .introduction{
+	display: none;
+	padding: 10px;
+	width: 100%;
+	height: calc(100% - 30px);
+	position: absolute;
+	top: 30px;
+	left: 0;
+	z-index: 10;
+}
+
+.masonry-card:hover .introduction{
+	display: block;
+	background: rgba(255, 255, 255, 0.7);
+}
+
+/**
+ * Markdown
+ */
+textarea.markdown-input{
+	height: 1000px;
+}
+
+.markdown-output code{
+	white-space: pre-line;
+	display: block;
+}
+
+.markdown-output td{
+	border: 1px solid #888;
+	padding: 3px;
+}
+
+form.editor{
+	margin:0 15px;
+	max-width: 500px;
 }
 
 .date-preset{

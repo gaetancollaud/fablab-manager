@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface ReservationRepository extends JpaRepository<ReservationEO, Integer>, JpaSpecificationExecutor<ReservationEO> {
+public interface ReservationRepository extends JpaRepository<ReservationEO, Long>, JpaSpecificationExecutor<ReservationEO> {
 
 	@Query("SELECT DISTINCT r "
 			+ " FROM ReservationEO r "
@@ -32,5 +32,5 @@ public interface ReservationRepository extends JpaRepository<ReservationEO, Inte
 			+ " JOIN FETCH r.machine "
 			+ " JOIN FETCH r.user "
 			+ " WHERE r.id=:id")
-	ReservationEO findOne(@Param("id") Integer id);
+	ReservationEO findOne(@Param("id") Long id);
 }

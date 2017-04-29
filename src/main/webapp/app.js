@@ -5,10 +5,15 @@
 		//ext-lib
 		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
 		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 
+		'ngFileUpload', 'wiz.markdown', 'monospaced.elastic', 
 		// Core
 		'Notification', 'Loader', 'httpInterceptor'
-	]).config(function ($routeProvider, $httpProvider, $translateProvider) {
-		$routeProvider.when('/', {
+	]).config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider) {
+
+		$locationProvider.html5Mode(false);
+
+
+		$routeProvider.when('/home', {
 			templateUrl: './components/dashboard/home-view.html',
 			controller: 'DashboardHomeController'
 		}).when('/login', {
@@ -26,6 +31,9 @@
 		}).when('/profil', {
 			templateUrl: './components/user/profil-view.html',
 			controller: 'UserProfilController'
+		}).when('/assets', {
+			templateUrl: './components/asset/list-view.html',
+			controller: 'AssetListController'
 		}).when('/users', {
 			templateUrl: './components/user/list-view.html',
 			controller: 'UserListController'
@@ -56,8 +64,20 @@
 		}).when('/audit', {
 			templateUrl: './components/audit/audit-list-view.html',
 			controller: 'AuditListController'
+		}).when('/machines', {
+			templateUrl: './components/machine/machine-list-view.html',
+			controller: 'MachineListController'
+		}).when('/machines/add', {
+			templateUrl: './components/machine/machine-edit-view.html',
+			controller: 'MachineEditController'
+		}).when('/machines/:id', {
+			templateUrl: './components/machine/machine-view-view.html',
+			controller: 'MachineViewController'
+		}).when('/machines/edit/:id', {
+			templateUrl: './components/machine/machine-edit-view.html',
+			controller: 'MachineEditController'
 		}).otherwise({
-			redirectTo: '/'
+			redirectTo: '/login'
 		});
 
 		// HTTP Interceptor

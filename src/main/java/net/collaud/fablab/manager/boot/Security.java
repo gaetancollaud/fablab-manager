@@ -23,6 +23,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 		http
 				.anonymous().disable()
 				.csrf().disable()
+//				.httpBasic().and()
 				.authenticationProvider(authentificationProvider)
 				.authorizeRequests()
 				.antMatchers("*").permitAll();

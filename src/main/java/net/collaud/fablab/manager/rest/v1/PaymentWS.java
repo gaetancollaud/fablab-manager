@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/api/api/v1/payment")
@@ -29,14 +28,14 @@ public class PaymentWS {
 	private PaymentService paymentService;
 
 	@RequestMapping(value = "{userId}/history", method = RequestMethod.GET)
-	public BaseModel getallMembershipType(@PathVariable Integer userId) {
+	public BaseModel getallMembershipType(@PathVariable Long userId) {
 		return new DataModel(paymentService.getLastPaymentEntries(userId));
 	}
 
 	@RequestMapping(value = "add_usage", method = RequestMethod.POST)
 	public BaseModel addUsage(@RequestBody @Validated UsageEO usage) {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),
-				usage.getMachine().getId(), usage.getDateStart(), usage.getMinutes(),
+				usage.getMachine().getId(), usage.getDateStart(), usage.getAmount(),
 				usage.getAdditionalCost(), usage.getComment(), usage.isDirectPaid()));
 	}
 
@@ -45,7 +44,7 @@ public class PaymentWS {
 		return new DataModel(paymentService.addPayment(payment.getUser().getId()
 				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
 	}
-	
+
 	@RequestMapping(value = "add_subscription", method = RequestMethod.POST)
 	public BaseModel addSubscription(@RequestBody @Validated AddSubscriptionTO payment) {
 		return new DataModel(paymentService.addSubscription(
@@ -62,7 +61,7 @@ public class PaymentWS {
 	}
 
 //	@RequestMapping(value = "subscription/confirm/{id}", method = RequestMethod.GET)
-//	public BaseModel confirmSubscription(@PathVariable Integer id) {
+//	public BaseModel confirmSubscription(@PathVariable Long id) {
 //		return new DataModel(paymentService.addSubscriptionConfirmation(id));
 //	}
 

@@ -5,21 +5,19 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.ReservationRepository;
-import net.collaud.fablab.manager.dao.specifications.ReservationSpecifications;
 import net.collaud.fablab.manager.data.ReservationEO;
 import net.collaud.fablab.manager.data.UserEO;
 import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.ReservationService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
 @Transactional
@@ -43,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	@Secured({Roles.RESERVATION_MANAGE, Roles.RESERVATION_USE})
-	public void remove(Integer reservationId) {
+	public void remove(Long reservationId) {
 		LOG.debug("Remove with id"+reservationId);
 		reservationRepository.delete(reservationId);
 	}
@@ -61,7 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public Optional<ReservationEO> getById(Integer id) {
+	public Optional<ReservationEO> getById(Long id) {
 		return Optional.ofNullable(reservationRepository.findOne(id));
 	}
 

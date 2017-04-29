@@ -2,23 +2,16 @@ package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import lombok.EqualsAndHashCode;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.collaud.fablab.manager.data.type.PriceUnit;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
@@ -31,14 +24,18 @@ public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements 
 
 	@Id
 	@Column(name = "machine_type_id", nullable = false)
-	private int machineTypeId;
+	private Long machineTypeId;
 
 	@Id
 	@Column(name = "membership_type_id", nullable = false)
-	private int membershipTypeId;
+	private Long membershipTypeId;
 
-	@Column(name = "price", nullable = false)
-	private float price;
+	@Column(name="equation", nullable = false)
+	private String equation;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "unit", nullable = false)
+	private PriceUnit unit;
 
 	@JsonBackReference("machineType-price")
 	@JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id", insertable = false, updatable = false)

@@ -35,7 +35,7 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 	private EntityManager entityManager;
 
 	@Override
-	public List<AuditEO> search(Integer userId, List<AuditObject> type, Date after, Date before, String content, int limit) {
+	public List<AuditEO> search(Long userId, List<AuditObject> type, Date after, Date before, String content, int limit) {
 
 		if(limit<=0){
 			limit = DEFAULT_LIMIT;

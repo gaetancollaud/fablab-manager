@@ -9,13 +9,13 @@ import net.collaud.fablab.manager.data.UserEO;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Getter
 @Setter
 public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSimpleTO> {
 
-	private Integer id;
+	private Long id;
 
 	private Date dateStart;
 
@@ -23,7 +23,7 @@ public class ReservationSimpleTO extends AbstractTO<ReservationEO, ReservationSi
 
 	private UserSimpleTO user;
 
-	private Integer machineId;
+	private Long machineId;
 
 	public ReservationSimpleTO() {
 	}

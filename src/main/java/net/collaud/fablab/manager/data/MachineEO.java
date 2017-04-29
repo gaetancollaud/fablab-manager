@@ -1,6 +1,8 @@
 package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -29,15 +31,25 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
+public class MachineEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "machine_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "introduction", length = 255)
+	private String introduction;
+
+	@JsonInclude(JsonInclude.Include.NON_ABSENT)
+	@Column(name = "description", nullable = false)
+	private String description;
+
+	@Column(name = "image_url", length = 255)
+	private String image_url;
 
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machine", fetch = FetchType.LAZY)
@@ -47,8 +59,27 @@ public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private MachineTypeEO machineType;
 
-	public MachineEO(Integer id) {
+	public MachineEO(Long id) {
 		this.id = id;
+	}
+
+	@QueryProjection
+	public MachineEO(Long id, String name, String introduction, String description, String image_url, MachineTypeEO machineType) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.introduction = introduction;
+		this.image_url = image_url;
+		this.machineType = machineType;
+	}
+
+	@QueryProjection
+	public MachineEO(Long id, String name, String introduction, String image_url, MachineTypeEO machineType) {
+		this.id = id;
+		this.name = name;
+		this.introduction = introduction;
+		this.image_url = image_url;
+		this.machineType = machineType;
 	}
 
 }

@@ -24,7 +24,7 @@ App.interceptors.XMLHttpRequestCall = function (xhr, progressBar, successFonc, e
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-				var response = App.interceptors.success($.parseJSON(xhr.responseText));
+				var response = App.interceptors.then($.parseJSON(xhr.responseText));
 				if (successFonc != undefined)
 					successFonc(response.data);
 			} else {
@@ -43,7 +43,7 @@ App.interceptors.XMLHttpRequestCall = function (xhr, progressBar, successFonc, e
 		}
 	}
 }
-App.interceptors.success = function (response, scope) {
+App.interceptors.then = function (response, scope) {
 	App.interceptors.errorInterceptor.loaderService.hide();
 
 	var message = null;
@@ -215,7 +215,7 @@ angular.module('httpInterceptor', [], ['$provide', function ($provide) {
 						return config || $q.when(config);
 					},
 					response: function (response) {
-						App.interceptors.success(response, scope);
+						App.interceptors.then(response, scope);
 						return response || $q.when(response);
 					},
 					responseError: function (rejection) {

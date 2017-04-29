@@ -13,15 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Transactional
-public interface UserRepository extends JpaRepository<UserEO, Integer>{
+public interface UserRepository extends JpaRepository<UserEO, Long>{
 
+	@Override
+	@Query("SELECT u "
+			+ " FROM UserEO u "
+			+ " WHERE u.id=:id")
+	UserEO findOne(@Param("id")Long id);
+	
+	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
 			+ " LEFT JOIN FETCH u.groups g "
 			+ " LEFT JOIN FETCH u.membershipType mt "
 			+ " LEFT JOIN FETCH u.subscriptions s "
 			+ " WHERE u.id=:id")
-	Optional<UserEO> findOneDetails(@Param("id")Integer id);
+	Optional<UserEO> findOneDetails(@Param("id")Long id);
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
@@ -30,7 +37,7 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 			+ " LEFT JOIN FETCH u.subscriptions sub"
 			+ " LEFT JOIN FETCH u.membershipType mt "
 			+ " WHERE u.id=:id")
-	Optional<UserEO> findOneByIdAndFetchRoles(@Param("id")Integer id);
+	Optional<UserEO> findOneByIdAndFetchRoles(@Param("id")Long id);
 	
 	@Query("SELECT u "
 			+ " FROM UserEO u "
@@ -50,7 +57,7 @@ public interface UserRepository extends JpaRepository<UserEO, Integer>{
 	@Query("SELECT ub "
 			+ " FROM UserBalanceEO ub "
 			+ " WHERE ub.userId=:userId ")
-	Optional<UserBalanceEO> getUserBalanceFromUserId(@Param("userId")Integer userId);
+	Optional<UserBalanceEO> getUserBalanceFromUserId(@Param("userId")Long userId);
 
 	@Query("SELECT u "
 			+ " FROM UserEO u "

@@ -20,9 +20,9 @@ import lombok.ToString;
 @ToString
 public class PriceMachineEOPK implements Serializable {
 
-	private int machineTypeId;
+	private Long machineTypeId;
 
-	private int membershipTypeId;
+	private Long membershipTypeId;
 
 
 }

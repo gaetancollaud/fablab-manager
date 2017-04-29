@@ -1,0 +1,26 @@
+.machines .masonry-grid-item{
+	width: 400px;
+}
+
+/**
+ * One Machines
+ */
+.machines .information{
+	float:right;
+	margin:0 10px;
+}
+.machines .information div{
+	padding: 10px;
+	border:1px solid #DDDDDD;
+	width: 420px;
+	border-radius: 5px;
+	margin:5px;
+}
+.machines .information .actions{
+	text-align: right;
+	border:none;
+}
+.machines .information .prices p{
+	font-style: italic;
+	color:#444444;
+}

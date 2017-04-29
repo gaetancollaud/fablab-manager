@@ -1,14 +1,7 @@
 package net.collaud.fablab.manager.audit;
 
-import java.lang.reflect.Method;
-import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
-import net.collaud.fablab.manager.data.AbstractDataEO;
-import net.collaud.fablab.manager.data.AuditEO;
-import net.collaud.fablab.manager.data.PaymentEO;
-import net.collaud.fablab.manager.data.SubscriptionEO;
-import net.collaud.fablab.manager.data.UsageEO;
-import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.*;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.type.LoginResult;
@@ -16,16 +9,18 @@ import net.collaud.fablab.manager.exceptions.FablabException;
 import net.collaud.fablab.manager.service.AuditService;
 import net.collaud.fablab.manager.service.SecurityService;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Method;
+import java.util.Date;
+
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Aspect
@@ -33,14 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class AuditAspect {
-	
+
 	@Autowired
 	private AuditService auditService;
-	
+
 	@Autowired
 	private SecurityService securityService;
 
-//	@Around("@within(net.collaud.fablab.manager.audit.Audit) || @annotation(net.collaud.fablab.manager.audit.Audit)")
+	//	@Around("@within(net.collaud.fablab.manager.audit.Audit) || @annotation(net.collaud.fablab.manager.audit.Audit)")
 //	@Around("@annotation(net.collaud.fablab.manager.audit.Audit)")
 	@Around("execution(* net.collaud.fablab.manager.service.*.*(..))")
 	public Object serviceAction(ProceedingJoinPoint pjp) throws Throwable {
@@ -51,7 +46,7 @@ public class AuditAspect {
 		}
 		return pjp.proceed();
 	}
-	
+
 	protected Object aroudAudit(ProceedingJoinPoint pjp, Method method) throws Throwable {
 		LOG.info("Intercepted method " + method.getName());
 		Audit ann = method.getAnnotation(Audit.class);
@@ -59,7 +54,7 @@ public class AuditAspect {
 			Object result = pjp.proceed();
 			try {
 				Object object = getObjectOutOfResultAndParameters(ann, result, pjp.getArgs());
-				Integer id = getIdOfObject(object);
+				Long id = getIdOfObject(object);
 				addEntry(ann.action(), ann.object(), id, true, getReadableMessage(ann.object(), ann.action(), object, pjp.getArgs()), null);
 			} catch (Exception ex) {
 				LOG.error("Cannot add login for themod " + method.getName(), ex);
@@ -67,19 +62,19 @@ public class AuditAspect {
 			return result;
 		} catch (Exception ex) {
 			Object entity = getObjectOutOfResultAndParameters(ann, null, pjp.getArgs());
-			Integer id = getIdOfObject(entity);
+			Long id = getIdOfObject(entity);
 			addEntry(ann.action(), ann.object(), id, true, "Error while " + ann.action() + " " + ann.object() + " with id  " + id, ex.getMessage());
 			throw ex;
 		}
 	}
-	
-	private void addEntry(AuditAction action, AuditObject object, Integer objectId, boolean success, String content, String detail) throws FablabException {
+
+	private void addEntry(AuditAction action, AuditObject object, Long objectId, boolean success, String content, String detail) throws FablabException {
 		if (detail != null && detail.isEmpty()) {
 			detail = null;
 		}
 		auditService.addEntry(new AuditEO(securityService.getCurrentUser().orElse(null), action, object, objectId, new Date(), success, content, detail));
 	}
-	
+
 	private Object getObjectOutOfResultAndParameters(Audit ann, Object result, Object[] parameters) {
 		if (ann.action().equals(AuditAction.INSERT)
 				|| ann.action().equals(AuditAction.UPDATE)) {
@@ -97,14 +92,14 @@ public class AuditAspect {
 		}
 		return null;
 	}
-	
-	private Integer getIdOfObject(Object entity) {
+
+	private Long getIdOfObject(Object entity) {
 		if (entity instanceof AbstractDataEO) {
-			return (Integer) ((AbstractDataEO) entity).getId();
+			return (Long) ((AbstractDataEO) entity).getId();
 		}
 		return null;
 	}
-	
+
 	private String getReadableMessage(AuditObject obj, AuditAction action, Object res, Object[] args) {
 		switch (obj) {
 			case USAGE:
@@ -119,6 +114,10 @@ public class AuditAspect {
 //				return getReadableMessage(action, (AccessDoorResponse) res);
 			case SUBSCRIPTION:
 				return getReadableMessage(action, (SubscriptionEO) res);
+			case MACHINE:
+				return getReadableMessage(action, (MachineEO) res);
+			case ASSET:
+				return getReadableMessage(action, (AssetEO) res);
 			default:
 				return "ERROR object " + obj + " not implemented yet";
 		}
@@ -128,10 +127,10 @@ public class AuditAspect {
 	private String getReadableMessage(AuditAction action, UsageEO usage) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(usage.getUser().getFirstLastName());
-		sb.append(" used the machine ");
+		sb.append(" used the asset ");
 		sb.append(usage.getMachine().getName());
 		sb.append(" for ");
-		sb.append(usage.getMinutes()).append("min");
+		sb.append(usage.getAmount()).append(usage.getUnit().getTextUnit());
 		sb.append(" with ");
 		if (usage.getAdditionalCost() == 0) {
 			sb.append("no additional cost");
@@ -158,7 +157,7 @@ public class AuditAspect {
 		}
 		return sb.toString();
 	}
-	
+
 	private String getReadableMessage(AuditAction action, UserEO user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("User ");
@@ -185,7 +184,7 @@ public class AuditAspect {
 		sb.append("]");
 		return sb.toString();
 	}
-	
+
 	private String getReadableMessageForSecurity(AuditAction action, Object result, Object[] args) {
 		StringBuilder sb = new StringBuilder();
 		if (action == AuditAction.LOGIN) {
@@ -200,7 +199,7 @@ public class AuditAspect {
 		return sb.toString();
 	}
 
-//	private String getReadableMessage(AuditAction action, AccessDoorResponse res) {
+	//	private String getReadableMessage(AuditAction action, AccessDoorResponse res) {
 //		StringBuilder sb = new StringBuilder();
 //		if (res.getUser() != null) {
 //			sb.append("User ");
@@ -220,8 +219,28 @@ public class AuditAspect {
 		StringBuilder sb = new StringBuilder();
 		sb.append("User ");
 		sb.append(subscription.getUser().getEmail());
-		sb.append(" confirmed his subscription");
+		sb.append(" confirmed his asset");
 		return sb.toString();
 	}
-	
+
+	private String getReadableMessage(AuditAction action, MachineEO machine) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Machine name=");
+		sb.append(machine.getName());
+		sb.append(" intro=");
+		sb.append(machine.getIntroduction());
+		return sb.toString();
+	}
+
+	private String getReadableMessage(AuditAction action, AssetEO asset) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Asset title=");
+		sb.append(asset.getTitle());
+		sb.append(" mime=");
+		sb.append(asset.getMime());
+		sb.append(" size=");
+		sb.append(asset.getSize());
+		return sb.toString();
+	}
+
 }

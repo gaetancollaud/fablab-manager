@@ -18,7 +18,7 @@ import net.collaud.fablab.manager.data.type.AuditObject;
 @NoArgsConstructor
 @ToString
 public class AuditSearchCriteria extends PeriodSearchCriteria {
-	private Integer userId;
+	private Long userId;
 	private List<AuditObject> type;
 	private String content;
 	private int limit;

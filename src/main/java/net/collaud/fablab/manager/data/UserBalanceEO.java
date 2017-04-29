@@ -28,7 +28,7 @@ public class UserBalanceEO implements Serializable, CsvToString {
 	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
-	private Integer userId;
+	private Long userId;
 
 	@Column(name = "balance", nullable = false)
 	private double value;

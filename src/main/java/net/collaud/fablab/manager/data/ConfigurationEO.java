@@ -2,7 +2,6 @@ package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,7 @@ import net.collaud.fablab.manager.data.type.ConfigurationKey;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
 @Table(name = "t_configuration")
@@ -29,13 +28,13 @@ import net.collaud.fablab.manager.data.type.ConfigurationKey;
 @Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConfigurationEO extends AbstractDataEO<Integer> implements Serializable {
+public class ConfigurationEO extends AbstractDataEO<Long> implements Serializable {
 
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "conf_key", nullable = false)
 	private String keyString;

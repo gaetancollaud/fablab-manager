@@ -5,7 +5,7 @@
 	ctrl.controller('AuthLogoutController', function ($rootScope, $scope, $location, AuthService) {
 		AuthService.logout(function () {
 			$rootScope.updateCurrentUser(function () {
-				$location.path('/');
+				$location.path('/login');
 			});
 		});
 	});

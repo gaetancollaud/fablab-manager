@@ -13,8 +13,11 @@
 		};
 	});
 	reservation.controller('GlobalReservationEditController', function ($scope, $rootScope, $location, $filter, $q,
-			ReservationService, MachineService, NotificationService) {
-		$scope.value = {};
+																		ReservationService, MachineService, NotificationService) {
+		$scope.params = {
+			machineId:0
+		};
+		$scope.value = {}
 		$scope.dateFormat = 'dd MMMM yyyy';
 		$scope.dateOptions = {
 			formatYear: 'yy',
@@ -32,7 +35,7 @@
 		var extractDates = function () {
 			$scope.value.reservationDate = moment($scope.reservation.dateStart).toDate();
 			$scope.value.startTime = moment($scope.reservation.dateStart).startOf('minute').toDate();
-			$scope.value.endTime =  moment($scope.reservation.dateEnd).startOf('minute').toDate();
+			$scope.value.endTime = moment($scope.reservation.dateEnd).startOf('minute').toDate();
 
 		};
 
@@ -43,7 +46,8 @@
 				extractDates();
 			});
 		};
-		$scope.createNewReservation = function () {
+		$scope.createNewReservation = function (machineId) {
+			$scope.params.machineId = machineId;
 			var now = moment().hour(18).startOf('hour');
 			$scope.value.reservationUser = $rootScope.connectedUser.user;
 			$scope.reservation = {
@@ -80,15 +84,24 @@
 
 		MachineService.list(function (data) {
 			$scope.machines = data;
+			if($scope.params.machineId){
+				data.forEach(function(m){
+					if(m.id==$scope.params.machineId){
+						$scope.reservation.machine = m;
+					}
+				})
+			}
 		});
 
 	});
-	reservation.controller('ReservationNewController', function ($rootScope, $scope, $location, ReservationService, $controller) {
+	reservation.controller('ReservationNewController', function ($rootScope, $scope, $location, $routeParams,
+																 ReservationService, $controller) {
 		$controller('GlobalReservationEditController', {$scope: $scope});
 		$scope.newReservation = true;
-		$scope.createNewReservation();
+		$scope.createNewReservation($routeParams.machineId);
 	});
-	reservation.controller('ReservationEditController', function ($rootScope, $scope, $location, $routeParams, ReservationService, $controller) {
+	reservation.controller('ReservationEditController', function ($rootScope, $scope, $location, $routeParams,
+																  ReservationService, $controller) {
 		$controller('GlobalReservationEditController', {$scope: $scope});
 		$scope.newReservation = false;
 		$scope.loadReservation($routeParams.id);

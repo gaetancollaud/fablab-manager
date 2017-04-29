@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/api/v1/reservation")
@@ -36,6 +36,7 @@ public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, Reserv
 	public List<ReservationEO> list(@RequestBody PeriodSearchCriteria criteria) {
 		LOG.debug("Search reservation " + criteria);
 		List<ReservationEO> list = reservationService.findReservations(
+
 				criteria.getDateFrom(),
 				criteria.getDateTo());
 		return list;

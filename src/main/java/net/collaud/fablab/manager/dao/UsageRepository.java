@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Repository
-public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
+public interface UsageRepository extends JpaRepository<UsageEO, Long> {
 
 	@Query(" SELECT u "
 			+ " FROM UsageEO u "
@@ -23,6 +23,6 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
 	@Query(" SELECT u "
 			+ " FROM  UsageEO u "
 			+ " WHERE u.user.id=:userId ")
-	public List<UsageEO> getByUser(@Param("userId") Integer userId);
+	public List<UsageEO> getByUser(@Param("userId") Long userId);
 
 }

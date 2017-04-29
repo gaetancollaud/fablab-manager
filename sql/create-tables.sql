@@ -412,7 +412,7 @@ INNER JOIN t_subscription AS s ON u.user_id=s.user_id
 DROP TABLE IF EXISTS `fablab`.`v_user_balance_usage`;
 USE `fablab`;
 CREATE  OR REPLACE VIEW `v_user_balance_usage` AS
-SELECT u.firstname, u.lastname, u.user_id, -(a.additional_cost+a.minutes/60*a.price_hour) AS total
+SELECT u.firstname, u.lastname, u.user_id, -a.total AS total
 FROM t_user AS u
 INNER JOIN t_usage AS a ON u.user_id=a.user_id;
 

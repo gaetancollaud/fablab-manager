@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface MembershipTypeRepository extends JpaRepository<MembershipTypeEO, Integer>{
+public interface MembershipTypeRepository extends JpaRepository<MembershipTypeEO, Long>{
 
 }

@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,14 +34,14 @@ import net.collaud.fablab.manager.data.type.AuditObject;
 //@AllArgsConstructor(onConstructor = @_({
 //	@QueryProjection
 //}))
-public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
+public class AuditEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "audit_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "action", nullable = false)
 	private AuditAction action;
@@ -51,7 +50,7 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 	private AuditObject object;
 
 	@Column(name = "object_id", nullable = true)
-	private Integer objectId;
+	private Long objectId;
 
 	@Column(name = "dateandtime", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -70,11 +69,11 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 	@Column(name = "detail", nullable = true)
 	private String detail;
 
-	public AuditEO(Integer auditId) {
+	public AuditEO(Long auditId) {
 		this.id = auditId;
 	}
 
-	public AuditEO(UserEO who, AuditAction action, AuditObject object, Integer objectId, Date when, boolean success, String content, String detail) {
+	public AuditEO(UserEO who, AuditAction action, AuditObject object, Long objectId, Date when, boolean success, String content, String detail) {
 		this.who = who;
 		this.action = action;
 		this.object = object;
@@ -86,7 +85,7 @@ public class AuditEO extends AbstractDataEO<Integer> implements Serializable {
 	}
 
 	@QueryProjection
-	public AuditEO(Integer id, AuditAction action, AuditObject object, Integer objectId, Date when, boolean success, UserEO who, String content, String detail) {
+	public AuditEO(Long id, AuditAction action, AuditObject object, Long objectId, Date when, boolean success, UserEO who, String content, String detail) {
 		this.id = id;
 		this.action = action;
 		this.object = object;

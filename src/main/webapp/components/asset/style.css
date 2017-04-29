@@ -1,0 +1,7 @@
+.assets .table .name{
+	word-wrap: break-word;
+	max-width:100px;
+}
+.assets .thumbnail{
+	cursor: pointer;
+}

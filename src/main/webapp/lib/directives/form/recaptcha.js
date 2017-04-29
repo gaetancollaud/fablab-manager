@@ -30,7 +30,7 @@ angular.module('Fablab').directive('recaptcha', function ($timeout) {
 				}
 			};
 
-			loadCaptcha();
+			setTimeout(loadCaptcha, 300);
 		}
 	};
 });

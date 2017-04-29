@@ -1,9 +1,7 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,12 +25,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MembershipTypeEO extends AbstractDataEO<Integer> implements Serializable {
+public class MembershipTypeEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "membership_type_id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name", nullable = false)
 	private String name;

@@ -52,7 +52,7 @@ abstract public class ReadRestWebservice<ENTITY extends AbstractDataEO, SERVICE 
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public BaseModel get(@PathVariable("id") Integer id) {
+	public BaseModel get(@PathVariable("id") Long id) {
 		DataModel<ENTITY> model = new DataModel<>();
 		model.setData(service.getById(id).orElse(null));
 		return model;

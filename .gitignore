@@ -7,6 +7,13 @@ release.properties
 nbactions.xml
 nb-configuration.xml
 *.mwb.bak
-nb_jr_remoting.cfg
 *.war
-
+nb_jr_remoting.cfg
+src/main/webapp/ext-lib/
+logs/
+.idea/
+fablab-manager.iml
+application-dev.properties
+node/
+node_modules/
+npm-debug.log

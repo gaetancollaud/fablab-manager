@@ -3,18 +3,17 @@ package net.collaud.fablab.manager.rest.v1.data;
 import lombok.Getter;
 import lombok.Setter;
 import net.collaud.fablab.manager.data.MembershipTypeEO;
-import net.collaud.fablab.manager.data.SubscriptionEO;
 import net.collaud.fablab.manager.data.UserEO;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Getter
 @Setter
 public class UserSimpleTO extends AbstractTO<UserEO, UserSimpleTO> {
 
-	private Integer id;
+	private Long id;
 	private String firstname;
 	private String lastname;
 	private String email;

@@ -21,6 +21,8 @@ public interface Roles {
 	public static final String RESERVATION_USE = "ROLE_RESERVATION_USE";
 	public static final String RESERVATION_MANAGE = "ROLE_RESERVATION_MANAGE";
 	public static final String MAILING_LIST_MANAGE = "ROLE_MAILINGLIST_MANAGE";
+	public static final String ASSET_UPLOAD = "ROLE_ASSET_UPLOAD";
+	public static final String ASSET_MANAGE = "ROLE_ASSET_MANAGE";
 
 	public static final String[] LIST_ROLES = new String[]{
 		ADMIN,
@@ -36,6 +38,8 @@ public interface Roles {
 		RESERVATION_VIEW,
 		RESERVATION_USE,
 		RESERVATION_MANAGE,
-		MAILING_LIST_MANAGE
+		MAILING_LIST_MANAGE,
+		ASSET_UPLOAD,
+		ASSET_MANAGE,
 	};
 }

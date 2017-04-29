@@ -1,0 +1,48 @@
+{
+  "name": "fablab-manager",
+  "version": "1.0.0",
+  "description": "Fablab-manager [![Build Status](https://travis-ci.org/gaetancollaud/fablab-manager.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-manager) [![Join the chat at https://gitter.im/gaetancollaud/fablab-manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-manager.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-manager)\r ==========",
+  "main": "index.js",
+  "scripts": {
+    "compile": "gulp prod:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaetancollaud/fablab-manager.git"
+  },
+  "author": "Gaétan Collaud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gaetancollaud/fablab-manager/issues"
+  },
+  "homepage": "https://github.com/gaetancollaud/fablab-manager#readme",
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "run-sequence": "^1.2.2"
+  },
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-bootstrap": "^0.12.2",
+    "angular-elastic": "^2.5.1",
+    "angular-resource": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-sanitize": "~1.5.0",
+    "angular-translate": "^2.13.1",
+    "angular-ui-calendar": "^1.0.2",
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "^4.7.0",
+    "font-awesome": "^4.7.0",
+    "fullcalendar": "^3.1.0",
+    "jquery": "^3.1.1",
+    "masonry-layout": "^4.1.1",
+    "moment": "^2.17.1",
+    "moment-range": "^3.0.0",
+    "ng-file-upload": "^12.2.13",
+    "ng-table": "^3.0.1",
+    "toastr": "^2.1.2",
+    "ui-select": "^0.19.6",
+    "wizmarkdown": "^1.3.0"
+  }
+}
