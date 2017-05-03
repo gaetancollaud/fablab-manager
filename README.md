@@ -76,3 +76,11 @@ admin@gmail.com  | fablab | comite
 animator@gmail.com  | fablab | animator
 member@gmail.com  | fablab | member 
 extern@gmail.com  | fablab | _none_
+
+
+# Build and release
+```
+mvn -DpushChanges=false release:prepare 
+git push
+git push --tags
+```
