@@ -33,7 +33,7 @@ public class PriceUtil {
 		switch (unit) {
 			case HOUR:
 				Duration duration = Duration.ofSeconds((long) (amount * 3600));
-				long hour = Math.ceil(duration.getSeconds() / 3600.0);
+				long hour = Double.valueOf(Math.ceil(duration.getSeconds() / 3600.0)).longValue();
 				long min = Math.round(duration.minusHours(hour).getSeconds() / 60.0);
 				return new StringBuilder()
 						.append(Long.valueOf(hour).toString()).append("h ")
