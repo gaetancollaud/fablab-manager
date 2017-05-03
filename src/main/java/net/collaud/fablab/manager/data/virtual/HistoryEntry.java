@@ -11,7 +11,7 @@ import net.collaud.fablab.manager.data.UsageEO;
 import net.collaud.fablab.manager.data.type.HistoryEntryType;
 import net.collaud.fablab.manager.export.CsvExport;
 import net.collaud.fablab.manager.export.CsvField;
-import net.collaud.fablab.manager.service.util.recaptcha.PriceUtil;
+import net.collaud.fablab.manager.service.util.PriceUtil;
 
 /**
  * @author Gaetan Collaud <gaetancollaud@gmail.com>

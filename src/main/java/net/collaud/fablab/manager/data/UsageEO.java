@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.collaud.fablab.manager.data.type.PriceUnit;
-import net.collaud.fablab.manager.service.util.recaptcha.PriceUtil;
+import net.collaud.fablab.manager.service.util.PriceUtil;
 
 /**
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
