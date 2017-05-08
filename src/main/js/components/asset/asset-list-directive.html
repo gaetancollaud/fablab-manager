@@ -1,0 +1,49 @@
+<div class="assets">
+	<div class="drop-zone">
+		<drop-file target="uploadTarget" upload-done="uploadDone()">Drop file here</drop-file>
+	</div>
+
+
+	<table ng-table="tableParams" class="table" show-filter="true">
+		<tr ng-repeat="asset in $data">
+			<td class="name"
+				data-title="'asset.title' | translate"
+				sortable="'title'"
+				filter="{'title':'text'}">
+				<span ng-if="asset.mime.indexof('image')==-1">{{asset.title}}.{{asset.extension}}</span>
+				<img ng-if="asset.mime.indexof('image')!=-1"
+					 ng-src="{{getUrl(asset)}}"
+					 ng-click="select(asset)"
+					 title="{{asset.title}}.{{asset.extension}}"
+					 class="thumbnail"
+					 style="max-width: 100px"/>
+			</td>
+			<td
+					data-title="'asset.date' | translate"
+					sortable="'sortDate'">
+				{{asset.dateUpload|formatTimestamp}}
+			</td>
+			<td
+					data-title="'asset.size' | translate"
+					sortable="'size'">
+				{{asset.size|fileSize}}
+			</td>
+			<td style="width:140px"
+				data-title="'asset.action' | translate">
+				<div class="btn-group">
+					<button ng-show="showSelectBtn" class="btn btn-primary" type="button" ng-click="select(asset)">
+						<span class="fa fa-check"></span>
+					</button>
+					<a class="btn btn-default" href="{{getUrl(asset)}}" target="_blank">
+						<span class="fa fa-film"></span>
+					</a>
+					<button ng-really-click="remove(asset)"
+							ng-really-message="{{'assets.confirmation.remove'|translate}}"
+							class="btn btn-danger" type="button">
+						<span class="fa fa-trash"></span>
+					</button>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

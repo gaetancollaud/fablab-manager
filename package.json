@@ -4,7 +4,8 @@
   "description": "Fablab-manager [![Build Status](https://travis-ci.org/gaetancollaud/fablab-manager.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-manager) [![Join the chat at https://gitter.im/gaetancollaud/fablab-manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-manager.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-manager)\r ==========",
   "main": "index.js",
   "scripts": {
-    "compile": "gulp prod:all"
+    "compile": "gulp prod:all",
+    "webpack": "rm -rf dist && webpack"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,18 @@
   },
   "homepage": "https://github.com/gaetancollaud/fablab-manager#readme",
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
     "bower": "^1.8.0",
+    "css-loader": "^0.28.1",
     "del": "^2.2.2",
+    "file-loader": "^0.11.1",
     "gulp": "^3.9.1",
-    "run-sequence": "^1.2.2"
+    "html-webpack-plugin": "^2.28.0",
+    "run-sequence": "^1.2.2",
+    "style-loader": "^0.17.0",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.5.1"
   },
   "dependencies": {
     "angular": "~1.5.0",

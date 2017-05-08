@@ -1,0 +1,37 @@
+<div class="date-preset">
+	<div class="btn-group">
+		<button class="btn btn-secondary"
+				ng-click="presetDelta(-1)"
+				type="button">-</button>
+		<button ng-repeat="mode in modes"
+				class="btn"
+				ng-class="(mode === selectedMode ? 'btn-primary' : 'btn-default')"
+				ng-click="selectPeriodPreset(mode)"
+				translate="{{'form.preset.' + mode.label+'.label'}}" 
+				type="button"></button>
+		<button class="btn btn-secondary"
+				ng-click="presetDelta(1)"
+				type="button">+</button>
+	</div>
+	
+	<div class="summary">
+		{{summary}}
+	</div>
+	
+	
+	<div class="form-group">
+		<div class="col-sm-1"></div>
+		<label class="col-sm-1 control-label" translate="filter.from"></label>
+		<div class="col-sm-4">
+			<input class="form-control" type="date"
+				   ng-change="dateManuallyUpdated()"
+				   ng-model="criteria.dateFrom" required />
+		</div>
+		<label class="col-sm-1 control-label" translate="filter.to"></label>
+		<div class="col-sm-4">
+			<input class="form-control" type="date"
+				   ng-change="dateManuallyUpdated()"
+				   ng-model="criteria.dateTo" required />
+		</div>
+	</div>
+</div>

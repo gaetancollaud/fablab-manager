@@ -1,0 +1,13 @@
+<div class="row">
+		<div class="col-md-6">
+			<wiz-markdown-editor content="ngModel" textareaclass="form-control">
+				<wiz-toolbar-button ng-repeat="action in actions"
+									command="{{action.command}}" buttonclass="btn btn-default">
+					<i title="{{('markdown.actions.'+action.command)|translate}}"  class="fa fa-{{action.icon}}"></i>
+				</wiz-toolbar-button>
+			</wiz-markdown-editor>
+		</div>
+		<div class="col-md-6">
+			<wiz-markdown content="ngModel"></wiz-markdown>
+		</div>
+	</div>

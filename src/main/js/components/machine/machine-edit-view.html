@@ -1,0 +1,38 @@
+<div class="machines">
+	<div class="information">
+		<div class="actions">
+			<button ng-really-click="cancel()"
+					ng-really-message="{{'machines.confirmation.remove'|translate}}"
+					type="button" class="btn btn-secondary">Cancel
+			</button>
+			<button ng-click="save()" type="button" class="btn btn-primary">Save</button>
+		</div>
+	</div>
+
+	<form class="form-horizontal editor">
+		<div class="form-group">
+			<label class="form-label">TITLE</label>
+			<input type="text" class="form-control" ng-model="machine.name"/>
+		</div>
+
+		<div class="form-group">
+			<label class="form-label">IMAGEURL</label>
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="machine.image_url"/>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"
+							ng-click="clickAssetImageUrl()">
+						Assets
+					</button>
+				</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="form-label">INTRODUCTION</label>
+			<textarea class="form-control" msd-elastic="\n" ng-model="machine.introduction" maxlength="255"></textarea>
+		</div>
+	</form>
+	<markdown-editor ng-model="machine.description"></markdown-editor>
+	<asset-select></asset-select>
+</div>
