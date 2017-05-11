@@ -4,14 +4,14 @@ const path = require('path');
 
 const config = {
 	entry: {
-		'fablab': './src/main/js/app.js',
-		'styles': './src/main/js/styles.css',
+		// 'fablab': './src/main/js/app.js',
+		// 'styles': './src/main/js/styles.css',
 		'vendor-js': './src/main/js/vendors.js',
-		'vendor-css': './src/main/js/vendors.css',
+		// 'vendor-css': './src/main/js/vendors.css',
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name]-[hash].min.[ext]'
+		filename: '[name]-[hash].min.js'
 	},
 	module: {
 		rules: [
