@@ -22,10 +22,10 @@ export * from '../../../node_modules/wizmarkdown/wizMarkdown/wizMarkdown'
 export * from '../../../node_modules/masonry-layout/dist/masonry.pkgd.min'
 export * from '../../../node_modules/angular-elastic/elastic'
 
-
-import styles from './../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import styles from  '../../../node_modules/fullcalendar/dist/fullcalendar.min.css';
-import styles from  '../../../node_modules/ng-table/bundles/ng-table.min.css';
-import styles from  '../../../node_modules/ui-select/dist/select.min.css';
-import styles from  '../../../node_modules/toastr/build/toastr.min.css';
-import styles from  '../../../node_modules/components-font-awesome/css/font-awesome.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/fullcalendar/dist/fullcalendar.min.css';
+import '../../../node_modules/ng-table/bundles/ng-table.min.css';
+import '../../../node_modules/ui-select/dist/select.min.css';
+import '../../../node_modules/toastr/build/toastr.min.css';
+import '../../../node_modules/components-font-awesome/css/font-awesome.min.css';
