@@ -17,6 +17,7 @@ application-dev.properties
 node/
 node_modules/
 npm-debug.log
+yarn-error.log
 dist/
 src/main/webapp/*.min.js
 src/main/webapp/*.min.css

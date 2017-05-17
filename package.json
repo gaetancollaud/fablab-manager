@@ -4,9 +4,8 @@
   "description": "Fablab-manager [![Build Status](https://travis-ci.org/gaetancollaud/fablab-manager.svg?branch=master)](https://travis-ci.org/gaetancollaud/fablab-manager) [![Join the chat at https://gitter.im/gaetancollaud/fablab-manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-manager.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-manager)\r ==========",
   "main": "index.js",
   "scripts": {
-    "compile": "gulp prod:all",
-    "webpack": "yarn run clean && webpack",
-    "clean": "rimraf ./src/main/webapp/*.css & rimraf ./src/main/webapp/*.js & rimraf ./src/main/webapp/*.ttf & rimraf ./src/main/webapp/*.eot & rimraf ./src/main/webapp/*.svg & rimraf ./src/main/webapp/index.html"
+    "compile": "yarn run clean && webpack",
+    "clean": "rimraf ./src/main/webapp/*.css & rimraf ./src/main/webapp/*.js & rimraf ./src/main/webapp/components & rimraf ./src/main/webapp/lib"
   },
   "repository": {
     "type": "git",
@@ -21,19 +20,16 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
-    "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "bower": "^1.8.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.1",
     "del": "^2.2.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
-    "gulp": "^3.9.1",
     "html-webpack-plugin": "^2.28.0",
     "ngtemplate-loader": "^1.3.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1",
-    "run-sequence": "^1.2.2",
     "style-loader": "^0.17.0",
     "url-loader": "^0.5.8",
     "webpack": "^2.5.1"
