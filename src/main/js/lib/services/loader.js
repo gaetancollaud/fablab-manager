@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 /**
  * Notification service
  */

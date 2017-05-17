@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 /** Error interceptor */
 if (App == null) {
 	App = new Object();

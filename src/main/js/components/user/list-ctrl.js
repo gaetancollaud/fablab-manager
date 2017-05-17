@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 angular.module('Fablab').controller('UserListController', function ($scope, $filter, $location,
 																	NgTableParams , UserService, NotificationService) {
 

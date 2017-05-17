@@ -1,11 +1,12 @@
-export * from './app';
-
-import './css/application.css';
+// export * from 'vendors'
 
 export * from './lib/services/httpInterceptor';
 export * from './lib/services/loader';
 export * from './lib/services/notification';
 export * from './lib/services/modal';
+
+import './css/application.css';
+export * from './app';
 
 export * from './lib/filters/core';
 export * from './lib/filters/date';
@@ -29,6 +30,7 @@ export * from './lib/directives/utils/reallyClick';
 export * from './i18n/en';
 export * from './i18n/fr';
 
+export * from './components/services/auth-service';
 export * from './components/services/accounting-service';
 export * from './components/services/asset-service';
 export * from './components/services/audit-service';
@@ -84,3 +86,4 @@ import './components/machine/style.css';
 export * from './components/machine/machine-edit-ctrl';
 export * from './components/machine/machine-list-ctrl';
 export * from './components/machine/machine-view-ctrl';
+

@@ -1,3 +1,6 @@
+import angular from 'angular'
+import toastr from 'toastr'
+
 /**
  * Notification service
  */

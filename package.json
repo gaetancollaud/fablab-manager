@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "gulp prod:all",
-    "webpack": "rm -rf dist/* && webpack"
+    "webpack": "yarn run clean && webpack",
+    "clean": "rimraf ./src/main/webapp/*.css & rimraf ./src/main/webapp/*.js & rimraf ./src/main/webapp/*.ttf & rimraf ./src/main/webapp/*.eot & rimraf ./src/main/webapp/*.svg & rimraf ./src/main/webapp/index.html"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
+    "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "bower": "^1.8.0",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.1",
     "del": "^2.2.2",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -28,6 +31,8 @@
     "gulp": "^3.9.1",
     "html-webpack-plugin": "^2.28.0",
     "ngtemplate-loader": "^1.3.1",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.1",
     "run-sequence": "^1.2.2",
     "style-loader": "^0.17.0",
     "url-loader": "^0.5.8",
@@ -37,6 +42,7 @@
     "angular": "~1.5.0",
     "angular-bootstrap": "^0.12.2",
     "angular-elastic": "^2.5.1",
+    "angular-modal": "^0.5.0",
     "angular-resource": "~1.5.0",
     "angular-route": "~1.5.0",
     "angular-sanitize": "~1.5.0",

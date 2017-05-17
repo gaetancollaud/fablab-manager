@@ -18,3 +18,10 @@ node/
 node_modules/
 npm-debug.log
 dist/
+src/main/webapp/*.min.js
+src/main/webapp/*.min.css
+src/main/webapp/*.eot
+src/main/webapp/*.ttf
+src/main/webapp/*.svg
+src/main/webapp/index.html
+src/main/webapp/components

@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 /*
  * angular-modal v0.0.3
  * (c) 2013 Brian Ford http://briantford.com

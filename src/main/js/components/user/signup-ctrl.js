@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 var ctrl = angular.module('Fablab');
 ctrl.controller('AuthSignUpController', function ($rootScope, $location, $filter, $scope,
 		NotificationService, AuthService, StaticDataService) {

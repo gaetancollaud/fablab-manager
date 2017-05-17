@@ -1,3 +1,6 @@
+import angular from 'angular'
+import moment from 'moment'
+
 angular.module('Fablab').directive('fabUserSubscription', function ($filter, PaymentService) {
 
 	return {
@@ -21,7 +24,7 @@ angular.module('Fablab').directive('fabUserSubscription', function ($filter, Pay
 				if (newValue) {
 					$scope.visible = true;
 					myself = $rootScope.connectedUser !== undefined && $rootScope.connectedUser.connected
-							&& newValue.id === $rootScope.connectedUser.user.id;
+						&& newValue.id === $rootScope.connectedUser.user.id;
 					$scope.who = myself ? 'myself' : 'user';
 					if (newValue.subscriptions && newValue.subscriptions.length > 0) {
 						var lastSub = $filter('orderBy')(newValue.subscriptions, 'dateSubscription', true)[0];

@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 var ctrl = angular.module('Fablab');
 ctrl.controller('GlobalUserEditController', function ($scope, $location, $filter, $q,
 		UserService, GroupService, NotificationService, StaticDataService) {
