@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 angular.module('Fablab').directive('recaptcha', function ($timeout) {
 	var index = 0;
 	return {

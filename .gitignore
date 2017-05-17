@@ -25,3 +25,4 @@ src/main/webapp/*.ttf
 src/main/webapp/*.svg
 src/main/webapp/index.html
 src/main/webapp/components
+src/main/webapp/lib

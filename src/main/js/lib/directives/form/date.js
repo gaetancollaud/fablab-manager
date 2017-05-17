@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 angular.module('Fablab').directive('filterDate', function () {
 	return {
 		restrict: 'EA',

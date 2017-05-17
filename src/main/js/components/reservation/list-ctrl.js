@@ -1,35 +1,35 @@
-(function () {
-	'use strict';
-	
-	angular.module('Fablab').controller('ReservationListController', function ($scope, $filter,
-		$location, NgTableParams, ReservationService) {
+import angular from 'angular'
+import moment from 'moment'
+
+angular.module('Fablab').controller('ReservationListController', function ($scope, $filter,
+																		   $location, NgTableParams, ReservationService) {
 	$scope.criteria = {
 		dateFrom: moment().startOf('month').toDate(),
 		dateTo: moment().endOf('month').toDate()
 	};
 
 	$scope.tableParams = new NgTableParams(
-			angular.extend({
-				page: 1, // show first page
-				count: 25, // count per page
-				sorting: {
-					dateStart: 'asc'
-				}
-			}, $location.search()), {
-		getData: function (params) {
-			if ($scope.reservations) {
-				var filteredData = params.filter() ? $filter('filter')($scope.reservations, params.filter()) : $scope.reservations;
-				var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-				return orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+		angular.extend({
+			page: 1, // show first page
+			count: 25, // count per page
+			sorting: {
+				dateStart: 'asc'
 			}
-		}
-	});
-	
+		}, $location.search()), {
+			getData: function (params) {
+				if ($scope.reservations) {
+					var filteredData = params.filter() ? $filter('filter')($scope.reservations, params.filter()) : $scope.reservations;
+					var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+					return orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+				}
+			}
+		});
+
 
 	$scope.updateReservationList = function () {
 		var criteria = {
-			dateFrom:$filter('cropToDate')($scope.criteria.dateFrom),
-			dateTo:$filter('cropToDate')($scope.criteria.dateTo)
+			dateFrom: $filter('cropToDate')($scope.criteria.dateFrom),
+			dateTo: $filter('cropToDate')($scope.criteria.dateTo)
 		};
 		ReservationService.search(criteria, function (data) {
 			$scope.reservations = data;
@@ -45,7 +45,8 @@
 			$scope.events[$scope.events.length] = {
 				title: r.machine.name,
 				start: new Date(r.dateStart),
-				end: new Date(r.dateEnd)};
+				end: new Date(r.dateEnd)
+			};
 		}
 	};
 
@@ -56,19 +57,6 @@
 	};
 
 	$scope.updateReservationList();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	var date = new Date();
@@ -90,7 +78,12 @@
 		{title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)},
 		{id: 999, title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false},
 		{id: 999, title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false},
-		{title: 'Birthday Party', start: new Date(y, m, d + 1, 19, 0), end: new Date(y, m, d + 1, 22, 30), allDay: false},
+		{
+			title: 'Birthday Party',
+			start: new Date(y, m, d + 1, 19, 0),
+			end: new Date(y, m, d + 1, 22, 30),
+			allDay: false
+		},
 		{title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
 	];
 
@@ -120,5 +113,3 @@
 
 });
 
-	
-}());

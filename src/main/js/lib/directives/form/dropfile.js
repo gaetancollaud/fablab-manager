@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 angular.module('Fablab').directive('dropFile', function (Upload, $timeout) {
 	return {
 		restrict: 'EA',

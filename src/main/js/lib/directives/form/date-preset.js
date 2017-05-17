@@ -1,3 +1,7 @@
+import angular from 'angular'
+import moment from 'moment'
+
+
 angular.module('Fablab').directive('datePreset', function ($translate, $timeout) {
 	return {
 		restrict: 'EA',

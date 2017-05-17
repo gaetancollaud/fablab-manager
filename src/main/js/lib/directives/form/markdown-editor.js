@@ -1,3 +1,5 @@
+import angular from 'angular'
+
 angular.module('Fablab').directive('markdownEditor', function ($timeout, $translate, $compile) {
 	var index = 0;
 	return {

@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
 	entry: {
-		// 'vendor-js': './src/main/js/vendors.js',
 		'bundle': './src/main/js/bundle.js',
 	},
 	output: {
@@ -19,9 +18,6 @@ const config = {
 				test: /\.(js)$/,
 				use: 'babel-loader',
 				exclude: /node_modules/
-				// options: {
-				// 	"plugins": ["transform-remove-strict-mode"]
-				// }
 			},
 			{
 				test: /\.css$/,
@@ -36,15 +32,7 @@ const config = {
 			{
 				test: /\.html$/,
 				loader: 'raw-loader'
-			},
-			// {
-			// 	test: /\.html$/,
-			// 	loaders: ['ngtemplate?relativeTo=/src/', 'html']
-			// }
-			// {
-			// 	test: /\.html$/,
-			// 	loader: 'ngtemplate?relativeTo=' + (path.resolve(__dirname, './app')) + '/!html'
-			// }
+			}
 		]
 	},
 	plugins: [
@@ -55,6 +43,11 @@ const config = {
 			{
 				context: 'src/main/js',
 				from: 'components/**/*.html',
+				to: '.'
+			},
+			{
+				context: 'src/main/js',
+				from: 'lib/**/*.html',
 				to: '.'
 			}
 		]),

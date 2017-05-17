@@ -4,7 +4,7 @@ export * from 'angular-bootstrap';
 export * from 'angular-route'
 export * from 'angular-sanitize'
 export * from 'angular-resource'
-export *  from 'ng-table'
+export *  from 'ng-table/bundles/ng-table.min'
 export *  from 'angular-translate'
 export * from 'angular-ui-calendar'
 export * from 'ui-select'
@@ -12,16 +12,22 @@ export *  from 'ng-file-upload'
 export * from 'wizmarkdown'
 export * from 'angular-elastic'
 
+import 'ui-select/dist/select.min.css';
+import 'toastr/build/toastr.min.css';
+import 'fullcalendar/dist/fullcalendar.min.css';
+import 'ng-table/bundles/ng-table.min.css';
+import 'toastr/build/toastr.min.css';
+import 'components-font-awesome/css/font-awesome.min.css';
 
 
-	angular.module('Fablab', [
-		//ext-lib
-		'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 
-		'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 
-		'ngFileUpload', 'wiz.markdown', 'monospaced.elastic', 
-		// Core
-		'Notification', 'Loader', 'httpInterceptor'
-	]).config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider) {
+angular.module('Fablab', [
+	//ext-lib
+	'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal',
+	'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select',
+	'ngFileUpload', 'wiz.markdown', 'monospaced.elastic',
+	// Core
+	'Notification', 'Loader', 'httpInterceptor'
+]).config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider) {
 
 	$locationProvider.html5Mode(false);
 
