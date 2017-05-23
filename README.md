@@ -2,7 +2,7 @@
 Fablab-manager [![Build Status](https://travis-ci.org/gaetancollaud/fablab-manager.svg?branch=develop)](https://travis-ci.org/gaetancollaud/fablab-manager) [![Join the chat at https://gitter.im/gaetancollaud/fablab-manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gaetancollaud/fablab-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Stories in Ready](https://badge.waffle.io/gaetancollaud/fablab-manager.png?label=ready&title=Ready)](https://waffle.io/gaetancollaud/fablab-manager)
 ==========
 
-#Description
+# Description
 
 Fablab-manager is a fully open-source web application that allows you to easily manage a Fablab (or any makerspace). You can manage :
 
@@ -18,7 +18,7 @@ Fablab-manager is a fully open-source web application that allows you to easily 
  * See accounting information
 
 
-#Demo
+# Demo
 
 Live demo on [quality.fablab-fribourg.ch](https://quality.fablab-fribourg.ch/)
 
@@ -38,10 +38,10 @@ Password : **fablab**
 ## Installation
 
 * Install MySQL and Tomcat
-* Compile from source (I will make releases eventually)
+* Download a realease or compile from source
 * Put fablab-config.properties in tomcat configuration directory
 * Edit fablab-config.properties
-* Create database schema (use Mysql workbench)
+* Create database schema
 * Deploy the WAR file previously compiled
 
 ### Docker
@@ -53,20 +53,8 @@ You can easily run this application by using docker. See the docker folder. You 
 To run the application and the database : 
 
 ```sh
-cd docker/
+wget https://raw.githubusercontent.com/gaetancollaud/fablab-manager/master/docker-compose.yml
 docker-compose up
-```
-
-
-### Install from scratch
-
-If you are lazy just run the script to install everything for your 
-
-```sh
-apt-get install git
-git clone https://github.com/gaetancollaud/fablab-manager.git
-cd fablab-manager
-sudo scripts/install-from-scratch.sh
 ```
 
 ### Default users
