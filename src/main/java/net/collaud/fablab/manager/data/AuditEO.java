@@ -1,19 +1,6 @@
 package net.collaud.fablab.manager.data;
 
-import com.mysema.query.annotations.QueryProjection;
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +8,10 @@ import lombok.ToString;
 import net.collaud.fablab.manager.data.type.AuditAction;
 import net.collaud.fablab.manager.data.type.AuditObject;
 
+import javax.persistence.*;
+import java.util.Date;
+
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
@@ -31,12 +20,7 @@ import net.collaud.fablab.manager.data.type.AuditObject;
 @Setter
 @ToString
 @NoArgsConstructor
-//@AllArgsConstructor(onConstructor = @_({
-//	@QueryProjection
-//}))
-public class AuditEO extends AbstractDataEO<Long> implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class AuditEO extends AbstractDataEO<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,20 +1,19 @@
 package net.collaud.fablab.manager.dao.impl;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.dao.AssetRepositoryCustom;
 import net.collaud.fablab.manager.dao.projection.AssetProjection;
 import net.collaud.fablab.manager.data.AssetEO;
 import net.collaud.fablab.manager.data.QAssetEO;
-import net.collaud.fablab.manager.data.UserEO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Repository
@@ -32,37 +31,41 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 
 	@Override
 	public AssetEO findOneWithoutContent(Long id) {
-		return new JPAQuery(entityManager)
+		return new JPAQuery<>(entityManager)
+				.select(AssetProjection.projectionWithoutContent(asset))
 				.from(asset)
 				.innerJoin(asset.owner)
 				.where(asset.id.eq(id))
-				.singleResult(AssetProjection.projectionWithoutContent(asset));
+				.fetchOne();
 	}
 
 	@Override
 	public AssetEO findOneWithContent(Long id) {
-		return new JPAQuery(entityManager)
+		return new JPAQuery<>(entityManager)
+				.select(AssetProjection.projectionWithContent(asset))
 				.from(asset)
 				.innerJoin(asset.owner)
 				.where(asset.id.eq(id))
-				.singleResult(AssetProjection.projectionWithContent(asset));
+				.fetchOne();
 	}
 
 	@Override
 	public List<AssetEO> findAll() {
-		return new JPAQuery(entityManager)
+		return new JPAQuery<>(entityManager)
+				.select(AssetProjection.projectionWithoutContent(asset))
 				.from(asset)
 				.innerJoin(asset.owner)
 				.orderBy(asset.id.desc())
-				.list(AssetProjection.projectionWithoutContent(asset));
+				.fetch();
 	}
 
 	@Override
 	public List<AssetEO> findAllForOwner(Long ownerId) {
-		return new JPAQuery(entityManager)
+		return new JPAQuery<>(entityManager)
+				.select(AssetProjection.projectionWithoutContent(asset))
 				.from(asset)
 				.innerJoin(asset.owner)
 				.where(asset.owner.id.eq(ownerId))
-				.list(AssetProjection.projectionWithoutContent(asset));
+				.fetch();
 	}
 }
