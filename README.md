@@ -26,38 +26,25 @@ User : **admin@gmail.com**
 
 Password : **fablab**
 
-## Technologies
+# Technologies
 * Java 8
-* Apache Tomcat 8
 * MySQL
-* Spring 4
-* Spring-data
-* Spring-security
+* SpringBoot
 * AngularJS
 
-## Installation
+# Installation
 
-* Install MySQL and Tomcat
-* Download a realease or compile from source
-* Put fablab-config.properties in tomcat configuration directory
-* Edit fablab-config.properties
-* Create database schema
-* Deploy the WAR file previously compiled
-
-### Docker
-
-You can easily run this application by using docker. See the docker folder. You need
+The easiest way to run this application is to use docker. You will need:
 * [docker-engine](https://docs.docker.com/installation/ubuntulinux/)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
-To run the application and the database : 
-
+Copy the _docker-compose.yml_ file and the _docker_ folder. Adapt the configuration in this folder. Then run:
 ```sh
-wget https://raw.githubusercontent.com/gaetancollaud/fablab-manager/master/docker-compose.yml
-docker-compose up
+docker-compose up -d
+docker-compose logs -f
 ```
 
-### Default users
+## Default users
 Login  | Password | groups
 ------------- | ------------- | -----------
 admin@gmail.com  | fablab | comite
@@ -65,10 +52,9 @@ animator@gmail.com  | fablab | animator
 member@gmail.com  | fablab | member 
 extern@gmail.com  | fablab | _none_
 
+# Development
 
-# Build and release
-```
-mvn -DpushChanges=false release:prepare 
-git push
-git push --tags
-```
+* Add this entry in your host file: `127.0.0.1 mysql` (or change the datasource url in application.properties)
+* Install MySQL (add the schema and user _fablab_ or change the login info in application.properties)
+* Build and run using maven `mvn spring-boot:run`
+* If you use intellij, the spring boot will be detected and you can run it directly from the IDE
