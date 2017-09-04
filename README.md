@@ -38,7 +38,7 @@ The easiest way to run this application is to use docker. You will need:
 * [docker-engine](https://docs.docker.com/installation/ubuntulinux/)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
-Copy the _docker-compose.yml_ file and the _docker_ folder. Adapt the configuration in this folder. Then run:
+Copy the _docker-compose.yml_ file and the _config_ folder. Adapt the configuration in this folder. Then run:
 ```sh
 docker-compose up -d
 docker-compose logs -f

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Fablab">
 <head>
 	<meta charset="utf-8">
-	<title>Fablab-Fribourg</title>
+	<title>{{appName}}</title>
 	<link rel="icon" type="image/ico" href="./favicon.ico">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,7 +30,7 @@
 
 
 </head>
-<body ng-app="Fablab">
+<body >
 
 <toast></toast>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -47,7 +47,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand">Fablab-Fribourg</a>
+			<a class="navbar-brand">{{appName}}</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
