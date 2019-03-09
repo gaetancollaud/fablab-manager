@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RestController()
 @RequestMapping("/api/v1/price-machine")
-@JavascriptAPIConstant("MACHINE_API")
+@JavascriptAPIConstant("PRICE_MACHINE_API")
 @Slf4j
 public class PriceMachineWS {
 

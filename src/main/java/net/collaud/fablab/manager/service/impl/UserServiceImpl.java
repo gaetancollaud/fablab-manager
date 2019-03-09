@@ -76,9 +76,17 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	@Secured({Roles.USER_MANAGE, Roles.USER_VIEW})
+	@Secured({Roles.USER_MANAGE, Roles.USER_VIEW, Roles.PAYMENT_VIEW})
 	public Optional<UserEO> getById(Long id) {
-		return userDao.findOneDetails(id);
+		if (securityService.hasRole(Roles.USER_MANAGE, Roles.USER_VIEW)) {
+			return userDao.findOneDetails(id);
+		} else {
+			if (securityService.getCurrentUserId().equals(id)) {
+				return userDao.findOneDetails(id);
+			} else {
+				return Optional.empty();
+			}
+		}
 	}
 
 	@Override

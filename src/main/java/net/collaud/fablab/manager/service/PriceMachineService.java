@@ -28,7 +28,7 @@ public class PriceMachineService {
 		return priceMachineRepository.save(entity);
 	}
 
-	@Secured({Roles.MACHINE_MANAGE})
+	@Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW, Roles.PAYMENT_VIEW, Roles.PAYMENT_MANAGE})
 	public List<PriceMachineEO> findAll() {
 		return priceMachineRepository.findAll();
 	}
