@@ -24,7 +24,7 @@ import lombok.ToString;
 @Table(name = "t_membership_type")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"priceList"})
 public class MembershipTypeEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id

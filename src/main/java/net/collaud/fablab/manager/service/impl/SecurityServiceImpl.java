@@ -92,6 +92,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 		return context != null && context.getAuthentication() != null;
 	}
 
+	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGIN)
 	@Override
 	public LoginResult login(String login, String password) {
 		if (isAuthenticated()) {
@@ -113,6 +114,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 		}
 	}
 
+	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGOUT)
 	@Override
 	public void logout() {
 		SecurityContextHolder.clearContext();

@@ -5,11 +5,14 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.dao.GroupRepository;
 import net.collaud.fablab.manager.dao.MembershipTypeRepository;
 import net.collaud.fablab.manager.dao.UserRepository;
 import net.collaud.fablab.manager.data.GroupEO;
 import net.collaud.fablab.manager.data.UserEO;
+import net.collaud.fablab.manager.data.type.AuditAction;
+import net.collaud.fablab.manager.data.type.AuditObject;
 import net.collaud.fablab.manager.data.type.ChangePasswordResult;
 import net.collaud.fablab.manager.rest.v1.result.ConnectedUser;
 import net.collaud.fablab.manager.security.PasswordUtils;
@@ -97,6 +100,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		return userDao.save(userEO);
 	}
 
+	@Audit(object = AuditObject.USER, action = AuditAction.SAVE)
 	@Override
 	@Secured({Roles.USER_MANAGE})
 	public UserEO save(UserEO user) {
@@ -139,6 +143,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		}
 	}
 
+	@Audit(object = AuditObject.USER, action = AuditAction.DELETE)
 	@Override
 	@Secured({Roles.USER_MANAGE})
 	public void remove(Long id) {
@@ -147,6 +152,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 		userDao.saveAndFlush(user);
 	}
 
+	@Audit(object = AuditObject.USER, action = AuditAction.SIGNUP)
 	@Override
 	public void signup(UserEO user, String recaptchaResponse) {
 		checkRecaptcha(recaptchaResponse);

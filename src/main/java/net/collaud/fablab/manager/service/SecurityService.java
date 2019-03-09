@@ -22,11 +22,9 @@ public interface SecurityService {
 	Long getCurrentUserId();
 	
 	Boolean isAuthenticated();
-	
-	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGIN)
+
 	LoginResult login(String login, String password);
-	
-	@Audit(object = AuditObject.SECURITY, action = AuditAction.LOGOUT)
+
 	void logout();
 	
 	boolean hasRole(String... role);

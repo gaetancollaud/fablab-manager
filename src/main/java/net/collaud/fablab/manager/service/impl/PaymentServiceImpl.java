@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.audit.AuditUtils;
 import net.collaud.fablab.manager.dao.MachineRepository;
 import net.collaud.fablab.manager.dao.PaymentRepository;
@@ -64,6 +65,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 	@Autowired
 	private MachineRepository machineRepository;
 
+	@Audit(object = AuditObject.PAYMENT, action = AuditAction.INSERT)
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public PaymentEO addPayment(Long userId, Date datePayment, double amount, String comment) {
@@ -73,6 +75,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		return payment;
 	}
 
+	@Audit(object = AuditObject.USAGE, action = AuditAction.INSERT)
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public UsageEO useMachine(Long userId, Long machineId, Date startDate, double value, double additionalCost, String comment, boolean paidDirectly) {
@@ -141,6 +144,7 @@ public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentSe
 		return listHistory;
 	}
 
+	@Audit(object = AuditObject.SUBSCRIPTION, action = AuditAction.INSERT)
 	@Secured({Roles.PAYMENT_MANAGE})
 	@Override
 	public SubscriptionEO addSubscription(Long userId, Date dateSubscriptionStart, Date datePayment, String comment, boolean paidDirectly) {

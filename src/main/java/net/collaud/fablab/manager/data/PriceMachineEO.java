@@ -18,7 +18,7 @@ import net.collaud.fablab.manager.data.type.PriceUnit;
 @Table(name = "r_price_machine")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"machineTypeEO", "membershipType"})
 @IdClass(PriceMachineEOPK.class)
 public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements Serializable {
 
