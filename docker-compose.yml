@@ -1,7 +1,7 @@
-version: '2'
+version: '3'
 services:
   mysql:
-    image: mysql
+    image: mysql:5.7
     environment:
      - MYSQL_ROOT_PASSWORD=fablab
      - MYSQL_DATABASE=fablab
@@ -10,6 +10,7 @@ services:
 
   web:
     image: gaetancollaud/fablab-manager
+    build: .
     volumes:
       - ./config/application.properties:/application.properties
     ports:
