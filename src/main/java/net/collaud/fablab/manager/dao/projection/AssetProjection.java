@@ -1,6 +1,6 @@
 package net.collaud.fablab.manager.dao.projection;
 
-import com.mysema.query.types.Expression;
+import com.querydsl.core.types.Expression;
 import net.collaud.fablab.manager.data.AssetEO;
 import net.collaud.fablab.manager.data.QAssetEO;
 

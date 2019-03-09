@@ -28,15 +28,15 @@ abstract public class ReadWriteRestWebservice<ENTITY extends AbstractDataEO, SER
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestBody ENTITY entity) {
+	public ENTITY create(@RequestBody ENTITY entity) {
 		LOG.debug("create entity " + entity);
-		service.save(entity);
+		return service.save(entity);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public void edit(@PathVariable Long id, @RequestBody ENTITY entity) {
+	public ENTITY edit(@PathVariable Long id, @RequestBody ENTITY entity) {
 		LOG.debug("edit entity " + entity);
-		service.save(entity);
+		return service.save(entity);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)

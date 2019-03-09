@@ -2,7 +2,6 @@ package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mysema.query.annotations.QueryProjection;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

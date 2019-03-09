@@ -1,11 +1,6 @@
 package net.collaud.fablab.manager.service.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -70,13 +65,18 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	}
 
 	@Override
-	@Secured({Roles.USER_MANAGE})
+	@Secured({Roles.USER_MANAGE, Roles.USER_VIEW, Roles.PAYMENT_VIEW})
 	public List<UserEO> findAll() {
-		return userDao.findAll();
+		if (securityService.hasRole(Roles.USER_MANAGE, Roles.USER_VIEW)) {
+			return userDao.findAll();
+		} else {
+			// show only the current user for payment view
+			return Collections.singletonList(userDao.findOne(securityService.getCurrentUserId()));
+		}
 	}
 
 	@Override
-	@Secured({Roles.USER_MANAGE})
+	@Secured({Roles.USER_MANAGE, Roles.USER_VIEW})
 	public Optional<UserEO> getById(Long id) {
 		return userDao.findOneDetails(id);
 	}
@@ -190,7 +190,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements UserService 
 	@Override
 	public ChangePasswordResult changePassword(String old, String newPass, String repeatPass) {
 		Optional<UserEO> optUser = securityService.getCurrentUser();
-		if (newPass == null || !newPass.equals(repeatPass) || newPass.length()<6) {
+		if (newPass == null || !newPass.equals(repeatPass) || newPass.length() < 6) {
 			return ChangePasswordResult.WRONG_REPEAT;
 		}
 

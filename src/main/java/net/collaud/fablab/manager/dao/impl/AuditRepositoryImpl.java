@@ -1,7 +1,9 @@
 package net.collaud.fablab.manager.dao.impl;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.Predicate;
+import com.querydsl.core.types.ConstructorExpression;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.JPAQueryBase;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +46,18 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 			limit = MAX_LIMIT;
 		}
 
-		JPAQuery query = new JPAQuery(entityManager)
+		JPAQuery<AuditEO> query = new JPAQuery<>(entityManager)
+				.select(QAuditEO.create(
+						audit.id,
+						audit.action,
+						audit.object,
+						audit.objectId,
+						audit.when,
+						audit.success,
+						audit.who,
+						audit.content,
+						audit.detail
+				))
 				.from(audit);
 
 		List<Predicate> predicates = new ArrayList<>();
@@ -76,19 +89,10 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 
 		return query
 				.innerJoin(audit.who, user)
+				.where(predicates.toArray(new Predicate[predicates.size()]))
 				.orderBy(audit.when.desc())
 				.limit(limit)
-				.list(QAuditEO.create(
-								audit.id,
-								audit.action,
-								audit.object,
-								audit.objectId,
-								audit.when,
-								audit.success,
-								audit.who,
-								audit.content,
-								audit.detail
-						));
+				.fetch();
 	}
 
 }

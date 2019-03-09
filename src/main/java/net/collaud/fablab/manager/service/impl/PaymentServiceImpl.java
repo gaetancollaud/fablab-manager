@@ -29,7 +29,7 @@ import net.collaud.fablab.manager.security.Roles;
 import net.collaud.fablab.manager.service.AuditService;
 import net.collaud.fablab.manager.service.PaymentService;
 import net.collaud.fablab.manager.service.SecurityService;
-import net.collaud.fablab.manager.service.util.recaptcha.PriceUtil;
+import net.collaud.fablab.manager.service.util.PriceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;

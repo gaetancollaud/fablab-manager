@@ -1,6 +1,6 @@
 package net.collaud.fablab.manager.dao.impl;
 
-import com.mysema.query.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,20 +37,22 @@ public class MachineRepositoryImpl implements MachineRepositoryCustom {
 
 	@Override
 	public List<MachineEO> findAll() {
-		final List<MachineEO> machines = new JPAQuery(entityManager)
+		final List<MachineEO> machines = new JPAQuery<>(entityManager)
+				.select(MachineProjection.projectionWithoutContent(machine))
 				.from(machine)
 				.innerJoin(machine.machineType, machineType)
 				.orderBy(machine.id.desc())
-				.list(MachineProjection.projectionWithoutContent(machine));
+				.fetch();
 
 		final Set<Long> machineTypeIds = machines.stream()
 				.map(m -> m.getMachineType().getId())
 				.collect(Collectors.toSet());
 
-		final Map<Long, List<PriceMachineEO>> priceByMachineType = new JPAQuery(entityManager)
+		final Map<Long, List<PriceMachineEO>> priceByMachineType = new JPAQuery<>(entityManager)
+				.select(priceMachine)
 				.from(priceMachine)
 				.where(priceMachine.machineTypeId.in(machineTypeIds))
-				.list(priceMachine)
+				.fetch()
 				.stream()
 				.collect(Collectors.groupingBy(PriceMachineEO::getMachineTypeId));
 		
@@ -63,16 +65,18 @@ public class MachineRepositoryImpl implements MachineRepositoryCustom {
 
 	@Override
 	public MachineEO findOneWithDescription(Long machineId) {
-		final MachineEO machineEO = new JPAQuery(entityManager)
+		final MachineEO machineEO = new JPAQuery<>(entityManager)
+				.select(MachineProjection.projectionWithContent(machine))
 				.from(machine)
 				.innerJoin(machine.machineType, machineType)
 				.where(machine.id.eq(machineId))
-				.singleResult(MachineProjection.projectionWithContent(machine));
+				.fetchOne();
 		
-		final List<PriceMachineEO> prices = new JPAQuery(entityManager)
+		final List<PriceMachineEO> prices = new JPAQuery<>(entityManager)
+				.select(priceMachine)
 				.from(priceMachine)
 				.where(priceMachine.machineTypeId.eq(machineEO.getMachineType().getId()))
-				.list(priceMachine);
+				.fetch();
 		
 		machineEO.getMachineType().setPriceList(new HashSet<>(prices));
 		

@@ -1,29 +1,17 @@
 package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mysema.query.annotations.QueryProjection;
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Builder;
+import lombok.Builder;
+
+import javax.persistence.*;
+import java.time.Instant;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
@@ -34,9 +22,7 @@ import lombok.experimental.Builder;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-public class AssetEO extends AbstractDataEO<Long> implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class AssetEO extends AbstractDataEO<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +38,7 @@ public class AssetEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Column(name = "mime", nullable = false)
 	private String mime;
-	
+
 	@Column(name = "data_size", nullable = false)
 	private Integer size;
 

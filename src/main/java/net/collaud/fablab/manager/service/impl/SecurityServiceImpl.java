@@ -3,6 +3,7 @@ package net.collaud.fablab.manager.service.impl;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.manager.audit.Audit;
 import net.collaud.fablab.manager.dao.UserRepository;
@@ -29,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Service
@@ -119,14 +119,17 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 	}
 
 	@Override
-	public boolean hasRole(String role) {
+	public boolean hasRole(String... roles) {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if (context == null || context.getAuthentication() == null) {
 			return false;
 		}
 		for (GrantedAuthority authority : context.getAuthentication().getAuthorities()) {
-			if (authority.getAuthority().equalsIgnoreCase(role)) {
-				return true;
+			String authority1 = authority.getAuthority();
+			for (String role : roles) {
+				if (authority1.equalsIgnoreCase(role)) {
+					return true;
+				}
 			}
 		}
 		return false;

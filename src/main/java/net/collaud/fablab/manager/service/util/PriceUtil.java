@@ -1,4 +1,4 @@
-package net.collaud.fablab.manager.service.util.recaptcha;
+package net.collaud.fablab.manager.service.util;
 
 
 import lombok.experimental.UtilityClass;
@@ -32,17 +32,26 @@ public class PriceUtil {
 	public static String prettyPrintValue(double amount, PriceUnit unit) {
 		switch (unit) {
 			case HOUR:
-				Duration duration = Duration.ofSeconds((long) (amount * 3600));
-				long hour = Math.round(duration.getSeconds() / 3600.0);
-				long min = Math.round(duration.minusHours(hour).getSeconds() / 60.0);
-				return new StringBuilder()
-						.append(Long.valueOf(hour).toString()).append("h ")
-						.append(Long.valueOf(min).toString()).append("min ")
-						.toString();
+				return printHour(amount);
 			default:
-				DecimalFormat df = new DecimalFormat("#.##");
-				return df.format(amount) + unit.getTextUnit();
+				return printDecimalWithUnit(amount, unit);
+
 		}
 	}
 
+	private static String printHour(double amount) {
+		Duration duration = Duration.ofSeconds((long) (amount * 3600));
+//		long hour = Double.valueOf(Math.ceil(duration.getSeconds() / 3600.0)).longValue();
+//		long min = Math.round(duration.minusHours(hour).getSeconds() / 60.0);
+		long min = Math.round(duration.getSeconds() / 60.0);
+		return new StringBuilder()
+//				.append(Long.valueOf(hour).toString()).append("h ")
+				.append(Long.valueOf(min).toString()).append("min ")
+				.toString();
+	}
+
+	private static String printDecimalWithUnit(double amount, PriceUnit unit) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(amount) + unit.getTextUnit();
+	}
 }

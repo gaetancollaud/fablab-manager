@@ -88,6 +88,8 @@
 		App.interceptors.errorInterceptor.loaderService = LoaderService;
 		App.interceptors.errorInterceptor.notificationService = NotificationService;
 
+		$rootScope.appName = App.CONFIG.FABLAB_NAME;
+
 		$rootScope.updateCurrentUser = function (redirectCallback) {
 			AuthService.getCurrentUser(function (data) {
 				$rootScope.connectedUser = data;

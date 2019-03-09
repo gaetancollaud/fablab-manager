@@ -1,5 +1,6 @@
-package net.collaud.fablab.manager.service.util.recaptcha;
+package net.collaud.fablab.manager.service.util;
 
+import net.collaud.fablab.manager.service.util.PriceUtil;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
