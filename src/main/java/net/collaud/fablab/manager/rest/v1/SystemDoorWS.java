@@ -1,11 +1,11 @@
 package net.collaud.fablab.manager.rest.v1;
 
-import net.collaud.fablab.manager.data.type.DoorAction;
+import net.collaud.fablab.manager.rest.v1.data.DoorEventTO;
 import net.collaud.fablab.manager.service.SystemDoorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -20,20 +20,18 @@ public class SystemDoorWS {
 	@Autowired
 	private SystemDoorService systemDoorService;
 
-	@RequestMapping(value = "rfids", method = RequestMethod.GET)
-	public Map<String, String> getAllWithRfid() {
-		return systemDoorService.getRfids();
+//	@RequestMapping(value = "rfids", method = RequestMethod.GET)
+//	public Map<String, String> getAllWithRfid() {
+//		return systemDoorService.getRfids();
+//	}
+
+	@RequestMapping(value = "event", method = RequestMethod.POST)
+	public void event(@RequestBody DoorEventTO event) {
+		systemDoorService.event(event.getAction(), event.getRfid());
 	}
 
-	@RequestMapping(value = "event", method = RequestMethod.GET)
-	public void event(
-			@RequestParam("eventAction") DoorAction action,
-			@RequestParam("rfid") String rfid) {
-		systemDoorService.event(action, rfid);
-	}
-
-	@RequestMapping(value="allowed")
-	public boolean allowed(@RequestParam("rfid") String rfid){
-		return systemDoorService.allowed(rfid);
-	}
+//	@RequestMapping(value="allowed")
+//	public boolean allowed(@RequestParam("rfid") String rfid){
+//		return systemDoorService.allowed(rfid);
+//	}
 }

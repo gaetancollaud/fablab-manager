@@ -28,8 +28,8 @@ public class SystemDoorService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
 	private AuditService auditService;
-
 
 	@Secured({Roles.SYSTEM})
 	public Map<String, String> getRfids() {
@@ -72,7 +72,7 @@ public class SystemDoorService {
 
 		LOG.info(sb.toString());
 		try {
-			AuditUtils.addAudit(auditService, user.orElse(null), AuditObject.ACCESS_DOOR, AuditAction.UPDATE, success, sb.toString());
+			AuditUtils.addAudit(auditService, user.orElse(null), AuditObject.ACCESS_DOOR, AuditAction.OTHER, success, sb.toString());
 		} catch (FablabException ex) {
 			LOG.error("Cannot add audit entry");
 		}

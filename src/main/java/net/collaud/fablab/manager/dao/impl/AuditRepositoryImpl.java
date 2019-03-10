@@ -88,7 +88,7 @@ public class AuditRepositoryImpl implements AuditRepositoryCustom {
 		}
 
 		return query
-				.innerJoin(audit.who, user)
+				.leftJoin(audit.who, user)
 				.where(predicates.toArray(new Predicate[predicates.size()]))
 				.orderBy(audit.when.desc())
 				.limit(limit)
