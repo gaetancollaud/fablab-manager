@@ -13,8 +13,6 @@ services:
   web:
     image: gaetancollaud/fablab-manager
     build: .
-    volumes:
-      - ./config/application.properties:/application.properties
     ports:
      - "8080:8080"
     links:

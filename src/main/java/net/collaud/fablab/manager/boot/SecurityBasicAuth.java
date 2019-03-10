@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 /**
  * @author Gaetan Collaud
  */
-@Order(101)
+@Order(1)
 @Configuration
 public class SecurityBasicAuth extends WebSecurityConfigurerAdapter {
 
@@ -21,7 +21,9 @@ public class SecurityBasicAuth extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-				.regexMatcher("/api/v1/system/door/.*")
+				.authenticationProvider(authentificationProvider)
+				.csrf().disable()
+				.antMatcher("/api/v1/system/door/**")
 				.httpBasic();
 
 	}

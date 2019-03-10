@@ -37,38 +37,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-context</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-web</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-webmvc</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-orm</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.security</groupId>-->
-			<!--<artifactId>spring-security-core</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.security</groupId>-->
-			<!--<artifactId>spring-security-web</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.security</groupId>-->
-			<!--<artifactId>spring-security-config</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.data</groupId>-->
-			<!--<artifactId>spring-data-jpa</artifactId>-->
-		<!--</dependency>-->
 
 		<!-- Jackson -->
 		<dependency>
@@ -80,27 +48,6 @@
 			<artifactId>jackson-datatype-hibernate5</artifactId>
 		</dependency>
 
-		<!-- ORM integration, e.g Hibernate -->
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate</groupId>-->
-			<!--<artifactId>hibernate-core</artifactId>-->
-			<!--<version>5.0.6.Final</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate</groupId>-->
-			<!--<artifactId>hibernate-jpamodelgen</artifactId>-->
-			<!--<version>5.0.6.Final</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate</groupId>-->
-			<!--<artifactId>hibernate-entitymanager</artifactId>-->
-			<!--<version>5.0.6.Final</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate</groupId>-->
-			<!--<artifactId>hibernate-java8</artifactId>-->
-			<!--<version>5.0.6.Final</version>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
@@ -120,22 +67,6 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.querydsl</groupId>-->
-			<!--<artifactId>querydsl-jpa</artifactId>-->
-			<!--<version>${querydsl.version}</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>com.querydsl</groupId>-->
-			<!--<artifactId>querydsl-core</artifactId>-->
-			<!--<version>${querydsl.version}</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>com.querydsl</groupId>-->
-			<!--<artifactId>querydsl-apt</artifactId>-->
-			<!--<version>${querydsl.version}</version>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
 
 		<!-- connect to mysql -->
 		<dependency>
@@ -143,37 +74,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!-- Logging -->
-		<!--<dependency>-->
-			<!--<groupId>org.slf4j</groupId>-->
-			<!--<artifactId>slf4j-api</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>ch.qos.logback</groupId>-->
-			<!--<artifactId>logback-classic</artifactId>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>ch.qos.logback</groupId>-->
-			<!--<artifactId>logback-core</artifactId>-->
-			<!--<version>1.2.3</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>net.logstash.logback</groupId>-->
-			<!--<artifactId>logstash-logback-encoder</artifactId>-->
-			<!--<version>4.11</version>-->
-		<!--</dependency>-->
-
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-test</artifactId>-->
-			<!--<scope>test</scope>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
@@ -222,7 +128,6 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-
 		<!-- Utils -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -252,22 +157,6 @@
 			<artifactId>recaptcha4j</artifactId>
 			<version>0.0.7</version>
 		</dependency>
-
-		<!--&lt;!&ndash; FIxme remove ? &ndash;&gt;-->
-		<!--<dependency>-->
-		<!--<groupId>javax.servlet</groupId>-->
-		<!--<artifactId>javax.servlet-api</artifactId>-->
-		<!--<type>jar</type>-->
-		<!--</dependency>-->
-
-		<!-- Fixme remove interceptor -->
-		<!--<dependency>-->
-			<!--<groupId>javax</groupId>-->
-			<!--<artifactId>javaee-api</artifactId>-->
-			<!--<version>7.0</version>-->
-			<!--<type>jar</type>-->
-		<!--</dependency>-->
-
 
 		<!-- Spring AOP + AspectJ -->
 		<dependency>
@@ -419,20 +308,6 @@
 
 		</plugins>
 	</build>
-
-	<!--<repositories>-->
-		<!--<repository>-->
-			<!--<id>spring-releases</id>-->
-			<!--<url>http://repo.spring.io/libs-release</url>-->
-		<!--</repository>-->
-
-	<!--</repositories>-->
-	<!--<pluginRepositories>-->
-		<!--<pluginRepository>-->
-			<!--<id>spring-releases</id>-->
-			<!--<url>http://repo.spring.io/libs-release</url>-->
-		<!--</pluginRepository>-->
-	<!--</pluginRepositories>-->
 
 	<scm>
 		<url>https://github.com/gaetancollaud/fablab-manager</url>
