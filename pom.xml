@@ -194,6 +194,7 @@
 						<pushChanges>false</pushChanges>
 						<remoteTagging>true</remoteTagging>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<tagNameFormat>@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
 			</plugins>
