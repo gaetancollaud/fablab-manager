@@ -3,8 +3,10 @@ package net.collaud.fablab.manager.boot;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import net.collaud.fablab.manager.rest.HibernateAwareObjectMapper;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +45,11 @@ public class Database {
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
 		return converter;
 	}
+
+//	@Bean
+//	public ObjectMapper getObjectMapper() {
+//		return new HibernateAwareObjectMapper();
+//	}
 
 //	@Bean
 //	public LocalSessionFactoryBean sessionFactory() {

@@ -1,6 +1,7 @@
 package net.collaud.fablab.manager.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -27,6 +28,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude = {"priceList", "machineList"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MachineTypeEO extends AbstractDataEO<Long> implements Serializable{
 
 	@Id

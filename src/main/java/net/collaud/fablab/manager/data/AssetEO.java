@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
@@ -22,6 +23,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AssetEO extends AbstractDataEO<Long> {
 
 	@Id

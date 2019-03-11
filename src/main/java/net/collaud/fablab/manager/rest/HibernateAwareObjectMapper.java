@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.rest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,12 +22,15 @@ import java.util.function.Function;
 public class HibernateAwareObjectMapper extends ObjectMapper {
 
 	public HibernateAwareObjectMapper() {
+		addMixIn(Object.class, IgnoreHibernatePropertiesInJackson.class);
 		registerModule(new Hibernate5Module());
 		final Jackson8Module dateModule = new Jackson8Module();
 		dateModule.addLongSerializer(Instant.class, (i) -> i.getEpochSecond() * 1000);
 		dateModule.addLongDeserializer(Instant.class, (s) -> Instant.ofEpochMilli(s));
 		registerModule(dateModule);
 	}
+
+
 
 	public class Jackson8Module extends SimpleModule {
 
@@ -73,4 +77,8 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
 		
 
 	}
+
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private abstract class IgnoreHibernatePropertiesInJackson{ }
 }

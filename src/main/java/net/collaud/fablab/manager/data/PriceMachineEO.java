@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,6 +36,7 @@ public class PriceMachineEO extends AbstractDataEO<PriceMachineEOPK> implements 
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "unit", nullable = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private PriceUnit unit;
 
 	@JsonBackReference("machineType-price")

@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -24,6 +25,7 @@ import net.collaud.fablab.manager.service.util.PriceUtil;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UsageEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

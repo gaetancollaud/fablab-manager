@@ -1,10 +1,7 @@
 package net.collaud.fablab.manager.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 import net.collaud.fablab.manager.data.type.Gender;
@@ -28,6 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @CsvExport(fileName = "users")
 @JsonInclude(Include.NON_ABSENT)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserEO extends AbstractDataEO<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.ToString;
 import net.collaud.fablab.manager.export.CsvToString;
@@ -20,6 +22,7 @@ import net.collaud.fablab.manager.export.CsvToString;
 @Table(name = "v_user_balance_grouped")
 @Getter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserBalanceEO implements Serializable, CsvToString {
 
 	private static final long serialVersionUID = 1L;

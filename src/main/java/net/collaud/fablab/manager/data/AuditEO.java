@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AuditEO extends AbstractDataEO<Long> {
 
 	@Id

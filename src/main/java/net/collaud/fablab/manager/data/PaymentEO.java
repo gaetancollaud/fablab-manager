@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,6 +30,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PaymentEO extends AbstractDataEO<Long> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

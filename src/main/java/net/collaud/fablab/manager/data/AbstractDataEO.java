@@ -1,5 +1,7 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 import javax.persistence.MappedSuperclass;
 

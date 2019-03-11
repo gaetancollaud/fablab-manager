@@ -1,5 +1,6 @@
 package net.collaud.fablab.manager.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Set;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude = {"priceList"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MembershipTypeEO extends AbstractDataEO<Long> implements Serializable {
 
 	@Id
